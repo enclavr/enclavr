@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=dev
 WorkingDirectory=/home/dev/Projects/enclavr
-ExecStart=/home/dev/Projects/enclavr/script.sh
+ExecStart=/usr/local/bin/enclavr-agent
 Restart=always
 RestartSec=10
 
