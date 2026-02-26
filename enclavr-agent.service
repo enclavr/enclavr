@@ -4,7 +4,6 @@ After=network.target
 
 [Service]
 Type=simple
-User=dev
 WorkingDirectory=/home/dev/Projects/enclavr
 Environment="PATH=/home/dev/.opencode/bin:/home/dev/go/bin:/home/dev/.bun/bin:/usr/local/bin:/usr/bin:/bin"
 ExecStart=/usr/local/bin/enclavr-agent
@@ -12,4 +11,4 @@ Restart=always
 RestartSec=10
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
