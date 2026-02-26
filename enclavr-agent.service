@@ -7,7 +7,7 @@ Type=simple
 User=dev
 WorkingDirectory=/home/dev/Projects/enclavr
 Environment="PATH=/home/dev/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
-ExecStart=/home/dev/Projects/enclavr/script.sh
+ExecStart=/usr/local/bin/enclavr-agent
 Restart=always
 RestartSec=10
 
