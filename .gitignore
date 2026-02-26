@@ -1,0 +1,6 @@
+agent.log
+.env
+.env.local
+*.log
+.DS_Store
+memory-bank/

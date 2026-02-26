@@ -1,0 +1,14 @@
+[Unit]
+Description=Enclavr Autonomous Agent
+After=network.target
+
+[Service]
+Type=simple
+User=dev
+WorkingDirectory=/home/dev/Projects/enclavr
+ExecStart=/home/dev/Projects/enclavr/script.sh
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

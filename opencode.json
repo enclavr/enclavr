@@ -1,0 +1,26 @@
+{
+    "$schema":"https://opencode.ai/config.json",
+    "permission":{
+        "*":"allow"
+    },
+    "model":"opencode/minimax-m2.5-free",
+    "agent":{
+        "build":{
+            "temperature":0.75
+        }
+    },
+    "mcp":{
+        "mcp-sequential-thinking":{
+            "type":"local",
+            "command":["bunx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
+        },
+        "mcp-fetch":{
+            "type":"local",
+            "command":["uvx", "mcp-server-fetch"]
+        },
+        "context7":{
+            "type":"remote",
+            "url":"https://mcp.context7.com/mcp"
+        }
+    }
+}
