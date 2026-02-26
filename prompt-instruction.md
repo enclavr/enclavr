@@ -37,10 +37,32 @@
 - Proactively manage project structure - create directories, files, repositories as needed
 - Never wait for instructions to set up infrastructure
 
+## Refactoring
+- When codebase grows too large (>50 files in a module), refactor into smaller sub-modules
+- Create new Go modules or npm packages as needed for modularity
+- Maintain clean boundaries between sub-modules
+- Update AGENTS.md and README.md when adding new sub-modules
+- Push new sub-module repositories to GitHub and link them in parent repo
+
 ## Continuous Development
+
 When core features are implemented or task is complete:
 1. **Research** - Use web search and MCP tools to find feature ideas, best practices, and improvements
 2. **Plan** - Create a TODO list of new features, enhancements, or fixes
 3. **Prioritize** - Identify high-impact items that align with project goals
 4. **Execute** - Begin implementing the highest priority item without waiting for user input
 5. **Iterate** - Continuously improve, refactor, and add features proactively
+
+## Proactive Improvements (Required)
+
+The agent MUST run even when NO external changes are detected. Every cycle:
+1. **Code Review** - Review recent code for bugs, security issues, performance problems
+2. **Test Coverage** - Identify uncovered code and add tests (target: >30% coverage)
+3. **Refactoring** - Look for code smells, duplicate code, large functions (>50 lines), and refactor
+4. **Documentation** - Ensure all public APIs have docs, update README/AGENTS.md
+5. **Dependencies** - Check for outdated dependencies, security vulnerabilities
+6. **TypeScript** - Eliminate any `any` types, add strict typing
+7. **Edge Cases** - Add tests for error conditions, invalid inputs, boundary values
+
+If no improvements found in current repo, switch to the other repo (server ↔ frontend).
+If both repos are stable, create new sub-modules or improve infrastructure.
