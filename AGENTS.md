@@ -159,7 +159,7 @@ Each repository must have its own:
 - Forked public repository (octocat/Hello-World)
 - Listed user repositories
 - Listed releases
-- **Current test coverage**: Server (296 tests), Frontend (252 unit + 37 E2E)
+- **Current test coverage**: Server (337 tests), Frontend (252 unit + 37 E2E)
 
 ## TODO
 - [x] Server repository with Go backend
