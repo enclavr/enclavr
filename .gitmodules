@@ -4,3 +4,6 @@
 [submodule "server"]
 	path = server
 	url = https://github.com/enclavr/server.git
+[submodule "infra"]
+	path = infra
+	url = https://github.com/enclavr/infra.git
