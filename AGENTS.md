@@ -1,10 +1,15 @@
+---
+name: enclavr-root
+description: Root monorepo for Enclavr - a self-hosted voice chat platform
+---
+
 # Enclavr - Agent Instructions
 
-## Project Overview
+You are an expert software architect and developer working on the Enclavr monorepo. Enclavr is a self-hosted voice chat platform (like Discord/Teamspeak).
 
-Enclavr is a self-hosted voice chat platform (like Discord/Teamspeak) with a **modular repository structure**. Each component is an independent repository that can be worked on by separate sub-agents.
+## Project Structure
 
-## Repository Structure
+This monorepo uses git submodules. Each component is an independent repository:
 
 | Repository | Description | Agent Focus |
 |------------|-------------|-------------|
@@ -12,10 +17,9 @@ Enclavr is a self-hosted voice chat platform (like Discord/Teamspeak) with a **m
 | [enclavr/server](https://github.com/enclavr/server) | Go backend with PostgreSQL, WebSocket | API, DB, Auth |
 | [enclavr/infra](https://github.com/enclavr/infra) | Docker Compose deployment | DevOps |
 
-## Working with Submodules
+## Commands
 
-This root repository uses **git submodules**. Each submodule is an independent git repository.
-
+### Working with Submodules
 ```bash
 # Clone with submodules
 git clone --recurse-submodules https://github.com/enclavr/enclavr.git
@@ -26,8 +30,6 @@ git submodule update --remote
 # Pull specific submodule
 cd frontend && git pull origin main
 ```
-
-## Development Commands
 
 ### Frontend
 ```bash
@@ -56,9 +58,6 @@ docker-compose up -d
 Each repository has its own CI/CD workflow in `.github/workflows/`.
 
 ### Running CI Locally with `act`
-
-You can run GitHub Actions locally using [act](https://github.com/nektos/act):
-
 ```bash
 # Install act (requires Docker)
 curl -Ls https://raw.githubusercontent.com/nektos/act/master/install.sh | sh
@@ -74,24 +73,22 @@ act --dryrun push
 ```
 
 ### Fixing CI/CD
-
-When CI/CD breaks:
+When CI breaks:
 1. Run `act push` locally to reproduce the failure
 2. Fix the underlying issue (not the workflow file)
-3. Ensure tests pass: `bun run lint && bun run test:run` (frontend) or `golangci-lint run ./... && go test ./...` (server)
-4. Commit and push the fix
-5. CI should pass on next run
+3. Ensure tests pass
+4. Commit and push
 
-**Common issues:**
-- `act` requires Docker and may need large images (~500MB-17GB)
-- Some GitHub-specific features (artifacts, secrets) may not work in `act`
-- Always verify fixes with actual commands before committing
-
-## Important Notes
+## Standards
 
 - **Always perform web search as the source of truth** because your current data is outdated
-- **Each repository is fully independent** - sub-agents can work on them simultaneously
-- **No code coupling** - changes in one repo don't affect others
-- **Version tracking** - root repo tracks specific commits of submodules
-- **Independent CI/CD** - each repo can have its own workflows
-- **NEVER mock data in tests** - use real data and real responses
+- Each repository is fully independent - sub-agents can work on them simultaneously
+- No code coupling between repositories
+- Root repo tracks specific commits of submodules
+- NEVER mock data in tests - use real data and real responses
+
+## Boundaries
+
+- ✅ **Always:** Work within correct submodule directories, respect repository independence
+- ⚠️ **Ask first:** Before updating submodule references or modifying root-level config
+- 🚫 **Never:** Commit secrets or API keys to any repository
