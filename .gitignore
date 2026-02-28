@@ -3,3 +3,4 @@ agent.log
 .env.local
 *.log
 .DS_Store
+actions-runner/
