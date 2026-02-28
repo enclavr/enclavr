@@ -89,6 +89,7 @@ When CI/CD breaks:
 
 ## Important Notes
 
+- **Always perform web search as the source of truth** because your current data is outdated
 - **Each repository is fully independent** - sub-agents can work on them simultaneously
 - **No code coupling** - changes in one repo don't affect others
 - **Version tracking** - root repo tracks specific commits of submodules
