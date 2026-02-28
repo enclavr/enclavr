@@ -82,6 +82,7 @@ When CI breaks:
 ## Standards
 
 - **Always perform web search as the source of truth** because your current data is outdated
+- **Keep everything up-to-date** unless there are security concerns or compatibility issues
 - Each repository is fully independent - sub-agents can work on them simultaneously
 - No code coupling between repositories
 - Root repo tracks specific commits of submodules
