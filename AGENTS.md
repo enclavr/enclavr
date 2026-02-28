@@ -51,10 +51,46 @@ cp .env.example .env
 docker-compose up -d
 ```
 
+## CI/CD
+
+Each repository has its own CI/CD workflow in `.github/workflows/`.
+
+### Running CI Locally with `act`
+
+You can run GitHub Actions locally using [act](https://github.com/nektos/act):
+
+```bash
+# Install act (requires Docker)
+curl -Ls https://raw.githubusercontent.com/nektos/act/master/install.sh | sh
+
+# Run all CI jobs
+act push
+
+# Run specific job
+act -j test
+
+# Dry run (preview)
+act --dryrun push
+```
+
+### Fixing CI/CD
+
+When CI/CD breaks:
+1. Run `act push` locally to reproduce the failure
+2. Fix the underlying issue (not the workflow file)
+3. Ensure tests pass: `bun run lint && bun run test:run` (frontend) or `golangci-lint run ./... && go test ./...` (server)
+4. Commit and push the fix
+5. CI should pass on next run
+
+**Common issues:**
+- `act` requires Docker and may need large images (~500MB-17GB)
+- Some GitHub-specific features (artifacts, secrets) may not work in `act`
+- Always verify fixes with actual commands before committing
+
 ## Important Notes
 
 - **Each repository is fully independent** - sub-agents can work on them simultaneously
 - **No code coupling** - changes in one repo don't affect others
 - **Version tracking** - root repo tracks specific commits of submodules
 - **Independent CI/CD** - each repo can have its own workflows
-- ** NEVER mock data in tests** - use real data and real responses
+- **NEVER mock data in tests** - use real data and real responses
