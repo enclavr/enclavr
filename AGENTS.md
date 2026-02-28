@@ -2,87 +2,59 @@
 
 ## Project Overview
 
-Enclavr is a self-hosted voice chat platform (like Discord/Teamspeak) with:
-- **Server**: Go backend with PostgreSQL, WebSocket hub, WebRTC signaling
-- **Frontend**: Next.js 16 + React 19 + TypeScript + Zustand + Tailwind CSS v4
+Enclavr is a self-hosted voice chat platform (like Discord/Teamspeak) with a **modular repository structure**. Each component is an independent repository that can be worked on by separate sub-agents.
 
-## Build Commands
+## Repository Structure
+
+| Repository | Description | Agent Focus |
+|------------|-------------|-------------|
+| [enclavr/frontend](https://github.com/enclavr/frontend) | Next.js 16 + React 19 + TypeScript | UI/UX, State |
+| [enclavr/server](https://github.com/enclavr/server) | Go backend with PostgreSQL, WebSocket | API, DB, Auth |
+| [enclavr/infra](https://github.com/enclavr/infra) | Docker Compose deployment | DevOps |
+
+## Working with Submodules
+
+This root repository uses **git submodules**. Each submodule is an independent git repository.
+
+```bash
+# Clone with submodules
+git clone --recurse-submodules https://github.com/enclavr/enclavr.git
+
+# Update all submodules
+git submodule update --remote
+
+# Pull specific submodule
+cd frontend && git pull origin main
+```
+
+## Development Commands
 
 ### Frontend
 ```bash
 cd frontend
 bun install
 bun run dev
-bun run build
-bun run lint
-bun run test:run
-bun run test:e2e
+bun run lint && bun run test:run
 ```
 
 ### Server
 ```bash
 cd server
 go run ./cmd/server
-go test -v ./...
-golangci-lint run ./...
-go build -o bin/server ./cmd/server
+golangci-lint run ./... && go test -v ./...
 ```
 
-### Docker
+### Infrastructure
 ```bash
+cd infra
+cp .env.example .env
 docker-compose up -d
 ```
 
-## Code Style
-
-### TypeScript / React
-- Explicit types for all function parameters and return types
-- Never use `any` - use `unknown` if needed
-- Use `interface` for objects, `type` for unions
-- Functional components with hooks
-- Use `useCallback`, `useMemo`, `React.memo` for performance
-- Zustand for state management
-
-### Go
-- Use `go fmt` before committing
-- Use `golangci-lint` to catch issues
-- Keep functions under 50 lines
-- Use meaningful variable names
-- Group imports: stdlib → external → internal
-
-### General
-- **NEVER mock data in tests** - use real data and real responses
-- Keep files under 300 lines (frontend) / 500 lines (server)
-- Use barrel files (`index.ts` / `index.go`) for clean imports
-
-## Testing Requirements
-
-- All tests must pass before committing
-- Run frontend: `bun run lint && bun run test:run`
-- Run server: `golangci-lint run ./... && go test -v ./...`
-- Test with real data, never mock database or external services
-
-## Project Structure
-
-```
-/home/dev/Projects/enclavr/
-├── frontend/          # Next.js frontend (use bun, NOT npm)
-├── server/           # Go backend
-├── docker-compose.yml # Full stack deployment
-└── .github/workflows/ # CI/CD pipelines
-```
-
-## Environment
-
-- Bun is required for frontend (NEVER use npm/yarn/pnpm)
-- Go 1.25.7 for backend
-- PostgreSQL database
-- Redis for pub/sub (optional, for scaling)
-
 ## Important Notes
 
-- This is a monorepo with two independent projects
-- Frontend and server can run independently for development
-- Both are pushed to separate GitHub repositories:
-  - `enclavr/server` - Go backend
-  - `enclavr/frontend` - Next.js frontend
+- **Each repository is fully independent** - sub-agents can work on them simultaneously
+- **No code coupling** - changes in one repo don't affect others
+- **Version tracking** - root repo tracks specific commits of submodules
+- **Independent CI/CD** - each repo can have its own workflows
+- ** NEVER mock data in tests** - use real data and real responses
