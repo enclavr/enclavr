@@ -3,4 +3,3 @@ agent.log
 .env.local
 *.log
 .DS_Store
-memory-bank/
