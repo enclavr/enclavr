@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate-submodules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Verify submodules
+        run: |
+          git submodule status
+
+      - name: Check for submodule updates
+        id: submodule_status
+        run: |
+          git diff --quiet HEAD..origin/main -- frontend server infra && echo "updated=false" || echo "updated=true"
+
+      - name: Comment on PR if submodules updated
+        if: github.event_name == 'pull_request' && steps.submodule_status.outputs.updated == 'true'
+        run: |
+          echo "::warning::Submodules have been updated. Please review and merge."
