@@ -28,6 +28,45 @@
 - Create separate repositories for modular dependencies
 - Use sub-repositories where appropriate for code organization
 - Leverage branches, tags, releases, and all git features as needed
+- **ALWAYS use `gh` CLI** for all GitHub operations (issues, PRs, releases, labels, CI)
+- Never use web UI or direct API calls - use `gh issue`, `gh pr`, `gh release`, `gh run`, `gh label`
+
+## GitHub CLI (gh) - Required Tool
+
+All GitHub operations MUST use the `gh` CLI tool:
+
+### Check Issues (Every Cycle)
+```bash
+# Check all enclavr repos for issues
+for r in enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra; do
+  gh issue list -R $r
+done
+```
+
+### Resolve Issues
+```bash
+gh issue view 123 --repo enclavr/server  # View issue
+gh issue comment 123 --body "..."         # Respond
+gh issue close 123                        # Close resolved
+```
+
+### Pull Requests
+```bash
+gh pr create --title "..." --body "..."   # Create PR
+gh pr merge 123                           # Auto-merge
+gh pr review 123 --approve               # Approve
+```
+
+### Releases
+```bash
+gh release create v1.0.0 --notes "..."   # Create release
+```
+
+### CI Status
+```bash
+gh run list -R enclavr/server            # Check CI
+gh run rerun --failed                    # Fix failures
+```
 
 ## Core Principles
 - Make all decisions independently - never ask user for clarification

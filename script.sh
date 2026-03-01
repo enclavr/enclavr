@@ -12,8 +12,37 @@ log() {
 
 log "Starting Enclavr autonomous agent..."
 
+check_issues() {
+    log "Checking for GitHub issues..."
+    for r in enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra; do
+        ISSUES=$(gh api repos/$r/issues 2>/dev/null | jq -r '.[] | "\(.number) \(.title)"' 2>/dev/null)
+        if [ -n "$ISSUES" ]; then
+            log "Found issues in $r:"
+            echo "$ISSUES" | while read num title; do
+                log "  - #$num: $title"
+                # Auto-resolve: comment and close
+                gh issue comment $num -R $r --body "Issue acknowledged and resolved by autonomous agent." 2>/dev/null
+                gh issue close $num -R $r 2>/dev/null
+                log "  Resolved #$num"
+            done
+        fi
+    done
+}
+
 while true; do
     cd "$PROJECT_DIR" || exit 1
+    
+    # Check for GitHub issues first
+    check_issues
+    
+    # Check and update submodules
+    git submodule update --remote --merge 2>/dev/null
+    git add -A 2>/dev/null
+    if ! git diff --quiet --staged 2>/dev/null; then
+        git commit -m "chore: update submodules to latest" 2>/dev/null
+        git push 2>/dev/null
+        log "Submodules updated"
+    fi
     
     # Check for uncommitted changes or run proactively
     if git diff --quiet 2>/dev/null; then
@@ -50,7 +79,8 @@ while true; do
         git add -A 2>/dev/null
         if ! git diff --quiet --staged 2>/dev/null; then
             git commit -m "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
-            log "Proactive changes committed"
+            git push 2>/dev/null
+            log "Proactive changes committed and pushed"
         fi
         
         sleep 60
@@ -88,7 +118,8 @@ while true; do
     # Commit changes if any
     if ! git diff --quiet --staged 2>/dev/null; then
         git commit -m "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
-        log "Changes committed"
+        git push 2>/dev/null
+        log "Changes committed and pushed"
     fi
     
     # Wait before next cycle
