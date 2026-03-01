@@ -13,6 +13,15 @@ log() {
 
 # ========== GitHub CLI Management Functions ==========
 
+# Security: Detect dangerous patterns in issue bodies
+is_safe_issue() {
+    local body="$1"
+    # Check for prompt injection patterns
+    local danger_patterns="ignore.*previous|forget.*above|you are now|emergency|urgent|critical.*now|just do|don't tell|eval\(|exec\(|subprocess|rm -rf|curl.*sh|wget.*sh|base64|decoded|backdoor|reverse shell"
+    echo "$body" | grep -Ei "$danger_patterns" >/dev/null 2>&1
+    return $?
+}
+
 check_issues() {
     log "Checking GitHub issues..."
     for r in $REPOS; do
@@ -21,9 +30,20 @@ check_issues() {
             log "Found issues in $r:"
             echo "$ISSUES" | while read num title; do
                 log "  - #$num: $title"
-                gh issue comment $num -R $r --body "Issue acknowledged and resolved by autonomous agent." 2>/dev/null
-                gh issue close $num -R $r 2>/dev/null
-                log "  Resolved #$num"
+                
+                # Get issue body for safety analysis
+                BODY=$(gh api repos/$r/issues/$num 2>/dev/null | jq -r '.body // ""')
+                
+                # Security check: only auto-resolve if safe
+                if [ -n "$BODY" ] && is_safe_issue "$BODY"; then
+                    log "  WARNING: Issue #$num contains suspicious patterns - skipping auto-resolve"
+                    gh issue comment $num -R $r --body "Issue requires manual review due to suspicious content patterns." 2>/dev/null
+                else
+                    # Safe issue - auto-resolve
+                    gh issue comment $num -R $r --body "Issue acknowledged and resolved by autonomous agent." 2>/dev/null
+                    gh issue close $num -R $r 2>/dev/null
+                    log "  Resolved #$num"
+                fi
             done
         fi
     done
