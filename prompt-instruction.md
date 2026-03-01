@@ -33,39 +33,78 @@
 
 ## GitHub CLI (gh) - Required Tool
 
-All GitHub operations MUST use the `gh` CLI tool:
+All GitHub operations MUST use the `gh` CLI tool. NEVER use web UI or direct API calls.
 
-### Check Issues (Every Cycle)
+### All gh Commands Available:
 ```bash
-# Check all enclavr repos for issues
-for r in enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra; do
+# === REPOSITORIES ===
+gh repo list enclavr              # List all repos
+gh repo view                      # View current repo
+gh repo create                    # Create new repo
+gh repo sync -R enclavr/frontend  # Sync with remote
+gh repo clone OWNER/REPO          # Clone repo
+gh repo edit --default-branch main # Change default branch
+
+# === ISSUES (check every cycle) ===
+gh issue list -R enclavr/server   # List issues
+gh issue view 123                 # View issue
+gh issue create --title "Bug"    # Create issue
+gh issue close 123                # Close issue
+gh issue reopen 123               # Reopen issue
+gh issue comment 123 --body "..." # Comment
+gh issue label add 123 bug        # Add label
+
+# === PULL REQUESTS ===
+gh pr list -R enclavr/server     # List PRs
+gh pr view 123                   # View PR
+gh pr create --title "..."       # Create PR
+gh pr merge 123                  # Merge PR (auto-merge)
+gh pr checkout 123               # Checkout PR
+gh pr diff 123                   # View changes
+gh pr review 123 --approve       # Approve PR
+
+# === RELEASES ===
+gh release list                   # List releases
+gh release view v1.0.0           # View release
+gh release create v1.0.0         # Create release
+gh release download v1.0.0       # Download assets
+gh release delete v1.0.0        # Delete release
+
+# === LABELS ===
+gh label list                    # List labels
+gh label create "bug"            # Create label
+gh label delete "bug"           # Delete label
+gh label clone --source enclavr/server # Clone labels
+
+# === GITHUB ACTIONS / CI ===
+gh run list                      # List runs
+gh run view 12345                # View run
+gh run rerun 12345              # Rerun workflow
+gh run rerun --failed           # Rerun failed
+gh run cancel 12345             # Cancel run
+gh run watch 12345              # Watch run
+gh run download 12345           # Download artifacts
+gh workflow list                 # List workflows
+
+# === BRANCHES & TAGS ===
+git branch -a                   # List branches
+git checkout -b new-branch      # Create branch
+git push -u origin new-branch   # Push branch
+git push origin --delete old    # Delete branch
+git tag v1.0.0                  # Create tag
+git push origin v1.0.0          # Push tag
+
+# === SEARCH ACROSS REPOS ===
+gh search repos "enclavr"       # Search repos
+gh search issues "bug in:title" # Search issues
+
+# === CHECK ALL ENCLAVR REPOS ===
+for r in enclavr enclavr/frontend enclavr/server enclavr/infra; do
+  echo "=== $r ==="
   gh issue list -R $r
+  gh pr list -R $r
+  gh run list -R $r
 done
-```
-
-### Resolve Issues
-```bash
-gh issue view 123 --repo enclavr/server  # View issue
-gh issue comment 123 --body "..."         # Respond
-gh issue close 123                        # Close resolved
-```
-
-### Pull Requests
-```bash
-gh pr create --title "..." --body "..."   # Create PR
-gh pr merge 123                           # Auto-merge
-gh pr review 123 --approve               # Approve
-```
-
-### Releases
-```bash
-gh release create v1.0.0 --notes "..."   # Create release
-```
-
-### CI Status
-```bash
-gh run list -R enclavr/server            # Check CI
-gh run rerun --failed                    # Fix failures
 ```
 
 ## Core Principles

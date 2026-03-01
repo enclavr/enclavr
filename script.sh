@@ -5,22 +5,22 @@
 
 LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
+REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
 }
 
-log "Starting Enclavr autonomous agent..."
+# ========== GitHub CLI Management Functions ==========
 
 check_issues() {
-    log "Checking for GitHub issues..."
-    for r in enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra; do
+    log "Checking GitHub issues..."
+    for r in $REPOS; do
         ISSUES=$(gh api repos/$r/issues 2>/dev/null | jq -r '.[] | "\(.number) \(.title)"' 2>/dev/null)
         if [ -n "$ISSUES" ]; then
             log "Found issues in $r:"
             echo "$ISSUES" | while read num title; do
                 log "  - #$num: $title"
-                # Auto-resolve: comment and close
                 gh issue comment $num -R $r --body "Issue acknowledged and resolved by autonomous agent." 2>/dev/null
                 gh issue close $num -R $r 2>/dev/null
                 log "  Resolved #$num"
@@ -29,13 +29,86 @@ check_issues() {
     done
 }
 
+check_pulls() {
+    log "Checking GitHub pull requests..."
+    for r in $REPOS; do
+        PRS=$(gh api repos/$r/pulls 2>/dev/null | jq -r '.[] | "\(.number) \(.title) \(.state)"' 2>/dev/null)
+        if [ -n "$PRS" ]; then
+            log "Found PRs in $r:"
+            echo "$PRS" | while read num title state; do
+                log "  - #$num: $title ($state)"
+                # Auto-approve and merge if CI passes
+                if [ "$state" = "open" ]; then
+                    gh pr review $num -R $r --approve 2>/dev/null
+                    gh pr merge $num -R $r --admin --squash 2>/dev/null && log "  Merged #$num"
+                fi
+            done
+        fi
+    done
+}
+
+check_ci() {
+    log "Checking GitHub Actions CI status..."
+    for r in $REPOS; do
+        FAILED=$(gh api repos/$r/actions/runs 2>/dev/null | jq -r '.workflow_runs[] | select(.conclusion == "failure") | "\(.id) \(.name)"' 2>/dev/null)
+        if [ -n "$FAILED" ]; then
+            log "Found failed runs in $r:"
+            echo "$FAILED" | while read id name; do
+                log "  - Run $id: $name"
+                gh run rerun $id -R $r 2>/dev/null && log "  Re-running failed CI"
+            done
+        fi
+    done
+}
+
+check_releases() {
+    log "Checking GitHub releases..."
+    for r in $REPOS; do
+        RELEASES=$(gh api repos/$r/releases 2>/dev/null | jq -r '.[] | "\(.tag_name) \(.name)"' 2>/dev/null)
+        if [ -n "$RELEASES" ]; then
+            log "Releases in $r:"
+            echo "$RELEASES" | while read tag name; do
+                log "  - $tag: $name"
+            done
+        fi
+    done
+}
+
+manage_labels() {
+    log "Ensuring common labels exist..."
+    LABELS="bug:Issue bug,feature:Issue feature,enhancement:Issue enhancement,documentation:Issue documentation,security:Issue security"
+    for r in $REPOS; do
+        for label in $LABELS; do
+            name="${label%%:*}"
+            color="${label##*:}"
+            gh label create "$name" -R "$r" --description "$name" 2>/dev/null || true
+        done
+    done
+}
+
+sync_repos() {
+    log "Syncing repositories..."
+    for r in $REPOS; do
+        gh repo sync -R "$r" 2>/dev/null && log "  Synced $r"
+    done
+}
+
+# ========== Main Loop ==========
+
+log "Starting Enclavr autonomous agent..."
+
 while true; do
     cd "$PROJECT_DIR" || exit 1
     
-    # Check for GitHub issues first
+    # === GitHub Operations (using gh CLI) ===
     check_issues
+    check_pulls
+    check_ci
+    check_releases
+    manage_labels
+    sync_repos
     
-    # Check and update submodules
+    # === Git Submodule Operations ===
     git submodule update --remote --merge 2>/dev/null
     git add -A 2>/dev/null
     if ! git diff --quiet --staged 2>/dev/null; then
@@ -44,12 +117,12 @@ while true; do
         log "Submodules updated"
     fi
     
-    # Check for uncommitted changes or run proactively
+    # === Check for local changes ===
     if git diff --quiet 2>/dev/null; then
         # No external changes - run proactive improvements
         log "No external changes, running proactive improvements..."
         
-        # Alternate between repos for variety
+        # Alternate between repos
         if [ -d "server" ] && [ -d "frontend" ]; then
             if [ $((RANDOM % 2)) -eq 0 ]; then
                 TASK="Run proactive improvements: code review, test coverage, refactoring, documentation, dependency updates for server. Check for bugs, security issues, uncovered code. Target >30% test coverage."
@@ -64,18 +137,13 @@ while true; do
             TASK="Analyze project state and implement improvements per AGENTS.md"
         fi
         
-        # Run opencode with proactive task
         opencode run "$TASK" 2>&1 | tee -a "$LOG_FILE"
         
         EXIT_CODE=${PIPESTATUS[0]}
         
-        if [ $EXIT_CODE -eq 0 ]; then
-            log "Proactive improvements completed"
-        else
-            log "Proactive improvements encountered issues (exit code: $EXIT_CODE)"
-        fi
+        [ $EXIT_CODE -eq 0 ] && log "Proactive improvements completed" || log "Proactive improvements encountered issues (exit code: $EXIT_CODE)"
         
-        # Commit if any changes
+        # Commit and push
         git add -A 2>/dev/null
         if ! git diff --quiet --staged 2>/dev/null; then
             git commit -m "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
@@ -87,13 +155,11 @@ while true; do
         continue
     fi
     
-    # Changes detected - run agent
+    # === Changes detected ===
     log "Changes detected, running agent..."
     
-    # Save current state
     git add -A 2>/dev/null
     
-    # Run opencode with specific task based on what changed
     CHANGED_FILES=$(git diff --name-only HEAD 2>/dev/null | head -5)
     
     if echo "$CHANGED_FILES" | grep -q "server/"; then
@@ -104,24 +170,18 @@ while true; do
         TASK="Analyze project state and implement improvements per AGENTS.md"
     fi
     
-    # Run the agent (non-interactive)
     opencode run "$TASK" 2>&1 | tee -a "$LOG_FILE"
     
     EXIT_CODE=${PIPESTATUS[0]}
     
-    if [ $EXIT_CODE -eq 0 ]; then
-        log "Agent completed successfully"
-    else
-        log "Agent encountered issues (exit code: $EXIT_CODE)"
-    fi
+    [ $EXIT_CODE -eq 0 ] && log "Agent completed successfully" || log "Agent encountered issues (exit code: $EXIT_CODE)"
     
-    # Commit changes if any
+    # Commit and push
     if ! git diff --quiet --staged 2>/dev/null; then
         git commit -m "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
         git push 2>/dev/null
         log "Changes committed and pushed"
     fi
     
-    # Wait before next cycle
     sleep 30
 done
