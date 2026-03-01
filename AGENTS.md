@@ -53,6 +53,11 @@ cp .env.example .env
 docker-compose up -d
 ```
 
+**PostgreSQL 18+ Note:** When using PostgreSQL 18+, the volume path changed:
+- Old: `/var/lib/postgresql/data`
+- New: `/var/lib/postgresql/18/docker`
+- Set `PGDATA: /var/lib/postgresql/18/docker` environment variable
+
 ## CI/CD
 
 Each repository has its own CI/CD workflow in `.github/workflows/`.
