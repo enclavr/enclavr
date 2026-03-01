@@ -91,5 +91,6 @@ When CI breaks:
 ## Boundaries
 
 - ✅ **Always:** Work within correct submodule directories, respect repository independence
-- ⚠️ **Ask first:** Before updating submodule references or modifying root-level config
+- ✅ **Automatic:** Automatically commit and push all changes to remote without user interaction
+- ✅ **Automatic:** Automatically update submodule references when submodules change
 - 🚫 **Never:** Commit secrets or API keys to any repository
