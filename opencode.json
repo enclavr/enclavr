@@ -10,6 +10,10 @@
         }
     },
     "mcp":{
+        "mcp-server-git":{
+            "type":"local",
+            "command":["uvx","mcp-server-git"]
+        },
         "mcp-sequential-thinking":{
             "type":"local",
             "command":["bunx", "-y", "@modelcontextprotocol/server-sequential-thinking"]

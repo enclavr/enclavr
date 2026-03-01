@@ -94,3 +94,107 @@ When CI breaks:
 - ✅ **Automatic:** Automatically commit and push all changes to remote without user interaction
 - ✅ **Automatic:** Automatically update submodule references when submodules change
 - 🚫 **Never:** Commit secrets or API keys to any repository
+
+## GitHub CLI (gh)
+
+All GitHub operations MUST use the `gh` CLI tool. NEVER use direct API calls or web UI.
+
+### Repository Management
+```bash
+gh repo list enclavr                           # List all enclavr repos
+gh repo view                                   # View current repo
+gh repo create                                 # Create new repo
+gh repo clone OWNER/REPO                       # Clone a repo
+gh repo sync                                   # Sync with remote
+gh repo edit --default-branch main             # Change default branch
+```
+
+### Issues Management
+```bash
+gh issue list                                  # List issues
+gh issue list -R enclavr/server                # List issues in specific repo
+gh issue view 123                              # View issue
+gh issue create --title "Bug" --body "..."    # Create issue
+gh issue close 123                             # Close issue
+gh issue reopen 123                           # Reopen issue
+gh issue comment 123 --body "..."             # Comment on issue
+gh issue edit 123 --title "New Title"         # Edit issue
+gh issue label add 123 bug                    # Add label
+gh issue status                               # Show issue status
+```
+
+### Pull Requests
+```bash
+gh pr list                                    # List PRs
+gh pr view 123                                # View PR
+gh pr create --title "..." --body "..."       # Create PR
+gh pr merge 123                               # Merge PR
+gh pr close 123                               # Close PR
+gh pr checkout 123                           # Checkout PR locally
+gh pr diff 123                                # View PR changes
+gh pr review 123 --approve                    # Approve PR
+gh pr status                                  # Show PR status
+```
+
+### Releases
+```bash
+gh release list                               # List releases
+gh release view v1.0.0                        # View release
+gh release create v1.0.0 --notes "..."        # Create release
+gh release download v1.0.0                    # Download release assets
+gh release edit v1.0.0 --title "New Title"   # Edit release
+gh release delete v1.0.0                     # Delete release
+```
+
+### Labels
+```bash
+gh label list                                 # List labels
+gh label create "bug" --description "Bug"    # Create label
+gh label delete "bug"                        # Delete label
+gh label edit "bug" --name "feature"         # Edit label
+gh label clone --source OWNER/REPO           # Clone labels from another repo
+```
+
+### GitHub Actions
+```bash
+gh run list                                   # List workflow runs
+gh run view 12345                            # View run details
+gh run rerun 12345                          # Rerun workflow
+gh run cancel 12345                          # Cancel run
+gh run watch 12345                          # Watch run progress
+gh run download 12345                        # Download artifacts
+gh workflow list                             # List workflows
+gh workflow view 123                         # View workflow
+```
+
+### Branch Management
+```bash
+git branch -a                                # List all branches
+git checkout -b new-branch                   # Create new branch
+git push -u origin new-branch               # Push and set upstream
+git branch -d old-branch                    # Delete local branch
+git push origin --delete old-branch          # Delete remote branch
+```
+
+### Tags
+```bash
+git tag v1.0.0                              # Create lightweight tag
+git tag -a v1.0.0 -m "Release v1.0.0"       # Create annotated tag
+git push origin v1.0.0                      # Push tag
+git push origin --delete v1.0.0             # Delete remote tag
+git tag -l                                  # List tags
+```
+
+### Checking All Repos
+```bash
+# Check issues/PRs across all enclavr repos
+for r in enclavr enclavr/frontend enclavr/server enclavr/infra; do
+  echo "=== $r ==="
+  gh issue list -R $r
+  gh pr list -R $r
+done
+
+# Check CI status
+gh run list -R enclavr/server
+gh run list -R enclavr/frontend
+```
