@@ -25,7 +25,10 @@ jobs:
         run: |
           git diff --quiet HEAD..origin/main -- frontend server infra && echo "updated=false" || echo "updated=true"
 
-      - name: Comment on PR if submodules updated
-        if: github.event_name == 'pull_request' && steps.submodule_status.outputs.updated == 'true'
+      - name: Auto-update submodules if changed
+        if: steps.submodule_status.outputs.updated == 'true'
         run: |
-          echo "::warning::Submodules have been updated. Please review and merge."
+          git submodule update --remote --merge
+          git add .
+          git commit -m "chore: update submodules to latest" || echo "No submodule changes"
+          git push
