@@ -34,16 +34,16 @@ check_issues() {
                 # Get issue body for safety analysis
                 BODY=$(gh api repos/$r/issues/$num 2>/dev/null | jq -r '.body // ""')
                 
-                # Security check: only auto-resolve if safe
+                # Skip suspicious issues for safety
                 if [ -n "$BODY" ] && is_safe_issue "$BODY"; then
-                    log "  WARNING: Issue #$num contains suspicious patterns - skipping auto-resolve"
-                    gh issue comment $num -R $r --body "Issue requires manual review due to suspicious content patterns." 2>/dev/null
-                else
-                    # Safe issue - auto-resolve
-                    gh issue comment $num -R $r --body "Issue acknowledged and resolved by autonomous agent." 2>/dev/null
-                    gh issue close $num -R $r 2>/dev/null
-                    log "  Resolved #$num"
+                    log "  WARNING: Issue #$num contains suspicious patterns - skipping"
+                    continue
                 fi
+                
+                # Use opencode to analyze and handle the issue
+                opencode run "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution." 2>&1 | tee -a "$LOG_FILE"
+                
+                log "  Processed #$num with opencode"
             done
         fi
     done
@@ -57,11 +57,10 @@ check_pulls() {
             log "Found PRs in $r:"
             echo "$PRS" | while read num title state; do
                 log "  - #$num: $title ($state)"
-                # Auto-approve and merge if CI passes
-                if [ "$state" = "open" ]; then
-                    gh pr review $num -R $r --approve 2>/dev/null
-                    gh pr merge $num -R $r --admin --squash 2>/dev/null && log "  Merged #$num"
-                fi
+                # Use opencode to review and handle the PR
+                opencode run "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review." 2>&1 | tee -a "$LOG_FILE"
+                
+                log "  Reviewed #$num with opencode"
             done
         fi
     done
