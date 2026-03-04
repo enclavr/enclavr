@@ -17,6 +17,108 @@ This monorepo uses git submodules. Each component is an independent repository:
 | [enclavr/server](https://github.com/enclavr/server) | Go backend with PostgreSQL, WebSocket | API, DB, Auth |
 | [enclavr/infra](https://github.com/enclavr/infra) | Docker Compose deployment | DevOps |
 
+## Memory Bank
+
+Each repository (root and submodules) maintains a `memory-bank/` directory for agent context. This is **local-only** and should be gitignored - it contains session-specific state.
+
+### Required Files
+Each memory-bank must have exactly 6 files:
+
+| File | Purpose |
+|------|---------|
+| `activeContext.md` | Current work focus, latest changes, current state |
+| `progress.md` | What works, what's left to build, completed features |
+| `productContext.md` | Product purpose, features, user stories |
+| `projectbrief.md` | Project goals, requirements, constraints |
+| `systemPatterns.md` | Code patterns, architectural decisions, conventions |
+| `techContext.md` | Technologies used, CLI commands, setup |
+
+### Format
+
+#### activeContext.md
+```markdown
+# Active Context - [Component Name]
+
+## Current Work Focus
+Brief description of current task.
+
+## Latest Changes (YYYY-MM-DD)
+- Description of latest improvement
+- All lint passes
+- All tests pass
+
+## Previous Changes (YYYY-MM-DD)
+- Previous improvement
+```
+
+#### progress.md
+```markdown
+# Progress - [Component Name]
+
+## What Works
+- Feature A
+- Feature B
+
+## What's Left to Build
+- [ ] Feature C (Priority 1)
+- [ ] Feature D (Priority 2)
+```
+
+#### productContext.md
+```markdown
+# Product Context - [Component Name]
+
+## Purpose
+What this component does.
+
+## Key Features
+- Feature 1
+- Feature 2
+```
+
+#### projectbrief.md
+```markdown
+# Project Brief - [Component Name]
+
+## Goal
+What this component aims to achieve.
+
+## Requirements
+- Requirement 1
+- Requirement 2
+```
+
+#### systemPatterns.md
+```markdown
+# System Patterns - [Component Name]
+
+## Patterns Used
+- Pattern 1
+- Pattern 2
+
+## Conventions
+- Convention 1
+```
+
+#### techContext.md
+```markdown
+# Tech Context - [Component Name]
+
+## Technologies Used
+- **Tech**: Version - Description
+
+## CLI Commands
+\`\`\`bash
+command1
+command2
+\`\`\`
+```
+
+### Updates
+- Update `activeContext.md` **at the start** of every work session
+- Update `progress.md` when features are completed
+- Update `techContext.md` when dependencies change
+
 ## Commands
 
 ### Working with Submodules
