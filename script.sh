@@ -74,7 +74,11 @@ check_ci() {
             log "Found failed runs in $r:"
             echo "$FAILED" | while read id name; do
                 log "  - Run $id: $name"
-                gh run rerun $id -R $r 2>/dev/null && log "  Re-running failed CI"
+                
+                # Use opencode to analyze and fix the CI failure
+                opencode run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed." 2>&1 | tee -a "$LOG_FILE"
+                
+                log "  Analyzed and fixed CI failure with opencode"
             done
         fi
     done
@@ -88,6 +92,9 @@ check_releases() {
             log "Releases in $r:"
             echo "$RELEASES" | while read tag name; do
                 log "  - $tag: $name"
+                
+                # Use opencode to analyze and potentially create release notes
+                opencode run --continue "Analyze release '$tag' in $r: '$name'. Review the release, check for any issues, and update documentation if needed." 2>&1 | tee -a "$LOG_FILE"
             done
         fi
     done
@@ -189,7 +196,7 @@ while true; do
         TASK="Analyze project state and implement improvements per AGENTS.md"
     fi
     
-    opencode run "$TASK" 2>&1 | tee -a "$LOG_FILE"
+    opencode run --continue "$TASK" 2>&1 | tee -a "$LOG_FILE"
     
     EXIT_CODE=${PIPESTATUS[0]}
     
