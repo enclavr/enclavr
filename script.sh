@@ -156,7 +156,7 @@ while true; do
             TASK="Analyze project state and implement improvements per AGENTS.md"
         fi
         
-        opencode run "$TASK" 2>&1 | tee -a "$LOG_FILE"
+        opencode run --continue "$TASK" 2>&1 | tee -a "$LOG_FILE"
         
         EXIT_CODE=${PIPESTATUS[0]}
         
