@@ -40,8 +40,8 @@ check_issues() {
                     continue
                 fi
                 
-                # Use opencode to analyze and handle the issue
-                opencode run "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution." 2>&1 | tee -a "$LOG_FILE"
+                # Use opencode to analyze and handle the issue (non-interactive)
+                opencode run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution." 2>&1 | tee -a "$LOG_FILE"
                 
                 log "  Processed #$num with opencode"
             done
@@ -57,8 +57,8 @@ check_pulls() {
             log "Found PRs in $r:"
             echo "$PRS" | while read num title state; do
                 log "  - #$num: $title ($state)"
-                # Use opencode to review and handle the PR
-                opencode run "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review." 2>&1 | tee -a "$LOG_FILE"
+                # Use opencode to review and handle the PR (non-interactive)
+                opencode run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review." 2>&1 | tee -a "$LOG_FILE"
                 
                 log "  Reviewed #$num with opencode"
             done
