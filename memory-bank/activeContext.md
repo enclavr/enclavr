@@ -5,6 +5,14 @@ Reviewing and updating AGENTS.md files across all submodules with current tech s
 
 ## Latest Improvement (Mar 4, 2026)
 
+### AGENTS.md Submodule Documentation
+- Added submodule creation instructions to root AGENTS.md:
+  - `git submodule add` to create new submodule
+  - Commit and push the submodule reference
+  - `git submodule deinit -f` + `git rm` + cleanup to remove
+
+## Previous Work (Mar 4, 2026)
+
 ### script.sh Autonomous Agent Fix
 - Fixed `check_issues()` to use `opencode run` to analyze and implement fixes instead of auto-closing
 - Fixed `check_pulls()` to use `opencode run` to review and approve (NOT merge) instead of auto-merging

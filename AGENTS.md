@@ -131,6 +131,21 @@ git submodule update --remote
 
 # Pull specific submodule
 cd frontend && git pull origin main
+
+# Create a new submodule (when adding a new component)
+# 1. Add the new repository as a submodule
+git submodule add https://github.com/enclavr/new-component.git path/to/new-component
+
+# 2. Commit the submodule change
+git commit -m "feat: add new-component as submodule"
+
+# 3. Push to remote
+git push origin main
+
+# Remove a submodule (if needed)
+git submodule deinit -f path/to/submodule
+git rm path/to/submodule
+rm -rf .git/modules/path/to/submodule
 ```
 
 ### Frontend
