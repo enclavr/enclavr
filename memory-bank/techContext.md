@@ -3,26 +3,33 @@
 ## Technologies Used
 
 ### Backend
-- **Language**: Go 1.25.7
-- **Web Framework**: Gin
-- **Database**: PostgreSQL
+- **Language**: Go 1.25 (August 2025)
+- **Web Framework**: Go net/http with gorilla/mux
+- **Database**: PostgreSQL 18 (September 2025)
 - **ORM**: GORM
-- **Authentication**: JWT + OIDC (optional)
-- **Real-time**: WebSocket (gorilla/websocket)
+- **Migrations**: golang-migrate
+- **Authentication**: JWT + bcrypt + OIDC
+- **Real-time**: WebSocket (gorilla/websocket) with Redis pub/sub
 - **Testing**: Go built-in testing with SQLite in-memory
 
 ### Frontend
-- **Framework**: Next.js 16.1.6 (with Turbopack)
+- **Framework**: Next.js 16.1.6 (App Router, Turbopack default)
 - **Package Manager**: bun (strict - never npm/yarn/pnpm)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS v4
-- **State Management**: Zustand 5.x
-- **React**: React 19
+- **Language**: TypeScript 5.9.x (strict mode)
+- **Styling**: Tailwind CSS 4.x
+- **State Management**: Zustand 5.0.11
+- **React**: 19.2.x (with CVE-2025-55182 security patches)
 - **Testing**: Vitest (unit) + Playwright (E2E)
 
+### Infrastructure
+- **Container Runtime**: Docker
+- **Orchestration**: Docker Compose v2
+- **Database**: PostgreSQL 18 (Alpine) with PGDATA=/var/lib/postgresql/18/docker
+- **Cache/PubSub**: Redis 8 (Alpine)
+- **Voice**: Coturn (TURN server for WebRTC)
+- **CI/CD**: GitHub Actions
+
 ### DevOps
-- **Containerization**: Docker
-- **Orchestration**: Docker Compose
 - **Linting**: golangci-lint (Go), ESLint v9 (JS)
 - **Testing**: Go testing, Vitest, Playwright
 

@@ -1,9 +1,53 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Verifying project state and documenting improvements.
+Reviewing and updating AGENTS.md files across all submodules with current tech stack information, fixing script.sh autonomous agent behavior.
 
-## Latest Improvement (Feb 28, 2026)
+## Latest Improvement (Mar 4, 2026)
+
+### script.sh Autonomous Agent Fix
+- Fixed `check_issues()` to use `opencode run` to analyze and implement fixes instead of auto-closing
+- Fixed `check_pulls()` to use `opencode run` to review and approve (NOT merge) instead of auto-merging
+- Added safety check to skip suspicious issues (prompt injection patterns)
+- Added `--continue` flag to all `opencode run` calls to maintain session state
+- This prevents dangerous auto-close/auto-merge behavior
+
+## Latest Improvement (Mar 4, 2026)
+
+### server/AGENTS.md Update
+- Updated tech stack: Go 1.25 (August 2025), PostgreSQL 18 (September 2025)
+- Added golang-migrate for database migrations
+- Added Database Migrations section with commands and best practices
+- Added Rollback Strategies section with:
+  - Migration rollbacks (up/down/force)
+  - Emergency rollback (data preservation)
+  - Database backup rollback
+  - Application-level rollback (feature flags)
+  - CI/CD integration
+  - Decision tree for rollbacks
+
+## Latest Improvement (Mar 4, 2026)
+
+### frontend/AGENTS.md Update
+- Updated tech stack: Next.js 16.1.6 (Turbopack default), React 19.2.x, TypeScript 5.9.x
+- Added security note for CVE-2025-55182 (React RCE vulnerability - update to 19.2.3+)
+- Added Next.js 16 Features section:
+  - Cache Components ("use cache" directive)
+  - Activity component (visibility management)
+  - useEffectEvent (stable event handlers)
+  - React Compiler (stable - auto memoization)
+  - Turbopack improvements (5-10x faster Fast Refresh)
+  - Breaking changes (async params, image defaults, middleware → proxy.ts)
+- Added TypeScript 5.9 Features (import defer, minimal tsconfig)
+
+## Latest Improvement (Mar 4, 2026)
+
+### infra/AGENTS.md Update
+- Updated tech stack: Docker Compose v2, PostgreSQL 18 (Alpine), Redis 8 (Alpine)
+- Added PostgreSQL 18 PGDATA note (/var/lib/postgresql/18/docker)
+- Added Redis 8 Features (2x throughput, 87% faster commands, all Stack modules included)
+
+## Previous Work (Feb 28, 2026)
 
 ### Server Metrics Test Suite
 - Added comprehensive test file `internal/metrics/metrics_test.go`
