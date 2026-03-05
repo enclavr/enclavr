@@ -1,7 +1,20 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Reviewing and updating AGENTS.md files across all submodules with current tech stack information, fixing script.sh autonomous agent behavior.
+GitHub Actions CI optimization to reduce free tier minute usage. Completed: weekly scheduling, concurrency control, path filters, parallel jobs.
+
+## Latest Improvement (Mar 5, 2026)
+
+### GitHub Actions CI Optimization
+- Added weekly schedule (Sunday midnight UTC) to all 4 workflows
+- Added concurrency control to cancel redundant in-progress runs
+- Added path filtering to skip on non-critical file changes
+- Added workflow_dispatch for manual triggers (urgent bug/security fixes)
+- Split frontend into parallel jobs: lint-typecheck, test (not sequential)
+- Added Go cache to server CI (built-in setup-go cache)
+- All PRs still trigger full CI (for code review)
+
+**Estimated savings**: ~85-90% reduction in CI runs
 
 ## Latest Improvement (Mar 4, 2026)
 

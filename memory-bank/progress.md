@@ -59,6 +59,16 @@
 - All lint passes ✅
 - Pushed to remote
 
+## Latest Improvement (Mar 5, 2026)
+- GitHub Actions CI optimization:
+  - Weekly schedule (Sunday midnight UTC) on all 4 repos
+  - Concurrency control to cancel redundant runs
+  - Path filtering to skip non-critical changes
+  - workflow_dispatch for manual/urgent runs
+  - Parallel jobs in frontend CI
+  - Go cache in server CI
+- Estimated ~85-90% reduction in free tier usage
+
 ### Frontend Modular Architecture Refactor (Feb 28, 2026)
 - Split API client into modular sub-modules: base, auth, room, chat, dm, presence, admin
 - Split WebRTC utilities into modular sub-modules: types, ice, peer

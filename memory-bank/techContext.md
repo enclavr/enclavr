@@ -33,6 +33,13 @@
 - **Linting**: golangci-lint (Go), ESLint v9 (JS)
 - **Testing**: Go testing, Vitest, Playwright
 
+### CI/CD Optimization (Mar 2026)
+- **Schedule**: Weekly (Sunday midnight UTC) - manual trigger available
+- **Concurrency**: Cancels in-progress runs on new commits
+- **Path filtering**: Only runs on critical file changes
+- **Jobs**: Parallel execution where possible
+- **Result**: ~85-90% reduction in free tier minutes
+
 ## Development Setup
 
 ### Frontend
