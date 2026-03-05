@@ -11,6 +11,25 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
 }
 
+OPENCODE_PATH=""
+find_opencode() {
+    OPENCODE_PATH=$(which opencode 2>/dev/null)
+    if [ -z "$OPENCODE_PATH" ]; then
+        log "WARNING: opencode not found in PATH"
+        return 1
+    fi
+    log "Found opencode at: $OPENCODE_PATH"
+    return 0
+}
+
+run_opencode() {
+    if [ -z "$OPENCODE_PATH" ]; then
+        find_opencode || return 1
+    fi
+    "$OPENCODE_PATH" "$@" 2>&1 | tee -a "$LOG_FILE"
+    return ${PIPESTATUS[0]}
+}
+
 # ========== Memory Bank Functions ==========
 
 read_memory_bank() {
@@ -132,18 +151,22 @@ check_pulls() {
 
 check_ci() {
     log "Checking GitHub Actions CI status..."
+    
+    SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ')
+    
     for r in $REPOS; do
-        FAILED=$(gh api repos/$r/actions/runs 2>/dev/null | jq -r '.workflow_runs[] | select(.conclusion == "failure") | "\(.id) \(.name)"' 2>/dev/null)
+        FAILED=$(gh api repos/$r/actions/runs 2>/dev/null | jq --arg since "$SINCE" -r '.workflow_runs[] | select(.conclusion == "failure") | select(.created_at > $since) | "\(.id) \(.name) \(.created_at)"' 2>/dev/null)
         if [ -n "$FAILED" ]; then
-            log "Found failed runs in $r:"
-            echo "$FAILED" | while read id name; do
-                log "  - Run $id: $name"
+            log "Found failed runs in $r (last 24h):"
+            echo "$FAILED" | while read id name created; do
+                log "  - Run $id: $name ($created)"
                 
-                # Use opencode to analyze and fix the CI failure
-                opencode run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed." 2>&1 | tee -a "$LOG_FILE"
+                run_opencode run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
                 
                 log "  Analyzed and fixed CI failure with opencode"
             done
+        else
+            log "No recent failed runs in $r"
         fi
     done
 }
