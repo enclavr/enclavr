@@ -16,6 +16,12 @@ GitHub Actions CI optimization to reduce free tier minute usage. Completed: week
 
 **Estimated savings**: ~85-90% reduction in CI runs
 
+### script.sh Memory Bank Integration
+- Added `read_memory_bank()` function - reads all memory banks at start of each loop
+- Added `update_memory_bank()` function - updates relevant repo's memory bank after changes
+- Both proactive improvements and external change handlers now update memory banks
+- Memory banks stay current without manual intervention
+
 ## Latest Improvement (Mar 4, 2026)
 
 ### AGENTS.md Submodule Documentation
