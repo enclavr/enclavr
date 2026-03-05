@@ -12,7 +12,17 @@ log() {
 }
 
 OPENCODE_PATH=""
+OPENCODE_SEARCH_PATHS="/home/dev/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
+
 find_opencode() {
+    for dir in $(echo "$OPENCODE_SEARCH_PATHS" | tr ':' ' '); do
+        if [ -x "$dir/opencode" ]; then
+            OPENCODE_PATH="$dir/opencode"
+            log "Found opencode at: $OPENCODE_PATH"
+            return 0
+        fi
+    done
+    
     OPENCODE_PATH=$(which opencode 2>/dev/null)
     if [ -z "$OPENCODE_PATH" ]; then
         log "WARNING: opencode not found in PATH"
