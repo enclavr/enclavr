@@ -124,7 +124,7 @@ check_issues() {
                 fi
                 
                 # Use opencode to analyze and handle the issue (non-interactive)
-                opencode run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution." 2>&1 | tee -a "$LOG_FILE"
+                run_opencode run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
                 
                 log "  Processed #$num with opencode"
             done
@@ -141,7 +141,7 @@ check_pulls() {
             echo "$PRS" | while read num title state; do
                 log "  - #$num: $title ($state)"
                 # Use opencode to review and handle the PR (non-interactive)
-                opencode run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review." 2>&1 | tee -a "$LOG_FILE"
+                run_opencode run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review."
                 
                 log "  Reviewed #$num with opencode"
             done
@@ -181,7 +181,7 @@ check_releases() {
                 log "  - $tag: $name"
                 
                 # Use opencode to analyze and potentially create release notes
-                opencode run --continue "Analyze release '$tag' in $r: '$name'. Review the release, check for any issues, and update documentation if needed." 2>&1 | tee -a "$LOG_FILE"
+                run_opencode run --continue "Analyze release '$tag' in $r: '$name'. Review the release, check for any issues, and update documentation if needed."
             done
         fi
     done
@@ -253,7 +253,7 @@ while true; do
             TASK="Analyze project state and implement improvements per AGENTS.md"
         fi
         
-        opencode run --continue "$TASK" 2>&1 | tee -a "$LOG_FILE"
+        run_opencode run --continue "$TASK"
         
         EXIT_CODE=${PIPESTATUS[0]}
         
