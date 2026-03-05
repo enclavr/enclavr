@@ -11,6 +11,70 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
 }
 
+# ========== Memory Bank Functions ==========
+
+read_memory_bank() {
+    log "Reading memory banks for context..."
+    
+    # Read root memory bank
+    if [ -f "$PROJECT_DIR/memory-bank/activeContext.md" ]; then
+        ROOT_CONTEXT=$(cat "$PROJECT_DIR/memory-bank/activeContext.md")
+        log "  Root active context loaded"
+    fi
+    
+    # Read submodules memory banks
+    for submodule in frontend server infra; do
+        if [ -d "$PROJECT_DIR/$submodule/memory-bank" ]; then
+            if [ -f "$PROJECT_DIR/$submodule/memory-bank/activeContext.md" ]; then
+                log "  $submodule active context loaded"
+            fi
+        fi
+    done
+    
+    log "Memory banks read complete"
+}
+
+update_memory_bank() {
+    local repo="$1"
+    local change_summary="$2"
+    
+    log "Updating memory bank for $repo..."
+    
+    local mem_bank_path=""
+    case "$repo" in
+        frontend) mem_bank_path="$PROJECT_DIR/frontend/memory-bank" ;;
+        server)   mem_bank_path="$PROJECT_DIR/server/memory-bank" ;;
+        infra)    mem_bank_path="$PROJECT_DIR/infra/memory-bank" ;;
+        *)        mem_bank_path="$PROJECT_DIR/memory-bank" ;;
+    esac
+    
+    if [ -f "$mem_bank_path/activeContext.md" ]; then
+        local timestamp=$(date '+%b %d, %Y')
+        
+        # Read current file, prepend new entry
+        local current_content=$(cat "$mem_bank_path/activeContext.md")
+        
+        # Find the "Current Work Focus" section and update it
+        if echo "$current_content" | grep -q "## Current Work Focus"; then
+            # Replace current work focus with new one
+            local new_focus="## Current Work Focus
+$change_summary
+
+## Latest Update ($timestamp)
+
+### Changes Made
+- $change_summary"
+            
+            # Rebuild file with new content at top
+            echo "$new_focus" > "$mem_bank_path/activeContext.md"
+            echo "" >> "$mem_bank_path/activeContext.md"
+            echo "$current_content" >> "$mem_bank_path/activeContext.md"
+            
+            log "  Updated $repo memory bank"
+        fi
+    fi
+}
+
 # ========== GitHub CLI Management Functions ==========
 
 # Security: Detect dangerous patterns in issue bodies
@@ -126,6 +190,9 @@ log "Starting Enclavr autonomous agent..."
 while true; do
     cd "$PROJECT_DIR" || exit 1
     
+    # === Read Memory Banks for Context ===
+    read_memory_bank
+    
     # === GitHub Operations (using gh CLI) ===
     check_issues
     check_pulls
@@ -175,6 +242,18 @@ while true; do
             git commit -m "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
             git push 2>/dev/null
             log "Proactive changes committed and pushed"
+            
+            # Update memory banks after changes
+            if [ -d "server" ]; then
+                update_memory_bank "server" "Proactive improvements completed"
+            fi
+            if [ -d "frontend" ]; then
+                update_memory_bank "frontend" "Proactive improvements completed"
+            fi
+            if [ -d "infra" ]; then
+                update_memory_bank "infra" "Proactive improvements completed"
+            fi
+            update_memory_bank "root" "Proactive improvements completed"
         fi
         
         sleep 60
@@ -189,10 +268,13 @@ while true; do
     CHANGED_FILES=$(git diff --name-only HEAD 2>/dev/null | head -5)
     
     if echo "$CHANGED_FILES" | grep -q "server/"; then
+        TARGET_REPO="server"
         TASK="Analyze server changes and run tests, lint, then implement improvements"
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
+        TARGET_REPO="frontend"
         TASK="Analyze frontend changes and run tests, lint, then implement improvements"
     else
+        TARGET_REPO="root"
         TASK="Analyze project state and implement improvements per AGENTS.md"
     fi
     
@@ -207,6 +289,9 @@ while true; do
         git commit -m "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
         git push 2>/dev/null
         log "Changes committed and pushed"
+        
+        # Update memory banks after changes
+        update_memory_bank "$TARGET_REPO" "Changes processed and improvements implemented"
     fi
     
     sleep 30
