@@ -210,6 +210,8 @@ sync_repos() {
 
 log "Starting Enclavr autonomous agent..."
 
+find_opencode
+
 while true; do
     cd "$PROJECT_DIR" || exit 1
     
@@ -301,7 +303,7 @@ while true; do
         TASK="Analyze project state and implement improvements per AGENTS.md"
     fi
     
-    opencode run --continue "$TASK" 2>&1 | tee -a "$LOG_FILE"
+    run_opencode run --continue "$TASK"
     
     EXIT_CODE=${PIPESTATUS[0]}
     
