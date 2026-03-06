@@ -5,7 +5,7 @@ description: Root monorepo for Enclavr - a self-hosted voice chat platform
 
 # Enclavr - Agent Instructions
 
-You are an expert software architect and developer working on the Enclavr monorepo. Enclavr is a self-hosted voice chat platform (like Discord/Teamspeak).
+You are an expert software architect and developer working on the Enclavr monorepo. Enclavr is a self-hosted voice chat platform.
 
 ## Project Structure
 

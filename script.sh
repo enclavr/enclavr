@@ -5,7 +5,7 @@
 
 LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
-REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra"
+REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra enclavr/docs"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE"
@@ -52,7 +52,7 @@ read_memory_bank() {
     fi
     
     # Read submodules memory banks
-    for submodule in frontend server infra; do
+    for submodule in frontend server infra docs; do
         if [ -d "$PROJECT_DIR/$submodule/memory-bank" ]; then
             if [ -f "$PROJECT_DIR/$submodule/memory-bank/activeContext.md" ]; then
                 log "  $submodule active context loaded"
@@ -74,6 +74,7 @@ update_memory_bank() {
         frontend) mem_bank_path="$PROJECT_DIR/frontend/memory-bank" ;;
         server)   mem_bank_path="$PROJECT_DIR/server/memory-bank" ;;
         infra)    mem_bank_path="$PROJECT_DIR/infra/memory-bank" ;;
+        docs)     mem_bank_path="$PROJECT_DIR/../docs/memory-bank" ;;
         *)        mem_bank_path="$PROJECT_DIR/memory-bank" ;;
     esac
     
@@ -252,15 +253,18 @@ while true; do
         
         # Alternate between repos
         if [ -d "server" ] && [ -d "frontend" ]; then
-            if [ $((RANDOM % 2)) -eq 0 ]; then
-                TASK="Run proactive improvements: code review, test coverage, refactoring, documentation, dependency updates for server. Check for bugs, security issues, uncovered code. Target >30% test coverage."
-            else
-                TASK="Run proactive improvements: code review, TypeScript fixes, test coverage, refactoring, documentation for frontend. Eliminate any types, add tests for edge cases."
-            fi
+            case $((RANDOM % 4)) in
+                0) TASK="Run proactive improvements: code review, test coverage, refactoring, documentation, dependency updates for server. Check for bugs, security issues, uncovered code. Target >30% test coverage." ;;
+                1) TASK="Run proactive improvements: code review, TypeScript fixes, test coverage, refactoring, documentation for frontend. Eliminate any types, add tests for edge cases." ;;
+                2) TASK="Run proactive improvements: review documentation, check for broken links, verify accuracy against codebase, update if needed." ;;
+                3) TASK="Run proactive improvements: review infra configuration, check Docker setup, environment variables, deployment docs." ;;
+            esac
         elif [ -d "server" ]; then
             TASK="Run proactive improvements for server: code review, test coverage, refactoring, documentation"
         elif [ -d "frontend" ]; then
-            TASK="Run proactive improvements for frontend: code review, TypeScript fixes, test coverage"
+            TASK="Run proactive improvements for frontend: code review, TypeScript fixes, test coverage, documentation"
+        elif [ -d "../docs" ]; then
+            TASK="Run proactive improvements for documentation: review docs, check for broken links, verify accuracy"
         else
             TASK="Analyze project state and implement improvements per AGENTS.md"
         fi
@@ -288,6 +292,9 @@ while true; do
             if [ -d "infra" ]; then
                 update_memory_bank "infra" "Proactive improvements completed"
             fi
+            if [ -d "../docs" ]; then
+                update_memory_bank "docs" "Proactive improvements completed"
+            fi
             update_memory_bank "root" "Proactive improvements completed"
         fi
         
@@ -308,6 +315,12 @@ while true; do
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
         TARGET_REPO="frontend"
         TASK="Analyze frontend changes and run tests, lint, then implement improvements"
+    elif echo "$CHANGED_FILES" | grep -q "docs/"; then
+        TARGET_REPO="docs"
+        TASK="Analyze documentation changes, verify accuracy, run build test"
+    elif echo "$CHANGED_FILES" | grep -q "infra/"; then
+        TARGET_REPO="infra"
+        TASK="Analyze infra changes, verify Docker configuration"
     else
         TARGET_REPO="root"
         TASK="Analyze project state and implement improvements per AGENTS.md"

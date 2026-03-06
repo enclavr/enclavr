@@ -1,7 +1,7 @@
 # Project Brief - Enclavr
 
 ## Project Overview
-Enclavr is a self-hosted open source voice chat platform, similar to Discord or Teamspeak, written in Go with a Next.js default frontend.
+Enclavr is a self-hosted open source voice chat platform written in Go with a Next.js default frontend.
 
 ## Core Requirements
 1. **Backend**: Go-based API server

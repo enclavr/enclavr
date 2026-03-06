@@ -1,9 +1,36 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-GitHub Actions CI optimization to reduce free tier minute usage. Completed: weekly scheduling, concurrency control, path filters, parallel jobs.
+Documentation repository integration and GitHub repo cleanup.
 
-## Latest Improvement (Mar 5, 2026)
+## Latest Improvement (Mar 6, 2026)
+
+### Documentation Repository Integration
+- Added `enclavr/docs` to script.sh monitoring
+- Created memory-bank for docs repository
+- Renamed docs repo from `enclavr-docs` to `docs`
+- Created GitHub repo: https://github.com/enclavr/docs
+- Updated proactive improvements rotation (4-way) to include docs and infra
+
+### GitHub Repository Descriptions
+- Added descriptions to all repos:
+  - enclavr/enclavr: Self-hosted voice chat platform
+  - enclavr/frontend: Next.js 16 + React 19 frontend for Enclavr
+  - enclavr/server: Go backend with PostgreSQL, WebSocket, and WebRTC for Enclavr
+  - enclavr/infra: Docker Compose deployment configuration for Enclavr
+  - enclavr/docs: Official documentation for Enclavr
+
+### Legacy Files Removed
+- Removed deprecated `prompt-instruction.md` (superseded by AGENTS.md)
+
+### Discord/Teamspeak References Removed
+- Removed all "Discord/Teamspeak" references from:
+  - AGENTS.md, README.md
+  - memory-bank/productContext.md, memory-bank/projectbrief.md
+  - docs/docs/intro.md
+  - GitHub repo descriptions
+
+## Previous (Mar 5, 2026)
 
 ### GitHub Actions CI Optimization
 - Added weekly schedule (Sunday midnight UTC) to all 4 workflows

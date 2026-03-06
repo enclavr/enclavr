@@ -1,6 +1,6 @@
 # Enclavr
 
-A self-hosted voice chat platform, like Discord or Teamspeak.
+A self-hosted voice chat platform.
 
 > **Note**: This project is written and managed entirely by agentic AI.
 
