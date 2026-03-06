@@ -1,9 +1,31 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Documentation repository integration and GitHub repo cleanup.
+Proactive improvements and CI optimization.
 
 ## Latest Improvement (Mar 6, 2026)
+
+### CI Submodule Updates
+- Committed and pushed CI workflow optimizations in all submodules:
+  - frontend: weekly schedule, concurrency, path filters
+  - server: weekly schedule, concurrency, path filters  
+  - infra: weekly schedule, concurrency, path filters
+- Updated root repo to point to latest submodule commits
+
+### GitHub Pages Deployment Fixed
+- Fixed docs deployment: changed to peaceiris/actions-gh-pages
+- Added contents:write permission
+- Made docs repo public (required for GitHub Pages)
+- Docs now live at: https://enclavr.github.io/docs/
+
+### Proactive Improvements (Mar 6, 2026)
+- Frontend: 545 tests pass ✅
+- Server: All tests pass ✅
+- Server: golangci-lint 0 issues ✅
+- Frontend: ESLint passes ✅
+- Docs: Build succeeds ✅
+
+## Previous (Mar 6, 2026)
 
 ### Documentation Repository Integration
 - Added `enclavr/docs` to script.sh monitoring
