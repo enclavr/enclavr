@@ -15,12 +15,12 @@
             "command":["uvx","mcp-server-git"]
         },
         "mcp-sequential-thinking":{
-            "type":"local",
-            "command":["bunx", "-y", "@modelcontextprotocol/server-sequential-thinking"]
+            "type":"remote",
+            "url":"https://remote.mcpservers.org/sequentialthinking/mcp"
         },
         "mcp-fetch":{
-            "type":"local",
-            "command":["uvx", "mcp-server-fetch"]
+            "type":"remote",
+            "url":"https://remote.mcpservers.org/fetch/mcp"
         },
         "context7":{
             "type":"remote",
