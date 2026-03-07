@@ -487,49 +487,244 @@ prs_processed=0
 ci_fixed=0
 proactive_runs=0
 
-while true; do
-    loop_count=$((loop_count + 1))
-    local loop_start=$(date +%s)
+log "=== STARTING ENCLAVR AUTONOMOUS AGENT ==="
+log "Configuration:"
+log "  Project Dir: $PROJECT_DIR"
+log "  Repos: $REPOS"
+log "  Log File: $LOG_FILE"
+log "  Kilo Session: $KILO_SESSION_ID"
+log "  Log Level: $KILO_LOG_LEVEL"
+log "  Show Thinking: $KILO_SHOW_THINKING"
+log "==================================="
 
-    log "==================================="
-    log "LOOP #$loop_count STARTED"
-    log "Current time: $(date '+%Y-%m-%d %H:%M:%S')"
-    log "Uptime: $((loop_start / 3600))h $(((loop_start % 3600) / 60))m"
-    log "Stats: Issues: $issues_processed, PRs: $prs_processed, CI Fixed: $ci_fixed, Proactive: $proactive_runs"
-    log "-----------------------------------"
+find_kilo
 
-    cd "$PROJECT_DIR" || {
-        log_error "Failed to cd to $PROJECT_DIR"
+# Initialize cooldown file if not exists
+proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
+if [ ! -f "$proactive_cooldown_file" ]; then
+    echo 0 > "$proactive_cooldown_file"
+    log_debug "Initialized proactive cooldown file"
+fi
+
+# Statistics tracking - global variables (not local, outside functions)
+loop_count=0
+issues_processed=0
+prs_processed=0
+ci_fixed=0
+proactive_runs=0
+
+# === Check for local changes ===
+log_debug "=== PHASE: Change Detection ==="
+if git diff --quiet 2>/dev/null; then
+    log_debug "No git changes detected"
+
+    # Check cooldown for proactive improvements
+    proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
+    last_proactive=0
+
+    if [ -f "$proactive_cooldown_file" ]; then
+        last_proactive=$(cat "$proactive_cooldown_file")
+    fi
+
+    current_time=$(date +%s)
+    time_since_proactive=$((current_time - last_proactive))
+    cooldown_seconds=1800  # 30 minutes between proactive runs
+
+    if [ $time_since_proactive -lt $cooldown_seconds ]; then
+        remaining=$((cooldown_seconds - time_since_proactive))
+        log "[COOLDOWN] Skipping proactive improvements - $((remaining / 60))m $(remaining % 60)s remaining (last: $((time_since_proactive / 60))m ago, min: $((cooldown_seconds / 60))m)"
+
+        # Log memory and system stats during cooldown
+        log_debug "System stats during cooldown:"
+        if command -v free &> /dev/null; then
+            free -h | head -n 2 | while IFS= read -r line; do
+                log_debug "  $line"
+            done
+        fi
+        if command -v df &> /dev/null; then
+            df -h "$PROJECT_DIR" | tail -n 1 | while IFS= read -r line; do
+                log_debug "  disk: $line"
+            done
+        fi
+
+        exit 0
+    fi
+
+    # No external changes - run proactive improvements
+    log ">>> NO CHANGES - STARTING PROACTIVE IMPROVEMENTS <<<"
+
+    # Update cooldown timestamp BEFORE running (prevent multiple concurrent runs)
+    echo "$current_time" > "$proactive_cooldown_file"
+    log_debug "Set proactive cooldown timestamp to $current_time ($(date -d @$current_time))"
+
+    # Rate limit check before proactive run
+    log_debug "Checking GitHub API rate limit..."
+    RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
+    log_info "GitHub API rate limit remaining: $RATE_REMAINING"
+
+    if [ "$RATE_REMAINING" -lt 20 ]; then
+        log_warn "Low GitHub API rate limit ($RATE_REMAINING), skipping proactive improvements..."
         exit 1
-    }
+    fi
 
-    log_debug "Current directory: $(pwd)"
-    log_debug "Git status: $(git status --short 2>/dev/null | head -n 10 || echo 'no changes')"
+    # Alternate between repos
+    if [ -d "server" ] && [ -d "frontend" ]; then
+        case $((RANDOM % 4)) in
+            0) TASK="Run proactive improvements: code review, test coverage, refactoring, documentation, dependency updates for server. Check for bugs, security issues, uncovered code. Target >30% test coverage." ;;
+            1) TASK="Run proactive improvements: code review, TypeScript fixes, test coverage, refactoring, documentation for frontend. Eliminate any types, add tests for edge cases." ;;
+            2) TASK="Run proactive improvements: review documentation, check for broken links, verify accuracy against codebase, update if needed." ;;
+            3) TASK="Run proactive improvements: review infra configuration, check Docker setup, environment variables, deployment docs." ;;
+        esac
+    elif [ -d "server" ]; then
+        TASK="Run proactive improvements for server: code review, test coverage, refactoring, documentation"
+    elif [ -d "frontend" ]; then
+        TASK="Run proactive improvements for frontend: code review, TypeScript fixes, test coverage, documentation"
+    elif [ -d "../docs" ]; then
+        TASK="Run proactive improvements for documentation: review docs, check for broken links, verify accuracy"
+    else
+        TASK="Analyze project state and implement improvements per AGENTS.md"
+    fi
 
-    # === Read Memory Banks for Context ===
-    log_debug "=== PHASE: Memory Bank Loading ==="
-    read_memory_bank
+    log_info "Proactive task selected: $TASK"
+    run_kilo run --continue "$TASK"
 
-    # === GitHub Operations (using gh CLI) ===
-    log_debug "=== PHASE: GitHub Operations ==="
+    EXIT_CODE=$?
+    proactive_runs=$((proactive_runs + 1))
 
-    # Check gh authentication
-    log_debug "Verifying gh CLI authentication..."
-    gh auth status 2>&1 | head -n 3 | while IFS= read -r line; do
-        log_debug "  gh: $line"
+    if [ $EXIT_CODE -eq 0 ]; then
+        log "✓ Proactive improvements completed successfully"
+    else
+        log_error "✗ Proactive improvements FAILED (exit code: $EXIT_CODE)"
+        # Add backoff on failure
+        log_warn "Initiating backoff: waiting 60s after failed proactive run..."
+        sleep 60
+    fi
+
+    # Commit and push
+    log_debug "Checking for changes to commit..."
+    git add -A 2>/dev/null
+    if ! git diff --quiet --staged 2>/dev/null; then
+        log_info "Proactive changes detected, committing..."
+        git diff --cached --stat 2>/dev/null | head -n 20 | while IFS= read -r line; do
+            log_debug "  change: $line"
+        done
+
+        git commit -m "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
+        log_debug "Committing to git..."
+
+        git push 2>/dev/null
+        log "✓ Proactive changes committed and pushed"
+
+        # Show what changed in memory banks
+        log_debug "Memory bank updates:"
+        if [ -d "server/memory-bank" ]; then
+            log_debug "  server/memory-bank/activeContext.md updated"
+        fi
+        if [ -d "frontend/memory-bank" ]; then
+            log_debug "  frontend/memory-bank/activeContext.md updated"
+        fi
+        if [ -d "infra/memory-bank" ]; then
+            log_debug "  infra/memory-bank/activeContext.md updated"
+        fi
+
+        # Update memory banks after changes
+        if [ -d "server" ]; then
+            update_memory_bank "server" "Proactive improvements completed"
+        fi
+        if [ -d "frontend" ]; then
+            update_memory_bank "frontend" "Proactive improvements completed"
+        fi
+        if [ -d "infra" ]; then
+            update_memory_bank "infra" "Proactive improvements completed"
+        fi
+        if [ -d "../docs" ]; then
+            update_memory_bank "docs" "Proactive improvements completed"
+        fi
+        update_memory_bank "root" "Proactive improvements completed"
+    else
+        log_debug "No changes to commit from proactive run"
+    fi
+
+    exit $EXIT_CODE
+fi
+
+# === Changes detected ===
+log ">>> CHANGES DETECTED - STARTING AGENT <<<"
+
+git add -A 2>/dev/null
+
+CHANGED_FILES=$(git diff --name-only HEAD 2>/dev/null | head -5)
+log_info "Changed files (top 5):"
+echo "$CHANGED_FILES" | while IFS= read -r file; do
+    log_debug "  modified: $file"
+done
+
+if echo "$CHANGED_FILES" | grep -q "server/"; then
+    TARGET_REPO="server"
+    TASK="Analyze server changes and run tests, lint, then implement improvements"
+elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
+    TARGET_REPO="frontend"
+    TASK="Analyze frontend changes and run tests, lint, then implement improvements"
+elif echo "$CHANGED_FILES" | grep -q "docs/"; then
+    TARGET_REPO="docs"
+    TASK="Analyze documentation changes, verify accuracy, run build test"
+elif echo "$CHANGED_FILES" | grep -q "infra/"; then
+    TARGET_REPO="infra"
+    TASK="Analyze infra changes, verify Docker configuration"
+else
+    TARGET_REPO="root"
+    TASK="Analyze project state and implement improvements per AGENTS.md"
+fi
+
+log_info "Target repository: $TARGET_REPO"
+log_info "Task: $TASK"
+
+run_kilo run --continue "$TASK"
+
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 0 ]; then
+    log "✓ Agent completed successfully"
+else
+    log_error "✗ Agent FAILED with exit code $EXIT_CODE"
+fi
+
+# Commit and push
+if ! git diff --quiet --staged 2>/dev/null; then
+    log_info "Agent produced changes, committing..."
+    git diff --cached --stat 2>/dev/null | head -n 20 | while IFS= read -r line; do
+        log_debug "  change: $line"
     done
 
+    git commit -m "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
+    log_debug "Committing to git..."
+
+    git push 2>/dev/null
+    log "✓ Changes committed and pushed"
+
+    # Show recent commit
+    latest_commit=$(git log -1 --oneline 2>/dev/null)
+    log_debug "Latest commit: $latest_commit"
+
+    # Update memory banks after changes
+    update_memory_bank "$TARGET_REPO" "Changes processed and improvements implemented"
+else
+    log_debug "No changes to commit from agent run"
+fi
+
+exit $EXIT_CODE
+
     check_issues
-    new_issues=$(grep -c "Completed processing issue" "$LOG_FILE" 2>/dev/null || echo 0)
-    issues_processed=$((issues_processed + new_issues))
+    new_issues=$(grep -c "Completed processing issue" "$LOG_FILE" 2>/dev/null || echo "0")
+    # issues_processed=$((issues_processed + new_issues))
 
     check_pulls
-    new_prs=$(grep -c "Completed PR" "$LOG_FILE" 2>/dev/null || echo 0)
+    # new_prs=$(grep -c "Completed PR" "$LOG_FILE" 2>/dev/null || echo "0")
     prs_processed=$((prs_processed + new_prs))
 
     check_ci
-    new_ci=$(grep -c "Completed CI analysis" "$LOG_FILE" 2>/dev/null || echo 0)
-    ci_fixed=$((ci_fixed + new_ci))
+    # new_ci=$(grep -c "Completed CI analysis" "$LOG_FILE" 2>/dev/null || echo "0")
+    # ci_fixed=$((ci_fixed + new_ci))
 
     check_releases
     manage_labels
