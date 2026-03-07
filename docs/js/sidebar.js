@@ -1,3 +1,24 @@
+const headerHTML = `
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+`;
+
+const footerHTML = `
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+`;
+
 const sidebarData = {
     "Getting Started": [
         { label: "Introduction", href: "index.html" },
@@ -47,23 +68,27 @@ function getCurrentPage() {
     return page;
 }
 
-function injectSidebar() {
+function injectSharedComponents() {
+    const headerContainer = document.getElementById('header-content');
+    const footerContainer = document.getElementById('footer-content');
     const sidebarContainer = document.getElementById('sidebar-content');
-    if (!sidebarContainer) return;
 
-    const currentPage = getCurrentPage();
-    let html = '';
+    if (headerContainer) headerContainer.innerHTML = headerHTML;
+    if (footerContainer) footerContainer.innerHTML = footerHTML;
 
-    for (const [sectionTitle, links] of Object.entries(sidebarData)) {
-        html += `<div class="sidebar-section"><h3>${sectionTitle}</h3>`;
-        for (const link of links) {
-            const isActive = link.href === currentPage ? ' class="active"' : '';
-            html += `<a href="${link.href}"${isActive}>${link.label}</a>`;
+    if (sidebarContainer) {
+        const currentPage = getCurrentPage();
+        let html = '';
+        for (const [sectionTitle, links] of Object.entries(sidebarData)) {
+            html += `<div class="sidebar-section"><h3>${sectionTitle}</h3>`;
+            for (const link of links) {
+                const isActive = link.href === currentPage ? ' class="active"' : '';
+                html += `<a href="${link.href}"${isActive}>${link.label}</a>`;
+            }
+            html += '</div>';
         }
-        html += '</div>';
+        sidebarContainer.innerHTML = html;
     }
-
-    sidebarContainer.innerHTML = html;
 }
 
-document.addEventListener('DOMContentLoaded', injectSidebar);
+document.addEventListener('DOMContentLoaded', injectSharedComponents);
