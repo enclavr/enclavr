@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Architecture - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Architecture</h1>
+
+<p>Enclavr uses a modular architecture with separate repositories for frontend, server, and infrastructure.</p>
+
+<h2>System Overview</h2>
+
+<pre><code>┌─────────────────────────────────────────────────────────────────┐
+│                        Browser                                   │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐ │
+│  │  WebRTC       │  │  WebSocket   │  │  REST API            │ │
+│  │  (Voice)      │  │  (Chat)      │  │  (HTTP)              │ │
+│  └──────┬───────┘  └──────┬───────┘  └──────────┬───────────┘ │
+└─────────┼──────────────────┼────────────────────┼─────────────┘
+          │                  │                    │
+          ▼                  ▼                    ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                       Coturn (TURN Server)                      │
+│                     Ports: 3478, 49152-49172                     │
+└─────────────────────────────────────────────────────────────────┘
+          │
+          ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                        Frontend                                 │
+│                    Next.js 16 (Port 3000)                       │
+└─────────────────────────────┬───────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                         Server                                   │
+│                 Go 1.25 (Port 8080)                             │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐  │
+│  │  REST API    │  │  WebSocket   │  │  WebRTC Signaling    │  │
+│  │  Handlers    │  │  Hub         │  │  Handler             │  │
+│  └──────────────┘  └──────┬───────┘  └──────────────────────┘  │
+└────────────────────────────┼───────────────────────────────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              ▼              ▼              ▼
+     ┌────────────┐  ┌────────────┐  ┌────────────┐
+     │ PostgreSQL │  │   Redis    │  │   STUN     │
+     │  :5432     │  │   :6379    │  │ Google     │
+     └────────────┘  └────────────┘  └────────────┘
+</code></pre>
+
+<h2>Project Structure</h2>
+
+<p>Enclavr uses git submodules:</p>
+
+<table>
+<tr><th>Repository</th><th>Description</th></tr>
+<tr><td><a href="https://github.com/enclavr/enclavr">enclavr/enclavr</a></td><td>Root monorepo</td></tr>
+<tr><td><a href="https://github.com/enclavr/frontend">enclavr/frontend</a></td><td>Next.js frontend</td></tr>
+<tr><td><a href="https://github.com/enclavr/server">enclavr/server</a></td><td>Go backend</td></tr>
+<tr><td><a href="https://github.com/enclavr/infra">enclavr/infra</a></td><td>Docker deployment</td></tr>
+</table>
+
+<h2>Data Flow</h2>
+
+<h3>Authentication Flow</h3>
+<ol>
+<li>User submits credentials to Frontend</li>
+<li>Frontend calls Server <code>/api/auth/login</code></li>
+<li>Server validates and returns JWT + refresh token</li>
+<li>Frontend stores tokens and includes JWT in subsequent requests</li>
+</ol>
+
+<h3>Chat Flow</h3>
+<ol>
+<li>User sends message via Frontend</li>
+<li>Frontend sends to Server via REST API</li>
+<li>Server stores in PostgreSQL</li>
+<li>Server broadcasts to room via WebSocket</li>
+<li>Other users receive real-time update</li>
+</ol>
+
+<h3>Voice Flow</h3>
+<ol>
+<li>User joins voice channel</li>
+<li>Frontend connects to Server WebSocket (<code>/api/voice/ws</code>)</li>
+<li>Server performs ICE handshake with STUN/TURN</li>
+<li>Peers connect directly via WebRTC</li>
+<li>Audio streams peer-to-peer</li>
+</ol>
+
+<h2>Scaling</h2>
+
+<ul>
+<li><strong>WebSocket scaling</strong>: Redis pub/sub for cross-server communication</li>
+<li><strong>Database</strong>: Connection pooling with GORM</li>
+<li><strong>Static assets</strong>: CDN-ready frontend (static export)</li>
+</ul>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

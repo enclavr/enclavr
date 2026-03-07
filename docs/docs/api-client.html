@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Client - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>API Client</h1>
+
+<p>The API client module structure.</p>
+
+<h2>Main API Module</h2>
+
+<p><code>src/lib/api.ts</code> contains the main API client with methods for:</p>
+
+<ul>
+<li>Authentication (login, register, refresh)</li>
+<li>Rooms (create, join, leave, list)</li>
+<li>Messages (send, edit, delete, search)</li>
+<li>Direct Messages</li>
+<li>Voice (ICE config)</li>
+<li>Admin (bans, reports, roles)</li>
+</ul>
+
+<h2>Modular API Structure</h2>
+
+<p>The API is split into modules:</p>
+
+<ul>
+<li><code>src/lib/api/base.ts</code> - Base client with auth headers</li>
+<li><code>src/lib/api/auth.ts</code> - Authentication endpoints</li>
+<li><code>src/lib/api/room.ts</code> - Room management</li>
+<li><code>src/lib/api/chat.ts</code> - Messaging</li>
+<li><code>src/lib/api/dm.ts</code> - Direct messages</li>
+<li><code>src/lib/api/presence.ts</code> - User presence</li>
+<li><code>src/lib/api/admin.ts</code> - Admin endpoints</li>
+</ul>
+
+<h2>Usage Example</h2>
+
+<pre><code>import { login, register, fetchRooms } from '@/lib/api';
+
+await login('username', 'password');
+const rooms = await fetchRooms();
+</code></pre>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

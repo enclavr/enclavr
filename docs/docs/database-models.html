@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Models - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Database Models</h1>
+
+<p>PostgreSQL database models using GORM.</p>
+
+<h2>Core Models</h2>
+
+<ul>
+<li><strong>User</strong> - User accounts</li>
+<li><strong>Room</strong> - Voice/text chat rooms</li>
+<li><strong>Category</strong> - Room categories</li>
+<li><strong>Message</strong> - Chat messages</li>
+<li><strong>DirectMessage</strong> - DMs between users</li>
+</ul>
+
+<h2>Feature Models</h2>
+
+<ul>
+<li><strong>Reaction</strong> - Message reactions</li>
+<li><strong>Thread</strong> - Message threads</li>
+<li><strong>Poll</strong> - Message polls</li>
+<li><strong>PinnedMessage</strong> - Pinned messages</li>
+<li><strong>Invite</strong> - Room invites</li>
+</ul>
+
+<h2>Moderation Models</h2>
+
+<ul>
+<li><strong>Ban</strong> - User bans</li>
+<li><strong>Report</strong> - User reports</li>
+<li><strong>AuditLog</strong> - Action logs</li>
+</ul>
+
+<h2>Relation Models</h2>
+
+<ul>
+<li><strong>RoomMember</strong> - Room membership</li>
+<li><strong>UserRole</strong> - Role assignments</li>
+</ul>
+
+<h2>Integration Models</h2>
+
+<ul>
+<li><strong>Webhook</strong> - Webhook configs</li>
+<li><strong>PushSubscription</strong> - Push notifications</li>
+</ul>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

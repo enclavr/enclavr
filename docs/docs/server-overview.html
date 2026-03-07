@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Server Overview - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Server Overview</h1>
+
+<p>The Enclavr backend is a Go server providing REST API, WebSocket, and WebRTC signaling.</p>
+
+<h2>Project Structure</h2>
+
+<pre><code>server/
+├── cmd/
+│   └── server/           # Main entry point
+├── internal/
+│   ├── handlers/        # HTTP handlers
+│   ├── services/        # Business logic
+│   ├── models/          # Database models
+│   ├── database/        # Database connections
+│   ├── websocket/       # WebSocket hub
+│   ├── voice/           # WebRTC signaling
+│   ├── auth/            # Authentication
+│   ├── config/          # Configuration
+│   ├── middleware/      # HTTP middleware
+│   ├── metrics/         # Prometheus metrics
+│   └── grpc/            # gRPC support
+└── pkg/
+    └── logger/          # Logging utilities
+</code></pre>
+
+<h2>Key Features</h2>
+
+<ul>
+<li>REST API with 60+ endpoints</li>
+<li>WebSocket for real-time messaging</li>
+<li>WebRTC signaling server</li>
+<li>JWT authentication</li>
+<li>OIDC support</li>
+<li>PostgreSQL with GORM</li>
+<li>Redis pub/sub for scaling</li>
+<li>Prometheus metrics</li>
+</ul>
+
+<h2>Running the Server</h2>
+
+<pre><code>cd server
+go run ./cmd/server
+</code></pre>
+
+<p>The server runs on <code>http://localhost:8080</code></p>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

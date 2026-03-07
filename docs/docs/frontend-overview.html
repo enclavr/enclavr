@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Overview - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Frontend Overview</h1>
+
+<p>The Enclavr frontend is a modern React 19 application built with Next.js 16, featuring real-time chat and voice communication capabilities.</p>
+
+<h2>Key Statistics</h2>
+
+<table>
+<tr><th>Metric</th><th>Value</th></tr>
+<tr><td>Framework</td><td>Next.js 16.1.6</td></tr>
+<tr><td>React</td><td>19.2.4</td></tr>
+<tr><td>Components</td><td>24</td></tr>
+<tr><td>Custom Hooks</td><td>4</td></tr>
+<tr><td>API Endpoints</td><td>60+</td></tr>
+<tr><td>Routes</td><td>4</td></tr>
+<tr><td>Test Files</td><td>14</td></tr>
+</table>
+
+<h2>Project Structure</h2>
+
+<pre><code>frontend/
+├── src/
+│   ├── app/                    # Next.js App Router
+│   │   ├── login/              # Login page
+│   │   ├── register/          # Registration page
+│   │   ├── rooms/             # Main rooms page
+│   │   ├── dm/                # Direct messages
+│   │   ├── layout.tsx         # Root layout
+│   │   └── page.tsx           # Home (redirects)
+│   ├── components/             # 24 React components
+│   │   ├── Chat.tsx
+│   │   ├── VoiceChat.tsx
+│   │   ├── MessageItem.tsx
+│   │   └── ... (21 more)
+│   ├── hooks/                  # Custom React hooks
+│   │   ├── useWebRTC.ts       # Voice chat
+│   │   ├── useChat.ts         # Chat WebSocket
+│   │   ├── usePresence.ts     # Presence tracking
+│   │   └── useDM.ts           # Direct messages
+│   ├── lib/
+│   │   ├── api.ts             # Main API client
+│   │   ├── store.ts           # Zustand stores
+│   │   └── webrtc/            # WebRTC utilities
+│   └── types/
+│       └── index.ts           # TypeScript interfaces
+├── e2e/                       # Playwright tests
+├── package.json
+└── next.config.js
+</code></pre>
+
+<h2>Routes</h2>
+
+<table>
+<tr><th>Path</th><th>Description</th></tr>
+<tr><td><code>/</code></td><td>Root - redirects to /login or /rooms</td></tr>
+<tr><td><code>/login</code></td><td>Login page</td></tr>
+<tr><td><code>/register</code></td><td>Registration page</td></tr>
+<tr><td><code>/rooms</code></td><td>Main rooms page (voice + chat)</td></tr>
+<tr><td><code>/dm</code></td><td>Direct messages page</td></tr>
+</table>
+
+<h2>Development Commands</h2>
+
+<pre><code># Install dependencies
+bun install
+
+# Start dev server
+bun run dev
+
+# Run tests
+bun run test:run
+bun run test:e2e
+
+# Lint
+bun run lint
+</code></pre>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

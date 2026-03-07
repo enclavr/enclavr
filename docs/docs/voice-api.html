@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice API - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Voice API</h1>
+
+<p>Endpoints for WebRTC voice communication.</p>
+
+<h2>Get ICE Configuration</h2>
+
+<pre><code>GET /api/voice/ice
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h3>Response</h3>
+
+<pre><code>{
+  "iceServers": [
+    {"urls": "stun:stun.l.google.com:19302"},
+    {"urls": "turn:turn.example.com:3478", "username": "user", "credential": "pass"}
+  ]
+}
+</code></pre>
+
+<h2>Voice WebSocket</h2>
+
+<p>Connect to <code>/api/voice/ws?room_id=&lt;room-id&gt;</code> for real-time voice communication.</p>
+
+<h3>WebSocket Messages</h3>
+
+<table>
+<tr><th>Type</th><th>Description</th></tr>
+<tr><td><code>voice_offer</code></td><td>SDP offer for peer connection</td></tr>
+<tr><td><code>voice_answer</code></td><td>SDP answer for peer connection</td></tr>
+<tr><td><code>voice_ice</code></td><td>ICE candidate exchange</td></tr>
+<tr><td><code>voice_mute</code></td><td>User muted/unmuted</td></tr>
+<tr><td><code>voice_join</code></td><td>User joined voice</td></tr>
+<tr><td><code>voice_leave</code></td><td>User left voice</td></tr>
+</table>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

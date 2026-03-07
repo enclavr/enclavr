@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages API - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Messages API</h1>
+
+<p>Endpoints for room messaging.</p>
+
+<h2>Get Messages</h2>
+
+<pre><code>GET /api/messages?room_id=&lt;room-id&gt;&amp;limit=50&amp;before=&lt;message-id&gt;
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>Send Message</h2>
+
+<pre><code>POST /api/message/send
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "roomId": "uuid",
+  "content": "string"
+}
+</code></pre>
+
+<h2>Update Message</h2>
+
+<pre><code>PUT /api/message/update?message_id=&lt;message-id&gt;
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "content": "string"
+}
+</code></pre>
+
+<h2>Delete Message</h2>
+
+<pre><code>DELETE /api/message/delete?message_id=&lt;message-id&gt;
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>Search Messages</h2>
+
+<pre><code>GET /api/messages/search?q=&lt;query&gt;&amp;limit=20
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>Reactions</h2>
+
+<h3>Add Reaction</h3>
+
+<pre><code>POST /api/reaction/add
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "messageId": "uuid",
+  "emoji": "string"
+}
+</code></pre>
+
+<h3>Remove Reaction</h3>
+
+<pre><code>DELETE /api/reaction/remove
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "messageId": "uuid",
+  "emoji": "string"
+}
+</code></pre>
+
+<h2>Pinned Messages</h2>
+
+<table>
+<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+<tr><td>GET</td><td><code>/api/pinnedmessages</code></td><td>Get pinned messages</td></tr>
+<tr><td>POST</td><td><code>/api/pinnedmessage/pin</code></td><td>Pin a message</td></tr>
+<tr><td>POST</td><td><code>/api/pinnedmessage/unpin</code></td><td>Unpin a message</td></tr>
+</table>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>

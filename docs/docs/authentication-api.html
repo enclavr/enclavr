@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication API - Enclavr</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="" class="logo">Enclavr</a>
+            <nav class="nav">
+                <a href="">Home</a>
+                <a href="overview.html">Docs</a>
+                <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3>Getting Started</h3>
+                <a href="">Introduction</a>
+                <a href="overview.html">Overview</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="features.html">Features</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Development</h3>
+                <a href="local-setup.html">Local Setup</a>
+                <a href="commands.html">Commands</a>
+                <a href="testing.html">Testing</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>API Reference</h3>
+                <a href="authentication-api.html">Authentication</a>
+                <a href="rooms-api.html">Rooms</a>
+                <a href="messages-api.html">Messages</a>
+                <a href="direct-messages-api.html">Direct Messages</a>
+                <a href="voice-api.html">Voice</a>
+                <a href="admin-api.html">Admin</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Frontend</h3>
+                <a href="frontend-overview.html">Overview</a>
+                <a href="frontend-tech-stack.html">Tech Stack</a>
+                <a href="components.html">Components</a>
+                <a href="state-management.html">State Management</a>
+                <a href="api-client.html">API Client</a>
+                <a href="webrtc.html">WebRTC</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Server</h3>
+                <a href="server-overview.html">Overview</a>
+                <a href="tech-stack.html">Tech Stack</a>
+                <a href="database-models.html">Database Models</a>
+                <a href="server-authentication.html">Authentication</a>
+                <a href="websocket.html">WebSocket</a>
+            </div>
+            <div class="sidebar-section">
+                <h3>Infrastructure</h3>
+                <a href="infra-overview.html">Overview</a>
+                <a href="services.html">Services</a>
+                <a href="environment.html">Environment</a>
+                <a href="deployment.html">Deployment</a>
+            </div>
+        </aside>
+
+        <main class="content">
+            <h1>Authentication API</h1>
+
+<p>Authentication endpoints for user registration and login.</p>
+
+<h2>Register</h2>
+
+<pre><code>POST /api/auth/register
+Content-Type: application/json
+
+{
+  "username": "string",
+  "email": "string",
+  "password": "string"
+}
+</code></pre>
+
+<h3>Response</h3>
+
+<pre><code>{
+  "token": "jwt-token",
+  "refreshToken": "refresh-token",
+  "user": {
+    "id": "uuid",
+    "username": "string",
+    "email": "string"
+  }
+}
+</code></pre>
+
+<h2>Login</h2>
+
+<pre><code>POST /api/auth/login
+Content-Type: application/json
+
+{
+  "username": "string",
+  "password": "string"
+}
+</code></pre>
+
+<h2>Refresh Token</h2>
+
+<pre><code>POST /api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "string"
+}
+</code></pre>
+
+<h2>Get Current User</h2>
+
+<pre><code>GET /api/auth/me
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>OIDC Endpoints</h2>
+
+<table>
+<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+<tr><td>GET</td><td><code>/api/auth/oidc/login</code></td><td>Start OIDC flow</td></tr>
+<tr><td>GET</td><td><code>/api/auth/oidc/callback</code></td><td>OIDC callback</td></tr>
+<tr><td>GET</td><td><code>/api/auth/oidc/config</code></td><td>Get OIDC config</td></tr>
+</table>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>Copyright &copy; 2026 Enclavr.</p>
+        </div>
+    </footer>
+</body>
+</html>
