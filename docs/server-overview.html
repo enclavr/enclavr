@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebSocket - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Server Overview - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,36 +70,51 @@
         </aside>
 
         <main class="content">
-            <h1>WebSocket</h1>
+            <h1>Server Overview</h1>
 
-<p>Real-time communication via WebSocket.</p>
+<p>The Enclavr backend is a Go server providing REST API, WebSocket, and WebRTC signaling.</p>
 
-<h2>Connection</h2>
+<h2>Project Structure</h2>
 
-<pre><code>ws://localhost:8080/ws
+<pre><code>server/
+├── cmd/
+│   └── server/           # Main entry point
+├── internal/
+│   ├── handlers/        # HTTP handlers
+│   ├── services/        # Business logic
+│   ├── models/          # Database models
+│   ├── database/        # Database connections
+│   ├── websocket/       # WebSocket hub
+│   ├── voice/           # WebRTC signaling
+│   ├── auth/            # Authentication
+│   ├── config/          # Configuration
+│   ├── middleware/      # HTTP middleware
+│   ├── metrics/         # Prometheus metrics
+│   └── grpc/            # gRPC support
+└── pkg/
+    └── logger/          # Logging utilities
 </code></pre>
 
-<h2>Message Types</h2>
+<h2>Key Features</h2>
 
-<table>
-<tr><th>Type</th><th>Description</th></tr>
-<tr><td><code>message</code></td><td>Chat message</td></tr>
-<tr><td><code>typing</code></td><td>Typing indicator</td></tr>
-<tr><td><code>presence</code></td><td>Presence update</td></tr>
-<tr><td><code>voice_offer</code></td><td>WebRTC offer</td></tr>
-<tr><td><code>voice_answer</code></td><td>WebRTC answer</td></tr>
-<tr><td><code>voice_ice</code></td><td>ICE candidate</td></tr>
-</table>
+<ul>
+<li>REST API with 60+ endpoints</li>
+<li>WebSocket for real-time messaging</li>
+<li>WebRTC signaling server</li>
+<li>JWT authentication</li>
+<li>OIDC support</li>
+<li>PostgreSQL with GORM</li>
+<li>Redis pub/sub for scaling</li>
+<li>Prometheus metrics</li>
+</ul>
 
-<h2>Horizontal Scaling</h2>
+<h2>Running the Server</h2>
 
-<p>Redis pub/sub enables multiple server instances.</p>
-
-<pre><code>REDIS_HOST=localhost
-REDIS_PORT=6379
-REDIS_PASSWORD=...
-REDIS_DB=0
+<pre><code>cd server
+go run ./cmd/server
 </code></pre>
+
+<p>The server runs on <code>http://localhost:8080</code></p>
         </main>
     </div>
 

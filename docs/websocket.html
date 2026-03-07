@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Stack - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>WebSocket - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,29 +70,36 @@
         </aside>
 
         <main class="content">
-            <h1>Server Tech Stack</h1>
+            <h1>WebSocket</h1>
 
-<p>Technologies used in the Enclavr backend.</p>
+<p>Real-time communication via WebSocket.</p>
 
-<h2>Core Technologies</h2>
+<h2>Connection</h2>
 
-<table>
-<tr><th>Technology</th><th>Version</th><th>Purpose</th></tr>
-<tr><td>Go</td><td>1.25</td><td>Runtime</td></tr>
-<tr><td>GORM</td><td>latest</td><td>ORM</td></tr>
-<tr><td>PostgreSQL</td><td>15+</td><td>Database</td></tr>
-<tr><td>Redis</td><td>7+</td><td>Pub/Sub & Caching</td></tr>
-</table>
+<pre><code>ws://localhost:8080/ws
+</code></pre>
 
-<h2>Key Libraries</h2>
+<h2>Message Types</h2>
 
 <table>
-<tr><th>Library</th><th>Purpose</th></tr>
-<tr><td>gorilla/websocket</td><td>WebSocket</td></tr>
-<tr><td>gin-gonic/gin</td><td>HTTP router</td></tr>
-<tr><td>golang-jwt</td><td>JWT auth</td></tr>
-<tr><td>prometheus/client_golang</td><td>Metrics</td></tr>
+<tr><th>Type</th><th>Description</th></tr>
+<tr><td><code>message</code></td><td>Chat message</td></tr>
+<tr><td><code>typing</code></td><td>Typing indicator</td></tr>
+<tr><td><code>presence</code></td><td>Presence update</td></tr>
+<tr><td><code>voice_offer</code></td><td>WebRTC offer</td></tr>
+<tr><td><code>voice_answer</code></td><td>WebRTC answer</td></tr>
+<tr><td><code>voice_ice</code></td><td>ICE candidate</td></tr>
 </table>
+
+<h2>Horizontal Scaling</h2>
+
+<p>Redis pub/sub enables multiple server instances.</p>
+
+<pre><code>REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=...
+REDIS_DB=0
+</code></pre>
         </main>
     </div>
 

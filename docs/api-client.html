@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Direct Messages API - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>API Client - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,38 +70,43 @@
         </aside>
 
         <main class="content">
-            <h1>Direct Messages API</h1>
+            <h1>API Client</h1>
 
-<p>Endpoints for direct messaging between users.</p>
+<p>The API client module structure.</p>
 
-<h2>Get Conversations</h2>
+<h2>Main API Module</h2>
 
-<pre><code>GET /api/dm/conversations
-Authorization: Bearer &lt;token&gt;
-</code></pre>
+<p><code>src/lib/api.ts</code> contains the main API client with methods for:</p>
 
-<h2>Get DM Messages</h2>
+<ul>
+<li>Authentication (login, register, refresh)</li>
+<li>Rooms (create, join, leave, list)</li>
+<li>Messages (send, edit, delete, search)</li>
+<li>Direct Messages</li>
+<li>Voice (ICE config)</li>
+<li>Admin (bans, reports, roles)</li>
+</ul>
 
-<pre><code>GET /api/dm/messages?user_id=&lt;user-id&gt;&amp;limit=50
-Authorization: Bearer &lt;token&gt;
-</code></pre>
+<h2>Modular API Structure</h2>
 
-<h2>Send DM</h2>
+<p>The API is split into modules:</p>
 
-<pre><code>POST /api/dm/send
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
+<ul>
+<li><code>src/lib/api/base.ts</code> - Base client with auth headers</li>
+<li><code>src/lib/api/auth.ts</code> - Authentication endpoints</li>
+<li><code>src/lib/api/room.ts</code> - Room management</li>
+<li><code>src/lib/api/chat.ts</code> - Messaging</li>
+<li><code>src/lib/api/dm.ts</code> - Direct messages</li>
+<li><code>src/lib/api/presence.ts</code> - User presence</li>
+<li><code>src/lib/api/admin.ts</code> - Admin endpoints</li>
+</ul>
 
-{
-  "recipientId": "uuid",
-  "content": "string"
-}
-</code></pre>
+<h2>Usage Example</h2>
 
-<h2>Delete DM</h2>
+<pre><code>import { login, register, fetchRooms } from '@/lib/api';
 
-<pre><code>DELETE /api/dm/delete?message_id=&lt;message-id&gt;
-Authorization: Bearer &lt;token&gt;
+await login('username', 'password');
+const rooms = await fetchRooms();
 </code></pre>
         </main>
     </div>

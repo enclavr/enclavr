@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Commands - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>WebRTC - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,63 +70,47 @@
         </aside>
 
         <main class="content">
-            <h1>Commands</h1>
+            <h1>WebRTC</h1>
 
-<p>Development commands for Enclavr components.</p>
+<p>WebRTC implementation for voice communication.</p>
 
-<h2>Frontend Commands</h2>
+<h2>useWebRTC Hook</h2>
 
-<pre><code># Install dependencies
-bun install
+<p>Main hook for managing WebRTC connections.</p>
 
-# Start development server
-bun run dev
-
-# Run unit tests
-bun run test:run
-
-# Run E2E tests
-bun run test:e2e
-
-# Lint code
-bun run lint
-
-# Build for production
-bun run build
+<pre><code>const {
+  localStream,
+  peers,
+  joinVoice,
+  leaveVoice,
+  mute,
+  unmute,
+} = useWebRTC(roomId, userId);
 </code></pre>
 
-<h2>Server Commands</h2>
+<h2>Features</h2>
 
-<pre><code># Run the server
-go run ./cmd/server
+<ul>
+<li>Peer-to-peer audio/video</li>
+<li>Screen sharing</li>
+<li>Mute/unmute controls</li>
+<li>ICE candidate exchange</li>
+<li>STUN/TURN server support</li>
+</ul>
 
-# Run tests
-go test -v ./...
+<h2>WebRTC Utilities</h2>
 
-# Run with specific test
-go test -v -run TestName ./...
+<p><code>src/lib/webrtc/</code> contains:</p>
 
-# Build binary
-go build -o bin/server ./cmd/server
+<ul>
+<li><code>types.ts</code> - TypeScript interfaces</li>
+<li><code>ice.ts</code> - ICE server configuration</li>
+<li><code>peer.ts</code> - Peer connection management</li>
+</ul>
 
-# Run linter
-golangci-lint run ./...
-</code></pre>
+<h2>Signaling</h2>
 
-<h2>Infrastructure Commands</h2>
-
-<pre><code># Start all services
-docker-compose up -d
-
-# Stop all services
-docker-compose down
-
-# View logs
-docker-compose logs -f
-
-# Rebuild services
-docker-compose up -d --build
-</code></pre>
+<p>WebRTC signaling is done through the WebSocket connection at <code>/api/voice/ws</code>.</p>
         </main>
     </div>
 

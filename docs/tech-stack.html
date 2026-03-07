@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overview - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Tech Stack - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,18 +70,29 @@
         </aside>
 
         <main class="content">
-            <h1>Overview</h1>
+            <h1>Server Tech Stack</h1>
 
-<p>Enclavr is a self-hosted voice chat platform with real-time communication capabilities.</p>
+<p>Technologies used in the Enclavr backend.</p>
 
-<h2>Quick Links</h2>
+<h2>Core Technologies</h2>
 
-<ul>
-<li><a href="architecture.html">Architecture</a> - System design and data flow</li>
-<li><a href="features.html">Features</a> - Complete feature list</li>
-<li><a href="local-setup.html">Local Setup</a> - Development setup</li>
-<li><a href="deployment.html">Deployment</a> - Production deployment</li>
-</ul>
+<table>
+<tr><th>Technology</th><th>Version</th><th>Purpose</th></tr>
+<tr><td>Go</td><td>1.25</td><td>Runtime</td></tr>
+<tr><td>GORM</td><td>latest</td><td>ORM</td></tr>
+<tr><td>PostgreSQL</td><td>15+</td><td>Database</td></tr>
+<tr><td>Redis</td><td>7+</td><td>Pub/Sub & Caching</td></tr>
+</table>
+
+<h2>Key Libraries</h2>
+
+<table>
+<tr><th>Library</th><th>Purpose</th></tr>
+<tr><td>gorilla/websocket</td><td>WebSocket</td></tr>
+<tr><td>gin-gonic/gin</td><td>HTTP router</td></tr>
+<tr><td>golang-jwt</td><td>JWT auth</td></tr>
+<tr><td>prometheus/client_golang</td><td>Metrics</td></tr>
+</table>
         </main>
     </div>
 

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages API - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Local Setup - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,85 +70,103 @@
         </aside>
 
         <main class="content">
-            <h1>Messages API</h1>
+            <h1>Local Setup</h1>
 
-<p>Endpoints for room messaging.</p>
+<p>Set up Enclavr for local development.</p>
 
-<h2>Get Messages</h2>
+<h2>Prerequisites</h2>
 
-<pre><code>GET /api/messages?room_id=&lt;room-id&gt;&amp;limit=50&amp;before=&lt;message-id&gt;
-Authorization: Bearer &lt;token&gt;
+<ul>
+<li><strong>Go 1.25+</strong> - For the server</li>
+<li><strong>Bun</strong> - For the frontend</li>
+<li><strong>Docker & Docker Compose</strong> - For infrastructure</li>
+</ul>
+
+<h2>Clone Repository</h2>
+
+<pre><code># Clone with submodules
+git clone --recurse-submodules https://github.com/enclavr/enclavr.git
+cd enclavr
 </code></pre>
 
-<h2>Send Message</h2>
+<h2>Start Infrastructure</h2>
 
-<pre><code>POST /api/message/send
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
+<pre><code>cd infra
 
-{
-  "roomId": "uuid",
-  "content": "string"
-}
+# Copy environment file
+cp .env.example .env
+
+# Start services
+docker-compose up -d
+
+# Verify services are running
+docker-compose ps
 </code></pre>
 
-<h2>Update Message</h2>
+<p>This starts:</p>
+<ul>
+<li>PostgreSQL on port 5432</li>
+<li>Redis on port 6379</li>
+<li>Coturn on port 3478</li>
+</ul>
 
-<pre><code>PUT /api/message/update?message_id=&lt;message-id&gt;
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
+<h2>Start Server</h2>
 
-{
-  "content": "string"
-}
+<pre><code>cd server
+
+# Run the server
+go run ./cmd/server
 </code></pre>
 
-<h2>Delete Message</h2>
+<p>The server runs on <a href="http://localhost:8080">http://localhost:8080</a></p>
 
-<pre><code>DELETE /api/message/delete?message_id=&lt;message-id&gt;
-Authorization: Bearer &lt;token&gt;
+<h2>Start Frontend</h2>
+
+<pre><code>cd frontend
+
+# Install dependencies
+bun install
+
+# Start development server
+bun run dev
 </code></pre>
 
-<h2>Search Messages</h2>
+<p>The frontend runs on <a href="http://localhost:3000">http://localhost:3000</a></p>
 
-<pre><code>GET /api/messages/search?q=&lt;query&gt;&amp;limit=20
-Authorization: Bearer &lt;token&gt;
+<h2>Verify Setup</h2>
+
+<ol>
+<li>Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser</li>
+<li>Register a new account</li>
+<li>Create a room</li>
+<li>Test chat and voice functionality</li>
+</ol>
+
+<h2>Troubleshooting</h2>
+
+<h3>Port Already in Use</h3>
+
+<pre><code># Find process using port
+lsof -i :8080
+
+# Kill process
+kill &lt;PID&gt;
 </code></pre>
 
-<h2>Reactions</h2>
+<h3>Database Connection Failed</h3>
 
-<h3>Add Reaction</h3>
+<pre><code># Check PostgreSQL
+docker-compose logs postgres
 
-<pre><code>POST /api/reaction/add
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
-
-{
-  "messageId": "uuid",
-  "emoji": "string"
-}
+# Restart PostgreSQL
+docker-compose restart postgres
 </code></pre>
 
-<h3>Remove Reaction</h3>
+<h3>Build Errors</h3>
 
-<pre><code>DELETE /api/reaction/remove
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
-
-{
-  "messageId": "uuid",
-  "emoji": "string"
-}
+<pre><code># Clear and reinstall dependencies
+cd frontend &amp;&amp; rm -rf node_modules bun.lock &amp;&amp; bun install
 </code></pre>
-
-<h2>Pinned Messages</h2>
-
-<table>
-<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
-<tr><td>GET</td><td><code>/api/pinnedmessages</code></td><td>Get pinned messages</td></tr>
-<tr><td>POST</td><td><code>/api/pinnedmessage/pin</code></td><td>Pin a message</td></tr>
-<tr><td>POST</td><td><code>/api/pinnedmessage/unpin</code></td><td>Unpin a message</td></tr>
-</table>
         </main>
     </div>
 

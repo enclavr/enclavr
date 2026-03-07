@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>State Management - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Environment - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,47 +70,40 @@
         </aside>
 
         <main class="content">
-            <h1>State Management</h1>
+            <h1>Environment Variables</h1>
 
-<p>Zustand stores for frontend state management.</p>
+<p>Configuration for Enclavr services.</p>
 
-<h2>AuthStore</h2>
+<h2>Server Variables</h2>
 
-<p>Manages authentication state.</p>
+<table>
+<tr><th>Variable</th><th>Description</th><th>Default</th></tr>
+<tr><td><code>PORT</code></td><td>Server port</td><td>8080</td></tr>
+<tr><td><code>DB_HOST</code></td><td>PostgreSQL host</td><td>postgres</td></tr>
+<tr><td><code>DB_PORT</code></td><td>PostgreSQL port</td><td>5432</td></tr>
+<tr><td><code>DB_USER</code></td><td>PostgreSQL user</td><td>enclavr</td></tr>
+<tr><td><code>DB_PASSWORD</code></td><td>PostgreSQL password</td><td>-</td></tr>
+<tr><td><code>DB_NAME</code></td><td>Database name</td><td>enclavr</td></tr>
+<tr><td><code>JWT_SECRET</code></td><td>JWT signing secret</td><td>-</td></tr>
+<tr><td><code>REDIS_HOST</code></td><td>Redis host</td><td>redis</td></tr>
+<tr><td><code>REDIS_PORT</code></td><td>Redis port</td><td>6379</td></tr>
+</table>
 
-<pre><code>interface AuthStore {
-  user: User | null;
-  token: string | null;
-  refreshToken: string | null;
-  isAuthenticated: boolean;
-  
-  login: (username: string, password: string) => Promise&lt;void&gt;;
-  register: (username: string, email: string, password: string) => Promise&lt;void&gt;;
-  logout: () => void;
-  setTokens: (token: string, refreshToken: string) => void;
-}
-</code></pre>
+<h2>Frontend Variables</h2>
 
-<h2>RoomStore</h2>
+<table>
+<tr><th>Variable</th><th>Description</th><th>Default</th></tr>
+<tr><td><code>NEXT_PUBLIC_API_URL</code></td><td>Server API URL</td><td>http://localhost:8080</td></tr>
+<tr><td><code>NEXT_PUBLIC_WS_URL</code></td><td>WebSocket URL</td><td>ws://localhost:8080</td></tr>
+</table>
 
-<p>Manages room and message state.</p>
+<h2>Coturn Variables</h2>
 
-<pre><code>interface RoomStore {
-  rooms: Room[];
-  currentRoom: Room | null;
-  messages: Message[];
-  categories: Category[];
-  
-  fetchRooms: () => Promise&lt;void&gt;;
-  setCurrentRoom: (roomId: string) => void;
-  sendMessage: (content: string) => Promise&lt;void&gt;;
-  fetchMessages: (roomId: string) => Promise&lt;void&gt;;
-}
-</code></pre>
-
-<h2>Store Implementation</h2>
-
-<p>Stores are implemented in <code>src/lib/store.ts</code> using Zustand.</p>
+<table>
+<tr><th>Variable</th><th>Description</th></tr>
+<tr><td><code>TRICKLE_ICE</code></td><td>Enable trickle ICE</td></tr>
+<tr><td><code>REALM</code></td><td>TURN realm</td></tr>
+</table>
         </main>
     </div>
 

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deployment - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Infrastructure Overview - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,63 +70,41 @@
         </aside>
 
         <main class="content">
-            <h1>Deployment</h1>
+            <h1>Infrastructure Overview</h1>
 
-<p>Deploy Enclavr to production.</p>
+<p>Docker Compose based deployment for Enclavr.</p>
+
+<h2>Architecture</h2>
+
+<p>Enclavr uses Docker Compose for local development and production deployment.</p>
+
+<h2>Services</h2>
+
+<ul>
+<li><strong>Server</strong> - Go backend API</li>
+<li><strong>Frontend</strong> - Next.js web app</li>
+<li><strong>PostgreSQL</strong> - Database</li>
+<li><strong>Redis</strong> - Pub/Sub & caching</li>
+<li><strong>Coturn</strong> - TURN server for WebRTC</li>
+</ul>
 
 <h2>Quick Start</h2>
 
 <pre><code>cd infra
 cp .env.example .env
-# Edit .env with your values
 docker-compose up -d
 </code></pre>
 
-<h2>Production Checklist</h2>
+<h2>Ports</h2>
 
-<ul>
-<li>Change <code>JWT_SECRET</code> to a secure random string</li>
-<li>Set strong <code>DB_PASSWORD</code></li>
-<li>Configure <code>REDIS_PASSWORD</code></li>
-<li>Set up SSL/TLS with reverse proxy</li>
-<li>Configure TURN server credentials</li>
-<li>Set up regular database backups</li>
-</ul>
-
-<h2>SSL/TLS</h2>
-
-<p>Use a reverse proxy (nginx, traefik) for HTTPS.</p>
-
-<pre><code># nginx example
-server {
-    listen 443 ssl;
-    server_name enclavr.example.com;
-    
-    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
-    
-    location / {
-        proxy_pass http://frontend:3000;
-    }
-    
-    location /api/ {
-        proxy_pass http://server:8080;
-    }
-    
-    location /ws {
-        proxy_pass http://server:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-    }
-}
-</code></pre>
-
-<h2>Database Backups</h2>
-
-<pre><code># Daily backup script
-docker-compose exec postgres pg_dump -U enclavr enclavr &gt; backup_$(date +%Y%m%d).sql
-</code></pre>
+<table>
+<tr><th>Service</th><th>Port</th></tr>
+<tr><td>Frontend</td><td>3000</td></tr>
+<tr><td>Server</td><td>8080</td></tr>
+<tr><td>PostgreSQL</td><td>5432</td></tr>
+<tr><td>Redis</td><td>6379</td></tr>
+<tr><td>Coturn</td><td>3478</td></tr>
+</table>
         </main>
     </div>
 

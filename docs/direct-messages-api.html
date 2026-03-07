@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin API - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Direct Messages API - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,113 +70,37 @@
         </aside>
 
         <main class="content">
-            <h1>Admin API</h1>
+            <h1>Direct Messages API</h1>
 
-<p>Endpoints for moderation and administration.</p>
+<p>Endpoints for direct messaging between users.</p>
 
-<h2>Bans</h2>
+<h2>Get Conversations</h2>
 
-<h3>Create Ban</h3>
+<pre><code>GET /api/dm/conversations
+Authorization: Bearer &lt;token&gt;
+</code></pre>
 
-<pre><code>POST /api/ban
+<h2>Get DM Messages</h2>
+
+<pre><code>GET /api/dm/messages?user_id=&lt;user-id&gt;&amp;limit=50
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>Send DM</h2>
+
+<pre><code>POST /api/dm/send
 Authorization: Bearer &lt;token&gt;
 Content-Type: application/json
 
 {
-  "userId": "uuid",
-  "roomId": "uuid",
-  "reason": "string",
-  "expiresAt": "timestamp"
+  "recipientId": "uuid",
+  "content": "string"
 }
 </code></pre>
 
-<h3>Get Room Bans</h3>
+<h2>Delete DM</h2>
 
-<pre><code>GET /api/ban/room?room_id=&lt;room-id&gt;
-Authorization: Bearer &lt;token&gt;
-</code></pre>
-
-<h3>Check User Ban</h3>
-
-<pre><code>GET /api/ban/check?user_id=&lt;user-id&gt;&amp;room_id=&lt;room-id&gt;
-Authorization: Bearer &lt;token&gt;
-</code></pre>
-
-<h3>Delete Ban</h3>
-
-<pre><code>DELETE /api/ban/delete?id=&lt;ban-id&gt;
-Authorization: Bearer &lt;token&gt;
-</code></pre>
-
-<h2>Reports</h2>
-
-<h3>Create Report</h3>
-
-<pre><code>POST /api/report
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
-
-{
-  "reportedUserId": "uuid",
-  "roomId": "uuid",
-  "reason": "string",
-  "messageId": "uuid"
-}
-</code></pre>
-
-<h3>Get Reports</h3>
-
-<pre><code>GET /api/reports?status=pending
-Authorization: Bearer &lt;token&gt;
-</code></pre>
-
-<h3>Review Report</h3>
-
-<pre><code>PUT /api/report/review?id=&lt;report-id&gt;
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
-
-{
-  "status": "resolved",
-  "action": "string"
-}
-</code></pre>
-
-<h2>Roles</h2>
-
-<table>
-<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
-<tr><td>GET</td><td><code>/api/roles</code></td><td>Get all roles</td></tr>
-<tr><td>GET</td><td><code>/api/role/members</code></td><td>Get room members</td></tr>
-<tr><td>GET</td><td><code>/api/role/user</code></td><td>Get user's role</td></tr>
-<tr><td>PUT</td><td><code>/api/role/update</code></td><td>Update member role</td></tr>
-<tr><td>POST</td><td><code>/api/role/kick</code></td><td>Kick user</td></tr>
-</table>
-
-<h2>Webhooks</h2>
-
-<table>
-<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
-<tr><td>POST</td><td><code>/api/webhook/create/:room_id</code></td><td>Create webhook</td></tr>
-<tr><td>GET</td><td><code>/api/webhook/room/:room_id</code></td><td>Get room webhooks</td></tr>
-<tr><td>DELETE</td><td><code>/api/webhook/:webhook_id</code></td><td>Delete webhook</td></tr>
-<tr><td>PUT</td><td><code>/api/webhook/toggle/:webhook_id</code></td><td>Toggle webhook</td></tr>
-<tr><td>GET</td><td><code>/api/webhook/logs/:webhook_id</code></td><td>Get webhook logs</td></tr>
-</table>
-
-<h2>Analytics</h2>
-
-<table>
-<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
-<tr><td>GET</td><td><code>/api/analytics/overview</code></td><td>Overview stats</td></tr>
-<tr><td>GET</td><td><code>/api/analytics/daily</code></td><td>Daily activity</td></tr>
-<tr><td>GET</td><td><code>/api/analytics/channels</code></td><td>Channel stats</td></tr>
-<tr><td>GET</td><td><code>/api/analytics/users</code></td><td>Top users</td></tr>
-</table>
-
-<h2>Audit Logs</h2>
-
-<pre><code>GET /api/audit/logs?room_id=&lt;room-id&gt;&amp;limit=50
+<pre><code>DELETE /api/dm/delete?message_id=&lt;message-id&gt;
 Authorization: Bearer &lt;token&gt;
 </code></pre>
         </main>

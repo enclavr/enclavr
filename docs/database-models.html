@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rooms API - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Database Models - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,78 +70,51 @@
         </aside>
 
         <main class="content">
-            <h1>Rooms API</h1>
+            <h1>Database Models</h1>
 
-<p>Endpoints for room management.</p>
+<p>PostgreSQL database models using GORM.</p>
 
-<h2>Get All Rooms</h2>
+<h2>Core Models</h2>
 
-<pre><code>GET /api/rooms
-Authorization: Bearer &lt;token&gt;
-</code></pre>
+<ul>
+<li><strong>User</strong> - User accounts</li>
+<li><strong>Room</strong> - Voice/text chat rooms</li>
+<li><strong>Category</strong> - Room categories</li>
+<li><strong>Message</strong> - Chat messages</li>
+<li><strong>DirectMessage</strong> - DMs between users</li>
+</ul>
 
-<h2>Get Room</h2>
+<h2>Feature Models</h2>
 
-<pre><code>GET /api/room?id=&lt;room-id&gt;
-Authorization: Bearer &lt;token&gt;
-</code></pre>
+<ul>
+<li><strong>Reaction</strong> - Message reactions</li>
+<li><strong>Thread</strong> - Message threads</li>
+<li><strong>Poll</strong> - Message polls</li>
+<li><strong>PinnedMessage</strong> - Pinned messages</li>
+<li><strong>Invite</strong> - Room invites</li>
+</ul>
 
-<h2>Create Room</h2>
+<h2>Moderation Models</h2>
 
-<pre><code>POST /api/room/create
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
+<ul>
+<li><strong>Ban</strong> - User bans</li>
+<li><strong>Report</strong> - User reports</li>
+<li><strong>AuditLog</strong> - Action logs</li>
+</ul>
 
-{
-  "name": "string",
-  "description": "string",
-  "password": "string",
-  "categoryId": "uuid"
-}
-</code></pre>
+<h2>Relation Models</h2>
 
-<h2>Join Room</h2>
+<ul>
+<li><strong>RoomMember</strong> - Room membership</li>
+<li><strong>UserRole</strong> - Role assignments</li>
+</ul>
 
-<pre><code>POST /api/room/join
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
+<h2>Integration Models</h2>
 
-{
-  "roomId": "uuid",
-  "password": "string"
-}
-</code></pre>
-
-<h2>Leave Room</h2>
-
-<pre><code>POST /api/room/leave
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
-
-{
-  "roomId": "uuid"
-}
-</code></pre>
-
-<h2>Categories</h2>
-
-<h3>Get Categories</h3>
-
-<pre><code>GET /api/categories
-Authorization: Bearer &lt;token&gt;
-</code></pre>
-
-<h3>Create Category</h3>
-
-<pre><code>POST /api/category/create
-Authorization: Bearer &lt;token&gt;
-Content-Type: application/json
-
-{
-  "name": "string",
-  "position": 0
-}
-</code></pre>
+<ul>
+<li><strong>Webhook</strong> - Webhook configs</li>
+<li><strong>PushSubscription</strong> - Push notifications</li>
+</ul>
         </main>
     </div>
 

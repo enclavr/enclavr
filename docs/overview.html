@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infrastructure Overview - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Overview - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,41 +70,18 @@
         </aside>
 
         <main class="content">
-            <h1>Infrastructure Overview</h1>
+            <h1>Overview</h1>
 
-<p>Docker Compose based deployment for Enclavr.</p>
+<p>Enclavr is a self-hosted voice chat platform with real-time communication capabilities.</p>
 
-<h2>Architecture</h2>
-
-<p>Enclavr uses Docker Compose for local development and production deployment.</p>
-
-<h2>Services</h2>
+<h2>Quick Links</h2>
 
 <ul>
-<li><strong>Server</strong> - Go backend API</li>
-<li><strong>Frontend</strong> - Next.js web app</li>
-<li><strong>PostgreSQL</strong> - Database</li>
-<li><strong>Redis</strong> - Pub/Sub & caching</li>
-<li><strong>Coturn</strong> - TURN server for WebRTC</li>
+<li><a href="architecture.html">Architecture</a> - System design and data flow</li>
+<li><a href="features.html">Features</a> - Complete feature list</li>
+<li><a href="local-setup.html">Local Setup</a> - Development setup</li>
+<li><a href="deployment.html">Deployment</a> - Production deployment</li>
 </ul>
-
-<h2>Quick Start</h2>
-
-<pre><code>cd infra
-cp .env.example .env
-docker-compose up -d
-</code></pre>
-
-<h2>Ports</h2>
-
-<table>
-<tr><th>Service</th><th>Port</th></tr>
-<tr><td>Frontend</td><td>3000</td></tr>
-<tr><td>Server</td><td>8080</td></tr>
-<tr><td>PostgreSQL</td><td>5432</td></tr>
-<tr><td>Redis</td><td>6379</td></tr>
-<tr><td>Coturn</td><td>3478</td></tr>
-</table>
         </main>
     </div>
 

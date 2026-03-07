@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Authentication - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Components - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,48 +70,67 @@
         </aside>
 
         <main class="content">
-            <h1>Server Authentication</h1>
+            <h1>Components</h1>
 
-<p>JWT and OIDC authentication implementation.</p>
+<p>Key React components in the Enclavr frontend.</p>
 
-<h2>JWT Authentication</h2>
-
-<p>The server uses JWT tokens for API authentication.</p>
-
-<h3>Token Types</h3>
+<h2>Chat Components</h2>
 
 <ul>
-<li><strong>Access Token</strong> - Short-lived (24h), used for API requests</li>
-<li><strong>Refresh Token</strong> - Long-lived (7 days), used to get new access tokens</li>
+<li><strong>Chat.tsx</strong> - Main chat container</li>
+<li><strong>ChatInput.tsx</strong> - Message input field</li>
+<li><strong>MessageItem.tsx</strong> - Individual message display</li>
 </ul>
 
-<h3>Middleware</h3>
+<h2>Voice Components</h2>
 
-<p><code>JWTAuth</code> middleware validates tokens on protected routes.</p>
+<ul>
+<li><strong>VoiceChat.tsx</strong> - Voice chat container</li>
+<li><strong>MediaRecorder.tsx</strong> - Audio/video recording</li>
+</ul>
 
-<pre><code>router.Use(middleware.JWTAuth())
-</code></pre>
+<h2>DM Components</h2>
 
-<h2>OIDC Authentication</h2>
+<ul>
+<li><strong>DMChat.tsx</strong> - Direct message chat</li>
+</ul>
 
-<p>Server supports OIDC providers for SSO.</p>
+<h2>Room Components</h2>
 
-<h3>Configuration</h3>
+<ul>
+<li><strong>RoomCard.tsx</strong> - Room display card</li>
+<li><strong>CategoryCard.tsx</strong> - Category display card</li>
+<li><strong>CreateRoomModal.tsx</strong> - Create room dialog</li>
+<li><strong>CategoryModal.tsx</strong> - Category management</li>
+<li><strong>JoinRoomModal.tsx</strong> - Join room dialog</li>
+</ul>
 
-<pre><code>OIDC_CLIENT_ID=...
-OIDC_CLIENT_SECRET=...
-OIDC_ISSUER=...
-OIDC_REDIRECT_URL=...
-</code></pre>
+<h2>User Components</h2>
 
-<h3>Flow</h3>
+<ul>
+<li><strong>PresenceList.tsx</strong> - Online users list</li>
+<li><strong>MembersModal.tsx</strong> - Room members list</li>
+</ul>
 
-<ol>
-<li>User visits <code>/api/auth/oidc/login</code></li>
-<li>Redirected to OIDC provider</li>
-<li>Provider redirects to <code>/api/auth/oidc/callback</code></li>
-<li>Server creates/updates user and returns JWT</li>
-</ol>
+<h2>Moderation Components</h2>
+
+<ul>
+<li><strong>BanList.tsx</strong> - Ban management</li>
+<li><strong>BanDialog.tsx</strong> - Ban user dialog</li>
+<li><strong>ReportsPanel.tsx</strong> - Report queue</li>
+<li><strong>ReportDialog.tsx</strong> - Report user dialog</li>
+</ul>
+
+<h2>Feature Components</h2>
+
+<ul>
+<li><strong>FileUpload.tsx</strong> - File upload handler</li>
+<li><strong>FileList.tsx</strong> - Uploaded files list</li>
+<li><strong>InviteModal.tsx</strong> - Invite system</li>
+<li><strong>SettingsModal.tsx</strong> - User settings</li>
+<li><strong>SearchModal.tsx</strong> - Search interface</li>
+<li><strong>WebhookModal.tsx</strong> - Webhook management</li>
+</ul>
         </main>
     </div>
 

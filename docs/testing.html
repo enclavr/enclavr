@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Authentication API - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Testing - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,70 +70,60 @@
         </aside>
 
         <main class="content">
-            <h1>Authentication API</h1>
+            <h1>Testing</h1>
 
-<p>Authentication endpoints for user registration and login.</p>
+<p>Testing strategies for Enclavr.</p>
 
-<h2>Register</h2>
+<h2>Frontend Testing</h2>
 
-<pre><code>POST /api/auth/register
-Content-Type: application/json
+<p>Frontend uses Vitest for unit tests and Playwright for E2E tests.</p>
 
-{
-  "username": "string",
-  "email": "string",
-  "password": "string"
-}
+<pre><code># Run unit tests
+bun run test:run
+
+# Run E2E tests
+bun run test:e2e
+
+# Run tests in watch mode
+bun run test
 </code></pre>
 
-<h3>Response</h3>
+<h3>Test Structure</h3>
 
-<pre><code>{
-  "token": "jwt-token",
-  "refreshToken": "refresh-token",
-  "user": {
-    "id": "uuid",
-    "username": "string",
-    "email": "string"
-  }
-}
+<ul>
+<li><code>src/test/</code> - Unit tests</li>
+<li><code>e2e/</code> - End-to-end tests</li>
+</ul>
+
+<h2>Server Testing</h2>
+
+<p>Server uses Go's testing package with SQLite in-memory for tests.</p>
+
+<pre><code># Run all tests
+go test -v ./...
+
+# Run specific package
+go test -v ./internal/handlers/...
+
+# Run with coverage
+go test -v -cover ./...
 </code></pre>
 
-<h2>Login</h2>
+<h3>Test Structure</h3>
 
-<pre><code>POST /api/auth/login
-Content-Type: application/json
+<ul>
+<li><code>internal/handlers/*_test.go</code> - Handler tests</li>
+<li><code>internal/websocket/*_test.go</code> - WebSocket tests</li>
+</ul>
 
-{
-  "username": "string",
-  "password": "string"
-}
+<h2>Running All Tests</h2>
+
+<pre><code># Frontend
+cd frontend && bun run test:run && bun run test:e2e
+
+# Server
+cd server && go test -v ./...
 </code></pre>
-
-<h2>Refresh Token</h2>
-
-<pre><code>POST /api/auth/refresh
-Content-Type: application/json
-
-{
-  "refreshToken": "string"
-}
-</code></pre>
-
-<h2>Get Current User</h2>
-
-<pre><code>GET /api/auth/me
-Authorization: Bearer &lt;token&gt;
-</code></pre>
-
-<h2>OIDC Endpoints</h2>
-
-<table>
-<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
-<tr><td>GET</td><td><code>/api/auth/oidc/login</code></td><td>Start OIDC flow</td></tr>
-<tr><td>GET</td><td><code>/api/auth/oidc/callback</code></td><td>OIDC callback</td></tr>
-<tr><td>GET</td><td><code>/api/auth/oidc/config</code></td><td>Get OIDC config</td></tr>
-</table>
         </main>
     </div>
 

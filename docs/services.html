@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voice API - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Services - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -64,47 +64,61 @@
                 <h3>Infrastructure</h3>
                 <a href="infra-overview.html">Overview</a>
                 <a href="services.html">Services</a>
-                <a href="environment.html">Environment</a>
+                <a name="environment.html">Services</a>
                 <a href="deployment.html">Deployment</a>
             </div>
         </aside>
 
         <main class="content">
-            <h1>Voice API</h1>
+            <h1>Services</h1>
 
-<p>Endpoints for WebRTC voice communication.</p>
+<p>Docker services in the Enclavr stack.</p>
 
-<h2>Get ICE Configuration</h2>
+<h2>Frontend</h2>
 
-<pre><code>GET /api/voice/ice
-Authorization: Bearer &lt;token&gt;
+<p>Next.js application serving the web interface.</p>
+
+<pre><code>image: enclavr/frontend:latest
+ports: ["3000:3000"]
 </code></pre>
 
-<h3>Response</h3>
+<h2>Server</h2>
 
-<pre><code>{
-  "iceServers": [
-    {"urls": "stun:stun.l.google.com:19302"},
-    {"urls": "turn:turn.example.com:3478", "username": "user", "credential": "pass"}
-  ]
-}
+<p>Go backend API server.</p>
+
+<pre><code>image: enclavr/server:latest
+ports: ["8080:8080"]
 </code></pre>
 
-<h2>Voice WebSocket</h2>
+<h2>PostgreSQL</h2>
 
-<p>Connect to <code>/api/voice/ws?room_id=&lt;room-id&gt;</code> for real-time voice communication.</p>
+<p>Database for persistent storage.</p>
 
-<h3>WebSocket Messages</h3>
+<pre><code>image: postgres:15-alpine
+ports: ["5432:5432"]
+volumes: [postgres_data:/var/lib/postgresql/data]
+</code></pre>
 
-<table>
-<tr><th>Type</th><th>Description</th></tr>
-<tr><td><code>voice_offer</code></td><td>SDP offer for peer connection</td></tr>
-<tr><td><code>voice_answer</code></td><td>SDP answer for peer connection</td></tr>
-<tr><td><code>voice_ice</code></td><td>ICE candidate exchange</td></tr>
-<tr><td><code>voice_mute</code></td><td>User muted/unmuted</td></tr>
-<tr><td><code>voice_join</code></td><td>User joined voice</td></tr>
-<tr><td><code>voice_leave</code></td><td>User left voice</td></tr>
-</table>
+<h2>Redis</h2>
+
+<p>Pub/Sub and caching.</p>
+
+<pre><code>image: redis:7-alpine
+ports: ["6379:6379"]
+command: redis-server --appendonly yes
+</code></pre>
+
+<h2>Coturn</h2>
+
+<p>TURN server for WebRTC NAT traversal.</p>
+
+<pre><code>image: coturn/coturn:4.6.2-alpine
+ports: ["3478:3478", "49152-49172:49152-49172"]
+</code></pre>
+
+<h2>Health Checks</h2>
+
+<p>All services include health checks for container orchestration.</p>
         </main>
     </div>
 

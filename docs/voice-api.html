@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local Setup - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Voice API - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,103 +70,41 @@
         </aside>
 
         <main class="content">
-            <h1>Local Setup</h1>
+            <h1>Voice API</h1>
 
-<p>Set up Enclavr for local development.</p>
+<p>Endpoints for WebRTC voice communication.</p>
 
-<h2>Prerequisites</h2>
+<h2>Get ICE Configuration</h2>
 
-<ul>
-<li><strong>Go 1.25+</strong> - For the server</li>
-<li><strong>Bun</strong> - For the frontend</li>
-<li><strong>Docker & Docker Compose</strong> - For infrastructure</li>
-</ul>
-
-<h2>Clone Repository</h2>
-
-<pre><code># Clone with submodules
-git clone --recurse-submodules https://github.com/enclavr/enclavr.git
-cd enclavr
+<pre><code>GET /api/voice/ice
+Authorization: Bearer &lt;token&gt;
 </code></pre>
 
-<h2>Start Infrastructure</h2>
+<h3>Response</h3>
 
-<pre><code>cd infra
-
-# Copy environment file
-cp .env.example .env
-
-# Start services
-docker-compose up -d
-
-# Verify services are running
-docker-compose ps
+<pre><code>{
+  "iceServers": [
+    {"urls": "stun:stun.l.google.com:19302"},
+    {"urls": "turn:turn.example.com:3478", "username": "user", "credential": "pass"}
+  ]
+}
 </code></pre>
 
-<p>This starts:</p>
-<ul>
-<li>PostgreSQL on port 5432</li>
-<li>Redis on port 6379</li>
-<li>Coturn on port 3478</li>
-</ul>
+<h2>Voice WebSocket</h2>
 
-<h2>Start Server</h2>
+<p>Connect to <code>/api/voice/ws?room_id=&lt;room-id&gt;</code> for real-time voice communication.</p>
 
-<pre><code>cd server
+<h3>WebSocket Messages</h3>
 
-# Run the server
-go run ./cmd/server
-</code></pre>
-
-<p>The server runs on <a href="http://localhost:8080">http://localhost:8080</a></p>
-
-<h2>Start Frontend</h2>
-
-<pre><code>cd frontend
-
-# Install dependencies
-bun install
-
-# Start development server
-bun run dev
-</code></pre>
-
-<p>The frontend runs on <a href="http://localhost:3000">http://localhost:3000</a></p>
-
-<h2>Verify Setup</h2>
-
-<ol>
-<li>Open <a href="http://localhost:3000">http://localhost:3000</a> in your browser</li>
-<li>Register a new account</li>
-<li>Create a room</li>
-<li>Test chat and voice functionality</li>
-</ol>
-
-<h2>Troubleshooting</h2>
-
-<h3>Port Already in Use</h3>
-
-<pre><code># Find process using port
-lsof -i :8080
-
-# Kill process
-kill &lt;PID&gt;
-</code></pre>
-
-<h3>Database Connection Failed</h3>
-
-<pre><code># Check PostgreSQL
-docker-compose logs postgres
-
-# Restart PostgreSQL
-docker-compose restart postgres
-</code></pre>
-
-<h3>Build Errors</h3>
-
-<pre><code># Clear and reinstall dependencies
-cd frontend &amp;&amp; rm -rf node_modules bun.lock &amp;&amp; bun install
-</code></pre>
+<table>
+<tr><th>Type</th><th>Description</th></tr>
+<tr><td><code>voice_offer</code></td><td>SDP offer for peer connection</td></tr>
+<tr><td><code>voice_answer</code></td><td>SDP answer for peer connection</td></tr>
+<tr><td><code>voice_ice</code></td><td>ICE candidate exchange</td></tr>
+<tr><td><code>voice_mute</code></td><td>User muted/unmuted</td></tr>
+<tr><td><code>voice_join</code></td><td>User joined voice</td></tr>
+<tr><td><code>voice_leave</code></td><td>User left voice</td></tr>
+</table>
         </main>
     </div>
 

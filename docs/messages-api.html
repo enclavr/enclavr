@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frontend Overview - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Messages API - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,81 +70,85 @@
         </aside>
 
         <main class="content">
-            <h1>Frontend Overview</h1>
+            <h1>Messages API</h1>
 
-<p>The Enclavr frontend is a modern React 19 application built with Next.js 16, featuring real-time chat and voice communication capabilities.</p>
+<p>Endpoints for room messaging.</p>
 
-<h2>Key Statistics</h2>
+<h2>Get Messages</h2>
 
-<table>
-<tr><th>Metric</th><th>Value</th></tr>
-<tr><td>Framework</td><td>Next.js 16.1.6</td></tr>
-<tr><td>React</td><td>19.2.4</td></tr>
-<tr><td>Components</td><td>24</td></tr>
-<tr><td>Custom Hooks</td><td>4</td></tr>
-<tr><td>API Endpoints</td><td>60+</td></tr>
-<tr><td>Routes</td><td>4</td></tr>
-<tr><td>Test Files</td><td>14</td></tr>
-</table>
-
-<h2>Project Structure</h2>
-
-<pre><code>frontend/
-├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── login/              # Login page
-│   │   ├── register/          # Registration page
-│   │   ├── rooms/             # Main rooms page
-│   │   ├── dm/                # Direct messages
-│   │   ├── layout.tsx         # Root layout
-│   │   └── page.tsx           # Home (redirects)
-│   ├── components/             # 24 React components
-│   │   ├── Chat.tsx
-│   │   ├── VoiceChat.tsx
-│   │   ├── MessageItem.tsx
-│   │   └── ... (21 more)
-│   ├── hooks/                  # Custom React hooks
-│   │   ├── useWebRTC.ts       # Voice chat
-│   │   ├── useChat.ts         # Chat WebSocket
-│   │   ├── usePresence.ts     # Presence tracking
-│   │   └── useDM.ts           # Direct messages
-│   ├── lib/
-│   │   ├── api.ts             # Main API client
-│   │   ├── store.ts           # Zustand stores
-│   │   └── webrtc/            # WebRTC utilities
-│   └── types/
-│       └── index.ts           # TypeScript interfaces
-├── e2e/                       # Playwright tests
-├── package.json
-└── next.config.js
+<pre><code>GET /api/messages?room_id=&lt;room-id&gt;&amp;limit=50&amp;before=&lt;message-id&gt;
+Authorization: Bearer &lt;token&gt;
 </code></pre>
 
-<h2>Routes</h2>
+<h2>Send Message</h2>
+
+<pre><code>POST /api/message/send
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "roomId": "uuid",
+  "content": "string"
+}
+</code></pre>
+
+<h2>Update Message</h2>
+
+<pre><code>PUT /api/message/update?message_id=&lt;message-id&gt;
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "content": "string"
+}
+</code></pre>
+
+<h2>Delete Message</h2>
+
+<pre><code>DELETE /api/message/delete?message_id=&lt;message-id&gt;
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>Search Messages</h2>
+
+<pre><code>GET /api/messages/search?q=&lt;query&gt;&amp;limit=20
+Authorization: Bearer &lt;token&gt;
+</code></pre>
+
+<h2>Reactions</h2>
+
+<h3>Add Reaction</h3>
+
+<pre><code>POST /api/reaction/add
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "messageId": "uuid",
+  "emoji": "string"
+}
+</code></pre>
+
+<h3>Remove Reaction</h3>
+
+<pre><code>DELETE /api/reaction/remove
+Authorization: Bearer &lt;token&gt;
+Content-Type: application/json
+
+{
+  "messageId": "uuid",
+  "emoji": "string"
+}
+</code></pre>
+
+<h2>Pinned Messages</h2>
 
 <table>
-<tr><th>Path</th><th>Description</th></tr>
-<tr><td><code>/</code></td><td>Root - redirects to /login or /rooms</td></tr>
-<tr><td><code>/login</code></td><td>Login page</td></tr>
-<tr><td><code>/register</code></td><td>Registration page</td></tr>
-<tr><td><code>/rooms</code></td><td>Main rooms page (voice + chat)</td></tr>
-<tr><td><code>/dm</code></td><td>Direct messages page</td></tr>
+<tr><th>Method</th><th>Endpoint</th><th>Description</th></tr>
+<tr><td>GET</td><td><code>/api/pinnedmessages</code></td><td>Get pinned messages</td></tr>
+<tr><td>POST</td><td><code>/api/pinnedmessage/pin</code></td><td>Pin a message</td></tr>
+<tr><td>POST</td><td><code>/api/pinnedmessage/unpin</code></td><td>Unpin a message</td></tr>
 </table>
-
-<h2>Development Commands</h2>
-
-<pre><code># Install dependencies
-bun install
-
-# Start dev server
-bun run dev
-
-# Run tests
-bun run test:run
-bun run test:e2e
-
-# Lint
-bun run lint
-</code></pre>
         </main>
     </div>
 

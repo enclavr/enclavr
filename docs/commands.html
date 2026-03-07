@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Commands - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -64,61 +64,69 @@
                 <h3>Infrastructure</h3>
                 <a href="infra-overview.html">Overview</a>
                 <a href="services.html">Services</a>
-                <a name="environment.html">Services</a>
+                <a href="environment.html">Environment</a>
                 <a href="deployment.html">Deployment</a>
             </div>
         </aside>
 
         <main class="content">
-            <h1>Services</h1>
+            <h1>Commands</h1>
 
-<p>Docker services in the Enclavr stack.</p>
+<p>Development commands for Enclavr components.</p>
 
-<h2>Frontend</h2>
+<h2>Frontend Commands</h2>
 
-<p>Next.js application serving the web interface.</p>
+<pre><code># Install dependencies
+bun install
 
-<pre><code>image: enclavr/frontend:latest
-ports: ["3000:3000"]
+# Start development server
+bun run dev
+
+# Run unit tests
+bun run test:run
+
+# Run E2E tests
+bun run test:e2e
+
+# Lint code
+bun run lint
+
+# Build for production
+bun run build
 </code></pre>
 
-<h2>Server</h2>
+<h2>Server Commands</h2>
 
-<p>Go backend API server.</p>
+<pre><code># Run the server
+go run ./cmd/server
 
-<pre><code>image: enclavr/server:latest
-ports: ["8080:8080"]
+# Run tests
+go test -v ./...
+
+# Run with specific test
+go test -v -run TestName ./...
+
+# Build binary
+go build -o bin/server ./cmd/server
+
+# Run linter
+golangci-lint run ./...
 </code></pre>
 
-<h2>PostgreSQL</h2>
+<h2>Infrastructure Commands</h2>
 
-<p>Database for persistent storage.</p>
+<pre><code># Start all services
+docker-compose up -d
 
-<pre><code>image: postgres:15-alpine
-ports: ["5432:5432"]
-volumes: [postgres_data:/var/lib/postgresql/data]
+# Stop all services
+docker-compose down
+
+# View logs
+docker-compose logs -f
+
+# Rebuild services
+docker-compose up -d --build
 </code></pre>
-
-<h2>Redis</h2>
-
-<p>Pub/Sub and caching.</p>
-
-<pre><code>image: redis:7-alpine
-ports: ["6379:6379"]
-command: redis-server --appendonly yes
-</code></pre>
-
-<h2>Coturn</h2>
-
-<p>TURN server for WebRTC NAT traversal.</p>
-
-<pre><code>image: coturn/coturn:4.6.2-alpine
-ports: ["3478:3478", "49152-49172:49152-49172"]
-</code></pre>
-
-<h2>Health Checks</h2>
-
-<p>All services include health checks for container orchestration.</p>
         </main>
     </div>
 

@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Testing - Enclavr</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <link rel="icon" type="image/svg+xml" href="../img/favicon.svg">
+    <title>Server Authentication - Enclavr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="img/favicon.svg">
 </head>
 <body>
     <header class="header">
         <div class="container">
-            <a href="../index.html" class="logo">Enclavr</a>
+            <a href="index.html" class="logo">Enclavr</a>
             <nav class="nav">
-                <a href="../index.html">Home</a>
+                <a href="index.html">Home</a>
                 <a href="overview.html">Docs</a>
                 <a href="https://github.com/enclavr/enclavr" target="_blank">GitHub</a>
             </nav>
@@ -23,7 +23,7 @@
         <aside class="sidebar">
             <div class="sidebar-section">
                 <h3>Getting Started</h3>
-                <a href="../index.html">Introduction</a>
+                <a href="index.html">Introduction</a>
                 <a href="overview.html">Overview</a>
                 <a href="architecture.html">Architecture</a>
                 <a href="features.html">Features</a>
@@ -70,60 +70,48 @@
         </aside>
 
         <main class="content">
-            <h1>Testing</h1>
+            <h1>Server Authentication</h1>
 
-<p>Testing strategies for Enclavr.</p>
+<p>JWT and OIDC authentication implementation.</p>
 
-<h2>Frontend Testing</h2>
+<h2>JWT Authentication</h2>
 
-<p>Frontend uses Vitest for unit tests and Playwright for E2E tests.</p>
+<p>The server uses JWT tokens for API authentication.</p>
 
-<pre><code># Run unit tests
-bun run test:run
-
-# Run E2E tests
-bun run test:e2e
-
-# Run tests in watch mode
-bun run test
-</code></pre>
-
-<h3>Test Structure</h3>
+<h3>Token Types</h3>
 
 <ul>
-<li><code>src/test/</code> - Unit tests</li>
-<li><code>e2e/</code> - End-to-end tests</li>
+<li><strong>Access Token</strong> - Short-lived (24h), used for API requests</li>
+<li><strong>Refresh Token</strong> - Long-lived (7 days), used to get new access tokens</li>
 </ul>
 
-<h2>Server Testing</h2>
+<h3>Middleware</h3>
 
-<p>Server uses Go's testing package with SQLite in-memory for tests.</p>
+<p><code>JWTAuth</code> middleware validates tokens on protected routes.</p>
 
-<pre><code># Run all tests
-go test -v ./...
-
-# Run specific package
-go test -v ./internal/handlers/...
-
-# Run with coverage
-go test -v -cover ./...
+<pre><code>router.Use(middleware.JWTAuth())
 </code></pre>
 
-<h3>Test Structure</h3>
+<h2>OIDC Authentication</h2>
 
-<ul>
-<li><code>internal/handlers/*_test.go</code> - Handler tests</li>
-<li><code>internal/websocket/*_test.go</code> - WebSocket tests</li>
-</ul>
+<p>Server supports OIDC providers for SSO.</p>
 
-<h2>Running All Tests</h2>
+<h3>Configuration</h3>
 
-<pre><code># Frontend
-cd frontend && bun run test:run && bun run test:e2e
-
-# Server
-cd server && go test -v ./...
+<pre><code>OIDC_CLIENT_ID=...
+OIDC_CLIENT_SECRET=...
+OIDC_ISSUER=...
+OIDC_REDIRECT_URL=...
 </code></pre>
+
+<h3>Flow</h3>
+
+<ol>
+<li>User visits <code>/api/auth/oidc/login</code></li>
+<li>Redirected to OIDC provider</li>
+<li>Provider redirects to <code>/api/auth/oidc/callback</code></li>
+<li>Server creates/updates user and returns JWT</li>
+</ol>
         </main>
     </div>
 
