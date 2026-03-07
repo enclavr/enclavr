@@ -1,0 +1,153 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - link "Enclavr" [ref=e4] [cursor=pointer]:
+        - /url: ""
+      - navigation [ref=e5]:
+        - link "Home" [ref=e6] [cursor=pointer]:
+          - /url: ""
+        - link "Docs" [ref=e7] [cursor=pointer]:
+          - /url: docs/overview.html
+        - link "GitHub" [ref=e8] [cursor=pointer]:
+          - /url: https://github.com/enclavr/enclavr
+  - generic [ref=e9]:
+    - complementary [ref=e10]:
+      - generic [ref=e11]:
+        - heading "Getting Started" [level=3] [ref=e12]
+        - link "Introduction" [ref=e13] [cursor=pointer]:
+          - /url: ""
+        - link "Overview" [ref=e14] [cursor=pointer]:
+          - /url: docs/overview.html
+        - link "Architecture" [ref=e15] [cursor=pointer]:
+          - /url: docs/architecture.html
+        - link "Features" [ref=e16] [cursor=pointer]:
+          - /url: docs/features.html
+      - generic [ref=e17]:
+        - heading "Development" [level=3] [ref=e18]
+        - link "Local Setup" [ref=e19] [cursor=pointer]:
+          - /url: docs/local-setup.html
+        - link "Commands" [ref=e20] [cursor=pointer]:
+          - /url: docs/commands.html
+        - link "Testing" [ref=e21] [cursor=pointer]:
+          - /url: docs/testing.html
+      - generic [ref=e22]:
+        - heading "API Reference" [level=3] [ref=e23]
+        - link "Authentication" [ref=e24] [cursor=pointer]:
+          - /url: docs/authentication-api.html
+        - link "Rooms" [ref=e25] [cursor=pointer]:
+          - /url: docs/rooms-api.html
+        - link "Messages" [ref=e26] [cursor=pointer]:
+          - /url: docs/messages-api.html
+        - link "Direct Messages" [ref=e27] [cursor=pointer]:
+          - /url: docs/direct-messages-api.html
+        - link "Voice" [ref=e28] [cursor=pointer]:
+          - /url: docs/voice-api.html
+        - link "Admin" [ref=e29] [cursor=pointer]:
+          - /url: docs/admin-api.html
+      - generic [ref=e30]:
+        - heading "Frontend" [level=3] [ref=e31]
+        - link "Overview" [ref=e32] [cursor=pointer]:
+          - /url: docs/frontend-overview.html
+        - link "Tech Stack" [ref=e33] [cursor=pointer]:
+          - /url: docs/frontend-tech-stack.html
+        - link "Components" [ref=e34] [cursor=pointer]:
+          - /url: docs/components.html
+        - link "State Management" [ref=e35] [cursor=pointer]:
+          - /url: docs/state-management.html
+        - link "API Client" [ref=e36] [cursor=pointer]:
+          - /url: docs/api-client.html
+        - link "WebRTC" [ref=e37] [cursor=pointer]:
+          - /url: docs/webrtc.html
+      - generic [ref=e38]:
+        - heading "Server" [level=3] [ref=e39]
+        - link "Overview" [ref=e40] [cursor=pointer]:
+          - /url: docs/server-overview.html
+        - link "Tech Stack" [ref=e41] [cursor=pointer]:
+          - /url: docs/tech-stack.html
+        - link "Database Models" [ref=e42] [cursor=pointer]:
+          - /url: docs/database-models.html
+        - link "Authentication" [ref=e43] [cursor=pointer]:
+          - /url: docs/server-authentication.html
+        - link "WebSocket" [ref=e44] [cursor=pointer]:
+          - /url: docs/websocket.html
+      - generic [ref=e45]:
+        - heading "Infrastructure" [level=3] [ref=e46]
+        - link "Overview" [ref=e47] [cursor=pointer]:
+          - /url: docs/infra-overview.html
+        - link "Services" [ref=e48] [cursor=pointer]:
+          - /url: docs/services.html
+        - link "Environment" [ref=e49] [cursor=pointer]:
+          - /url: docs/environment.html
+        - link "Deployment" [ref=e50] [cursor=pointer]:
+          - /url: docs/deployment.html
+    - main [ref=e51]:
+      - heading "Enclavr Documentation" [level=1] [ref=e52]
+      - paragraph [ref=e53]:
+        - text: Welcome to the Enclavr documentation. Enclavr is a
+        - strong [ref=e54]: self-hosted voice chat platform
+        - text: ", providing real-time voice communication, text chat, direct messages, and more."
+      - heading "Quick Links" [level=2] [ref=e55]
+      - generic [ref=e56]:
+        - link "Architecture Overview" [ref=e57] [cursor=pointer]:
+          - /url: docs/architecture.html
+        - link "Frontend Docs" [ref=e58] [cursor=pointer]:
+          - /url: docs/frontend-overview.html
+        - link "Server Docs" [ref=e59] [cursor=pointer]:
+          - /url: docs/server-overview.html
+        - link "Infrastructure" [ref=e60] [cursor=pointer]:
+          - /url: docs/infra-overview.html
+        - link "API Reference" [ref=e61] [cursor=pointer]:
+          - /url: docs/authentication-api.html
+      - heading "Key Features" [level=2] [ref=e62]
+      - list [ref=e63]:
+        - listitem [ref=e64]:
+          - strong [ref=e65]: Real-time voice communication
+          - text: using WebRTC
+        - listitem [ref=e66]:
+          - strong [ref=e67]: Text chat
+          - text: with reactions, threads, and polls
+        - listitem [ref=e68]:
+          - strong [ref=e69]: Direct messages
+          - text: between users
+        - listitem [ref=e70]:
+          - strong [ref=e71]: User presence
+          - text: tracking (online/away/busy)
+        - listitem [ref=e72]:
+          - strong [ref=e73]: Role-based permissions
+          - text: for moderation
+        - listitem [ref=e74]:
+          - strong [ref=e75]: OIDC authentication
+          - text: support
+        - listitem [ref=e76]:
+          - strong [ref=e77]: Self-hosted
+          - text: deployment with Docker
+      - heading "Tech Stack" [level=2] [ref=e78]
+      - table [ref=e79]:
+        - rowgroup [ref=e80]:
+          - row "Component Technology" [ref=e81]:
+            - columnheader "Component" [ref=e82]
+            - columnheader "Technology" [ref=e83]
+          - row "Frontend Next.js 16, React 19, TypeScript" [ref=e84]:
+            - cell "Frontend" [ref=e85]
+            - cell "Next.js 16, React 19, TypeScript" [ref=e86]
+          - row "Backend Go 1.25, PostgreSQL 15, WebSocket" [ref=e87]:
+            - cell "Backend" [ref=e88]
+            - cell "Go 1.25, PostgreSQL 15, WebSocket" [ref=e89]
+          - row "Infrastructure Docker Compose, Redis, Coturn" [ref=e90]:
+            - cell "Infrastructure" [ref=e91]
+            - cell "Docker Compose, Redis, Coturn" [ref=e92]
+      - heading "Getting Started" [level=2] [ref=e93]
+      - paragraph [ref=e94]:
+        - text: Ready to set up Enclavr? Head to the
+        - link "Local Setup" [ref=e95] [cursor=pointer]:
+          - /url: docs/local-setup.html
+        - text: guide to get started with development, or check the
+        - link "Deployment" [ref=e96] [cursor=pointer]:
+          - /url: docs/deployment.html
+        - text: guide for production.
+  - contentinfo [ref=e97]:
+    - paragraph [ref=e99]: Copyright © 2026 Enclavr.
+```
