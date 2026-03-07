@@ -2,6 +2,14 @@
 
 # Enclavr Autonomous Agent Loop
 # Runs continuously with smart change detection and logging
+#
+# This script uses Kilo with MCP (Model Context Protocol) tools:
+# - Git MCP tools for version control
+# - Neon MCP tools for database operations
+# - Sentry MCP tools for error tracking
+# - Context7 MCP tools for documentation lookup
+# - Web tools for current information
+# See AGENTS.md for full MCP tool documentation.
 
 LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
@@ -16,6 +24,7 @@ KILO_FORMAT="default"   # Human-readable format
 # Session configuration
 KILO_SESSION_ID="enclavr-autonomous-$(hostname)-$(date '+%Y%m%d')" # Persistent session ID
 KILO_AGENT=""  # Optional: specific agent type
+KILO_TIMEOUT=600  # 10 minute timeout for Kilo runs
 
 log() {
     local level="${2:-INFO}"
@@ -61,6 +70,24 @@ find_kilo() {
     return 0
 }
 
+check_gh_cli() {
+    if ! command -v gh &> /dev/null; then
+        log_error "GitHub CLI (gh) is not installed"
+        log_error "Install via: https://github.com/cli/cli#installation"
+        return 1
+    fi
+
+    # Check gh is authenticated
+    if ! gh auth status &> /dev/null; then
+        log_error "GitHub CLI is not authenticated"
+        log_error "Run: gh auth login"
+        return 1
+    fi
+
+    log_debug "gh CLI found and authenticated"
+    return 0
+}
+
 run_kilo() {
     if [ -z "$KILO_PATH" ]; then
         find_kilo || return 1
@@ -91,16 +118,31 @@ run_kilo() {
     # Add the message
     cmd+=("$@")
 
-    log_info "Executing task..."
+    log_info "Executing task... (timeout: ${KILO_TIMEOUT}s)"
     local start_time=$(date +%s)
 
-    # Execute and capture output
+    # Execute with timeout
     local output_file=$(mktemp)
-    "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
-    local exit_code=${PIPESTATUS[0]}
+    local exit_code=124  # Default to timeout
+
+    if command -v timeout &> /dev/null; then
+        timeout "$KILO_TIMEOUT" "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
+        exit_code=${PIPESTATUS[0]}
+    else
+        # Fallback: run without timeout but log warning
+        log_warn "timeout command not available - running without timeout"
+        "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
+        exit_code=${PIPESTATUS[0]}
+    fi
 
     local end_time=$(date +%s)
     local duration=$((end_time - start_time))
+
+    # Handle timeout specifically
+    if [ $exit_code -eq 124 ]; then
+        log_warn "Task timed out after ${KILO_TIMEOUT}s"
+        echo "Task timed out after ${KILO_TIMEOUT}s" >> "$output_file"
+    fi
 
     log_info "Task completed in ${duration}s (exit: $exit_code)"
 
@@ -357,8 +399,11 @@ log "Configuration:"
 log "  Log File: $LOG_FILE"
 log "  Session: $KILO_SESSION_ID"
 log "  Log Level: $KILO_LOG_LEVEL"
+log "  Timeout: ${KILO_TIMEOUT}s"
 log "==================================="
 
+# Verify prerequisites
+check_gh_cli || exit 1
 find_kilo
 
 # Initialize cooldown file if not exists
@@ -389,12 +434,23 @@ while true; do
 
     # === Git Submodule Operations (periodic) ===
     if [ $((loop_start - last_submodule_update)) -ge $submodule_interval ]; then
-        git submodule update --remote --merge 2>&1 >/dev/null
+        log "Updating submodules..."
+        submodule_output=$(git submodule update --remote --merge 2>&1)
+        submodule_status=$?
+
+        if [ $submodule_status -ne 0 ]; then
+            log_warn "Submodule update failed: $submodule_output"
+        else
+            if [ -n "$submodule_output" ]; then
+                log "  Submodule output: $submodule_output"
+            fi
+        fi
+
         git add -A 2>/dev/null
         if ! git diff --quiet --staged 2>/dev/null; then
+            # Use conventional commit format
             git commit -m "chore: update submodules to latest" 2>/dev/null
-            git push 2>/dev/null
-            log "  Submodules updated"
+            git push 2>/dev/null && log "  Submodules updated" || log_warn "  Failed to push submodules"
         fi
         last_submodule_update=$loop_start
     fi

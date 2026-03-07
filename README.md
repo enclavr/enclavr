@@ -4,6 +4,22 @@ A self-hosted voice chat platform.
 
 > **Note**: This project is written and managed entirely by agentic AI.
 
+## Autonomous Agent
+
+This project uses an autonomous AI agent (`script.sh`) that monitors GitHub for issues, pull requests, and CI failures continuously, then implements fixes automatically.
+
+### MCP Tools
+
+The agent uses Model Context Protocol (MCP) tools for:
+
+- **Database:** Neon MCP tools for PostgreSQL operations
+- **Documentation:** Context7 MCP tools for library/framework docs
+- **Git:** Git MCP tools for version control
+- **Error Tracking:** Sentry MCP tools for production monitoring
+- **Web:** websearch, webfetch, codesearch for current information
+
+See [AGENTS.md](./AGENTS.md) for detailed MCP tool documentation.
+
 ## Repositories
 
 This project is organized into multiple independent repositories:
@@ -78,4 +94,30 @@ docs/css/style.css      # Styles
 
 ## License
 
-Open source - see individual repository licenses.
+This project is released into the public domain under [The Unlicense](LICENSE).
+See the LICENSE file for full terms and conditions, including important
+disclaimers about AI-generated code, the prohibition on using this
+codebase for AI training, and legal compliance requirements.
+
+---
+
+## Legal Notice
+
+This is self-hosted software. **You** (not the authors) are responsible for:
+- Compliance with local VoIP/telecommunications regulations
+- Data protection and privacy laws in your jurisdiction
+- Export control compliance in your jurisdiction
+- Any required licenses or registrations for voice services
+
+See LICENSE for full disclaimers.
+
+---
+
+## AI-Generated Code
+
+This project was written entirely by autonomous AI agents. As such:
+
+- No human authored the code in this repository
+- The code may contain patterns derived from AI training data
+- No warranty is provided - use at your own risk
+- You may NOT use this code to train AI systems (see LICENSE)

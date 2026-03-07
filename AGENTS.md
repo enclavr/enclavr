@@ -549,3 +549,74 @@ codesearch --query "Go GORM PostgreSQL connection pooling" --tokensNum 5000
 - ✅ Use `codesearch` for code examples and implementation patterns
 - ✅ Use `webfetch` for full documentation pages
 - 🚫 Don't use for real-time data or API calls
+
+### Sequential Thinking Tool
+
+Use this tool for complex problem-solving through structured thought processes.
+
+```bash
+# Analyze a problem with sequential thinking
+mcp-sequential-thinking_sequentialthinking --thought "Analyzing the problem step by step..." --nextThoughtNeeded true --thoughtNumber 1 --totalThoughts 5
+```
+
+**When to use Sequential Thinking:**
+- ✅ Use for complex multi-step problems
+- ✅ Use for planning and design with room for revision
+- ✅ Use when full scope might not be clear initially
+- ✅ Use for analysis that might need course correction
+
+### Additional Neon MCP Tools
+
+```bash
+# List organizations
+neon_list_organizations --search "enclavr"
+
+# List shared projects
+neon_list_shared_projects --limit 10
+
+# Create a new Neon project
+neon_create_project --name "enclavr-production"
+
+# Delete a Neon project
+neon_delete_project --projectId "project-id"
+
+# Reset a branch from parent
+neon_reset_from_parent --branchIdOrName "feature-branch" --projectId "project-id"
+
+# Search for projects/organizations/branches
+neon_search --query "enclavr"
+
+# Fetch details about a specific resource
+neon_fetch --id "resource-id"
+
+# List documentation resources
+neon_list_docs_resources
+
+# Get a specific documentation page
+neon_get_doc_resource --slug "docs/guides/prisma.md"
+
+# Provision Neon Auth for a branch
+neon_provision_neon_auth --projectId "project-id"
+
+# Provision Neon Data API for a branch
+neon_provision_neon_data_api --projectId "project-id"
+```
+
+### Additional Sentry MCP Tools
+
+```bash
+# Create DSN for existing project
+sentry_create_dsn --organizationSlug "enclavr" --projectSlug "api" --name "Production"
+
+# Update project settings
+sentry_update_project --organizationSlug "enclavr" --projectSlug "api" --name "Updated Name"
+
+# Search Sentry documentation
+sentry_search_docs --query "Django setup SENTRY_DSN"
+
+# Get Sentry documentation page
+sentry_get_doc --path "/platforms/javascript/guides/nextjs.md"
+
+# Get event attachments
+sentry_get_event_attachment --eventId "event-id" --organizationSlug "enclavr" --projectSlug "api"
+```

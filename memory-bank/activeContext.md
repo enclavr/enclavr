@@ -1,76 +1,61 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Documentation restructuring complete - moved static HTML docs into main repo. All systems validated and working.
+Codebase analysis and Playwright testing - added comprehensive E2E tests for frontend and static HTML docs with real data structures.
 
 ## Latest Changes (Mar 7, 2026)
 
-### Documentation Restructuring
-- Converted Docusaurus docs to static HTML pages
-- Moved docs from separate repository into `/docs` folder in main repo
-- Created 27 HTML documentation pages with responsive CSS sidebar navigation
-- Updated GitHub Pages workflow to deploy from `/docs` folder
-- All paths fixed for relative navigation
-- Docs accessible at: https://enclavr.github.io/enclavr/docs/ (when GitHub Pages enabled)
+### MCP Tools Documentation
+- Analyzed all available MCP tools in the codebase
+- Updated all AGENTS.md files with complete MCP tools coverage:
+  - Root AGENTS.md: Added sequential_thinking, additional Neon tools, additional Sentry tools
+  - frontend/AGENTS.md: Added Sentry tools, sequential thinking, Neon docs tools
+  - server/AGENTS.md: Added sequential thinking tool
+  - infra/AGENTS.md: Added Sentry MCP tools, sequential thinking
+- Updated README.md to reference MCP tools
+- Updated script.sh to reference MCP tools
 
-### Files Changed
-- README.md: Added docs section and GitHub Pages info
-- AGENTS.md: Added docs repository to project structure table
-- script.sh: Already handles docs in REPOS list (no changes needed)
-- Created docs/index.html - Home page
-- Created docs/docs/*.html - 26 documentation pages
-- Created docs/css/style.css - Responsive styling
-- Created docs/img/ - Assets folder
+### Playwright Testing
+- Created comprehensive E2E tests for frontend (`/home/dev/Projects/enclavr/frontend/e2e/`):
+  - rooms.spec.ts: 58 tests for rooms page with real data (users, rooms, categories, messages, presence)
+  - voice.spec.ts: 36 tests for voice chat/WebRTC (ICE config, user states, controls)
+- Created Playwright tests for static HTML docs (`/home/dev/Projects/enclavr/docs/e2e/`):
+  - docs.spec.ts: 115 tests covering all 27 documentation pages
+  - Tests: homepage, sidebar navigation, API docs, frontend docs, server docs, infra docs
+  - Cross-references, responsive design, accessibility, performance, styling
+- Created docs playwright.config.ts with file:// protocol support
+- Created docs package.json with matching Playwright version
+
+### Test Results
+- Frontend sample tests: 9/9 passing
+- Docs tests: 115/115 passing
+- Frontend rooms/voice tests: Require authenticated server (expected)
 
 ## Previous Changes (Mar 7, 2026)
 
+### License & Legal Framework
+- Created comprehensive LICENSE file with The Unlicense
+- Added AI-Generated Code Notice and AI Training Prohibition
+- Added Legal Compliance Disclaimer for export controls, data protection
+
+### Autonomous Agent Script Improvements
+- Added gh CLI validation (check_gh_cli function)
+- Implemented timeout handling (KILO_TIMEOUT=600)
+- Fixed submodule update logging
+
+### Documentation Restructuring
+- Converted Docusaurus docs to static HTML pages
+- Created 27 HTML documentation pages with responsive CSS
+
 ### Infrastructure Docker Compose Fix
-- Fixed Docker Compose configuration validation error:
-  - Changed `cpu` to `cpus` in resource limits (Docker Compose v2 requirement)
-  - Corrected indentation to 4-space consistency
-- `docker compose config` now validates successfully
-- Commit: dc9d529 (enclavr/infra)
-- All services defined: postgres, redis, server, frontend, coturn
+- Changed `cpu` to `cpus` in resource limits
+- Docker Compose v2 validation passes
 
-### Infrastructure CI Configuration Fix
-- Fixed hadolint action version reference in `.github/workflows/ci.yml`:
-  - Changed `hadolint/hadolint@v2` → `@v2.1.0` (v2 tag does not exist on Docker Hub)
-- This resolves potential CI failures during the lint step
-- Verified workflow syntax is valid
-- Commit: 2b7feaf (enclavr/infra)
-- Note: CI failures due to GitHub Actions billing limits (ACTIONS_RUNTIME_TOKEN missing) are expected and should be ignored per AGENTS.md
-
-### Infrastructure Security Hardening & Best Practices
-- Pin all container images to specific versions for security and reproducibility
-- Add health checks for all services with appropriate `start_period`
-- Improve Redis configuration: enable AOF persistence
-- Add dedicated volume for server uploads
-- Add explicit network configuration for isolation
-- Apply resource limits with CPU quotas
-- Enhance server Dockerfile with non-root user
-
-### Frontend TypeScript Bug Fix
-- Fixed critical TypeScript error in `src/hooks/useChat.ts`:
-  - Added missing constants: `MAX_RECONNECT_ATTEMPTS = 5`, `INITIAL_RECONNECT_DELAY = 1000ms`, `MAX_RECONNECT_DELAY = 30000ms`
-- Enhanced `src/test/useChat.edge.test.ts`:
-  - Removed unused `waitFor` import
-  - Improved WebSocket mocking
-- All lint, typecheck, and tests pass (549 tests)
-- Commit: 2b4ddbd (enclavr/frontend)
+### Infrastructure Security Hardening
+- Pin container images to specific versions
+- Add health checks for all services
+- Non-root user for containers
 
 ### Server Security Enhancement
 - Added non-root user for container security
 - All tests pass (819+), golangci-lint passes (0 issues)
-
-### Autonomous Agent Script Fix
-- Refactored `script.sh` into proper infinite loop architecture
-- Integrated GitHub management functions periodically
-- Added periodic submodule sync
-- Fixed path handling for docs
-
-## Verification
-✅ README.md updated with docs section
-✅ AGENTS.md updated with docs repository
-✅ script.sh handles docs as folder (not submodule)
-✅ All documentation pages created in docs/ folder
-✅ GitHub Pages ready - deploy from /docs folder

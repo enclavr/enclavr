@@ -1,10 +1,32 @@
 # Progress - Enclavr
 
 ## What Works
+- **MCP Tools Documentation** (added Mar 7, 2026):
+  - Complete MCP tools coverage across all AGENTS.md files
+  - Root AGENTS.md: sequential_thinking, additional Neon/Sentry tools
+  - frontend/AGENTS.md: Sentry tools, sequential thinking, Neon docs
+  - server/AGENTS.md: sequential thinking tool
+  - infra/AGENTS.md: Sentry MCP tools, sequential thinking
+  - README.md and script.sh reference MCP tools
+- **Playwright Testing** (added Mar 7, 2026):
+  - Frontend E2E: rooms.spec.ts (58 tests), voice.spec.ts (36 tests)
+  - Docs E2E: docs.spec.ts (115 tests for all 27 pages)
+  - Frontend sample tests: 9/9 passing
+  - Docs tests: 115/115 passing
+- **License & Legal Framework** (added Mar 7, 2026):
+  - Comprehensive LICENSE with The Unlicense (public domain)
+  - AI-Generated Code Notice - disclaims originality, warns about training data
+  - AI Training Prohibition - explicitly forbids AI training use
+  - Legal Compliance Disclaimer - export controls, data protection, telecom
+  - No warranties - disclaimers for all legal consequences
 - Project documentation structure
 - Memory bank system
 - CI/CD resilient to GitHub Actions billing limits (added Mar 7, 2026)
 - Autonomous agent loop with smart change detection and GitHub integration (fixed Mar 7, 2026)
+  - Added gh CLI validation at startup (check_gh_cli function)
+  - Added 10-minute timeout with timeout command handling
+  - Improved submodule update logging (captures output, logs failures)
+  - Script syntax validated with `bash -n`
 - Static HTML documentation in /docs folder (added Mar 7, 2026)
 - Go backend server with:
   - User authentication (JWT)
