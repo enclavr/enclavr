@@ -3,7 +3,13 @@
     "permission":{
         "*":"allow"
     },
-    "model":"stepfun/step-3.5-flash:free",
+    "provider":{
+        "openrouter":{
+            "models":{
+                "stepfun/step-3.5-flash:free":{}
+            }
+        }
+    },
     "agent":{
         "build":{
             "temperature":0.75
