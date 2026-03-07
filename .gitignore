@@ -4,3 +4,5 @@ agent.log
 *.log
 .DS_Store
 actions-runner/
+.ci_failure_cache
+.proactive_cooldown
