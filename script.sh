@@ -7,24 +7,24 @@ LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
 REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra enclavr/docs"
 
-# Opencode logging configuration - EXTREMELY LOUD
-OPENCODE_LOG_LEVEL="DEBUG"  # Maximum verbosity
-OPENCODE_PRINT_LOGS="true"  # Print to stderr for real-time monitoring
-OPENCODE_SHOW_THINKING="true" # Show all AI thinking blocks
-OPENCODE_FORMAT="default"   # Human-readable format
+# Kilo logging configuration - EXTREMELY LOUD
+KILO_LOG_LEVEL="DEBUG"  # Maximum verbosity
+KILO_PRINT_LOGS="true"  # Print to stderr for real-time monitoring
+KILO_SHOW_THINKING="true" # Show all AI thinking blocks
+KILO_FORMAT="default"   # Human-readable format
 
 # CRITICAL: ALWAYS use free models only - never use paid models
-OPENCODE_USE_FREE_MODELS="true"
-OPENCODE_FREE_MODELS=(
+KILO_USE_FREE_MODELS="true"
+KILO_FREE_MODELS=(
     "stepfun/step-3.5-flash:free"
     "anthropic/claude-3-haiku:free"
     "openai/gpt-3.5-turbo:free"
     "meta-llama/llama-3-8b:free"
 )
-# OPENCODE_MODEL is disabled - free models only
-OPENCODE_MODEL=""  # Do not set - will be overridden by free model list
-OPENCODE_AGENT=""  # Optional: specific agent type
-OPENCODE_SESSION_ID="enclavr-autonomous-$(hostname)-$(date '+%Y%m%d')" # Persistent session ID
+# KILO_MODEL is disabled - free models only
+KILO_MODEL=""  # Do not set - will be overridden by free model list
+KILO_AGENT=""  # Optional: specific agent type
+KILO_SESSION_ID="enclavr-autonomous-$(hostname)-$(date '+%Y%m%d')" # Persistent session ID
 
 log() {
     local level="${2:-INFO}"
@@ -47,27 +47,27 @@ log_error() {
     log "[ERROR] $1" "ERROR" >&2
 }
 
-OPENCODE_PATH=""
-OPENCODE_SEARCH_PATHS="/home/dev/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
+KILO_PATH=""
+KILO_SEARCH_PATHS="/home/dev/.kilo/bin:/usr/local/bin:/usr/bin:/bin"
 
-find_opencode() {
-    log_debug "Searching for opencode in: $OPENCODE_SEARCH_PATHS"
-    for dir in $(echo "$OPENCODE_SEARCH_PATHS" | tr ':' ' '); do
-        log_debug "Checking: $dir/opencode"
-        if [ -x "$dir/opencode" ]; then
-            OPENCODE_PATH="$dir/opencode"
-            log "Found opencode at: $OPENCODE_PATH"
+find_kilo() {
+    log_debug "Searching for kilo in: $KILO_SEARCH_PATHS"
+    for dir in $(echo "$KILO_SEARCH_PATHS" | tr ':' ' '); do
+        log_debug "Checking: $dir/kilo"
+        if [ -x "$dir/kilo" ]; then
+            KILO_PATH="$dir/kilo"
+            log "Found kilo at: $KILO_PATH"
             return 0
         fi
     done
 
-    log_debug "Trying which opencode..."
-    OPENCODE_PATH=$(which opencode 2>/dev/null)
-    if [ -z "$OPENCODE_PATH" ]; then
-        log_error "opencode not found in PATH"
+    log_debug "Trying which kilo..."
+    KILO_PATH=$(which kilo 2>/dev/null)
+    if [ -z "$KILO_PATH" ]; then
+        log_error "kilo not found in PATH"
         return 1
     fi
-    log "Found opencode at: $OPENCODE_PATH"
+    log "Found kilo at: $KILO_PATH"
     return 0
 }
 
