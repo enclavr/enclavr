@@ -483,25 +483,25 @@ check_ci() {
                 log_info "Starting kilo analysis for CI failure (Run $id)"
                 run_kilo run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
 
-                local opencode_exit=$?
-                log_debug "Opencode returned exit code: $opencode_exit"
+                local kilo_exit=$?
+                log_debug "Kilo returned exit code: $kilo_exit"
 
-                if [ $opencode_exit -ne 0 ]; then
-                    log_error "Opencode failed for CI run $id (exit $opencode_exit)"
+                if [ $kilo_exit -ne 0 ]; then
+                    log_error "kilo failed for CI run $id (exit $kilo_exit)"
                     log_warn "Initiating retry after 30s backoff..."
                     sleep 30
 
                     run_kilo run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
-                    opencode_exit=$?
+                    kilo_exit=$?
 
-                    if [ $opencode_exit -ne 0 ]; then
-                        log_error "Retry FAILED for CI run $id (exit $opencode_exit) - SKIPPING"
+                    if [ $kilo_exit -ne 0 ]; then
+                        log_error "Retry FAILED for CI run $id (exit $kilo_exit) - SKIPPING"
                     else
                         log_info "Retry succeeded for CI run $id"
                     fi
                 fi
 
-                log_info "Completed CI analysis for run $id (exit: $opencode_exit)"
+                log_info "Completed CI analysis for run $id (exit: $kilo_exit)"
             done
         else
             log_info "No failed CI runs in $r"
@@ -547,19 +547,19 @@ sync_repos() {
 
 # ========== Main Loop ==========
 
-log "=== STARTING ENCLAVR AUTONOMOUS AGENT ==="
-log "Configuration:"
-log "  Project Dir: $PROJECT_DIR"
-log "  Repos: $REPOS"
-log "  Log File: $LOG_FILE"
-log "  OpenCode Session: $OPENCODE_SESSION_ID"
-log "  Free Models: $OPENCODE_USE_FREE_MODELS"
-if [ "$OPENCODE_USE_FREE_MODELS" = "true" ]; then
-    log "  Free Model List: ${OPENCODE_FREE_MODELS[*]}"
-fi
-log "  Log Level: $OPENCODE_LOG_LEVEL"
-log "  Show Thinking: $OPENCODE_SHOW_THINKING"
-log "==================================="
+ log "=== STARTING ENCLAVR AUTONOMOUS AGENT ==="
+ log "Configuration:"
+ log "  Project Dir: $PROJECT_DIR"
+ log "  Repos: $REPOS"
+ log "  Log File: $LOG_FILE"
+ log "  Kilo Session: $KILO_SESSION_ID"
+ log "  Free Models: $KILO_USE_FREE_MODELS"
+ if [ "$KILO_USE_FREE_MODELS" = "true" ]; then
+     log "  Free Model List: ${KILO_FREE_MODELS[*]}"
+ fi
+ log "  Log Level: $KILO_LOG_LEVEL"
+ log "  Show Thinking: $KILO_SHOW_THINKING"
+ log "==================================="
 
 find_kilo
 
