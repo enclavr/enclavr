@@ -71,6 +71,29 @@
 - Build succeeds ✅
 - Committed and pushed to remote (commit 19a7a6f)
 
+### Infrastructure Security Hardening & Best Practices (Proactive) (Mar 7, 2026)
+- Comprehensive Docker Compose improvements:
+  - Pin all container images to specific versions (Alpine 3.21, Coturn 4.6.2-alpine, Go builder 1.25.7-alpine)
+  - Add health checks for all services with proper start periods (40s)
+  - Enable Redis AOF persistence (`--appendonly yes`) and periodic saves
+  - Add dedicated volume for server uploads (`server_uploads`) for data persistence
+  - Explicit network configuration (`infra_default`) for isolation
+  - Apply resource limits with CPU quotas (`cpus` field)
+- Server Dockerfile hardening:
+  - Pin Alpine base to 3.21, add OCI metadata labels (title, description, vendor, license)
+  - Optimize layer caching: copy go.mod/go.sum separately before source
+  - Use virtual build deps (`.build-deps`) that get removed in same layer
+  - Remove unnecessary config.go copy (compiled into binary)
+  - Remove default DB env vars (should come from docker-compose)
+- Documentation enhancements:
+  - Overhauled README.md with quick start guide, troubleshooting, architecture diagram
+  - Added services table with health checks and resource limits
+  - Added security recommendations and production deployment checklist
+- Validation: `docker-compose config` passes without errors
+- All changes committed and pushed:
+  - infra@0f468a7 (docker-compose.yml, README.md)
+  - server@abe2f26 (Dockerfile)
+
 ## Latest Improvement (Mar 5, 2026)
 - GitHub Actions CI optimization:
   - Weekly schedule (Sunday midnight UTC) on all 4 repos

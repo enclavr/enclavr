@@ -21,6 +21,35 @@ Infrastructure fix and comprehensive improvements across all submodules. Recent 
 - Commit: 2b7feaf (enclavr/infra)
 - Note: CI failures due to GitHub Actions billing limits (ACTIONS_RUNTIME_TOKEN missing) are expected and should be ignored per AGENTS.md
 
+### Infrastructure Security Hardening & Best Practices (Proactive)
+- Pin all container images to specific versions for security and reproducibility:
+  - Alpine base: `3.21` (was `:latest`)
+  - Coturn: `4.6.2-alpine` (was `:latest`)
+  - Go builder: `golang:1.25.7-alpine`
+- Add health checks for all services with appropriate `start_period`:
+  - postgres: `pg_isready` (40s start period)
+  - redis: `redis-cli ping` (40s start period)
+  - frontend: HTTP GET `/` (40s start period)
+  - coturn: TCP port check (40s start period)
+- Improve Redis configuration: enable AOF persistence (`--appendonly yes`) with periodic saves
+- Add dedicated volume for server uploads (`server_uploads`) for data persistence
+- Add explicit network configuration (`infra_default`) for isolation
+- Apply resource limits with CPU quotas (`cpus` field, not `cpu`)
+- Enhance server Dockerfile (separate commit in server submodule):
+  - Pin Alpine to 3.21, add metadata labels
+  - Optimize layer caching with separate go.mod copy
+  - Use virtual build deps that get removed
+  - Remove unnecessary file copies
+  - Remove default env vars (should come from docker-compose)
+- Comprehensive README.md overhaul:
+  - Added quick start guide, troubleshooting section
+  - Added services table with health checks
+  - Added resource limits table
+  - Added security recommendations and production checklist
+  - Added architecture diagram
+- All changes validated: `docker-compose config` passes without errors
+- Commits: infra@0f468a7, server@abe2f26
+
 ### Frontend TypeScript Bug Fix
 - Fixed critical TypeScript error in `src/hooks/useChat.ts`:
   - Added missing constants: `MAX_RECONNECT_ATTEMPTS = 5`, `INITIAL_RECONNECT_DELAY = 1000ms`, `MAX_RECONNECT_DELAY = 30000ms`
@@ -85,8 +114,7 @@ Infrastructure fix and comprehensive improvements across all submodules. Recent 
 ✅ All tests pass (server: 819+, frontend: 549)
 ✅ Docker Compose configuration valid
 ✅ TypeScript type checking passes
-✅ Submodules updated to latest commits
+✅ Submodules updated to latest commits (infra:0f468a7, server:abe2f26)
 ✅ Autonomous agent script validated (bash -n)
-✅ Infrastructure docker-compose config validated
-✅ Infrastructure CI workflow fixed (hadolint version corrected)
+✅ Infrastructure security hardening complete
 ✅ All changes committed and pushed
