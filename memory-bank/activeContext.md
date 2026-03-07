@@ -1,7 +1,17 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Proactive improvements and CI optimization.
+CI/CD billing limits handling - making CI resilient to GitHub Actions billing limits.
+
+## Latest Changes (Mar 7, 2026)
+
+### GitHub Actions Billing Limits Handling
+- Updated AGENTS.md to clearly document billing limits behavior:
+  - CI failures due to billing limits are expected and should be IGNORED
+  - CI automatically resumes when billing cycle resets (start of each month)
+  - NEVER try to fix CI failures caused by billing limits - these are not code issues
+  - Weekly schedule minimizes usage to avoid hitting limits
+- This is critical because the repositories are private and GitHub Actions has limited free minutes
 
 ## Latest Improvement (Mar 6, 2026)
 

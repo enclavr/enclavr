@@ -201,6 +201,14 @@ When CI breaks:
 3. Ensure tests pass
 4. Commit and push
 
+### GitHub Actions Billing Limits
+GitHub Actions has monthly free minutes for private repositories. When billing limits are reached:
+- CI workflows will fail with billing-related errors
+- **This is expected and should be IGNORED** - CI will automatically resume when the billing cycle resets (at the start of each month)
+- **NEVER try to fix CI failures caused by billing limits** - these are not code issues
+- The workflow runs weekly (not on every push) to minimize usage
+- Only fix actual code/test failures, not billing-related failures
+
 ## Standards
 
 - **Always perform web search as the source of truth** because your current data is outdated

@@ -3,6 +3,7 @@
 ## What Works
 - Project documentation structure
 - Memory bank system
+- CI/CD resilient to GitHub Actions billing limits (added Mar 7, 2026)
 - Go backend server with:
   - User authentication (JWT)
   - Room management
