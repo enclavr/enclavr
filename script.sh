@@ -401,9 +401,9 @@ check_pulls() {
                     log_info "After wait, rate limit: $RATE_REMAINING"
                 fi
 
-                # Use opencode to review and handle the PR (non-interactive)
-                log_info "Starting opencode review for PR #$num in $r"
-                run_opencode run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review."
+                # Use kilo to review and handle the PR (non-interactive)
+                log_info "Starting kilo review for PR #$num in $r"
+                run_kilo run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review."
 
                 local opencode_exit=$?
                 log_debug "Opencode returned exit code: $opencode_exit"
@@ -480,8 +480,8 @@ check_ci() {
                 echo "${r}:${id}" >> "$cache_file"
                 log_debug "Added $r:$id to CI cache"
 
-                log_info "Starting opencode analysis for CI failure (Run $id)"
-                run_opencode run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
+                log_info "Starting kilo analysis for CI failure (Run $id)"
+                run_kilo run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
 
                 local opencode_exit=$?
                 log_debug "Opencode returned exit code: $opencode_exit"
@@ -491,7 +491,7 @@ check_ci() {
                     log_warn "Initiating retry after 30s backoff..."
                     sleep 30
 
-                    run_opencode run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
+                    run_kilo run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
                     opencode_exit=$?
 
                     if [ $opencode_exit -ne 0 ]; then
@@ -519,8 +519,8 @@ check_releases() {
             echo "$RELEASES" | while read tag name; do
                 log "  - $tag: $name"
 
-                # Use opencode to analyze and potentially create release notes
-                run_opencode run --continue "Analyze release '$tag' in $r: '$name'. Review the release, check for any issues, and update documentation if needed."
+                # Use kilo to analyze and potentially create release notes
+                run_kilo run --continue "Analyze release '$tag' in $r: '$name'. Review the release, check for any issues, and update documentation if needed."
             done
         fi
     done
@@ -722,7 +722,7 @@ while true; do
         fi
 
         log_info "Proactive task selected: $TASK"
-        run_opencode run --continue "$TASK"
+        run_kilo run --continue "$TASK"
 
         EXIT_CODE=$?
         proactive_runs=$((proactive_runs + 1))
@@ -819,7 +819,7 @@ while true; do
     log_info "Target repository: $TARGET_REPO"
     log_info "Task: $TASK"
 
-    run_opencode run --continue "$TASK"
+    run_kilo run --continue "$TASK"
 
     EXIT_CODE=$?
 
