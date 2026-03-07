@@ -1,3 +1,3 @@
 #!/bin/bash
 
-opencode run --continue "Analyze current codebase and read memory bank"
+kilo run "Analyze current codebase and read memory bank"
