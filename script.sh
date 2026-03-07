@@ -1,3 +1,3 @@
 #!/bin/bash
 
-opencode --help
+opencode run "Opencode Test. Don't do anything"
