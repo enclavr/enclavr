@@ -71,25 +71,25 @@ find_kilo() {
     return 0
 }
 
-run_opencode() {
-    if [ -z "$OPENCODE_PATH" ]; then
-        log_debug "OPENCODE_PATH not set, attempting to find..."
-        find_opencode || return 1
+run_kilo() {
+    if [ -z "$KILO_PATH" ]; then
+        log_debug "KILO_PATH not set, attempting to find..."
+        find_kilo || return 1
     fi
 
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    log_debug "Preparing to run opencode with args: $@"
+    log_debug "Preparing to run kilo with args: $@"
 
     # SECURITY: NEVER use paid models - only free models allowed
-    # Always use the free models list, ignore any OPENCODE_MODEL setting
-    local models_to_try=("${OPENCODE_FREE_MODELS[@]}")
+    # Always use the free models list, ignore any KILO_MODEL setting
+    local models_to_try=("${KILO_FREE_MODELS[@]}")
     log_info "MODEL POLICY: FREE MODELS ONLY"
     log_info "Attempting models in order: ${models_to_try[*]}"
 
     # Sanity check - ensure no paid models are configured
-    if [ -n "$OPENCODE_MODEL" ]; then
-        log_warn "OPENCODE_MODEL is set to '$OPENCODE_MODEL' but is being IGNORED - free models only policy"
-        log_warn "To use a specific model, add it to OPENCODE_FREE_MODELS array with :free suffix"
+    if [ -n "$KILO_MODEL" ]; then
+        log_warn "KILO_MODEL is set to '$KILO_MODEL' but is being IGNORED - free models only policy"
+        log_warn "To use a specific model, add it to KILO_FREE_MODELS array with :free suffix"
     fi
 
     local last_exit_code=1
@@ -99,23 +99,24 @@ run_opencode() {
     for model in "${models_to_try[@]}"; do
         log_info "=== ATTEMPTING WITH FREE MODEL: $model ==="
 
-        # Build opencode command with logging options
-        local cmd=("$OPENCODE_PATH" "run" "--continue" "--session" "$OPENCODE_SESSION_ID")
+        # Build kilo command with logging options
+        # Use 'kilo run' command per kilo --help
+        local cmd=("$KILO_PATH" "run" "--continue" "--session" "$KILO_SESSION_ID")
 
         # Add logging flags
-        if [ "$OPENCODE_LOG_LEVEL" != "INFO" ]; then
-            cmd+=("--log-level" "$OPENCODE_LOG_LEVEL")
+        if [ "$KILO_LOG_LEVEL" != "INFO" ]; then
+            cmd+=("--log-level" "$KILO_LOG_LEVEL")
         fi
 
-        if [ "$OPENCODE_PRINT_LOGS" = "true" ]; then
+        if [ "$KILO_PRINT_LOGS" = "true" ]; then
             cmd+=("--print-logs")
         fi
 
-        if [ "$OPENCODE_SHOW_THINKING" = "true" ]; then
+        if [ "$KILO_SHOW_THINKING" = "true" ]; then
             cmd+=("--thinking")
         fi
 
-        if [ "$OPENCODE_FORMAT" = "json" ]; then
+        if [ "$KILO_FORMAT" = "json" ]; then
             cmd+=("--format" "json")
         fi
 
@@ -123,8 +124,8 @@ run_opencode() {
         cmd+=("--model" "$model")
 
         # Add optional agent
-        if [ -n "$OPENCODE_AGENT" ]; then
-            cmd+=("--agent" "$OPENCODE_AGENT")
+        if [ -n "$KILO_AGENT" ]; then
+            cmd+=("--agent" "$KILO_AGENT")
         fi
 
         # Add title for this session
@@ -212,17 +213,17 @@ run_opencode() {
         log_error "Task: $*"
         log_error "Tried models: ${models_to_try[*]}"
         log_error "Final exit code: $last_exit_code"
-        log_error "Session ID: $OPENCODE_SESSION_ID"
+        log_error "Session ID: $KILO_SESSION_ID"
         log_error "Duration: ${duration}s"
         log_error "Action: Will retry in next cycle"
     else
-        log_info "=== OPENCODE SUCCESS (free model: $successful_model) ==="
+        log_info "=== KILO SUCCESS (free model: $successful_model) ==="
         log_info "Task: $*"
         log_info "Duration: ${duration}s"
         log_debug "Successful free model: $successful_model"
 
         # Save successful model for statistics
-        echo "$successful_model" > "/tmp/opencode-last-successful-model-$$" 2>/dev/null || true
+        echo "$successful_model" > "/tmp/kilo-last-successful-model-$$" 2>/dev/null || true
     fi
 
     return $last_exit_code
@@ -348,9 +349,9 @@ check_issues() {
                     log_info "After wait, rate limit: $RATE_REMAINING"
                 fi
 
-                # Use opencode to analyze and handle the issue (non-interactive)
-                log_info "Starting opencode analysis for issue #$num in $r"
-                run_opencode run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
+                # Use kilo to analyze and handle the issue (non-interactive)
+                log_info "Starting kilo analysis for issue #$num in $r"
+                run_kilo run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
 
                 local opencode_exit=$?
                 log_debug "Opencode returned exit code: $opencode_exit"
@@ -360,7 +361,7 @@ check_issues() {
                     log_warn "Initiating retry after 30s backoff..."
                     sleep 30
                     # One retry
-                    run_opencode run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
+                    run_kilo run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
                     opencode_exit=$?
                     if [ $opencode_exit -ne 0 ]; then
                         log_error "Retry FAILED for issue #$num (exit $opencode_exit) - SKIPPING"
@@ -560,7 +561,7 @@ log "  Log Level: $OPENCODE_LOG_LEVEL"
 log "  Show Thinking: $OPENCODE_SHOW_THINKING"
 log "==================================="
 
-find_opencode
+find_kilo
 
 # Initialize cooldown file if not exists
 proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
