@@ -14,67 +14,47 @@ Changes processed and improvements implemented
 ### Changes Made
 - Changes processed and improvements implemented
 
-## Current Work Focus
-Changes processed and improvements implemented
-
-## Latest Update (Mar 07, 2026)
-
-### Changes Made
-- Changes processed and improvements implemented
-
-## Current Work Focus
-Changes processed and improvements implemented
-
-## Latest Update (Mar 07, 2026)
-
-### Changes Made
-- Changes processed and improvements implemented
-
-## Current Work Focus
-Changes processed and improvements implemented
-
-## Latest Update (Mar 07, 2026)
-
-### Changes Made
-- Changes processed and improvements implemented
-
-## Current Work Focus
-Changes processed and improvements implemented
-
-## Latest Update (Mar 07, 2026)
-
-### Changes Made
-- Changes processed and improvements implemented
-
-## Current Work Focus
-Changes processed and improvements implemented
-
-## Latest Update (Mar 07, 2026)
-
-### Changes Made
-- Changes processed and improvements implemented
-
-## Current Work Focus
-Proactive improvements completed
-
-## Latest Update (Mar 07, 2026)
-
-### Changes Made
-- Proactive improvements completed
-
 # Active Context - Enclavr
 
 ## Current Work Focus
-Infrastructure improvements and documentation fixes. Recent work includes:
-- Enhanced Docker Compose configuration with restart policies and healthcheck fixes
-- Updated environment variable documentation to be complete
-- Fixed GitHub Pages deployment for docs repository
-- Addressed CI billing limits handling (documented expected behavior)
-- Integrated Neon PostgreSQL 17 for testing while maintaining self-hosted PostgreSQL support
-- Updated all AGENTS.md with MCP tools documentation (Neon, Context7, Git, Sentry, websearch, webfetch, codesearch)
-- Created Sentry projects for error tracking (api, frontend)
+Critical bug fixes and quality improvements across the monorepo. Recent work includes security enhancements, TypeScript error fixes, and test infrastructure improvements. All systems validated and deployed.
 
 ## Latest Changes (Mar 7, 2026)
+
+### Frontend TypeScript Bug Fix
+- Fixed critical TypeScript error in `src/hooks/useChat.ts`:
+  - Added missing constants: `MAX_RECONNECT_ATTEMPTS`, `INITIAL_RECONNECT_DELAY`, `MAX_RECONNECT_DELAY`
+  - These constants are used in WebSocket reconnection logic with exponential backoff
+  - Without them, the hook would fail at runtime and during type checking
+- All lint, typecheck, and tests now pass (549 tests)
+
+### Frontend Test Infrastructure Improvement
+- Enhanced `src/test/useChat.edge.test.ts`:
+  - Removed unused `waitFor` import from test file
+  - Improved WebSocket mocking by using direct assignment `globalThis.WebSocket = MockWebSocket` instead of `vi.stubGlobal`
+  - More reliable test isolation and cleaner mocks
+- All 38 tests in this file pass
+
+### Server Security Enhancement
+- Added non-root user for container security (commit 19a7a6f):
+  - Create `enclavr` user (UID 1000) in Dockerfile
+  - Switch to non-root user for runtime
+  - Create uploads directory with proper permissions
+  - Enhances security posture for production deployments
+- Server tests pass (819+), lint passes, build succeeds
+
+### Autonomous Agent Script Architecture Fix
+- Refactored `script.sh` into proper infinite loop architecture:
+  - Removed duplicate code blocks (lines 464-974 had two copies of main logic)
+  - Restructured as `while true` loop with clear phases
+  - Integrated GitHub management functions (issues, PRs, CI, releases, labels) as periodic checks every 5 minutes
+  - Added periodic submodule sync every 30 minutes with tracking
+  - Preserved change detection and proactive improvement cycles
+  - Fixed path handling for docs submodule (`../docs`)
+  - Maintained cooldown mechanism (30 minutes) and adaptive sleep (30s/60s)
+- Script validated with `bash -n` (syntax OK)
+
+## Previous Changes (Mar 7, 2026)
 
 ### MCP Tools Integration
 - Added comprehensive MCP tools documentation to all AGENTS.md files:
@@ -120,23 +100,12 @@ Infrastructure improvements and documentation fixes. Recent work includes:
   - NEVER attempt to fix billing-limit-related CI failures
 - Weekly schedule and path filtering already minimize usage (~85-90% reduction)
 
-### Autonomous Agent Script Architecture Fix
-- Refactored `script.sh` into proper infinite loop architecture:
-  - Removed duplicate code blocks (lines 464-974 had two copies of main logic)
-  - Restructured as `while true` loop with clear phases
-  - Integrated GitHub management functions (issues, PRs, CI, releases, labels) as periodic checks every 5 minutes
-  - Added periodic submodule sync every 30 minutes with tracking
-  - Preserved change detection and proactive improvement cycles
-  - Fixed path handling for docs submodule (`../docs`)
-  - Maintained cooldown mechanism (30 minutes) and adaptive sleep (30s/60s)
-- Script validated with `bash -n` (syntax OK)
-- All functionality preserved: rate limiting, retries, memory bank updates, commits
-
 ## Verification
 ✅ All lint passes (ESLint, golangci-lint)
-✅ All tests pass (server: 819+, frontend: 545)
+✅ All tests pass (server: 819+, frontend: 549)
 ✅ Docker Compose configuration valid
 ✅ TypeScript type checking passes
 ✅ Submodules updated to latest commits
-✅ Autonomous agent script validated (bash -n)
-✅ Autonomous agent script validated (bash -n)
+✅ Autonomous agent script syntax validated (bash -n)
+✅ Server security enhancement deployed (non-root user)
+✅ Frontend TypeScript errors resolved

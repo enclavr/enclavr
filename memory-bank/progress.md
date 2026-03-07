@@ -47,6 +47,30 @@
 - All changes validated with `bash -n` syntax check
 - Committed and pushed to remote
 
+### Frontend TypeScript Bug Fix and Test Improvements (Mar 7, 2026)
+- Fixed critical TypeScript error in `src/hooks/useChat.ts`:
+  - Added missing reconnection constants: `MAX_RECONNECT_ATTEMPTS` (5), `INITIAL_RECONNECT_DELAY` (1000ms), `MAX_RECONNECT_DELAY` (30000ms)
+  - Constants used in WebSocket reconnection exponential backoff logic
+- Improved `src/test/useChat.edge.test.ts`:
+  - Removed unused `waitFor` import
+  - Enhanced WebSocket mocking with direct assignment (`globalThis.WebSocket = MockWebSocket`)
+  - More reliable test isolation
+- All frontend tests pass: 549 tests ✅
+- ESLint passes ✅
+- TypeScript typecheck passes ✅
+- Committed and pushed to remote (commit 2b4ddbd)
+
+### Server Security Enhancement (Mar 7, 2026)
+- Added non-root user for container security:
+  - Create `enclavr` user (UID 1000) in Dockerfile
+  - Switch to non-root user for runtime
+  - Create uploads directory with proper permissions
+  - Enhances security for production deployments
+- All server tests pass: 819+ tests ✅
+- golangci-lint passes ✅
+- Build succeeds ✅
+- Committed and pushed to remote (commit 19a7a6f)
+
 ## Latest Improvement (Mar 5, 2026)
 - GitHub Actions CI optimization:
   - Weekly schedule (Sunday midnight UTC) on all 4 repos
