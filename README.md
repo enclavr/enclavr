@@ -13,6 +13,7 @@ This project is organized into multiple independent repositories:
 | [frontend](https://github.com/enclavr/frontend) | Next.js 16 + React 19 frontend |
 | [server](https://github.com/enclavr/server) | Go backend with PostgreSQL |
 | [infra](https://github.com/enclavr/infra) | Docker Compose deployment |
+| [docs](https://github.com/enclavr/docs) | Documentation (see /docs folder) |
 
 ## Quick Start
 
@@ -44,6 +45,24 @@ go run ./cmd/server
 cd infra
 cp .env.example .env
 docker-compose up -d
+```
+
+## Documentation
+
+The documentation is located in the `/docs` folder and is deployed via GitHub Pages.
+
+- **Live Docs**: https://enclavr.github.io/enclavr/docs/
+- **Source**: `/docs` folder in this repository
+
+### Building Docs Locally
+
+The docs are static HTML files. Edit directly in the `docs/` folder:
+
+```bash
+# Edit documentation
+docs/index.html          # Home page
+docs/docs/*.html        # All documentation pages
+docs/css/style.css      # Styles
 ```
 
 ## Features

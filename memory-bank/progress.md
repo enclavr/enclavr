@@ -5,6 +5,7 @@
 - Memory bank system
 - CI/CD resilient to GitHub Actions billing limits (added Mar 7, 2026)
 - Autonomous agent loop with smart change detection and GitHub integration (fixed Mar 7, 2026)
+- Static HTML documentation in /docs folder (added Mar 7, 2026)
 - Go backend server with:
   - User authentication (JWT)
   - Room management
@@ -93,6 +94,16 @@
 - All changes committed and pushed:
   - infra@0f468a7 (docker-compose.yml, README.md)
   - server@abe2f26 (Dockerfile)
+
+### Documentation Restructuring (Mar 7, 2026)
+- Converted Docusaurus documentation to static HTML
+- Moved docs from separate repository into `/docs` folder in main repo
+- Created 27 HTML documentation pages with responsive CSS sidebar
+- Updated README.md with docs section
+- Updated AGENTS.md to include docs repository
+- GitHub Pages configured to deploy from `/docs` folder
+- URL will be: https://enclavr.github.io/enclavr/docs/
+- All changes committed and pushed to remote
 
 ## Latest Improvement (Mar 5, 2026)
 - GitHub Actions CI optimization:

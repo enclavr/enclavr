@@ -16,6 +16,7 @@ This monorepo uses git submodules. Each component is an independent repository:
 | [enclavr/frontend](https://github.com/enclavr/frontend) | Next.js 16 + React 19 + TypeScript | UI/UX, State |
 | [enclavr/server](https://github.com/enclavr/server) | Go backend with PostgreSQL, WebSocket | API, DB, Auth |
 | [enclavr/infra](https://github.com/enclavr/infra) | Docker Compose deployment | DevOps |
+| [enclavr/docs](https://github.com/enclavr/docs) | Static HTML documentation | Docs |
 
 ## Memory Bank
 

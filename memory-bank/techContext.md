@@ -29,6 +29,13 @@
 - **Voice**: Coturn (TURN server for WebRTC)
 - **CI/CD**: GitHub Actions
 
+### Documentation
+- **Format**: Static HTML (no build step needed)
+- **Location**: `/docs` folder in main repo
+- **Deployment**: GitHub Pages (deploy from /docs folder)
+- **URL**: https://enclavr.github.io/enclavr/docs/
+- **Styling**: Custom CSS with responsive sidebar navigation
+
 ### DevOps
 - **Linting**: golangci-lint (Go), ESLint v9 (JS)
 - **Testing**: Go testing, Vitest, Playwright
