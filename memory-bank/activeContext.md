@@ -13,6 +13,14 @@ Infrastructure fix and comprehensive improvements across all submodules. Recent 
 - Commit: dc9d529 (enclavr/infra)
 - All services defined: postgres, redis, server, frontend, coturn
 
+### Infrastructure CI Configuration Fix
+- Fixed hadolint action version reference in `.github/workflows/ci.yml`:
+  - Changed `hadolint/hadolint@v2` → `@v2.1.0` (v2 tag does not exist on Docker Hub)
+- This resolves potential CI failures during the lint step
+- Verified workflow syntax is valid
+- Commit: 2b7feaf (enclavr/infra)
+- Note: CI failures due to GitHub Actions billing limits (ACTIONS_RUNTIME_TOKEN missing) are expected and should be ignored per AGENTS.md
+
 ### Frontend TypeScript Bug Fix
 - Fixed critical TypeScript error in `src/hooks/useChat.ts`:
   - Added missing constants: `MAX_RECONNECT_ATTEMPTS = 5`, `INITIAL_RECONNECT_DELAY = 1000ms`, `MAX_RECONNECT_DELAY = 30000ms`
@@ -80,4 +88,5 @@ Infrastructure fix and comprehensive improvements across all submodules. Recent 
 ✅ Submodules updated to latest commits
 ✅ Autonomous agent script validated (bash -n)
 ✅ Infrastructure docker-compose config validated
+✅ Infrastructure CI workflow fixed (hadolint version corrected)
 ✅ All changes committed and pushed
