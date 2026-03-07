@@ -5,12 +5,12 @@
   - banner [ref=e2]:
     - generic [ref=e3]:
       - link "Enclavr" [ref=e4] [cursor=pointer]:
-        - /url: ""
+        - /url: index.html
       - navigation [ref=e5]:
         - link "Home" [ref=e6] [cursor=pointer]:
-          - /url: ""
+          - /url: index.html
         - link "Docs" [ref=e7] [cursor=pointer]:
-          - /url: docs/overview.html
+          - /url: overview.html
         - link "GitHub" [ref=e8] [cursor=pointer]:
           - /url: https://github.com/enclavr/enclavr
   - generic [ref=e9]:
@@ -18,71 +18,71 @@
       - generic [ref=e11]:
         - heading "Getting Started" [level=3] [ref=e12]
         - link "Introduction" [ref=e13] [cursor=pointer]:
-          - /url: ""
+          - /url: index.html
         - link "Overview" [ref=e14] [cursor=pointer]:
-          - /url: docs/overview.html
+          - /url: overview.html
         - link "Architecture" [ref=e15] [cursor=pointer]:
-          - /url: docs/architecture.html
+          - /url: architecture.html
         - link "Features" [ref=e16] [cursor=pointer]:
-          - /url: docs/features.html
+          - /url: features.html
       - generic [ref=e17]:
         - heading "Development" [level=3] [ref=e18]
         - link "Local Setup" [ref=e19] [cursor=pointer]:
-          - /url: docs/local-setup.html
+          - /url: local-setup.html
         - link "Commands" [ref=e20] [cursor=pointer]:
-          - /url: docs/commands.html
+          - /url: commands.html
         - link "Testing" [ref=e21] [cursor=pointer]:
-          - /url: docs/testing.html
+          - /url: testing.html
       - generic [ref=e22]:
         - heading "API Reference" [level=3] [ref=e23]
         - link "Authentication" [ref=e24] [cursor=pointer]:
-          - /url: docs/authentication-api.html
+          - /url: authentication-api.html
         - link "Rooms" [ref=e25] [cursor=pointer]:
-          - /url: docs/rooms-api.html
+          - /url: rooms-api.html
         - link "Messages" [ref=e26] [cursor=pointer]:
-          - /url: docs/messages-api.html
+          - /url: messages-api.html
         - link "Direct Messages" [ref=e27] [cursor=pointer]:
-          - /url: docs/direct-messages-api.html
+          - /url: direct-messages-api.html
         - link "Voice" [ref=e28] [cursor=pointer]:
-          - /url: docs/voice-api.html
+          - /url: voice-api.html
         - link "Admin" [ref=e29] [cursor=pointer]:
-          - /url: docs/admin-api.html
+          - /url: admin-api.html
       - generic [ref=e30]:
         - heading "Frontend" [level=3] [ref=e31]
         - link "Overview" [ref=e32] [cursor=pointer]:
-          - /url: docs/frontend-overview.html
+          - /url: frontend-overview.html
         - link "Tech Stack" [ref=e33] [cursor=pointer]:
-          - /url: docs/frontend-tech-stack.html
+          - /url: frontend-tech-stack.html
         - link "Components" [ref=e34] [cursor=pointer]:
-          - /url: docs/components.html
+          - /url: components.html
         - link "State Management" [ref=e35] [cursor=pointer]:
-          - /url: docs/state-management.html
+          - /url: state-management.html
         - link "API Client" [ref=e36] [cursor=pointer]:
-          - /url: docs/api-client.html
+          - /url: api-client.html
         - link "WebRTC" [ref=e37] [cursor=pointer]:
-          - /url: docs/webrtc.html
+          - /url: webrtc.html
       - generic [ref=e38]:
         - heading "Server" [level=3] [ref=e39]
         - link "Overview" [ref=e40] [cursor=pointer]:
-          - /url: docs/server-overview.html
+          - /url: server-overview.html
         - link "Tech Stack" [ref=e41] [cursor=pointer]:
-          - /url: docs/tech-stack.html
+          - /url: tech-stack.html
         - link "Database Models" [ref=e42] [cursor=pointer]:
-          - /url: docs/database-models.html
+          - /url: database-models.html
         - link "Authentication" [ref=e43] [cursor=pointer]:
-          - /url: docs/server-authentication.html
+          - /url: server-authentication.html
         - link "WebSocket" [ref=e44] [cursor=pointer]:
-          - /url: docs/websocket.html
+          - /url: websocket.html
       - generic [ref=e45]:
         - heading "Infrastructure" [level=3] [ref=e46]
         - link "Overview" [ref=e47] [cursor=pointer]:
-          - /url: docs/infra-overview.html
+          - /url: infra-overview.html
         - link "Services" [ref=e48] [cursor=pointer]:
-          - /url: docs/services.html
+          - /url: services.html
         - link "Environment" [ref=e49] [cursor=pointer]:
-          - /url: docs/environment.html
+          - /url: environment.html
         - link "Deployment" [ref=e50] [cursor=pointer]:
-          - /url: docs/deployment.html
+          - /url: deployment.html
     - main [ref=e51]:
       - heading "Enclavr Documentation" [level=1] [ref=e52]
       - paragraph [ref=e53]:
@@ -92,15 +92,15 @@
       - heading "Quick Links" [level=2] [ref=e55]
       - generic [ref=e56]:
         - link "Architecture Overview" [ref=e57] [cursor=pointer]:
-          - /url: docs/architecture.html
+          - /url: architecture.html
         - link "Frontend Docs" [ref=e58] [cursor=pointer]:
-          - /url: docs/frontend-overview.html
+          - /url: frontend-overview.html
         - link "Server Docs" [ref=e59] [cursor=pointer]:
-          - /url: docs/server-overview.html
+          - /url: server-overview.html
         - link "Infrastructure" [ref=e60] [cursor=pointer]:
-          - /url: docs/infra-overview.html
+          - /url: infra-overview.html
         - link "API Reference" [ref=e61] [cursor=pointer]:
-          - /url: docs/authentication-api.html
+          - /url: authentication-api.html
       - heading "Key Features" [level=2] [ref=e62]
       - list [ref=e63]:
         - listitem [ref=e64]:
@@ -143,10 +143,10 @@
       - paragraph [ref=e94]:
         - text: Ready to set up Enclavr? Head to the
         - link "Local Setup" [ref=e95] [cursor=pointer]:
-          - /url: docs/local-setup.html
+          - /url: local-setup.html
         - text: guide to get started with development, or check the
         - link "Deployment" [ref=e96] [cursor=pointer]:
-          - /url: docs/deployment.html
+          - /url: deployment.html
         - text: guide for production.
   - contentinfo [ref=e97]:
     - paragraph [ref=e99]: Copyright © 2026 Enclavr.
