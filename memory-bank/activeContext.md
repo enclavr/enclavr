@@ -1,9 +1,16 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Codebase analysis and Playwright testing - added comprehensive E2E tests for frontend and static HTML docs with real data structures.
+Codebase analysis, Playwright testing, and documentation navigation fixes - completed comprehensive E2E tests and fixed broken relative links in static HTML docs.
 
 ## Latest Changes (Mar 7, 2026)
+
+### Documentation Navigation Fixes
+- Fixed broken relative links in all 27 static HTML documentation pages
+- Root docs/index.html: Fixed sidebar links from `docs/*.html` to `*.html`
+- docs/template.html: Fixed relative paths for template
+- All 26 files in docs/docs/*.html: Replaced `href=""` with `href="../index.html"`
+- GitHub Pages now works correctly at https://enclavr.github.io/enclavr/docs/
 
 ### MCP Tools Documentation
 - Analyzed all available MCP tools in the codebase
@@ -59,3 +66,5 @@ Codebase analysis and Playwright testing - added comprehensive E2E tests for fro
 ### Server Security Enhancement
 - Added non-root user for container security
 - All tests pass (819+), golangci-lint passes (0 issues)
+
+(End of file - total 75 lines)

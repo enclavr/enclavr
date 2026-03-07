@@ -1,6 +1,12 @@
 # Progress - Enclavr
 
 ## What Works
+- **Documentation Navigation Fixes** (added Mar 7, 2026):
+  - Fixed broken relative links in all 27 static HTML docs pages
+  - Root docs/index.html: Fixed sidebar links from `docs/*.html` to `*.html`
+  - docs/template.html: Fixed relative paths
+  - All 26 docs/docs/*.html: Replaced empty `href=""` with `href="../index.html"`
+  - GitHub Pages navigation now works correctly
 - **MCP Tools Documentation** (added Mar 7, 2026):
   - Complete MCP tools coverage across all AGENTS.md files
   - Root AGENTS.md: sequential_thinking, additional Neon/Sentry tools
