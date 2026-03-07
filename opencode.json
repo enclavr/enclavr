@@ -25,6 +25,14 @@
         "context7":{
             "type":"remote",
             "url":"https://mcp.context7.com/mcp"
+        },
+        "neon":{
+            "type":"remote",
+            "url":"https://mcp.neon.tech/mcp"
+        },
+        "sentry":{
+            "type":"remote",
+            "url":"https://mcp.sentry.dev/mcp"
         }
     }
 }

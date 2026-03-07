@@ -17,7 +17,7 @@
 
 ### Database
 - PostgreSQL with proper indexing
-- migrations for schema changes
+- Migrations for schema changes
 - Connection pooling for heavy workload
 
 ### Voice Communication
@@ -31,3 +31,20 @@
 - Dependency Injection
 - RESTful API design
 - JWT Authentication with refresh tokens
+
+## Development Workflow (MCP Tools)
+
+### Database Operations
+- Use Neon MCP tools for PostgreSQL operations
+- Never use psql directly - use neon_run_sql
+
+### Documentation
+- Use Context7 MCP for library docs (React, Next.js, Go, etc.)
+- Use websearch/webfetch for current information
+
+### Version Control
+- Use Git MCP tools instead of bash git commands
+
+### Error Monitoring
+- Sentry MCP for production error tracking
+- Create projects via sentry_create_project

@@ -370,6 +370,21 @@
 ## Current Status
 Implemented server ban system and user reporting system for moderation.
 
+## Latest Improvements (Mar 7, 2026)
+
+### Neon PostgreSQL 17 Integration
+- Created Neon PostgreSQL 17 database for testing (free tier)
+- Server uses standard GORM with PostgreSQL driver (no Neon SDK)
+- Works with any PostgreSQL provider (Neon, self-hosted, etc.)
+- Created `server/.env.neon` template for easy Neon setup
+- Added uuid-ossp extension support for UUID columns
+- Fixed migration order (Category before Room)
+- Fixed duplicate /metrics route conflict
+- Database usage: ~30MB / 512MB free tier limit (6%)
+- All 20 tables created successfully via GORM migrations
+
+All backend changes pass linting and build successfully.
+
 ## Repository Memory Banks
 Each sub-repo has its own memory-bank:
 - `server/memory-bank/` - Server-specific context

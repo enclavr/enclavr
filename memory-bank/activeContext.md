@@ -6,8 +6,32 @@ Infrastructure improvements and documentation fixes. Recent work includes:
 - Updated environment variable documentation to be complete
 - Fixed GitHub Pages deployment for docs repository
 - Addressed CI billing limits handling (documented expected behavior)
+- Integrated Neon PostgreSQL 17 for testing while maintaining self-hosted PostgreSQL support
+- Updated all AGENTS.md with MCP tools documentation (Neon, Context7, Git, Sentry, websearch, webfetch, codesearch)
+- Created Sentry projects for error tracking (api, frontend)
 
 ## Latest Changes (Mar 7, 2026)
+
+### MCP Tools Integration
+- Added comprehensive MCP tools documentation to all AGENTS.md files:
+  - Neon Database MCP: PostgreSQL operations, migrations, query tuning
+  - Context7 MCP: Library documentation lookup (React, Next.js, Go, etc.)
+  - Git MCP: Version control operations
+  - Sentry MCP: Error tracking and monitoring
+  - Web Search/Fetch: Current information and code examples
+- Tested all MCP tools - all functional
+
+### Sentry Projects Created
+- Created Sentry project: **api** (DSN: https://bc4efb79c26f87983bdc64b05e8ed834@o4511001039011840.ingest.us.sentry.io/4511001064701952)
+- Created Sentry project: **frontend** (DSN: https://6774674f354796de422f5d12c1be29f4@o4511001039011840.ingest.us.sentry.io/4511001065160704)
+
+### Neon PostgreSQL 17 Integration
+- Cleaned up Neon database (dropped test branch, cleared data)
+- Created `server/.env.neon` with Neon PostgreSQL 17 connection configuration
+- Updated `.env.example` with documentation for Neon vs self-hosted PostgreSQL
+- No Neon SDK used - server uses standard GORM with PostgreSQL driver (works with any PostgreSQL)
+- Neon free tier limits: 0.5GB storage, 1 project, 1 branch (suitable for testing)
+- Server auto-creates tables via GORM migrations
 
 ### Infrastructure Improvements
 - Added `restart: unless-stopped` to all services (postgres, redis, server, frontend, coturn) for production reliability

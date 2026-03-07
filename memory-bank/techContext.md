@@ -5,7 +5,7 @@
 ### Backend
 - **Language**: Go 1.25 (August 2025)
 - **Web Framework**: Go net/http with gorilla/mux
-- **Database**: PostgreSQL 18 (September 2025)
+- **Database**: PostgreSQL 17 (Neon) / PostgreSQL 18 (self-hosted)
 - **ORM**: GORM
 - **Migrations**: golang-migrate
 - **Authentication**: JWT + bcrypt + OIDC
@@ -24,7 +24,7 @@
 ### Infrastructure
 - **Container Runtime**: Docker
 - **Orchestration**: Docker Compose v2
-- **Database**: PostgreSQL 18 (Alpine) with PGDATA=/var/lib/postgresql/18/docker
+- **Database**: PostgreSQL 17 (Neon - free tier) or PostgreSQL 18 (self-hosted)
 - **Cache/PubSub**: Redis 8 (Alpine)
 - **Voice**: Coturn (TURN server for WebRTC)
 - **CI/CD**: GitHub Actions
@@ -39,6 +39,24 @@
 - **Path filtering**: Only runs on critical file changes
 - **Jobs**: Parallel execution where possible
 - **Result**: ~85-90% reduction in free tier minutes
+
+## MCP Tools Available
+
+This project has access to MCP (Model Context Protocol) tools.
+
+### Neon Database (Server)
+- PostgreSQL operations via Neon MCP (no SDK - standard GORM)
+- Database: ~30MB / 512MB free tier (6%)
+
+### Error Monitoring
+- Sentry projects: **api**, **frontend**
+- DSNs available in Sentry console
+
+### Other MCP Tools
+- Context7: Library documentation
+- Git MCP: Version control
+- Web Search/Fetch: Current information
+- codesearch: Code examples
 
 ## Development Setup
 
@@ -59,6 +77,30 @@ go run ./cmd/server
 go test -v ./...
 golangci-lint run ./...
 ```
+
+### Database Options
+
+#### Option 1: Docker Compose (Recommended for production-like testing)
+```bash
+cd infra
+docker-compose up -d postgres redis
+# Uses PostgreSQL 18
+```
+
+#### Option 2: Neon PostgreSQL 17 (Free tier - for CI/testing)
+```bash
+# Copy the Neon environment file
+cp server/.env.neon server/.env
+
+# Sign up at https://neon.tech (free: 0.5GB storage, 1 branch)
+# Update server/.env with your Neon connection details
+
+# Run migrations
+go run ./cmd/server  # migrations run automatically
+```
+- Neon free tier: 0.5GB storage, 1 project, 1 branch
+- Uses connection pooling (lower latency)
+- Requires SSL (sslmode=require)
 
 ## Technical Constraints
 - Must support multiple concurrent voice users
