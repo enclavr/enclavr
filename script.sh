@@ -13,18 +13,9 @@ KILO_PRINT_LOGS="true"  # Print to stderr for real-time monitoring
 KILO_SHOW_THINKING="true" # Show all AI thinking blocks
 KILO_FORMAT="default"   # Human-readable format
 
-# CRITICAL: ALWAYS use free models only - never use paid models
-KILO_USE_FREE_MODELS="true"
-KILO_FREE_MODELS=(
-    "stepfun/step-3.5-flash:free"
-    "anthropic/claude-3-haiku:free"
-    "openai/gpt-3.5-turbo:free"
-    "meta-llama/llama-3-8b:free"
-)
-# KILO_MODEL is disabled - free models only
-KILO_MODEL=""  # Do not set - will be overridden by free model list
-KILO_AGENT=""  # Optional: specific agent type
+# Session configuration
 KILO_SESSION_ID="enclavr-autonomous-$(hostname)-$(date '+%Y%m%d')" # Persistent session ID
+KILO_AGENT=""  # Optional: specific agent type
 
 log() {
     local level="${2:-INFO}"
@@ -80,153 +71,76 @@ run_kilo() {
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     log_debug "Preparing to run kilo with args: $@"
 
-    # SECURITY: NEVER use paid models - only free models allowed
-    # Always use the free models list, ignore any KILO_MODEL setting
-    local models_to_try=("${KILO_FREE_MODELS[@]}")
-    log_info "MODEL POLICY: FREE MODELS ONLY"
-    log_info "Attempting models in order: ${models_to_try[*]}"
+    # Build kilo command with logging options
+    # Use 'kilo run' command per kilo --help
+    local cmd=("$KILO_PATH" "run" "--continue" "--session" "$KILO_SESSION_ID")
 
-    # Sanity check - ensure no paid models are configured
-    if [ -n "$KILO_MODEL" ]; then
-        log_warn "KILO_MODEL is set to '$KILO_MODEL' but is being IGNORED - free models only policy"
-        log_warn "To use a specific model, add it to KILO_FREE_MODELS array with :free suffix"
+    # Add logging flags
+    if [ "$KILO_LOG_LEVEL" != "INFO" ]; then
+        cmd+=("--log-level" "$KILO_LOG_LEVEL")
     fi
 
-    local last_exit_code=1
-    local successful_model=""
-
-    # Try each free model until one succeeds
-    for model in "${models_to_try[@]}"; do
-        log_info "=== ATTEMPTING WITH FREE MODEL: $model ==="
-
-        # Build kilo command with logging options
-        # Use 'kilo run' command per kilo --help
-        local cmd=("$KILO_PATH" "run" "--continue" "--session" "$KILO_SESSION_ID")
-
-        # Add logging flags
-        if [ "$KILO_LOG_LEVEL" != "INFO" ]; then
-            cmd+=("--log-level" "$KILO_LOG_LEVEL")
-        fi
-
-        if [ "$KILO_PRINT_LOGS" = "true" ]; then
-            cmd+=("--print-logs")
-        fi
-
-        if [ "$KILO_SHOW_THINKING" = "true" ]; then
-            cmd+=("--thinking")
-        fi
-
-        if [ "$KILO_FORMAT" = "json" ]; then
-            cmd+=("--format" "json")
-        fi
-
-        # Add model flag (required - free model)
-        cmd+=("--model" "$model")
-
-        # Add optional agent
-        if [ -n "$KILO_AGENT" ]; then
-            cmd+=("--agent" "$KILO_AGENT")
-        fi
-
-        # Add title for this session
-        local task_summary="${1:0:50}"
-        cmd+=("--title" "Enclavr Agent: $task_summary...")
-
-        # Add the message
-        cmd+=("$@")
-
-        # Execute with full logging
-        log_info "Executing with free model: $model"
-        log_debug "Full command: ${cmd[*]}"
-
-        # Capture start time and provider metrics
-        local start_time=$(date +%s)
-        log_debug "Start timestamp: $(date -d @$start_time '+%Y-%m-%d %H:%M:%S')"
-
-        # Execute and capture output
-        local output_file=$(mktemp)
-        log_debug "Capturing output to: $output_file"
-
-        # Run with full output capture
-        "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
-        local exit_code=${PIPESTATUS[0]}
-
-        local end_time=$(date +%s)
-        local duration=$((end_time - start_time))
-
-        # Log execution metrics
-        log_info "Model $model completed in ${duration}s with exit code: $exit_code"
-
-        # Analyze output for provider-specific errors
-        if [ $exit_code -ne 0 ]; then
-            log_warn "✗ Model $model failed. Analyzing error patterns..."
-
-            # Check for common provider errors
-            if grep -qi "rate.*limit\|quota\|exceeded" "$output_file" 2>/dev/null; then
-                log_warn "  → RATE LIMIT detected for $model"
-            fi
-            if grep -qi "unauthorized|invalid.*key|auth|credential" "$output_file" 2>/dev/null; then
-                log_error "  → AUTHORIZATION error with $model"
-            fi
-            if grep -qi "timeout|deadline|elapsed" "$output_file" 2>/dev/null; then
-                log_warn "  → TIMEOUT detected for $model"
-            fi
-            if grep -qi "context.*length|too.*long|max.*tokens" "$output_file" 2>/dev/null; then
-                log_warn "  → CONTEXT LENGTH issue with $model"
-            fi
-            if grep -qi "payment|billing|upgrade|paid|subscription" "$output_file" 2>/dev/null; then
-                log_error "  → PAID MODEL REQUIRED detected - skipping to next free model"
-            fi
-
-            # Extract last error lines
-            log_debug "Last 5 lines of output:"
-            tail -n 5 "$output_file" 2>/dev/null | while IFS= read -r line; do
-                log_debug "    > $line"
-            done
-
-            rm -f "$output_file"
-            last_exit_code=$exit_code
-
-            # If we have more models to try, continue to next
-            log_info "Trying next free model..."
-            continue
-        else
-            # Success!
-            successful_model="$model"
-            log_info "✓ Model $model succeeded!"
-
-            # Log success summary
-            if grep -qi "tokens\|token" "$output_file" 2>/dev/null; then
-                local token_info=$(grep -i "tokens" "$output_file" | tail -n 1)
-                log_info "Token usage: $token_info"
-            fi
-
-            rm -f "$output_file"
-            last_exit_code=0
-            break  # Success, exit the model loop
-        fi
-    done
-
-    # If no free model succeeded, log final failure
-    if [ $last_exit_code -ne 0 ]; then
-        log_error "=== ALL FREE MODELS FAILED ==="
-        log_error "Task: $*"
-        log_error "Tried models: ${models_to_try[*]}"
-        log_error "Final exit code: $last_exit_code"
-        log_error "Session ID: $KILO_SESSION_ID"
-        log_error "Duration: ${duration}s"
-        log_error "Action: Will retry in next cycle"
-    else
-        log_info "=== KILO SUCCESS (free model: $successful_model) ==="
-        log_info "Task: $*"
-        log_info "Duration: ${duration}s"
-        log_debug "Successful free model: $successful_model"
-
-        # Save successful model for statistics
-        echo "$successful_model" > "/tmp/kilo-last-successful-model-$$" 2>/dev/null || true
+    if [ "$KILO_PRINT_LOGS" = "true" ]; then
+        cmd+=("--print-logs")
     fi
 
-    return $last_exit_code
+    if [ "$KILO_SHOW_THINKING" = "true" ]; then
+        cmd+=("--thinking")
+    fi
+
+    if [ "$KILO_FORMAT" = "json" ]; then
+        cmd+=("--format" "json")
+    fi
+
+    # Add optional agent
+    if [ -n "$KILO_AGENT" ]; then
+        cmd+=("--agent" "$KILO_AGENT")
+    fi
+
+    # Add title for this session
+    local task_summary="${1:0:50}"
+    cmd+=("--title" "Enclavr Agent: $task_summary...")
+
+    # Add the message
+    cmd+=("$@")
+
+    # Execute with full logging
+    log_info "Executing kilo"
+    log_debug "Full command: ${cmd[*]}"
+
+    # Capture start time
+    local start_time=$(date +%s)
+    log_debug "Start timestamp: $(date -d @$start_time '+%Y-%m-%d %H:%M:%S')"
+
+    # Execute and capture output
+    local output_file=$(mktemp)
+    log_debug "Capturing output to: $output_file"
+
+    # Run with full output capture
+    "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
+    local exit_code=${PIPESTATUS[0]}
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    # Log execution metrics
+    log_info "Kilo completed in ${duration}s with exit code: $exit_code"
+
+    # Show last output lines on failure
+    if [ $exit_code -ne 0 ]; then
+        log_warn "✗ Kilo failed. Last 5 lines:"
+        tail -n 5 "$output_file" 2>/dev/null | while IFS= read -r line; do
+            log_warn "    > $line"
+        done
+    fi
+
+    rm -f "$output_file"
+
+    log_info "=== KILO COMPLETE ==="
+    log_info "Task: $*"
+    log_info "Duration: ${duration}s"
+
+    return $exit_code
 }
 
 # ========== Memory Bank Functions ==========
@@ -553,10 +467,6 @@ sync_repos() {
  log "  Repos: $REPOS"
  log "  Log File: $LOG_FILE"
  log "  Kilo Session: $KILO_SESSION_ID"
- log "  Free Models: $KILO_USE_FREE_MODELS"
- if [ "$KILO_USE_FREE_MODELS" = "true" ]; then
-     log "  Free Model List: ${KILO_FREE_MODELS[*]}"
- fi
  log "  Log Level: $KILO_LOG_LEVEL"
  log "  Show Thinking: $KILO_SHOW_THINKING"
  log "==================================="
