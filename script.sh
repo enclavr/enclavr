@@ -336,7 +336,7 @@ check_issues() {
                     continue
                 fi
 
-                # Rate limit check before opencode call
+                 # Rate limit check before kilo call
                 log_debug "Checking rate limit for issue #$num..."
                 RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
                 log_debug "Rate limit remaining: $RATE_REMAINING"
@@ -353,24 +353,24 @@ check_issues() {
                 log_info "Starting kilo analysis for issue #$num in $r"
                 run_kilo run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
 
-                local opencode_exit=$?
-                log_debug "Opencode returned exit code: $opencode_exit"
+                local kilo_exit=$?
+                log_debug "Kilo returned exit code: $kilo_exit"
 
-                if [ $opencode_exit -ne 0 ]; then
-                    log_error "Opencode failed for issue #$num (exit $opencode_exit)"
+                if [ $kilo_exit -ne 0 ]; then
+                    log_error "kilo failed for issue #$num (exit $kilo_exit)"
                     log_warn "Initiating retry after 30s backoff..."
                     sleep 30
                     # One retry
                     run_kilo run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
-                    opencode_exit=$?
-                    if [ $opencode_exit -ne 0 ]; then
-                        log_error "Retry FAILED for issue #$num (exit $opencode_exit) - SKIPPING"
+                    kilo_exit=$?
+                    if [ $kilo_exit -ne 0 ]; then
+                        log_error "Retry FAILED for issue #$num (exit $kilo_exit) - SKIPPING"
                     else
                         log_info "Retry succeeded for issue #$num"
                     fi
                 fi
 
-                log_info "Completed processing issue #$num (final exit: $opencode_exit)"
+                log_info "Completed processing issue #$num (final exit: $kilo_exit)"
             done
         else
             log_debug "No issues found in $r"
@@ -405,16 +405,16 @@ check_pulls() {
                 log_info "Starting kilo review for PR #$num in $r"
                 run_kilo run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review."
 
-                local opencode_exit=$?
-                log_debug "Opencode returned exit code: $opencode_exit"
+                local kilo_exit=$?
+                log_debug "Kilo returned exit code: $kilo_exit"
 
-                if [ $opencode_exit -ne 0 ]; then
-                    log_error "Opencode failed for PR #$num (exit $opencode_exit)"
+                if [ $kilo_exit -ne 0 ]; then
+                    log_error "kilo failed for PR #$num (exit $kilo_exit)"
                     log_warn "Initiating retry after 30s backoff..."
                     sleep 30
                 fi
 
-                log_info "Completed PR #$num review (exit: $opencode_exit)"
+                log_info "Completed PR #$num review (exit: $kilo_exit)"
             done
         else
             log_debug "No PRs found in $r"
