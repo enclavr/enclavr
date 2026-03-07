@@ -3,7 +3,7 @@
     "permission":{
         "*":"allow"
     },
-    "model":"opencode/minimax-m2.5-free",
+    "model":"stepfun/step-3.5-flash:free",
     "agent":{
         "build":{
             "temperature":0.75
