@@ -609,15 +609,15 @@ while true; do
     done
     
     check_issues
-    local new_issues=$(grep -c "Completed processing issue" "$LOG_FILE" 2>/dev/null || echo 0)
+    new_issues=$(grep -c "Completed processing issue" "$LOG_FILE" 2>/dev/null || echo 0)
     issues_processed=$((issues_processed + new_issues))
     
     check_pulls
-    local new_prs=$(grep -c "Completed PR" "$LOG_FILE" 2>/dev/null || echo 0)
+    new_prs=$(grep -c "Completed PR" "$LOG_FILE" 2>/dev/null || echo 0)
     prs_processed=$((prs_processed + new_prs))
     
     check_ci
-    local new_ci=$(grep -c "Completed CI analysis" "$LOG_FILE" 2>/dev/null || echo 0)
+    new_ci=$(grep -c "Completed CI analysis" "$LOG_FILE" 2>/dev/null || echo 0)
     ci_fixed=$((ci_fixed + new_ci))
     
     check_releases
@@ -652,19 +652,19 @@ while true; do
         log_debug "No git changes detected"
         
         # Check cooldown for proactive improvements
-        local proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
-        local last_proactive=0
+        proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
+        last_proactive=0
         
         if [ -f "$proactive_cooldown_file" ]; then
             last_proactive=$(cat "$proactive_cooldown_file")
         fi
         
-        local current_time=$(date +%s)
-        local time_since_proactive=$((current_time - last_proactive))
-        local cooldown_seconds=1800  # 30 minutes between proactive runs
+        current_time=$(date +%s)
+        time_since_proactive=$((current_time - last_proactive))
+        cooldown_seconds=1800  # 30 minutes between proactive runs
         
         if [ $time_since_proactive -lt $cooldown_seconds ]; then
-            local remaining=$((cooldown_seconds - time_since_proactive))
+            remaining=$((cooldown_seconds - time_since_proactive))
             log "[COOLDOWN] Skipping proactive improvements - $((remaining / 60))m $(remaining % 60)s remaining (last: $((time_since_proactive / 60))m ago, min: $((cooldown_seconds / 60))m)"
             
             # Log memory and system stats during cooldown
@@ -780,7 +780,7 @@ while true; do
             log_debug "No changes to commit from proactive run"
         fi
         
-        local loop_duration=$(( $(date +%s) - loop_start ))
+        loop_duration=$(( $(date +%s) - loop_start ))
         log "PROACTIVE CYCLE COMPLETE (duration: ${loop_duration}s)"
         log "-----------------------------------"
         sleep 60
