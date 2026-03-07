@@ -5,7 +5,7 @@
 
 LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
-REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra enclavr/docs"
+REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra"
 
 # Kilo logging configuration - reduced verbosity
 KILO_LOG_LEVEL="WARN"  # Only warnings and errors
@@ -126,7 +126,7 @@ read_memory_bank() {
 
     # Read submodules memory banks
     local submodules_count=0
-    for submodule in frontend server infra docs; do
+    for submodule in frontend server infra; do
         if [ -d "$PROJECT_DIR/$submodule/memory-bank" ]; then
             if [ -f "$PROJECT_DIR/$submodule/memory-bank/activeContext.md" ]; then
                 submodules_count=$((submodules_count + 1))
@@ -148,7 +148,6 @@ update_memory_bank() {
         frontend) mem_bank_path="$PROJECT_DIR/frontend/memory-bank" ;;
         server)   mem_bank_path="$PROJECT_DIR/server/memory-bank" ;;
         infra)    mem_bank_path="$PROJECT_DIR/infra/memory-bank" ;;
-        docs)     mem_bank_path="$PROJECT_DIR/docs/memory-bank" ;;
         *)        mem_bank_path="$PROJECT_DIR/memory-bank" ;;
     esac
 
@@ -456,8 +455,6 @@ while true; do
             TASK="Run proactive improvements for server: code review, test coverage, refactoring, documentation"
         elif [ -d "frontend" ]; then
             TASK="Run proactive improvements for frontend: code review, TypeScript fixes, test coverage, documentation"
-        elif [ -d "docs" ]; then
-            TASK="Run proactive improvements for documentation: review docs, check for broken links, verify accuracy"
         else
             TASK="Analyze project state and implement improvements per AGENTS.md"
         fi
@@ -494,9 +491,6 @@ while true; do
             if [ -d "infra" ]; then
                 update_memory_bank "infra" "Proactive improvements completed"
             fi
-            if [ -d "docs" ]; then
-                update_memory_bank "docs" "Proactive improvements completed"
-            fi
             update_memory_bank "root" "Proactive improvements completed"
         fi
 
@@ -518,9 +512,6 @@ while true; do
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
         TARGET_REPO="frontend"
         TASK="Analyze frontend changes and run tests, lint, then implement improvements"
-    elif echo "$CHANGED_FILES" | grep -q "docs/"; then
-        TARGET_REPO="docs"
-        TASK="Analyze documentation changes, verify accuracy, run build test"
     elif echo "$CHANGED_FILES" | grep -q "infra/"; then
         TARGET_REPO="infra"
         TASK="Analyze infra changes, verify Docker configuration"
