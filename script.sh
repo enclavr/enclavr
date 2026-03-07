@@ -272,7 +272,7 @@ update_memory_bank() {
         frontend) mem_bank_path="$PROJECT_DIR/frontend/memory-bank" ;;
         server)   mem_bank_path="$PROJECT_DIR/server/memory-bank" ;;
         infra)    mem_bank_path="$PROJECT_DIR/infra/memory-bank" ;;
-        docs)     mem_bank_path="$PROJECT_DIR/../docs/memory-bank" ;;
+        docs)     mem_bank_path="$PROJECT_DIR/docs/memory-bank" ;;
         *)        mem_bank_path="$PROJECT_DIR/memory-bank" ;;
     esac
     
