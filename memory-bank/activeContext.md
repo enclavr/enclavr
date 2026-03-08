@@ -1,9 +1,14 @@
 # Active Context - Enclavr
 
 ## Current Work Focus (Mar 8, 2026)
-Script.sh autonomous agent - refactored to use both kilo and opencode with shared state for continuity.
+Proactive improvements completed
 
-## Latest Changes (Mar 8, 2026)
+## Latest Update (Mar 8, 2026)
+
+### Changes Made
+- Proactive improvements completed
+
+## Previous Changes (Mar 8, 2026)
 
 ### Script.sh Provider Alternation
 - Refactored script.sh to alternate between kilo and opencode
@@ -68,9 +73,9 @@ Script.sh autonomous agent - refactored to use both kilo and opencode with share
 - Docs tests: 115/115 passing
 - Frontend rooms/voice tests: Require authenticated server (expected)
 
-## Previous Changes (Mar 7, 2026)
+## Previous Changes (Mar 8, 2026)
 
-### Docs Submodule
+### Script.sh Provider Alternation
 - Converted docs folder to proper git submodule
 - Created new https://github.com/enclavr/docs repo
 - Added .gitignore to docs repo (exclude node_modules, test-results)
