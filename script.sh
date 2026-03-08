@@ -35,6 +35,15 @@ log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$level] $1" | tee -a "$LOG_FILE"
 }
 
+# Rotate log if larger than 10MB
+if [ -f "$LOG_FILE" ]; then
+    size=$(stat -c %s "$LOG_FILE" 2>/dev/null || echo 0)
+    if [ "$size" -gt 10485760 ]; then
+        mv "$LOG_FILE" "${LOG_FILE}.old"
+        echo "Log rotated (was ${size} bytes)" > "$LOG_FILE"
+    fi
+fi
+
 log_debug() {
     log "[DEBUG] $1" "DEBUG"
 }
@@ -126,9 +135,9 @@ $details
 
 "
 
-    # Keep last 10 entries
+    # Keep last 3 entries only (was 10)
     local state_content="$new_entry$existing_state"
-    local trimmed=$(echo "$state_content" | head -200)
+    local trimmed=$(echo "$state_content" | head -50)
 
     echo "$trimmed" > "$SHARED_STATE_FILE"
     log_info "Updated shared state: $provider - $task_summary - $status"
@@ -136,6 +145,7 @@ $details
 
 get_shared_context() {
     # Get context from the OTHER provider (for continuity)
+    # ONLY pass last 3 entries to avoid context overflow
     if [ -f "$SHARED_STATE_FILE" ]; then
         local last_provider=""
         local context=""
@@ -144,8 +154,9 @@ get_shared_context() {
         last_provider=$(grep -A2 "## Last Run" "$SHARED_STATE_FILE" | grep "Provider" | head -1 | sed 's/.*: //')
 
         if [ -n "$last_provider" ]; then
-            context=$(cat "$SHARED_STATE_FILE")
-            log_info "Found context from previous $last_provider session"
+            # Only pass last ~30 lines (2-3 entries) to stay under context limit
+            context=$(head -35 "$SHARED_STATE_FILE")
+            log_info "Found context from previous $last_provider session (truncated)"
             echo "$context"
         fi
     fi
@@ -175,11 +186,20 @@ run_agent() {
 
     local task_summary="${1:0:50}"
 
-    # === Read shared state from previous agent ===
-    local shared_context=$(get_shared_context)
-    if [ -n "$shared_context" ]; then
-        log_info "Context from previous session:"
-        echo "$shared_context" | head -20
+    # === Read shared state from previous agent (TRUNCATED) ===
+    # Skip if previous runs had context overflow issues
+    local skip_context=false
+    if grep -q "context length" "$SHARED_STATE_FILE" 2>/dev/null; then
+        log_warn "Previous context overflow detected - skipping shared context"
+        skip_context=true
+    fi
+
+    if [ "$skip_context" = "false" ]; then
+        local shared_context=$(get_shared_context)
+        if [ -n "$shared_context" ]; then
+            log_info "Context from previous session:"
+            echo "$shared_context" | head -3
+        fi
     fi
 
     # Build agent command with minimal logging options
@@ -232,6 +252,15 @@ run_agent() {
     fi
 
     log_info "Task completed in ${duration}s (exit: $exit_code)"
+
+    # Clear context overflow flag on success
+    if [ $exit_code -eq 0 ]; then
+        # Remove any context overflow markers from shared state
+        if grep -q "context length" "$SHARED_STATE_FILE" 2>/dev/null; then
+            sed -i '/context length/d' "$SHARED_STATE_FILE"
+            log_info "Cleared context overflow flag after successful run"
+        fi
+    fi
 
     # === Write shared state for next agent ===
     local details=""
