@@ -13,7 +13,7 @@
 
 LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
-REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra"
+REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra enclavr/docs"
 
 # Agent logging configuration - reduced verbosity
 AGENT_LOG_LEVEL="WARN"  # Only warnings and errors
@@ -308,13 +308,12 @@ check_gh_cli() {
 read_memory_bank() {
     # Read root memory bank
     if [ -f "$PROJECT_DIR/memory-bank/activeContext.md" ]; then
-        ROOT_CONTEXT=$(cat "$PROJECT_DIR/memory-bank/activeContext.md")
         log_info "Loaded root memory bank"
     fi
 
     # Read submodules memory banks
     local submodules_count=0
-    for submodule in frontend server infra; do
+    for submodule in frontend server infra docs; do
         if [ -d "$PROJECT_DIR/$submodule/memory-bank" ]; then
             if [ -f "$PROJECT_DIR/$submodule/memory-bank/activeContext.md" ]; then
                 submodules_count=$((submodules_count + 1))
@@ -358,8 +357,20 @@ commit_and_push() {
 
     log_info "Checking for changes to commit..."
 
-    # First, check if there are any changes to commit
-    if git diff --quiet 2>/dev/null && git diff --quiet --staged 2>/dev/null; then
+    # First, check if there are any changes to commit (root and submodules)
+    local has_changes=false
+    if ! git diff --quiet 2>/dev/null || ! git diff --quiet --staged 2>/dev/null; then
+        has_changes=true
+    fi
+    
+    # Check submodules for changes
+    if [ -f "$PROJECT_DIR/.gitmodules" ]; then
+        if git submodule status 2>/dev/null | grep -q "^+"; then
+            has_changes=true
+        fi
+    fi
+
+    if [ "$has_changes" = "false" ]; then
         log "No changes to commit"
         return 0
     fi
@@ -448,8 +459,10 @@ is_safe_issue() {
     local body="$1"
     # Check for prompt injection patterns
     local danger_patterns="ignore.*previous|forget.*above|you are now|emergency|urgent|critical.*now|just do|don't tell|eval\(|exec\(|subprocess|rm -rf|curl.*sh|wget.*sh|base64|decoded|backdoor|reverse shell"
-    echo "$body" | grep -Ei "$danger_patterns" >/dev/null 2>&1
-    return $?
+    if echo "$body" | grep -Ei "$danger_patterns" >/dev/null 2>&1; then
+        return 1  # Danger found - NOT safe
+    fi
+    return 0  # No danger - IS safe
 }
 
 # ========== Kilo-based GitHub Operations ==========
@@ -472,7 +485,7 @@ Report what submodules were updated, if any."
 manage_labels_via_kilo() {
     log "Managing GitHub labels via Kilo..."
 
-    local task="Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra):
+    local task="Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs):
 - bug:Issue bug (color: ee0701)
 - feature:Issue feature (color: 008672)
 - enhancement:Issue enhancement (color: 84b6eb)
@@ -493,6 +506,7 @@ sync_repos_via_kilo() {
 - enclavr/frontend
 - enclavr/server
 - enclavr/infra
+- enclavr/docs
 
 Use 'gh repo sync -R <repo>' to sync each repository. This fetches the latest commits from remote. Report which repos were synced."
 
@@ -739,8 +753,20 @@ while true; do
         last_github_check=$loop_start
     fi
 
-    # === Check for local changes ===
-    if git diff --quiet 2>/dev/null; then
+    # === Check for local changes (root and submodules) ===
+    local has_local_changes=false
+    if ! git diff --quiet 2>/dev/null || ! git diff --quiet --staged 2>/dev/null; then
+        has_local_changes=true
+    fi
+    
+    # Check submodules for changes
+    if [ -f "$PROJECT_DIR/.gitmodules" ]; then
+        if git submodule status 2>/dev/null | grep -q "^+"; then
+            has_local_changes=true
+        fi
+    fi
+
+    if [ "$has_local_changes" = "false" ]; then
 
         # Check cooldown for proactive improvements
         last_proactive=0
@@ -816,6 +842,9 @@ while true; do
         if [ -d "infra" ]; then
             update_memory_bank "infra" "Proactive improvements completed"
         fi
+        if [ -d "docs" ]; then
+            update_memory_bank "docs" "Proactive improvements completed"
+        fi
         update_memory_bank "root" "Proactive improvements completed"
 
         log "Proactive cycle complete"
@@ -826,7 +855,17 @@ while true; do
      # Changes detected
     log "Changes detected"
 
+    # Check both root and submodules for changes
     CHANGED_FILES=$(git diff --name-only HEAD 2>/dev/null | head -5)
+    
+    # Also check submodule changes
+    if [ -f "$PROJECT_DIR/.gitmodules" ]; then
+        local submodule_changes=$(git submodule status 2>/dev/null | grep "^+" | awk '{print $2}')
+        if [ -n "$submodule_changes" ]; then
+            CHANGED_FILES="${CHANGED_FILES}
+${submodule_changes}"
+        fi
+    fi
 
     if echo "$CHANGED_FILES" | grep -q "server/"; then
         TARGET_REPO="server"
