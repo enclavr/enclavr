@@ -652,94 +652,28 @@ sync_repos() {
     sync_repos_via_kilo
 }
 
-# ========== Branch Management ==========
+# ========== Branch & Tag Management via Kilo ==========
 
-cleanup_stale_branches() {
-    log "Checking for stale branches..."
+manage_branches_via_kilo() {
+    log "Managing branches and tags via Kilo..."
 
-    local stale_days=7
-    local cutoff_date=$(date -u -d "$stale_days days ago" '+%Y-%m-%dT%H:%M:%SZ')
+    local task="Manage git branches and tags for all enclavr repositories:
 
-    for r in $REPOS; do
-        # Get branches merged to main more than $stale_days ago
-        local merged_branches=$(gh api repos/$r/git/commits/main --jq '.sha' 2>/dev/null)
-        if [ -z "$merged_branches" ]; then
-            continue
-        fi
+1. Check all repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs) for branches
+2. Identify stale branches (branches not merged to main for 7+ days, or branches with no recent commits)
+3. Delete any stale branches using 'git push origin --delete <branch>' or GitHub API
+4. Check if today's release tag (format: vYYYY.MM.DD) exists in each repo
+5. If no tag exists today, create one pointing to the latest main commit using 'git tag -a vYYYY.MM.DD -m \"Release vYYYY-MM-DD\"' and 'git push origin vYYYY.MM.DD'
 
-        # List branches (excluding main)
-        local branches=$(gh api repos/$r/git/refs/heads --jq '.[].ref' 2>/dev/null | grep -v '^main$')
+Report which branches were deleted and which tags were created."
 
-        for branch in $branches; do
-            # Get branch commit date
-            local branch_date=$(gh api repos/$r/git/commits/$branch --jq '.commit.author.date' 2>/dev/null)
-            if [ -z "$branch_date" ]; then
-                continue
-            fi
-
-            # Check if older than cutoff
-            if [[ "$branch_date" < "$cutoff_date" ]]; then
-                log "Deleting stale branch: $branch in $r"
-                gh api -X DELETE repos/$r/git/refs/heads/$branch 2>/dev/null && \
-                    log "Deleted stale branch $branch in $r" || \
-                    log_warn "Failed to delete branch $branch in $r"
-            fi
-        done
-    done
-
-    # Also check root repo for stale branches
-    cd "$PROJECT_DIR" || return
-    local local_branches=$(git branch --format='%(refname:short)' 2>/dev/null | grep -v '^main$')
-    for branch in $local_branches; do
-        local last_commit_date=$(git log -1 --format=%ci $branch 2>/dev/null)
-        if [ -n "$last_commit_date" ]; then
-            local commit_timestamp=$(date -d "$last_commit_date" +%s 2>/dev/null)
-            local cutoff_timestamp=$(date -d "$stale_days days ago" +%s 2>/dev/null)
-            if [ "$commit_timestamp" -lt "$cutoff_timestamp" ]; then
-                log "Deleting stale local branch: $branch"
-                git branch -D $branch 2>/dev/null && \
-                    git push origin --delete $branch 2>/dev/null && \
-                    log "Deleted stale branch $branch" || \
-                    log_warn "Failed to delete branch $branch"
-            fi
-        fi
-    done
-}
-
-create_release_tag() {
-    local repo="$1"
-    local tag_name="v$(date +'%Y.%m.%d')"
-
-    # Check if tag already exists today
-    local existing_tag=$(gh api repos/$repo/tags --jq '.[].name' 2>/dev/null | grep "^${tag_name}$")
-    if [ -n "$existing_tag" ]; then
-        log "Tag $tag_name already exists in $repo"
-        return 0
-    fi
-
-    # Get main branch SHA
-    local main_sha=$(gh api repos/$repo/git/refs/heads/main --jq '.object.sha' 2>/dev/null)
-    if [ -z "$main_sha" ]; then
-        log_warn "Could not get main SHA for $repo"
-        return 1
-    fi
-
-    # Create annotated tag
-    local tag_message="Automated release $(date +'%Y-%m-%d')"
-    gh api repos/$repo/git/tags -f tag="refs/tags/$tag_name" \
-        -f message="$tag_message" \
-        -f object="$main_sha" \
-        -f type=commit 2>/dev/null
-
-    # Create reference
-    gh api repos/$repo/git/refs -f ref="refs/tags/$tag_name" -f sha="$main_sha" 2>/dev/null
-
-    log "Created release tag $tag_name in $repo"
+    run_kilo run --continue "$task"
+    return $?
 }
 
 manage_branches() {
     log "Managing branches and tags..."
-    cleanup_stale_branches
+    manage_branches_via_kilo
 }
 
 # ========== Main Loop ==========
