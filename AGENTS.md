@@ -620,3 +620,47 @@ sentry_get_doc --path "/platforms/javascript/guides/nextjs.md"
 # Get event attachments
 sentry_get_event_attachment --eventId "event-id" --organizationSlug "enclavr" --projectSlug "api"
 ```
+
+## Autonomous Agent Script
+
+The root repository contains `script.sh` - an autonomous agent loop that continuously manages the Enclavr project using AI agents.
+
+### Providers
+
+The script alternates between two AI providers:
+- **kilo** - Primary AI agent
+- **opencode** - Secondary AI agent (fallback)
+
+This alternation helps balance rate limits across both providers.
+
+### Shared State
+
+Since kilo and opencode have separate session IDs, they communicate via a shared state file:
+- **Location**: `memory-bank/shared-state.md`
+- **Purpose**: Each agent reads this file before running a task to understand what the other agent did
+- **Contents**: Last run provider, task, status (SUCCESS/FAILED), exit code, error details
+
+### Memory Bank Files
+
+Each repository has a `memory-bank/` directory with:
+- `activeContext.md` - Current work focus
+- `progress.md` - What works, what's left
+- `productContext.md` - Product purpose
+- `projectbrief.md` - Project goals
+- `systemPatterns.md` - Code patterns
+- `techContext.md` - Technologies
+
+### Running the Script
+
+```bash
+cd /home/dev/Projects/enclavr
+./script.sh
+```
+
+The script:
+1. Checks GitHub issues every 5 minutes
+2. Reviews pull requests
+3. Analyzes CI failures
+4. Runs proactive improvements every 30 minutes
+5. Commits and pushes changes (with AI review before commit)
+6. Updates memory banks

@@ -1,9 +1,39 @@
 # Active Context - Enclavr
 
-## Current Work Focus
-Codebase analysis, Playwright testing, and documentation navigation fixes - completed comprehensive E2E tests and fixed broken relative links in static HTML docs.
+## Current Work Focus (Mar 8, 2026)
+Script.sh autonomous agent - refactored to use both kilo and opencode with shared state for continuity.
 
-## Latest Changes (Mar 7, 2026)
+## Latest Changes (Mar 8, 2026)
+
+### Script.sh Provider Alternation
+- Refactored script.sh to alternate between kilo and opencode
+- Added `run_agent()` function that switches providers on each call
+- Added `find_agent()` to locate both kilo and opencode binaries
+- Changed variable prefix from `KILO_*` to `AGENT_*`
+
+### Script.sh Shared State
+- Added shared state via `memory-bank/shared-state.md`
+- Both agents read previous session info before running
+- Records: provider, task, status, exit code, error details
+- Enables continuity between kilo and opencode sessions
+
+### Script.sh AI Review for Commits
+- Added two-step commit process: review then commit
+- AI reviews changes for security issues, dangerous operations, broken code
+- Must respond with APPROVE: or REJECT: format
+- Only commits if approved
+
+### Script.sh Full Kilo Integration
+- All git operations now use Kilo: commit/push, submodule updates
+- All GitHub operations now use Kilo: labels, repo sync
+- Memory bank updates now use Kilo
+- Rate limit checks remain as direct CLI (for flow control)
+
+### Git History Rewrite
+- Rewrote all commit history in all 5 repos (root, frontend, server, infra, docs)
+- Changed author from various emails (ai@enclavr.dev, dev@enclavr.local) to enclavr.dev@gmail.com
+- Changed author name to "Enclavr AI" across all commits
+- Updated CI workflow to use new email address
 
 ### Documentation Navigation Fixes
 - Fixed broken relative links in all 27 static HTML documentation pages
@@ -40,7 +70,10 @@ Codebase analysis, Playwright testing, and documentation navigation fixes - comp
 
 ## Previous Changes (Mar 7, 2026)
 
-### License & Legal Framework
+### Docs Submodule
+- Converted docs folder to proper git submodule
+- Created new https://github.com/enclavr/docs repo
+- Added .gitignore to docs repo (exclude node_modules, test-results)
 - Created comprehensive LICENSE file with The Unlicense
 - Added AI-Generated Code Notice and AI Training Prohibition
 - Added Legal Compliance Disclaimer for export controls, data protection

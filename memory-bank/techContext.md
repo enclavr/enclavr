@@ -114,3 +114,30 @@ go run ./cmd/server  # migrations run automatically
 - Low latency audio streaming
 - Horizontal scaling capability
 - Cross-platform deployment
+
+## Autonomous Agent (script.sh)
+
+The script runs continuously to manage the project:
+
+### Running
+```bash
+cd /home/dev/Projects/enclavr
+./script.sh
+```
+
+### Configuration
+- **Timeout**: 600s (10 min) per task
+- **Providers**: Alternates between kilo and opencode
+- **Rate Limiting**: GitHub API rate limits checked before operations
+
+### Shared State
+- **File**: `memory-bank/shared-state.md`
+- **Purpose**: Enables continuity between kilo/opencode sessions
+- **Contents**: Last provider, task, status, exit code
+
+### Operations
+1. Checks issues/PRs/CI every 5 minutes
+2. Updates submodules every 30 minutes
+3. Runs proactive improvements (30 min cooldown)
+4. AI reviews all changes before commit (APPROVE/REJECT)
+5. Commits and pushes via Kilo

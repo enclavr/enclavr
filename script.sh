@@ -3,7 +3,7 @@
 # Enclavr Autonomous Agent Loop
 # Runs continuously with smart change detection and logging
 #
-# This script uses Kilo with MCP (Model Context Protocol) tools:
+# This script uses Kilo/Opencode with MCP (Model Context Protocol) tools:
 # - Git MCP tools for version control
 # - Neon MCP tools for database operations
 # - Sentry MCP tools for error tracking
@@ -15,16 +15,20 @@ LOG_FILE="/home/dev/Projects/enclavr/agent-$(date '+%Y%m%d').log"
 PROJECT_DIR="/home/dev/Projects/enclavr"
 REPOS="enclavr/enclavr enclavr/frontend enclavr/server enclavr/infra"
 
-# Kilo logging configuration - reduced verbosity
-KILO_LOG_LEVEL="WARN"  # Only warnings and errors
-KILO_PRINT_LOGS="false"  # Don't print to stderr
-KILO_SHOW_THINKING="false" # Hide AI thinking blocks
-KILO_FORMAT="default"   # Human-readable format
+# Agent logging configuration - reduced verbosity
+AGENT_LOG_LEVEL="WARN"  # Only warnings and errors
+AGENT_PRINT_LOGS="false"  # Don't print to stderr
+AGENT_SHOW_THINKING="false" # Hide AI thinking blocks
+AGENT_FORMAT="default"   # Human-readable format
 
 # Session configuration
-KILO_SESSION_ID="enclavr-autonomous-$(hostname)-$(date '+%Y%m%d')" # Persistent session ID
-KILO_AGENT=""  # Optional: specific agent type
-KILO_TIMEOUT=600  # 10 minute timeout for Kilo runs
+AGENT_SESSION_ID="enclavr-autonomous-$(hostname)-$(date '+%Y%m%d')" # Persistent session ID
+AGENT_TYPE=""  # Optional: specific agent type
+AGENT_TIMEOUT=600  # 10 minute timeout for agent runs
+
+# Alternate between kilo and opencode
+CURRENT_PROVIDER="kilo"  # Start with kilo
+PROVIDER_COOLDOWN_FILE="$PROJECT_DIR/.provider_cooldown"
 
 log() {
     local level="${2:-INFO}"
@@ -47,27 +51,209 @@ log_error() {
     log "[ERROR] $1" "ERROR" >&2
 }
 
-KILO_PATH=""
+AGENT_PATH=""
 KILO_SEARCH_PATHS="/home/dev/.kilo/bin:/usr/local/bin:/usr/bin:/bin"
+OPENCODE_SEARCH_PATHS="/home/dev/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
 
-find_kilo() {
-    KILO_SEARCH_PATHS="/home/dev/.kilo/bin:/usr/local/bin:/usr/bin:/bin"
+find_agent() {
+    local provider="$1"
+    local search_paths=""
+    
+    if [ "$provider" = "kilo" ]; then
+        search_paths="$KILO_SEARCH_PATHS"
+    else
+        search_paths="$OPENCODE_SEARCH_PATHS"
+    fi
 
-    for dir in $(echo "$KILO_SEARCH_PATHS" | tr ':' ' '); do
-        if [ -x "$dir/kilo" ]; then
-            KILO_PATH="$dir/kilo"
-            log "Found kilo at: $KILO_PATH"
+    for dir in $(echo "$search_paths" | tr ':' ' '); do
+        if [ -x "$dir/$provider" ]; then
+            AGENT_PATH="$dir/$provider"
+            log "Found $provider at: $AGENT_PATH"
             return 0
         fi
     done
 
-    KILO_PATH=$(which kilo 2>/dev/null)
-    if [ -z "$KILO_PATH" ]; then
-        log_error "kilo not found in PATH"
+    AGENT_PATH=$(which "$provider" 2>/dev/null)
+    if [ -z "$AGENT_PATH" ]; then
+        log_error "$provider not found in PATH"
         return 1
     fi
-    log "Found kilo at: $KILO_PATH"
+    log "Found $provider at: $AGENT_PATH"
     return 0
+}
+
+# ========== Shared State via Memory Bank ==========
+
+SHARED_STATE_FILE="$PROJECT_DIR/memory-bank/shared-state.md"
+
+read_shared_state() {
+    if [ -f "$SHARED_STATE_FILE" ]; then
+        log_info "Reading shared state from previous session..."
+        cat "$SHARED_STATE_FILE"
+    else
+        echo "# Shared State\n\nNo previous state."
+    fi
+}
+
+write_shared_state() {
+    local provider="$1"
+    local task_summary="$2"
+    local exit_code="$3"
+    local details="$4"
+
+    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+
+    # Read existing state or create new
+    local existing_state=""
+    if [ -f "$SHARED_STATE_FILE" ]; then
+        existing_state=$(cat "$SHARED_STATE_FILE")
+    fi
+
+    # Build new state entry
+    local status="SUCCESS"
+    if [ "$exit_code" -ne 0 ]; then
+        status="FAILED"
+    fi
+
+    local new_entry="## Last Run ($timestamp)
+- **Provider**: $provider
+- **Task**: $task_summary
+- **Status**: $status
+- **Exit Code**: $exit_code
+$details
+
+---
+
+"
+
+    # Keep last 10 entries
+    local state_content="$new_entry$existing_state"
+    local trimmed=$(echo "$state_content" | head -200)
+
+    echo "$trimmed" > "$SHARED_STATE_FILE"
+    log_info "Updated shared state: $provider - $task_summary - $status"
+}
+
+get_shared_context() {
+    # Get context from the OTHER provider (for continuity)
+    if [ -f "$SHARED_STATE_FILE" ]; then
+        local last_provider=""
+        local context=""
+
+        # Extract last provider from state
+        last_provider=$(grep -A2 "## Last Run" "$SHARED_STATE_FILE" | grep "Provider" | head -1 | sed 's/.*: //')
+
+        if [ -n "$last_provider" ]; then
+            context=$(cat "$SHARED_STATE_FILE")
+            log_info "Found context from previous $last_provider session"
+            echo "$context"
+        fi
+    fi
+}
+
+get_next_provider() {
+    local current="$1"
+    
+    if [ "$current" = "kilo" ]; then
+        echo "opencode"
+    else
+        echo "kilo"
+    fi
+}
+
+run_agent() {
+    # Switch provider for each call to balance load/rate limits
+    CURRENT_PROVIDER=$(get_next_provider "$CURRENT_PROVIDER")
+    
+    if ! find_agent "$CURRENT_PROVIDER"; then
+        # Fall back to the other provider if one fails
+        local fallback=$(get_next_provider "$CURRENT_PROVIDER")
+        log_warn "$CURRENT_PROVIDER not available, trying $fallback..."
+        CURRENT_PROVIDER="$fallback"
+        find_agent "$CURRENT_PROVIDER" || return 1
+    fi
+
+    local task_summary="${1:0:50}"
+
+    # === Read shared state from previous agent ===
+    local shared_context=$(get_shared_context)
+    if [ -n "$shared_context" ]; then
+        log_info "Context from previous session:"
+        echo "$shared_context" | head -20
+    fi
+
+    # Build agent command with minimal logging options
+    local cmd=("$AGENT_PATH" "run" "--continue" "--session" "$AGENT_SESSION_ID" "--title" "Enclavr Agent: $task_summary...")
+
+    # Add logging flags (already configured via env vars)
+    if [ "$AGENT_LOG_LEVEL" != "INFO" ]; then
+        cmd+=("--log-level" "$AGENT_LOG_LEVEL")
+    fi
+    if [ "$AGENT_PRINT_LOGS" = "true" ]; then
+        cmd+=("--print-logs")
+    fi
+    if [ "$AGENT_SHOW_THINKING" = "true" ]; then
+        cmd+=("--thinking")
+    fi
+    if [ "$AGENT_FORMAT" = "json" ]; then
+        cmd+=("--format" "json")
+    fi
+    if [ -n "$AGENT_TYPE" ]; then
+        cmd+=("--agent" "$AGENT_TYPE")
+    fi
+
+    # Add the message
+    cmd+=("$@")
+
+    log_info "Executing task with $CURRENT_PROVIDER... (timeout: ${AGENT_TIMEOUT}s)"
+    local start_time=$(date +%s)
+
+    # Execute with timeout
+    local output_file=$(mktemp)
+    local exit_code=124  # Default to timeout
+
+    if command -v timeout &> /dev/null; then
+        timeout "$AGENT_TIMEOUT" "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
+        exit_code=${PIPESTATUS[0]}
+    else
+        # Fallback: run without timeout but log warning
+        log_warn "timeout command not available - running without timeout"
+        "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
+        exit_code=${PIPESTATUS[0]}
+    fi
+
+    local end_time=$(date +%s)
+    local duration=$((end_time - start_time))
+
+    # Handle timeout specifically
+    if [ $exit_code -eq 124 ]; then
+        log_warn "Task timed out after ${AGENT_TIMEOUT}s"
+        echo "Task timed out after ${AGENT_TIMEOUT}s" >> "$output_file"
+    fi
+
+    log_info "Task completed in ${duration}s (exit: $exit_code)"
+
+    # === Write shared state for next agent ===
+    local details=""
+    if [ $exit_code -ne 0 ]; then
+        details="- **Details**: $(tail -n 3 "$output_file" 2>/dev/null | tr '\n' ' ' | head -c 200)"
+    fi
+    write_shared_state "$CURRENT_PROVIDER" "$task_summary" "$exit_code" "$details"
+
+    if [ $exit_code -ne 0 ]; then
+        log_warn "Task failed. Last 5 lines:"
+        tail -n 5 "$output_file" 2>/dev/null | while IFS= read -r line; do
+            log_warn "  > $line"
+        done
+    fi
+
+    rm -f "$output_file"
+    return $exit_code
+}
+
+# Alias for backward compatibility
+run_kilo() {
+    run_agent "$@"
 }
 
 check_gh_cli() {
@@ -86,75 +272,6 @@ check_gh_cli() {
 
     log_debug "gh CLI found and authenticated"
     return 0
-}
-
-run_kilo() {
-    if [ -z "$KILO_PATH" ]; then
-        find_kilo || return 1
-    fi
-
-    local task_summary="${1:0:50}"
-
-    # Build kilo command with minimal logging options
-    local cmd=("$KILO_PATH" "run" "--continue" "--session" "$KILO_SESSION_ID" "--title" "Enclavr Agent: $task_summary...")
-
-    # Add logging flags (already configured via env vars)
-    if [ "$KILO_LOG_LEVEL" != "INFO" ]; then
-        cmd+=("--log-level" "$KILO_LOG_LEVEL")
-    fi
-    if [ "$KILO_PRINT_LOGS" = "true" ]; then
-        cmd+=("--print-logs")
-    fi
-    if [ "$KILO_SHOW_THINKING" = "true" ]; then
-        cmd+=("--thinking")
-    fi
-    if [ "$KILO_FORMAT" = "json" ]; then
-        cmd+=("--format" "json")
-    fi
-    if [ -n "$KILO_AGENT" ]; then
-        cmd+=("--agent" "$KILO_AGENT")
-    fi
-
-    # Add the message
-    cmd+=("$@")
-
-    log_info "Executing task... (timeout: ${KILO_TIMEOUT}s)"
-    local start_time=$(date +%s)
-
-    # Execute with timeout
-    local output_file=$(mktemp)
-    local exit_code=124  # Default to timeout
-
-    if command -v timeout &> /dev/null; then
-        timeout "$KILO_TIMEOUT" "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
-        exit_code=${PIPESTATUS[0]}
-    else
-        # Fallback: run without timeout but log warning
-        log_warn "timeout command not available - running without timeout"
-        "${cmd[@]}" 2>&1 | tee -a "$LOG_FILE" | tee "$output_file"
-        exit_code=${PIPESTATUS[0]}
-    fi
-
-    local end_time=$(date +%s)
-    local duration=$((end_time - start_time))
-
-    # Handle timeout specifically
-    if [ $exit_code -eq 124 ]; then
-        log_warn "Task timed out after ${KILO_TIMEOUT}s"
-        echo "Task timed out after ${KILO_TIMEOUT}s" >> "$output_file"
-    fi
-
-    log_info "Task completed in ${duration}s (exit: $exit_code)"
-
-    if [ $exit_code -ne 0 ]; then
-        log_warn "Task failed. Last 5 lines:"
-        tail -n 5 "$output_file" 2>/dev/null | while IFS= read -r line; do
-            log_warn "  > $line"
-        done
-    fi
-
-    rm -f "$output_file"
-    return $exit_code
 }
 
 # ========== Memory Bank Functions ==========
@@ -179,48 +296,123 @@ read_memory_bank() {
     log_info "Memory banks loaded (${submodules_count} submodules)"
 }
 
+update_memory_bank_via_kilo() {
+    local repo="$1"
+    local change_summary="$2"
+
+    log "Updating memory bank for $repo via Kilo..."
+
+    local task="Update the memory bank for repository '$repo':
+1. Read the current activeContext.md file at '$PROJECT_DIR/$repo/memory-bank/activeContext.md' (or '$PROJECT_DIR/memory-bank/activeContext.md' for root)
+2. Update the 'Current Work Focus' section with: '$change_summary'
+3. Add a new 'Latest Update' section with today's date and describe: '$change_summary'
+
+Use proper markdown formatting and preserve existing content. Report what you updated."
+
+    run_kilo run --continue "$task"
+    return $?
+}
+
 update_memory_bank() {
     local repo="$1"
     local change_summary="$2"
 
     log "Updating memory bank for $repo..."
-
-    local mem_bank_path=""
-    case "$repo" in
-        frontend) mem_bank_path="$PROJECT_DIR/frontend/memory-bank" ;;
-        server)   mem_bank_path="$PROJECT_DIR/server/memory-bank" ;;
-        infra)    mem_bank_path="$PROJECT_DIR/infra/memory-bank" ;;
-        *)        mem_bank_path="$PROJECT_DIR/memory-bank" ;;
-    esac
-
-    if [ -f "$mem_bank_path/activeContext.md" ]; then
-        local timestamp=$(date '+%b %d, %Y')
-
-        # Read current file, prepend new entry
-        local current_content=$(cat "$mem_bank_path/activeContext.md")
-
-        # Find the "Current Work Focus" section and update it
-        if echo "$current_content" | grep -q "## Current Work Focus"; then
-            # Replace current work focus with new one
-            local new_focus="## Current Work Focus
-$change_summary
-
-## Latest Update ($timestamp)
-
-### Changes Made
-- $change_summary"
-
-            # Rebuild file with new content at top
-            echo "$new_focus" > "$mem_bank_path/activeContext.md"
-            echo "" >> "$mem_bank_path/activeContext.md"
-            echo "$current_content" >> "$mem_bank_path/activeContext.md"
-
-            log "  Updated $repo memory bank"
-        fi
-    fi
+    update_memory_bank_via_kilo "$repo" "$change_summary"
 }
 
-# ========== GitHub CLI Management Functions ==========
+# ========== Git Commit/Push via Kilo ==========
+
+commit_and_push() {
+    local commit_message="$1"
+    local timeout="${2:-120}"
+
+    log_info "Checking for changes to commit..."
+
+    # First, check if there are any changes to commit
+    if git diff --quiet 2>/dev/null && git diff --quiet --staged 2>/dev/null; then
+        log "No changes to commit"
+        return 0
+    fi
+
+    # === STEP 1: Review changes ===
+    log_info "Reviewing changes before commit..."
+
+    local review_task="Analyze the current uncommitted/unstaged changes in this repository:
+1. First, run 'git status' to see all changed files
+2. Run 'git diff' to see the actual changes
+3. Carefully review each changed file for:
+   - Security issues (hardcoded secrets, API keys, passwords, tokens)
+   - Dangerous operations (rm -rf, eval, exec, subprocess with shell=True)
+   - Broken code or syntax errors
+   - Intentional malicious code or backdoors
+   - Credential leaks or sensitive data exposure
+   - Infrastructure changes that could cause downtime
+   - Changes that don't match the intended task
+
+Respond with EXACTLY ONE of these formats (no other text):
+- APPROVE: <brief reason> - if changes are safe and good to commit
+- REJECT: <detailed reason why> - if changes are dangerous, broken, or problematic"
+
+    log_info "Running AI review of changes (timeout: 90s)"
+
+    local review_output=$(mktemp)
+    local review_exit=0
+
+    # Use run_agent which handles provider switching
+    run_agent "$review_task" 2>&1 | tee -a "$LOG_FILE" | tee "$review_output"
+    review_exit=${PIPESTATUS[0]}
+
+    # Check if review approved or rejected
+    local decision=$(grep -E "^(APPROVE|REJECT):" "$review_output" | head -1 | tr -d '\n' | xargs)
+
+    rm -f "$review_output"
+
+    if [ $review_exit -eq 124 ]; then
+        log_warn "Review timed out - proceeding with caution"
+        decision="APPROVE: review timeout - proceeding"
+    elif [ -z "$decision" ]; then
+        log_warn "Could not determine review decision - rejecting for safety"
+        decision="REJECT: no clear decision from review"
+    fi
+
+    if echo "$decision" | grep -q "^REJECT:"; then
+        local reason=$(echo "$decision" | sed 's/^REJECT: //')
+        log_error "CHANGES REJECTED: $reason"
+        log_error "NOT committing or pushing changes"
+        return 1
+    fi
+
+    local approval_reason=$(echo "$decision" | sed 's/^APPROVE: //')
+    log_info "Review APPROVED: $approval_reason"
+
+    # === STEP 2: Commit and push ===
+    log_info "Committing and pushing changes via agent..."
+
+    local commit_task="Stage all changes using 'git add -A', create a commit with message: '$commit_message', then push to the remote. Use conventional commit format. If there are no changes to stage, acknowledge that."
+
+    local commit_output=$(mktemp)
+    local commit_exit=124
+
+    run_agent "$commit_task" 2>&1 | tee -a "$LOG_FILE" | tee "$commit_output"
+    commit_exit=${PIPESTATUS[0]}
+
+    if [ $commit_exit -eq 124 ]; then
+        log_warn "Commit/push timed out after ${timeout}s"
+    elif [ $commit_exit -ne 0 ]; then
+        log_warn "Commit/push failed (exit: $commit_exit)"
+        tail -n 5 "$commit_output" 2>/dev/null | while IFS= read -r line; do
+            log_warn "  > $line"
+        done
+    else
+        log "✓ Changes committed and pushed"
+    fi
+
+    rm -f "$commit_output"
+    return $commit_exit
+}
+
+# ========== GitHub CLI Management via Kilo ==========
 
 # Security: Detect dangerous patterns in issue bodies
 is_safe_issue() {
@@ -228,6 +420,54 @@ is_safe_issue() {
     # Check for prompt injection patterns
     local danger_patterns="ignore.*previous|forget.*above|you are now|emergency|urgent|critical.*now|just do|don't tell|eval\(|exec\(|subprocess|rm -rf|curl.*sh|wget.*sh|base64|decoded|backdoor|reverse shell"
     echo "$body" | grep -Ei "$danger_patterns" >/dev/null 2>&1
+    return $?
+}
+
+# ========== Kilo-based GitHub Operations ==========
+
+update_submodules_via_kilo() {
+    log "Updating submodules via Kilo..."
+
+    local task="Update git submodules to their latest remote versions:
+1. Run 'git submodule status' to see current submodule states
+2. Run 'git submodule update --remote --merge' to fetch and merge latest
+3. Review any changes that occurred
+4. If there are changes, stage and commit them with message 'chore: update submodules to latest'
+
+Report what submodules were updated, if any."
+
+    run_kilo run --continue "$task"
+    return $?
+}
+
+manage_labels_via_kilo() {
+    log "Managing GitHub labels via Kilo..."
+
+    local task="Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra):
+- bug:Issue bug (color: ee0701)
+- feature:Issue feature (color: 008672)
+- enhancement:Issue enhancement (color: 84b6eb)
+- documentation:Issue documentation (color: d4c5f9)
+- security:Issue security (color: ee0701)
+
+Use 'gh label create' to create any missing labels. Report which labels were created."
+
+    run_kilo run --continue "$task"
+    return $?
+}
+
+sync_repos_via_kilo() {
+    log "Syncing repositories via Kilo..."
+
+    local task="Sync all enclavr repositories with their remote counterparts:
+- enclavr/enclavr (root monorepo)
+- enclavr/frontend
+- enclavr/server
+- enclavr/infra
+
+Use 'gh repo sync -R <repo>' to sync each repository. This fetches the latest commits from remote. Report which repos were synced."
+
+    run_kilo run --continue "$task"
     return $?
 }
 
@@ -374,22 +614,13 @@ check_releases() {
 }
 
 manage_labels() {
-    log "Ensuring common labels exist..."
-    LABELS="bug:Issue bug,feature:Issue feature,enhancement:Issue enhancement,documentation:Issue documentation,security:Issue security"
-    for r in $REPOS; do
-        for label in $LABELS; do
-            name="${label%%:*}"
-            color="${label##*:}"
-            gh label create "$name" -R "$r" --description "$name" 2>/dev/null || true
-        done
-    done
+    log "Ensuring common labels exist via Kilo..."
+    manage_labels_via_kilo
 }
 
 sync_repos() {
-    log "Syncing repositories..."
-    for r in $REPOS; do
-        gh repo sync -R "$r" 2>/dev/null && echo "  Synced $r"
-    done
+    log "Syncing repositories via Kilo..."
+    sync_repos_via_kilo
 }
 
 # ========== Main Loop ==========
@@ -397,14 +628,18 @@ sync_repos() {
 log "Starting Enclavr Autonomous Agent"
 log "Configuration:"
 log "  Log File: $LOG_FILE"
-log "  Session: $KILO_SESSION_ID"
-log "  Log Level: $KILO_LOG_LEVEL"
-log "  Timeout: ${KILO_TIMEOUT}s"
+log "  Session: $AGENT_SESSION_ID"
+log "  Log Level: $AGENT_LOG_LEVEL"
+log "  Timeout: ${AGENT_TIMEOUT}s"
+log "  Starting Provider: $CURRENT_PROVIDER"
 log "==================================="
 
 # Verify prerequisites
 check_gh_cli || exit 1
-find_kilo
+
+# Initialize both providers
+find_agent "kilo" || log_warn "kilo not found"
+find_agent "opencode" || log_warn "opencode not found"
 
 # Initialize cooldown file if not exists
 proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
@@ -434,24 +669,9 @@ while true; do
 
     # === Git Submodule Operations (periodic) ===
     if [ $((loop_start - last_submodule_update)) -ge $submodule_interval ]; then
-        log "Updating submodules..."
-        submodule_output=$(git submodule update --remote --merge 2>&1)
-        submodule_status=$?
-
-        if [ $submodule_status -ne 0 ]; then
-            log_warn "Submodule update failed: $submodule_output"
-        else
-            if [ -n "$submodule_output" ]; then
-                log "  Submodule output: $submodule_output"
-            fi
-        fi
-
-        git add -A 2>/dev/null
-        if ! git diff --quiet --staged 2>/dev/null; then
-            # Use conventional commit format
-            git commit -m "chore: update submodules to latest" 2>/dev/null
-            git push 2>/dev/null && log "  Submodules updated" || log_warn "  Failed to push submodules"
-        fi
+        log "Updating submodules via Kilo..."
+        update_submodules_via_kilo
+        commit_and_push "chore: update submodules to latest" 120
         last_submodule_update=$loop_start
     fi
 
@@ -529,26 +749,20 @@ while true; do
             sleep 60
         fi
 
-        # Commit and push
-        git add -A 2>/dev/null
-        if ! git diff --quiet --staged 2>/dev/null; then
-            log_info "Proactive changes detected, committing..."
-            git commit -m "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
-            git push 2>/dev/null
-            log "✓ Proactive changes committed and pushed"
+        # Commit and push via Kilo
+        commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
 
-            # Update memory banks after changes
-            if [ -d "server" ]; then
-                update_memory_bank "server" "Proactive improvements completed"
-            fi
-            if [ -d "frontend" ]; then
-                update_memory_bank "frontend" "Proactive improvements completed"
-            fi
-            if [ -d "infra" ]; then
-                update_memory_bank "infra" "Proactive improvements completed"
-            fi
-            update_memory_bank "root" "Proactive improvements completed"
+        # Update memory banks after changes
+        if [ -d "server" ]; then
+            update_memory_bank "server" "Proactive improvements completed"
         fi
+        if [ -d "frontend" ]; then
+            update_memory_bank "frontend" "Proactive improvements completed"
+        fi
+        if [ -d "infra" ]; then
+            update_memory_bank "infra" "Proactive improvements completed"
+        fi
+        update_memory_bank "root" "Proactive improvements completed"
 
         log "Proactive cycle complete"
         sleep 30
@@ -557,8 +771,6 @@ while true; do
 
      # Changes detected
     log "Changes detected"
-
-    git add -A 2>/dev/null
 
     CHANGED_FILES=$(git diff --name-only HEAD 2>/dev/null | head -5)
 
@@ -589,16 +801,8 @@ while true; do
         log_error "✗ Agent FAILED with exit code $EXIT_CODE"
     fi
 
-    # Commit and push
-    if ! git diff --quiet --staged 2>/dev/null; then
-        log_info "Agent produced changes, committing..."
-        git commit -m "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 2>/dev/null
-        git push 2>/dev/null
-        log "✓ Changes committed and pushed"
-
-        # Update memory banks after changes
-        update_memory_bank "$TARGET_REPO" "Changes processed and improvements implemented"
-    fi
+    # Commit and push via Kilo
+    commit_and_push "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 120
 
     loop_duration=$(( $(date +%s) - loop_start ))
     log "Loop complete (${loop_duration}s)"

@@ -38,7 +38,7 @@ jobs:
       - name: Auto-update submodules if changed
         if: steps.submodule_status.outputs.updated == 'true'
         run: |
-          git config --global user.email "ai@enclavr.dev"
+          git config --global user.email "enclavr.dev@gmail.com"
           git config --global user.name "Enclavr AI"
           git submodule update --remote --merge
           git add .
