@@ -7,9 +7,6 @@ on:
       - .gitmodules
       - docs/**
   workflow_dispatch:
-  repository_dispatch:
-    types:
-      - docs_updated
 
 permissions:
   contents: read
