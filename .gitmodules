@@ -7,6 +7,3 @@
 [submodule "infra"]
 	path = infra
 	url = https://github.com/enclavr/infra.git
-[submodule "docs"]
-	path = docs
-	url = https://github.com/enclavr/docs.git
