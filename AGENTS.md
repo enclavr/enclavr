@@ -307,6 +307,12 @@ git branch -d old-branch                    # Delete local branch
 git push origin --delete old-branch          # Delete remote branch
 ```
 
+#### Autonomous Agent Branch Strategy
+- **Trunk-based development**: AI agent works directly on `main` branch
+- **No feature branches**: Simpler workflow for autonomous agents
+- **Auto-cleanup**: Stale branches (>7 days old) are automatically deleted
+- **Stale definition**: Branch with no commits merged to main for 7+ days
+
 ### Tags
 ```bash
 git tag v1.0.0                              # Create lightweight tag
@@ -315,6 +321,11 @@ git push origin v1.0.0                      # Push tag
 git push origin --delete v1.0.0             # Delete remote tag
 git tag -l                                  # List tags
 ```
+
+#### Autonomous Agent Tag Strategy
+- **Automatic tagging**: Tags created on daily releases (format: `vYYYY.MM.DD`)
+- **Daily releases**: Autonomous agent creates tags for each day's work
+- **Prevention**: Skip if tag already exists for the day
 
 ### Checking All Repos
 ```bash
