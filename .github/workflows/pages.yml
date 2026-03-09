@@ -21,15 +21,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout docs
+      - name: Checkout
         uses: actions/checkout@v4
         with:
-          repository: enclavr/docs
-          ref: main
-          path: docs
+          fetch-depth: 0
+          submodules: recursive
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+
+      - name: Build Docs
+        run: |
+          if [ -d "docs" ]; then
+            echo "Using root docs folder"
+          elif [ -d "frontend/docs" ]; then
+            echo "Using frontend/docs"
+          else
+            echo "No docs folder found"
+            exit 1
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
