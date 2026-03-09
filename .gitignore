@@ -11,6 +11,8 @@ shared-state.md
 .next/
 out/
 memory-bank/
+.proactive_cooldown
+.provider_cooldown
 *.swp
 *.swo
 *~

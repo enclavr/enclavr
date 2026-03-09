@@ -829,8 +829,12 @@ while true; do
             sleep 60
         fi
 
-        # Commit and push via Kilo
-        commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
+        # Commit and push via Kilo ONLY if there are actual changes
+        if git diff --quiet 2>/dev/null && git diff --quiet --staged 2>/dev/null && ! git submodule status 2>/dev/null | grep -q "^+"; then
+            log "No changes to commit after proactive run"
+        else
+            commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
+        fi
 
         # Update memory banks after changes
         if [ -d "server" ]; then
@@ -894,8 +898,12 @@ ${submodule_changes}"
         log_error "✗ Agent FAILED with exit code $EXIT_CODE"
     fi
 
-    # Commit and push via Kilo
-    commit_and_push "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 120
+    # Commit and push via Kilo ONLY if there are actual changes
+    if git diff --quiet 2>/dev/null && git diff --quiet --staged 2>/dev/null && ! git submodule status 2>/dev/null | grep -q "^+"; then
+        log "No changes to commit"
+    else
+        commit_and_push "Autonomous agent: $(date '+%Y-%m-%d %H:%M')" 120
+    fi
 
     loop_duration=$(( $(date +%s) - loop_start ))
     log "Loop complete (${loop_duration}s)"
