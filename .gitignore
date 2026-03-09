@@ -3,6 +3,9 @@
 .env.*.local
 node_modules/
 *.log
+agent-*.log
+.ci_failure_cache
+shared-state.md
 .DS_Store
 *.tsbuildinfo
 .next/
