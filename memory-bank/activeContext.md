@@ -1,14 +1,21 @@
 # Active Context - Enclavr
 
-## Current Work Focus (Mar 8, 2026)
-Proactive improvements completed
+## Current Work Focus (Mar 9, 2026)
+Project verified and operational. CI fixes applied.
 
-## Latest Update (Mar 8, 2026)
+## Latest Changes (Mar 9, 2026)
+- Fixed CI failure in enclavr/server: PostgreSQL foreign key constraint issue - added audit_logs to test cleanup before users
+- Fixed CI failure in enclavr/enclavr: Pages workflow now uses local docs folder instead of separate repo checkout
+- All lint passes: Server ✅, Frontend ✅
+- All tests pass: Server ✅, Frontend 549 ✅
+- Frontend build: ✅ Next.js 16.1.6
+- Added Redis to docker-compose.yml for WebSocket pub/sub support
+- Server submodule updated to latest
+
+## Previous Changes (Mar 8, 2026)
 
 ### Changes Made
 - Proactive improvements completed
-
-## Previous Changes (Mar 8, 2026)
 
 ### Script.sh Provider Alternation
 - Refactored script.sh to alternate between kilo and opencode
