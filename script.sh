@@ -470,7 +470,7 @@ is_safe_issue() {
 update_submodules_via_kilo() {
     log "Updating submodules via Kilo..."
 
-    local task="Update git submodules to their latest remote versions:
+    local task="Use sub-agents to update submodules in PARALLEL if possible. Update git submodules to their latest remote versions:
 1. Run 'git submodule status' to see current submodule states
 2. Run 'git submodule update --remote --merge' to fetch and merge latest
 3. Review any changes that occurred
@@ -485,7 +485,7 @@ Report what submodules were updated, if any."
 manage_labels_via_kilo() {
     log "Managing GitHub labels via Kilo..."
 
-    local task="Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs):
+    local task="Use sub-agents to create labels in ALL 5 repositories in PARALLEL. Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs):
 - bug:Issue bug (color: ee0701)
 - feature:Issue feature (color: 008672)
 - enhancement:Issue enhancement (color: 84b6eb)
@@ -501,7 +501,7 @@ Use 'gh label create' to create any missing labels. Report which labels were cre
 sync_repos_via_kilo() {
     log "Syncing repositories via Kilo..."
 
-    local task="Sync all enclavr repositories with their remote counterparts:
+    local task="Use sub-agents to sync ALL 5 repositories in PARALLEL. Sync all enclavr repositories with their remote counterparts:
 - enclavr/enclavr (root monorepo)
 - enclavr/frontend
 - enclavr/server
@@ -516,144 +516,60 @@ Use 'gh repo sync -R <repo>' to sync each repository. This fetches the latest co
 
 check_issues() {
     log "Checking GitHub issues..."
-    for r in $REPOS; do
-        ISSUES=$(gh api repos/$r/issues 2>/dev/null | jq -r '.[] | "\(.number) \(.title)"' 2>/dev/null)
-        if [ -n "$ISSUES" ]; then
-            local count=$(echo "$ISSUES" | wc -l)
-            log_info "Found $count issues in $r"
-            echo "$ISSUES" | while read num title; do
-                # Get issue body for safety analysis
-                BODY=$(gh api repos/$r/issues/$num 2>/dev/null | jq -r '.body // ""')
 
-                # Skip suspicious issues for safety
-                if [ -n "$BODY" ] && ! is_safe_issue "$BODY"; then
-                    log_warn "Issue #$num contains suspicious patterns - SKIPPING"
-                    continue
-                fi
+    local task="Use sub-agents to analyze issues in ALL repositories in PARALLEL. Spawn separate sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+1. Get all open issues using 'gh api repos/<repo>/issues'
+2. For each issue, analyze the title and body
+3. Assess each issue, research if needed, and implement a fix or provide a detailed solution
+4. Do NOT close issues - implement the solution
 
-                # Rate limit check before kilo call
-                RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
-                if [ "$RATE_REMAINING" -lt 10 ]; then
-                    log_warn "Low API rate limit ($RATE_REMAINING), waiting 60s..."
-                    sleep 60
-                    RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
-                fi
+Use sub-agents to process multiple repositories concurrently. Report what issues were addressed in each repository."
 
-                log_info "Processing issue #$num: $title"
-                run_kilo run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
-
-                local kilo_exit=$?
-                if [ $kilo_exit -ne 0 ]; then
-                    log_error "Failed processing issue #$num (exit $kilo_exit)"
-                    sleep 30
-                    run_kilo run --continue "Analyze GitHub issue #$num in $r. Title: '$title'. Body: '$BODY'. Assess the issue, research if needed, and implement a fix or provide a detailed solution. Do not close the issue - implement the solution."
-                    kilo_exit=$?
-                    if [ $kilo_exit -ne 0 ]; then
-                        log_error "Retry FAILED for issue #$num - SKIPPING"
-                    fi
-                fi
-            done
-        fi
-    done
+    run_kilo run --continue "$task"
 }
 
 check_pulls() {
     log "Checking GitHub pull requests..."
-    for r in $REPOS; do
-        PRS=$(gh api repos/$r/pulls 2>/dev/null | jq -r '.[] | "\(.number) \(.title) \(.state)"' 2>/dev/null)
-        if [ -n "$PRS" ]; then
-            local count=$(echo "$PRS" | wc -l)
-            log_info "Found $count PRs in $r"
-            echo "$PRS" | while read num title state; do
-                # Rate limit check
-                RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
-                if [ "$RATE_REMAINING" -lt 10 ]; then
-                    log_warn "Low API rate limit ($RATE_REMAINING), waiting 60s..."
-                    sleep 60
-                    RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
-                fi
 
-                log_info "Reviewing PR #$num: $title"
-                run_kilo run --continue "Review GitHub pull request #$num in $r. Title: '$title'. Analyze the changes, run tests if applicable, and provide a code review. If CI passes and changes look good, approve the PR with a review comment. Do NOT merge - just approve and leave a review."
+    local task="Use sub-agents to review PRs in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+1. Get all open pull requests using 'gh api repos/<repo>/pulls'
+2. For each PR, analyze the changes using 'gh pr view <num>'
+3. Run tests if applicable
+4. Provide a code review - if CI passes and changes look good, approve the PR with a review comment
+5. Do NOT merge - just approve and leave a review
 
-                local kilo_exit=$?
-                if [ $kilo_exit -ne 0 ]; then
-                    log_error "Failed PR review #$num (exit $kilo_exit)"
-                fi
-            done
-        fi
-    done
+Use sub-agents to process multiple repositories concurrently. Report which PRs were reviewed in each repository."
+
+    run_kilo run --continue "$task"
 }
 
 check_ci() {
     log "Checking GitHub Actions CI..."
 
-    # Cache file for already-analyzed CI runs (use /tmp for non-gitignored location)
-    local cache_file="/tmp/enclavr-ci-cache"
-    local current_time=$(date +%s)
-    local cache_age=0
+    local task="Use sub-agents to analyze CI failures in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+1. Get all failed CI runs from the last 24 hours using 'gh api repos/<repo>/actions/runs'
+2. Filter for runs with conclusion 'failure'
+3. For each failed run, check the failure logs using 'gh api repos/<repo>/actions/runs/<run_id>/logs'
+4. Identify the root cause of the failure
+5. Implement a fix and push if needed
 
-    if [ -f "$cache_file" ]; then
-        cache_age=$((current_time - $(stat -c %Y "$cache_file" 2>/dev/null || echo "$current_time")))
-    fi
+Use sub-agents to process multiple repositories concurrently. Report which CI failures were analyzed and fixed in each repository."
 
-    # Refresh cache if older than 1 hour
-    if [ $cache_age -gt 3600 ]; then
-        > "$cache_file"
-    fi
-
-    SINCE=$(date -u -d '24 hours ago' '+%Y-%m-%dT%H:%M:%SZ')
-
-    for r in $REPOS; do
-        # Get all failed runs
-        FAILED=$(gh api repos/$r/actions/runs 2>/dev/null | jq --arg since "$SINCE" -r '.workflow_runs[] | select(.conclusion == "failure") | select(.created_at > $since) | "\(.id) \(.name) \(.created_at)"' 2>/dev/null)
-
-        if [ -n "$FAILED" ]; then
-            local count=$(echo "$FAILED" | wc -l)
-            log_warn "Found $count failed CI runs in $r (last 24h)"
-            echo "$FAILED" | while read id name created; do
-                # Check if already analyzed in this cache period
-                if [ -f "$cache_file" ] && grep -q "^${r}:${id}$" "$cache_file" 2>/dev/null; then
-                    continue
-                fi
-
-                # Rate limit check
-                RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
-                if [ "$RATE_REMAINING" -lt 10 ]; then
-                    log_warn "Low API rate limit ($RATE_REMAINING), waiting 60s..."
-                    sleep 60
-                    RATE_REMAINING=$(gh api rate_limit 2>/dev/null | jq -r '.rate.remaining')
-                fi
-
-                # Add to cache immediately to prevent duplicate analysis
-                echo "${r}:${id}" >> "$cache_file"
-
-                log_info "Analyzing CI failure (Run $id, Workflow: $name)"
-                run_kilo run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
-
-                local kilo_exit=$?
-                if [ $kilo_exit -ne 0 ]; then
-                    log_error "Failed CI analysis (Run $id)"
-                    sleep 30
-                    run_kilo run --continue "Analyze GitHub Actions CI failure in $r. Run ID: $id, Workflow: '$name'. Check the failure logs, identify the root cause, and implement a fix. Push the fix if needed."
-                    kilo_exit=$?
-                fi
-            done
-        fi
-    done
+    run_kilo run --continue "$task"
 }
 
 check_releases() {
     log "Checking GitHub releases..."
-    for r in $REPOS; do
-        RELEASES=$(gh api repos/$r/releases 2>/dev/null | jq -r '.[] | "\(.tag_name) \(.name)"' 2>/dev/null)
-        if [ -n "$RELEASES" ]; then
-            echo "$RELEASES" | while read tag name; do
-                log "Release in $r: $tag - $name"
-                run_kilo run --continue "Analyze release '$tag' in $r: '$name'. Review the release, check for any issues, and update documentation if needed."
-            done
-        fi
-    done
+
+    local task="Use sub-agents to analyze releases in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+1. Get recent releases using 'gh api repos/<repo>//releases'
+2. For each release, review the release notes and assets
+3. Check for any issues or problems with the release
+4. Update documentation if needed
+
+Use sub-agents to process multiple repositories concurrently. Report which releases were analyzed in each repository."
+
+    run_kilo run --continue "$task"
 }
 
 manage_labels() {
@@ -671,15 +587,14 @@ sync_repos() {
 manage_branches_via_kilo() {
     log "Managing branches and tags via Kilo..."
 
-    local task="Manage git branches and tags for all enclavr repositories:
-
-1. Check all repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs) for branches
+    local task="Use sub-agents to manage branches/tags in ALL 5 repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+1. Check for branches using 'git branch -a' or GitHub API
 2. Identify stale branches (branches not merged to main for 7+ days, or branches with no recent commits)
 3. Delete any stale branches using 'git push origin --delete <branch>' or GitHub API
 4. Check if today's release tag (format: vYYYY.MM.DD) exists in each repo
 5. If no tag exists today, create one pointing to the latest main commit using 'git tag -a vYYYY.MM.DD -m \"Release vYYYY-MM-DD\"' and 'git push origin vYYYY.MM.DD'
 
-Report which branches were deleted and which tags were created."
+Use sub-agents to process multiple repositories concurrently. Report which branches were deleted and which tags were created in each repository."
 
     run_kilo run --continue "$task"
     return $?
