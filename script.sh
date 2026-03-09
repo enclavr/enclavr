@@ -93,7 +93,7 @@ find_agent() {
 
 # ========== Shared State via Memory Bank ==========
 
-SHARED_STATE_FILE="$PROJECT_DIR/memory-bank/shared-state.md"
+SHARED_STATE_FILE="/tmp/enclavr-shared-state"
 
 read_shared_state() {
     if [ -f "$SHARED_STATE_FILE" ]; then
@@ -526,7 +526,7 @@ check_issues() {
                 BODY=$(gh api repos/$r/issues/$num 2>/dev/null | jq -r '.body // ""')
 
                 # Skip suspicious issues for safety
-                if [ -n "$BODY" ] && is_safe_issue "$BODY"; then
+                if [ -n "$BODY" ] && ! is_safe_issue "$BODY"; then
                     log_warn "Issue #$num contains suspicious patterns - SKIPPING"
                     continue
                 fi
@@ -588,8 +588,8 @@ check_pulls() {
 check_ci() {
     log "Checking GitHub Actions CI..."
 
-    # Cache file for already-analyzed CI runs
-    local cache_file="$PROJECT_DIR/.ci_failure_cache"
+    # Cache file for already-analyzed CI runs (use /tmp for non-gitignored location)
+    local cache_file="/tmp/enclavr-ci-cache"
     local current_time=$(date +%s)
     local cache_age=0
 
@@ -708,8 +708,8 @@ check_gh_cli || exit 1
 find_agent "kilo" || log_warn "kilo not found"
 find_agent "opencode" || log_warn "opencode not found"
 
-# Initialize cooldown file if not exists
-proactive_cooldown_file="$PROJECT_DIR/.proactive_cooldown"
+# Initialize cooldown file if not exists (use /tmp for non-gitignored location)
+proactive_cooldown_file="/tmp/enclavr-proactive-cooldown"
 if [ ! -f "$proactive_cooldown_file" ]; then
     echo 0 > "$proactive_cooldown_file"
     log_debug "Initialized proactive cooldown file"
@@ -830,26 +830,31 @@ while true; do
         fi
 
         # Commit and push via Kilo ONLY if there are actual changes
-        if git diff --quiet 2>/dev/null && git diff --quiet --staged 2>/dev/null && ! git submodule status 2>/dev/null | grep -q "^+"; then
-            log "No changes to commit after proactive run"
-        else
-            commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
+        local has_changes=false
+        if ! git diff --quiet 2>/dev/null || ! git diff --quiet --staged 2>/dev/null || git submodule status 2>/dev/null | grep -q "^+"; then
+            has_changes=true
         fi
 
-        # Update memory banks after changes
-        if [ -d "server" ]; then
-            update_memory_bank "server" "Proactive improvements completed"
+        if [ "$has_changes" = "true" ]; then
+            commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
+            
+            # Update memory banks only if changes were committed
+            if [ -d "server" ]; then
+                update_memory_bank "server" "Proactive improvements completed"
+            fi
+            if [ -d "frontend" ]; then
+                update_memory_bank "frontend" "Proactive improvements completed"
+            fi
+            if [ -d "infra" ]; then
+                update_memory_bank "infra" "Proactive improvements completed"
+            fi
+            if [ -d "docs" ]; then
+                update_memory_bank "docs" "Proactive improvements completed"
+            fi
+            update_memory_bank "root" "Proactive improvements completed"
+        else
+            log "No changes to commit after proactive run"
         fi
-        if [ -d "frontend" ]; then
-            update_memory_bank "frontend" "Proactive improvements completed"
-        fi
-        if [ -d "infra" ]; then
-            update_memory_bank "infra" "Proactive improvements completed"
-        fi
-        if [ -d "docs" ]; then
-            update_memory_bank "docs" "Proactive improvements completed"
-        fi
-        update_memory_bank "root" "Proactive improvements completed"
 
         log "Proactive cycle complete"
         sleep 30
