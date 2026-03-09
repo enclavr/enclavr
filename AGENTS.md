@@ -168,7 +168,7 @@ golangci-lint run ./... && go test -v ./...
 ```bash
 cd infra
 cp .env.example .env
-docker-compose up -d
+docker compose up -d
 ```
 
 **PostgreSQL 18+ Note:** When using PostgreSQL 18+, the volume path changed:

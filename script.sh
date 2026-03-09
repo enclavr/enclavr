@@ -470,7 +470,7 @@ is_safe_issue() {
 update_submodules_via_kilo() {
     log "Updating submodules via Kilo..."
 
-    local task="Use sub-agents to update submodules in PARALLEL if possible. Update git submodules to their latest remote versions:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to update submodules in PARALLEL if possible. Update git submodules to their latest remote versions:
 1. Run 'git submodule status' to see current submodule states
 2. Run 'git submodule update --remote --merge' to fetch and merge latest
 3. Review any changes that occurred
@@ -485,7 +485,7 @@ Report what submodules were updated, if any."
 manage_labels_via_kilo() {
     log "Managing GitHub labels via Kilo..."
 
-    local task="Use sub-agents to create labels in ALL 5 repositories in PARALLEL. Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs):
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to create labels in ALL 5 repositories in PARALLEL. Ensure the following labels exist in all enclavr repositories (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs):
 - bug:Issue bug (color: ee0701)
 - feature:Issue feature (color: 008672)
 - enhancement:Issue enhancement (color: 84b6eb)
@@ -501,7 +501,7 @@ Use 'gh label create' to create any missing labels. Report which labels were cre
 sync_repos_via_kilo() {
     log "Syncing repositories via Kilo..."
 
-    local task="Use sub-agents to sync ALL 5 repositories in PARALLEL. Sync all enclavr repositories with their remote counterparts:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to sync ALL 5 repositories in PARALLEL. Sync all enclavr repositories with their remote counterparts:
 - enclavr/enclavr (root monorepo)
 - enclavr/frontend
 - enclavr/server
@@ -517,7 +517,7 @@ Use 'gh repo sync -R <repo>' to sync each repository. This fetches the latest co
 check_issues() {
     log "Checking GitHub issues..."
 
-    local task="Use sub-agents to analyze issues in ALL repositories in PARALLEL. Spawn separate sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to analyze issues in ALL repositories in PARALLEL. Spawn separate sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
 1. Get all open issues using 'gh api repos/<repo>/issues'
 2. For each issue, analyze the title and body
 3. Assess each issue, research if needed, and implement a fix or provide a detailed solution
@@ -531,7 +531,7 @@ Use sub-agents to process multiple repositories concurrently. Report what issues
 check_pulls() {
     log "Checking GitHub pull requests..."
 
-    local task="Use sub-agents to review PRs in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to review PRs in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
 1. Get all open pull requests using 'gh api repos/<repo>/pulls'
 2. For each PR, analyze the changes using 'gh pr view <num>'
 3. Run tests if applicable
@@ -546,7 +546,7 @@ Use sub-agents to process multiple repositories concurrently. Report which PRs w
 check_ci() {
     log "Checking GitHub Actions CI..."
 
-    local task="Use sub-agents to analyze CI failures in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to analyze CI failures in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
 1. Get all failed CI runs from the last 24 hours using 'gh api repos/<repo>/actions/runs'
 2. Filter for runs with conclusion 'failure'
 3. For each failed run, check the failure logs using 'gh api repos/<repo>/actions/runs/<run_id>/logs'
@@ -561,7 +561,7 @@ Use sub-agents to process multiple repositories concurrently. Report which CI fa
 check_releases() {
     log "Checking GitHub releases..."
 
-    local task="Use sub-agents to analyze releases in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to analyze releases in ALL repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
 1. Get recent releases using 'gh api repos/<repo>//releases'
 2. For each release, review the release notes and assets
 3. Check for any issues or problems with the release
@@ -587,7 +587,7 @@ sync_repos() {
 manage_branches_via_kilo() {
     log "Managing branches and tags via Kilo..."
 
-    local task="Use sub-agents to manage branches/tags in ALL 5 repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
+    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to manage branches/tags in ALL 5 repositories in PARALLEL. Spawn sub-agents for enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs. For each repository:
 1. Check for branches using 'git branch -a' or GitHub API
 2. Identify stale branches (branches not merged to main for 7+ days, or branches with no recent commits)
 3. Delete any stale branches using 'git push origin --delete <branch>' or GitHub API

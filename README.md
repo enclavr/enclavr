@@ -58,9 +58,15 @@ go run ./cmd/server
 ### Production
 
 ```bash
-cd infra
+git clone --recurse-submodules https://github.com/enclavr/enclavr.git
+cd enclavr/infra
+
+# Configure environment
 cp .env.example .env
-docker-compose up -d
+# Edit .env and change all default passwords and secrets
+
+# Start all services
+docker compose up -d
 ```
 
 ## Documentation
