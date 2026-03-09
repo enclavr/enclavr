@@ -55,9 +55,70 @@ This project has access to MCP (Model Context Protocol) tools.
 - PostgreSQL operations via Neon MCP (no SDK - standard GORM)
 - Database: ~30MB / 512MB free tier (6%)
 
-### Error Monitoring
-- Sentry projects: **api**, **frontend**
-- DSNs available in Sentry console
+### Sentry Error Monitoring (Comprehensive Testing)
+Projects: **api**, **frontend**
+Region: **us.sentry.io**
+
+#### Quick Status Check
+```bash
+sentry_whoami                                    # Verify authentication
+sentry_find_organizations                        # Confirm enclavr org
+sentry_find_teams                                # List teams
+sentry_find_projects                             # Verify frontend + api
+```
+
+#### Get DSNs (Verify SDK Configuration)
+```bash
+sentry_find_dsns --organizationSlug "enclavr" --projectSlug "frontend"
+sentry_find_dsns --organizationSlug "enclavr" --projectSlug "api"
+```
+
+#### Search Issues & Events
+```bash
+sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "unresolved errors"
+sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "crashes"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "errors from the last 24 hours"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "slow transactions"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "database failures"
+```
+
+#### Analyze Issues
+```bash
+sentry_get_issue_details --issueUrl "https://enclavr.sentry.io/issues/123"
+sentry_analyze_issue_with_seer --issueUrl "https://enclavr.sentry.io/issues/123"
+sentry_get_issue_tag_values --issueUrl "https://enclavr.sentry.io/issues/123" --tagKey "environment"
+sentry_get_trace_details --organizationSlug "enclavr" --traceId "abc123"
+```
+
+#### Update Issues
+```bash
+sentry_update_issue --issueUrl "https://enclavr.sentry.io/issues/123" --status "resolved"
+sentry_update_issue --issueUrl "https://enclavr.sentry.io/issues/123" --assignedTo "user:123456"
+```
+
+#### Create Resources
+```bash
+sentry_create_team --organizationSlug "enclavr" --name "backend"
+sentry_create_project --organizationSlug "enclavr" --teamSlug "backend" --name "api"
+sentry_create_dsn --organizationSlug "enclavr" --projectSlug "api" --name "Production"
+```
+
+#### Documentation
+```bash
+sentry_get_doc --path "/platforms/javascript/guides/nextjs.md"
+```
+
+#### Comprehensive Testing Workflow (ALWAYS RUN IN ORDER)
+1. `sentry_whoami` - Verify authentication
+2. `sentry_find_organizations` - Confirm enclavr org exists
+3. `sentry_find_teams` - List all teams
+4. `sentry_find_projects` - Verify frontend and api projects exist
+5. `sentry_find_dsns` for both projects - Verify DSNs match .env files
+6. `sentry_search_issues` with "unresolved errors" - List all issues
+7. `sentry_search_events` with "errors from the last 24 hours" - Count recent errors
+8. `sentry_get_issue_details` on each critical issue
+9. `sentry_analyze_issue_with_seer` for root cause analysis
+10. `sentry_update_issue` to mark as resolved after fixing
 
 ### Other MCP Tools
 - Context7: Library documentation

@@ -1,6 +1,26 @@
 # Progress - Enclavr
 
 ## What Works
+
+### Docker Services Fixed (Mar 9, 2026)
+- Fixed database migration indexes (presence, direct_messages columns matching model)
+- Fixed coturn configuration in docker-compose.yml (simplified command to prevent crashes)
+- Fixed docker build context paths (../server, ../frontend for infra directory)
+- All 5 docker services running: frontend ✅, server ✅, postgres ✅, redis ✅, coturn ✅
+- API tested: registration, login, room create, message send, ICE config
+- Documentation updated with correct docker compose commands
+
+### Script.sh Improvements (Mar 9, 2026)
+- Added memory bank read/update instructions to all AI tasks
+- Added sub-agent parallelization instructions to GitHub operations
+- Fixed is_safe_issue logic inversion
+- Moved temp files to /tmp/ for proper gitignore
+- Memory bank updates now conditional on changes
+
+### Gitignore Fix (Mar 9, 2026)
+- Added agent-*.log, .ci_failure_cache, .proactive_cooldown, shared-state.md to .gitignore
+- Removed previously tracked runtime files
+
 - **Documentation Navigation Fixes** (added Mar 7, 2026):
   - Fixed broken relative links in all 27 static HTML docs pages
   - Root docs/index.html: Fixed sidebar links from `docs/*.html` to `*.html`

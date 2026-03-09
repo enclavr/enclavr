@@ -506,8 +506,24 @@ sentry_find_projects --organizationSlug "enclavr"
 # Find teams in an organization
 sentry_find_teams --organizationSlug "enclavr"
 
+# Find releases in a project
+sentry_find_releases --organizationSlug "enclavr"
+
+# Get project DSNs
+sentry_find_dsns --organizationSlug "enclavr" --projectSlug "frontend"
+sentry_find_dsns --organizationSlug "enclavr" --projectSlug "api"
+
 # Search for issues
-sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "unhandled errors"
+sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "unresolved errors"
+sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "crashes"
+sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "all issues"
+
+# Search events and get statistics
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "errors from the last 24 hours"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "all events from the last week"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "slow transactions"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "database failures"
+sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "how many errors today"
 
 # Get issue details
 sentry_get_issue_details --issueUrl "https://enclavr.sentry.io/issues/123"
@@ -521,14 +537,12 @@ sentry_get_issue_tag_values --issueUrl "https://enclavr.sentry.io/issues/123" --
 # Get trace details
 sentry_get_trace_details --organizationSlug "enclavr" --traceId "abc123"
 
-# Search events and get statistics
-sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "how many errors today"
-
 # Analyze issue with AI (Seer)
 sentry_analyze_issue_with_seer --issueUrl "https://enclavr.sentry.io/issues/123"
 
 # Update issue status/assignment
 sentry_update_issue --issueUrl "https://enclavr.sentry.io/issues/123" --status "resolved"
+sentry_update_issue --issueUrl "https://enclavr.sentry.io/issues/123" --assignedTo "user:123456"
 
 # Create team
 sentry_create_team --organizationSlug "enclavr" --name "backend"
@@ -536,8 +550,47 @@ sentry_create_team --organizationSlug "enclavr" --name "backend"
 # Create project
 sentry_create_project --organizationSlug "enclavr" --teamSlug "backend" --name "api"
 
-# Get project DSNs
-sentry_find_dsns --organizationSlug "enclavr" --projectSlug "api"
+# Create DSN for project
+sentry_create_dsn --organizationSlug "enclavr" --projectSlug "api" --name "Production"
+
+# Update project settings
+sentry_update_project --organizationSlug "enclavr" --projectSlug "api" --name "Updated Name"
+
+# Fetch Sentry documentation
+sentry_get_doc --path "/platforms/javascript/guides/nextjs.md"
+
+## Comprehensive Sentry Testing Workflow
+
+When debugging issues, ALWAYS run these Sentry MCP tools in order:
+
+### Step 1: Verify Connection
+1. `sentry_whoami` - Verify authentication
+2. `sentry_find_organizations` - Confirm enclavr org exists
+3. `sentry_find_teams` - List all teams
+
+### Step 2: Get Project Status
+1. `sentry_find_projects` - Verify frontend and api projects
+2. `sentry_find_dsns` for both projects - Verify DSNs match .env
+
+### Step 3: Search Issues
+1. `sentry_search_issues` with "unresolved errors"
+2. `sentry_search_issues` with "crashes"
+3. `sentry_search_events` with "errors from the last 24 hours"
+
+### Step 4: Analyze Issues
+1. `sentry_get_issue_details` on each issue
+2. `sentry_analyze_issue_with_seer` for root cause
+3. `sentry_get_issue_tag_values` with environment tag
+4. `sentry_get_trace_details` if trace available
+
+### Step 5: Performance Analysis
+1. `sentry_search_events` with "slow transactions"
+2. `sentry_search_events` with "database failures"
+
+### Step 6: Fix and Update
+1. Implement fixes
+2. `sentry_update_issue` to mark resolved
+3. Verify in dashboard
 ```
 
 ### Web Search & Fetch Tools
