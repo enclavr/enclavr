@@ -1,7 +1,15 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Proactive improvements and CI fixes completed
+Database debugging via Neon MCP attempted - tools unavailable
+
+## Latest Update (Mar 11, 2026)
+- Attempted Neon MCP database debugging - tools NOT AVAILABLE
+- Verified server database.go code manually:
+  - Connection pooling: max 100 open, 10 idle, 1h lifetime ✅
+  - Timeouts: statement_timeout=10s, lock_timeout=5s ✅
+  - 18 custom indexes defined (FTS, presence, messages, etc.) ✅
+- Proactive improvements completed
 
 ## Latest Update (Mar 11, 2026)
 - Proactive improvements completed
