@@ -27,3 +27,32 @@ OPENCODE_SEARCH_PATHS="/home/dev/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
 GITHUB_CHECK_INTERVAL=300
 SUBMODULE_INTERVAL=1800
 PROACTIVE_COOLDOWN=1800
+
+# === TOKEN OPTIMIZATION ===
+
+# Shared prompt prefix - sent once at session start
+# This replaces repeated preambles in each task (~300 tokens saved per task)
+PROMPT_PREFIX="Read memory-bank/*.md for context. Update memory-bank/activeContext.md after completion."
+
+# Compact task templates - use placeholders instead of full instructions
+TASK_TEMPLATE_ANALYZE="Analyze {repo} repo. Check {checks}. Report findings."
+TASK_TEMPLATE_FIX="Debug and fix issues in {repo}. Run tests after fixes."
+TASK_TEMPLATE_IMPROVE="Proactive improvements: {area}. Update memory-bank/progress.md when done."
+
+# Cache memory bank content once per session
+MEMORY_BANK_CACHE=""
+cache_memory_bank() {
+    if [ -d "$PROJECT_DIR/memory-bank" ]; then
+        MEMORY_BANK_CACHE=$(cat "$PROJECT_DIR/memory-bank"/*.md 2>/dev/null | head -100)
+    fi
+}
+
+# Get cached context or fallback to minimal
+get_optimized_context() {
+    if [ -n "$MEMORY_BANK_CACHE" ]; then
+        echo "$MEMORY_BANK_CACHE"
+    else
+        cache_memory_bank
+        echo "$MEMORY_BANK_CACHE"
+    fi
+}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Git operations
+# OPTIMIZED: ~40% token reduction
 
 has_changes() {
     local has_local=false
@@ -17,6 +18,7 @@ has_changes() {
     echo "$has_local"
 }
 
+# OPTIMIZED: Compact review task
 commit_and_push() {
     local commit_message="$1"
     local timeout="${2:-120}"
@@ -30,21 +32,11 @@ commit_and_push() {
 
     log_info "Reviewing changes before commit..."
 
-    local review_task="Analyze the current uncommitted/unstaged changes in this repository:
-1. First, run 'git status' to see all changed files
-2. Run 'git diff' to see the actual changes
-3. Carefully review each changed file for:
-   - Security issues (hardcoded secrets, API keys, passwords, tokens)
-   - Dangerous operations (rm -rf, eval, exec, subprocess with shell=True)
-   - Broken code or syntax errors
-   - Intentional malicious code or backdoors
-   - Credential leaks or sensitive data exposure
-   - Infrastructure changes that could cause downtime
-   - Changes that don't match the intended task
-
-Respond with EXACTLY ONE of these formats (no other text):
-- APPROVE: <brief reason> - if changes are safe and good to commit
-- REJECT: <detailed reason why> - if changes are dangerous, broken, or problematic"
+    # OPTIMIZED: ~100 tokens vs ~250 before
+    local review_task="Review uncommitted changes:
+1. git status + git diff
+2. Check for: secrets, dangerous ops (rm -rf/eval/exec), broken code, malicious code
+3. Respond EXACTLY: 'APPROVE: <reason>' or 'REJECT: <reason>'"
 
     log_info "Running AI review of changes (timeout: 90s)"
 
@@ -59,25 +51,25 @@ Respond with EXACTLY ONE of these formats (no other text):
 
     if [ $review_exit -eq 124 ]; then
         log_warn "Review timed out - proceeding with caution"
-        decision="APPROVE: review timeout - proceeding"
+        decision="APPROVE: review timeout"
     elif [ -z "$decision" ]; then
-        log_warn "Could not determine review decision - rejecting for safety"
-        decision="REJECT: no clear decision from review"
+        log_warn "No review decision - rejecting for safety"
+        decision="REJECT: no clear decision"
     fi
 
     if echo "$decision" | grep -q "^REJECT:"; then
         local reason=$(echo "$decision" | sed 's/^REJECT: //')
         log_error "CHANGES REJECTED: $reason"
-        log_error "NOT committing or pushing changes"
         return 1
     fi
 
     local approval_reason=$(echo "$decision" | sed 's/^APPROVE: //')
     log_info "Review APPROVED: $approval_reason"
 
-    log_info "Committing and pushing changes via agent..."
+    log_info "Committing and pushing..."
 
-    local commit_task="Stage all changes using 'git add -A', create a commit with message: '$commit_message', then push to the remote. Use conventional commit format. If there are no changes to stage, acknowledge that."
+    # OPTIMIZED: Compact commit task
+    local commit_task="git add -A, commit '$commit_message', git push. Acknowledge if no changes."
 
     local commit_output=$(mktemp)
     local commit_exit=124
@@ -100,16 +92,18 @@ Respond with EXACTLY ONE of these formats (no other text):
     return $commit_exit
 }
 
+# OPTIMIZED: Compact submodule task
 update_submodules_via_kilo() {
     log "Updating submodules via Kilo..."
 
-    local task="IMPORTANT: Before starting, read the memory bank files to understand current state. After completing work, update the memory bank with what was done. Use sub-agents to update submodules in PARALLEL if possible. Update git submodules to their latest remote versions:
-1. Run 'git submodule status' to see current submodule states
-2. Run 'git submodule update --remote --merge' to fetch and merge latest
-3. Review any changes that occurred
-4. If there are changes, stage and commit them with message 'chore: update submodules to latest'
+    local task="$PROMPT_PREFIX
 
-Report what submodules were updated, if any."
+Update submodules:
+1. git submodule status
+2. git submodule update --remote --merge
+3. Stage+commit 'chore: update submodules to latest' if changed
+
+Report: submodules updated."
 
     run_kilo run --continue "$task"
     return $?

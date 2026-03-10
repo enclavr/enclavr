@@ -69,6 +69,10 @@ cp .env.example .env
 docker compose up -d
 ```
 
+**First Login:**
+- Username: `admin`
+- Password: Set `ADMIN_PASSWORD` in `.env` (default: admin123)
+
 ## Documentation
 
 The documentation is located in the `/docs` folder and is deployed via GitHub Pages.
