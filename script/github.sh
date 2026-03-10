@@ -42,7 +42,7 @@ Analyze ALL 5 repos in PARALLEL (enclavr/enclavr, enclavr/frontend, enclavr/serv
 
 Report: issues addressed per repo."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
 }
 
 # OPTIMIZED: Compact format
@@ -58,7 +58,7 @@ Review PRs in ALL 5 repos PARALLEL:
 
 Report: PRs reviewed per repo."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
 }
 
 # OPTIMIZED: Compact format  
@@ -74,7 +74,7 @@ Analyze CI failures in ALL 5 repos PARALLEL:
 
 Report: failures fixed per repo."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
 }
 
 # OPTIMIZED: Compact format
@@ -90,7 +90,7 @@ Analyze releases in ALL 5 repos PARALLEL:
 
 Report: releases analyzed per repo."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
 }
 
 sync_repos_via_kilo() {
@@ -103,7 +103,7 @@ Sync ALL 5 repos PARALLEL via 'gh repo sync -R <repo>':
 
 Report: repos synced."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 

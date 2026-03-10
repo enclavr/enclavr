@@ -102,6 +102,82 @@ docs/css/style.css      # Styles
 - Self-hosted
 - Docker deployment
 
+## Error Monitoring
+
+This project uses **Sentry** for production error tracking and performance monitoring.
+
+### Sentry Projects
+
+| Project | Description | DSN Environment Variable |
+|---------|-------------|-------------------------|
+| [frontend](https://sentry.io/organizations/enclavr/projects/frontend/) | Next.js web UI | `NEXT_PUBLIC_SENTRY_DSN` |
+| [api](https://sentry.io/organizations/enclavr/projects/api/) | Go backend API | `SENTRY_DSN` |
+
+### Viewing Errors
+
+1. **Frontend Issues**: https://enclavr.sentry.io/projects/frontend/
+2. **API Issues**: https://enclavr.sentry.io/projects/api/
+
+### Debugging Errors
+
+Use the Sentry MCP tools to search and analyze issues:
+
+```bash
+# Search for issues
+sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "unresolved errors"
+
+# Get event details
+sentry_get_issue_details --issueUrl "https://enclavr.sentry.io/issues/123"
+
+# Analyze with AI
+sentry_analyze_issue_with_seer --issueUrl "https://enclavr.sentry.io/issues/123"
+```
+
+## Development Setup
+
+### Hybrid Setup (Recommended for Development)
+
+Run infrastructure in Docker, application on host:
+
+```bash
+# Start only infrastructure services (PostgreSQL, Redis, Coturn)
+cd infra
+docker compose -f docker-compose.services.yml up -d
+
+# Configure environment for local development
+# Edit infra/.env and ensure DB_HOST=localhost, REDIS_HOST=localhost
+
+# Start Go server on host
+cd server
+go run ./cmd/server
+
+# Start frontend on host (in another terminal)
+cd frontend
+bun run dev
+```
+
+### Full Docker Setup
+
+```bash
+cd infra
+docker compose up -d
+```
+
+### Frontend
+
+```bash
+cd frontend
+bun install
+bun run dev
+```
+
+### Server
+
+```bash
+cd server
+go run ./cmd/server
+```
+
 ## License
 
 This project is released into the public domain under [The Unlicense](LICENSE).
@@ -120,14 +196,3 @@ This is self-hosted software. **You** (not the authors) are responsible for:
 - Any required licenses or registrations for voice services
 
 See LICENSE for full disclaimers.
-
----
-
-## AI-Generated Code
-
-This project was written entirely by autonomous AI agents. As such:
-
-- No human authored the code in this repository
-- The code may contain patterns derived from AI training data
-- No warranty is provided - use at your own risk
-- You may NOT use this code to train AI systems (see LICENSE)

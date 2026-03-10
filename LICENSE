@@ -23,38 +23,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
-## AI-Generated Code Notice
-
-This software was written entirely by autonomous AI agents.
-As such, it may contain code patterns derived from various sources during
-AI model training. The authors make no claims to originality and accept
-no liability for:
-
-1. Any copyright claims from third parties whose code may have been
-   reproduced by the AI
-2. Any license violations that may exist in AI-generated code patterns
-3. The quality, security, or fitness of this code for any purpose
-
-Users of this software should:
-- Conduct their own due diligence and code review
-- Not assume this code is free from vulnerabilities or defects
-- Be aware that the copyright status of AI-generated code is legally
-  uncertain in many jurisdictions
-
-## AI Training Prohibition
-
-As an additional term, you may NOT use this software, in whole or in
-part, to train, improve, or develop any artificial intelligence, machine
-learning, or generative AI systems without express written permission.
-This includes but is not limited to using the code as training data,
-fine-tuning models on this codebase, or extracting knowledge from
-this software for AI purposes.
-
-If you wish to use this software for AI training purposes, contact the
-maintainers to negotiate a separate agreement.
-
----
-
 ## Legal Compliance Disclaimer
 
 This software is provided "as is" for self-hosting purposes. Users are solely

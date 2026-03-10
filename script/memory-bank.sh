@@ -32,7 +32,7 @@ update_memory_bank_via_kilo() {
 
 Use proper markdown formatting and preserve existing content. Report what you updated."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 

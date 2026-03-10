@@ -14,7 +14,7 @@ manage_labels_via_kilo() {
 
 Use 'gh label create' to create any missing labels. Report which labels were created."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 

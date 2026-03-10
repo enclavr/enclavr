@@ -105,7 +105,7 @@ Update submodules:
 
 Report: submodules updated."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 

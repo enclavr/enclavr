@@ -78,7 +78,7 @@ run_agent() {
         fi
     fi
 
-    local cmd=("$AGENT_PATH" "run" "--continue" "--session" "$AGENT_SESSION_ID" "--title" "Enclavr Agent: $task_summary...")
+    local cmd=("$AGENT_PATH" "run" "--title" "Enclavr Agent: $task_summary...")
 
     if [ "$AGENT_LOG_LEVEL" != "INFO" ]; then
         cmd+=("--log-level" "$AGENT_LOG_LEVEL")

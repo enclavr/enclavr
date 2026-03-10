@@ -687,7 +687,11 @@ sentry_get_event_attachment --eventId "event-id" --organizationSlug "enclavr" --
 
 ## Autonomous Agent Script
 
-The root repository contains `script.sh` - an autonomous agent loop that continuously manages the Enclavr project using AI agents.
+The root repository contains `script/` - an autonomous agent loop that continuously manages the Enclavr project using AI agents.
+
+### Location
+- Main script: `./script/main.sh`
+- Sub-scripts: `./script/` directory contains modular scripts (agent.sh, git.sh, github.sh, proactive.sh, debug.sh, etc.)
 
 ### Providers
 
@@ -700,7 +704,7 @@ This alternation helps balance rate limits across both providers.
 ### Shared State
 
 Since kilo and opencode have separate session IDs, they communicate via a shared state file:
-- **Location**: `memory-bank/shared-state.md`
+- **Location**: `/tmp/enclavr-shared-state`
 - **Purpose**: Each agent reads this file before running a task to understand what the other agent did
 - **Contents**: Last run provider, task, status (SUCCESS/FAILED), exit code, error details
 
@@ -718,13 +722,24 @@ Each repository has a `memory-bank/` directory with:
 
 ```bash
 cd /home/dev/Projects/enclavr
-./script.sh
+./script/main.sh
 ```
 
 The script:
 1. Checks GitHub issues every 5 minutes
 2. Reviews pull requests
 3. Analyzes CI failures
-4. Runs proactive improvements every 30 minutes
+4. **Runs proactive improvements every 30 minutes** - adds NEW FEATURES + maintains existing code
 5. Commits and pushes changes (with AI review before commit)
 6. Updates memory banks
+
+### Proactive Improvements
+
+Proactive tasks run on a timer (every 30 minutes) and always do TWO things:
+1. **MAINTENANCE**: Code review, bug fixes, test coverage, refactoring, dependency updates
+2. **NEW FEATURE**: Add something new - endpoints, components, hooks, services, etc.
+
+Example proactive tasks:
+- Server: New API endpoints, database models, WebSocket events, authentication features
+- Frontend: New UI components, pages, React hooks, utilities
+- Infrastructure: New Docker configurations, monitoring, deployment improvements

@@ -14,7 +14,7 @@ manage_branches_via_kilo() {
 
 Use sub-agents to process multiple repositories concurrently. Report which branches were deleted and which tags were created in each repository."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 

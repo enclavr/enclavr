@@ -44,8 +44,10 @@ proactive_runs=0
 last_github_check=0
 last_submodule_update=0
 last_debug_run=0
+last_proactive_run=0
 
 DEBUG_INTERVAL=1800
+PROACTIVE_INTERVAL=1800
 
 while true; do
     loop_start=$(date +%s)
@@ -101,36 +103,35 @@ while true; do
         last_github_check=$loop_start
     fi
 
-    # === Check for local changes ===
-    if [ "$(has_changes)" = "false" ]; then
-        if ! can_run_proactive; then
-            sleep 30
-            continue
+    # === Proactive Improvements (every 30 minutes regardless of changes) ===
+    if [ $((loop_start - last_proactive_run)) -ge $PROACTIVE_INTERVAL ]; then
+        if can_run_proactive; then
+            log "Running proactive improvements..."
+            run_proactive
+            EXIT_CODE=$?
+            proactive_runs=$((proactive_runs + 1))
+
+            if [ $EXIT_CODE -eq 0 ]; then
+                log "✓ Proactive improvements completed successfully"
+            else
+                log_error "✗ Proactive improvements FAILED (exit code: $EXIT_CODE)"
+                log_warn "Initiating backoff: waiting 60s after failed proactive run..."
+                sleep 60
+            fi
+
+            if [ "$(has_changes)" = "true" ]; then
+                commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
+                update_all_memory_banks "Proactive improvements completed"
+            else
+                log "No changes to commit after proactive run"
+            fi
+
+            last_proactive_run=$loop_start
         fi
-
-        run_proactive
-        EXIT_CODE=$?
-        proactive_runs=$((proactive_runs + 1))
-
-        if [ $EXIT_CODE -eq 0 ]; then
-            log "✓ Proactive improvements completed successfully"
-        else
-            log_error "✗ Proactive improvements FAILED (exit code: $EXIT_CODE)"
-            log_warn "Initiating backoff: waiting 60s after failed proactive run..."
-            sleep 60
-        fi
-
-        if [ "$(has_changes)" = "true" ]; then
-            commit_and_push "Proactive improvements: $(date '+%Y-%m-%d %H:%M')" 120
-            update_all_memory_banks "Proactive improvements completed"
-        else
-            log "No changes to commit after proactive run"
-        fi
-
-        log "Proactive cycle complete"
-        sleep 30
-        continue
     fi
+
+    # === Check for local changes ===
+    # Note: Proactive improvements now run on timer (see above), not just when no changes
 
     # === Changes detected ===
     log "Changes detected"
@@ -154,7 +155,7 @@ while true; do
     log_info "Target repository: $TARGET_REPO"
     log_info "Task: $TASK"
 
-    run_kilo run --continue "$TASK"
+    run_kilo run "$TASK"
 
     EXIT_CODE=$?
 

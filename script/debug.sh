@@ -24,7 +24,7 @@ Run tests: server='go test', frontend='bun run test:run'
 
 Report: issues found & fixed."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 
@@ -40,7 +40,7 @@ Debug Docker:
 
 Report: services fixed."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 
@@ -78,7 +78,7 @@ Debug via Sentry MCP:
 
 Report: issues analyzed & resolved."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 
@@ -96,7 +96,7 @@ Debug via Neon MCP:
 
 Report: DB issues fixed."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
 
@@ -113,6 +113,6 @@ Debug CI:
 
 Report: CI failures debugged."
 
-    run_kilo run --continue "$task"
+    run_kilo run "$task"
     return $?
 }
