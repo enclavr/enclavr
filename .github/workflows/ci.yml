@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          submodules: recursive
+          submodules: checkout
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Verify submodules
