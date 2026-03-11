@@ -1,6 +1,15 @@
 # Active Context - Enclavr
 
 ## Latest Changes (2026-03-12)
+- CI failure analysis: ALL 5 repos analyzed via gh api and gh run view
+- enclavr (root): validate-submodules failure - already fixed in latest commit (run 22937244064 SUCCESS)
+- frontend: Run tests failure - already fixed in latest commit (run 22974339224 SUCCESS)
+- server: Run linter failure - already fixed in latest commit (run 22930235490 SUCCESS)
+- infra: Validate Docker Compose failure - already fixed in latest commit (run 22942079353 SUCCESS)
+- docs: Setup Pages failure - already fixed by simplifying CI (run 22931680741 SUCCESS)
+- All CI failures are historical - subsequent commits have fixed them
+
+## Latest Changes (2026-03-12)
 - Issue analysis: ALL 5 repos analyzed via gh issue list
 - enclavr/enclavr: 0 open issues ✅
 - enclavr/frontend: 0 open issues ✅
