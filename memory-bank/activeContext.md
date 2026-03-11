@@ -1,7 +1,46 @@
 # Active Context - Enclavr
 
+## Latest Changes (2026-03-12)
+- CI failure analysis: ALL 5 repos analyzed with act push
+- Root: 0 failures ✅
+- frontend: Fixed lint errors in useRTCStats.ts
+  - Removed synchronous setState in useEffect (lines 36, 132)
+  - Changed setHistory to use setTimeout to avoid cascading renders
+  - bun run lint ✅
+- server: Tests pass ✅ (artifact upload failure is act limitation, not code issue)
+- infra: Validate passes ✅
+- docs: Build passes ✅
+
+### Failures Fixed
+- frontend: 3 lint errors fixed (setState-in-effect, prefer-const)
+
 ## Current Work Focus
-Label verification completed.
+Proactive improvements completed
+
+## Latest Update (2026-03-12)
+- Frontend: Added useRTCStats hook for WebRTC connection monitoring
+  - Collects RTC stats including bytes sent/received, packets, RTT, jitter
+  - Configurable interval for stats collection
+  - Useful for monitoring voice chat quality and debugging connection issues
+  - ESLint ✅, 573 tests ✅
+  - Pushed commit 076ba98
+
+## Latest Changes (2026-03-12)
+- Verified all 5 required labels exist in all 5 enclavr repositories:
+  - enclavr/enclavr: bug, feature, enhancement, documentation, security ✅
+  - enclavr/frontend: bug, feature, enhancement, documentation, security ✅
+  - enclavr/server: bug, feature, enhancement, documentation, security ✅
+  - enclavr/infra: bug, feature, enhancement, documentation, security ✅
+  - enclavr/docs: bug, feature, enhancement, documentation, security ✅
+- No labels needed to be created - all labels already present with correct colors
+
+## Latest Changes (2026-03-12)
+- Added missing database index on presences.room_id for efficient voice chat presence queries
+- All lint passes
+- All tests pass
+
+## Previous Changes (2026-03-12)
+- Label verification completed.
 
 ## Latest Changes (2026-03-12)
 - Verified all required labels exist in all 5 enclavr repositories:
