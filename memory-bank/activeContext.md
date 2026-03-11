@@ -1,7 +1,19 @@
 # Active Context - Enclavr
 
 ## Current Work Focus
-Debugging completed
+Proactive improvements completed
+
+## Latest Changes (2026-03-11)
+- Server: Added InviteLink feature for shareable room invites
+  - InviteLink model with Code, RoomID, CreatedBy, Title, Description, MaxUses, Uses, IsPermanent, IsEnabled, ExpiresAt
+  - InviteLinkHandler with Create, Get, Update, Delete, Resolve, Use endpoints
+  - /api/invite-link/* routes registered
+  - Requires room owner/admin to create invite links
+  - golangci-lint ✅, go test ✅
+- Infra: Fixed CI robustness when .env.example doesn't exist
+- Frontend: Fix MediaDeviceInfo test mock properties (lint ✅, 547 tests ✅)
+- Root: Updated submodules to latest commits
+- Pushed to remote: defbe4f
 
 ## Latest Update (2026-03-11)
 - Debugging completed

@@ -2,6 +2,24 @@
 
 ## What Works
 
+### InviteLink Feature (Mar 11, 2026)
+- Server: Added InviteLink model and handler for shareable room invites
+  - InviteLink model: Code, RoomID, CreatedBy, Title, Description, MaxUses, Uses, IsPermanent, IsEnabled, ExpiresAt
+  - InviteLinkHandler: Create, Get, Update, Delete, Resolve, Use endpoints
+  - /api/invite-link/* routes registered
+  - Requires room owner/admin to create invite links
+  - golangci-lint ✅, go test ✅
+
+### CI Improvements (Mar 11, 2026)
+- Infra: Fix CI robustness when .env.example doesn't exist
+- Frontend: Fix MediaDeviceInfo test mock properties
+
+### System Health (Mar 11, 2026)
+- Sentry: 0 errors in last 24 hours ✅
+- All transactions under 100ms p75 ✅
+- Server: golangci-lint ✅, go test ✅
+- Frontend: ESLint ✅, 547 tests ✅
+
 ### Docker Services Fixed (Mar 9, 2026)
 - Fixed database migration indexes (presence, direct_messages columns matching model)
 - Fixed coturn configuration in docker-compose.yml (simplified command to prevent crashes)
