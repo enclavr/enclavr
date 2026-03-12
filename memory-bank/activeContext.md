@@ -1,7 +1,29 @@
 # Active Context - Enclavr
 
 ## Latest Update (2026-03-13)
-- Proactive improvements completed
+- Database performance review via Neon MCP completed
+
+## Database Debug Results
+- Project: envlavr-dev (dawn-flower-74504084)
+- PostgreSQL: v17
+- 37 tables with proper indexes
+
+### Schema Review
+- messages: Well indexed (room_id, user_id, created_at, FTS)
+- users: Well indexed (email, username, deleted_at)
+- rooms: Well indexed (name, deleted_at) + added idx_rooms_created_by
+- user_rooms: Well indexed (user_id, room_id, composite)
+- presences: Well indexed (user_id unique, room_id)
+- sessions: Well indexed (token unique, user_id) + added idx_sessions_expires_at
+
+### Fixes Applied
+- Installed pg_stat_statements extension for slow query tracking
+- Added idx_sessions_expires_at for efficient session cleanup
+- Added idx_rooms_created_by for creator lookups
+- No slow queries detected (extension now enabled)
+
+### Status
+- DB issues: Fixed ✅
 
 ## Latest Update (2026-03-13)
 - Branch/tag management completed across all 5 repositories
