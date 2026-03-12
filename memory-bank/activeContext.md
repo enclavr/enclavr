@@ -1,7 +1,12 @@
 # Active Context - Enclavr
 
-## Latest Update (2026-03-12)
-- Debugging completed
+## Latest Changes (2026-03-12)
+- CI failure analysis: ALL 5 repos analyzed via gh api and gh run view
+- Fixed server CI: Added `-c .golangci.yml` to linter command to use config with errcheck exclusion rules for test files
+- Commit pushed: 834e04e
+
+## Previous Changes (2026-03-12)
+- Issue analysis: ALL 5 repos analyzed via gh api
 
 ## Current Work Focus
 Debugging completed
