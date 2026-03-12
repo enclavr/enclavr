@@ -1,6 +1,14 @@
 # Active Context - Enclavr
 
 ## Latest Update (2026-03-12)
+- Server improvements: Added OAuth (Google/GitHub), 2FA, password reset, email verification
+- Fixed lint errors in auth handler (unchecked error returns)
+- Updated tests to use 8+ character passwords (new validation requirement)
+- All local tests pass: golangci-lint ✅, go test ✅
+- Submodules updated: frontend, server, docs
+- Root repo pushed: 9427bd5
+
+## Latest Update (2026-03-12)
 - Issue analysis: ALL 5 repos analyzed via gh api repos/<repo>/issues
 - enclavr/enclavr: 0 open issues ✅
 - enclavr/frontend: 0 open issues ✅
