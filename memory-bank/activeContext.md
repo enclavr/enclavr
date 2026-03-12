@@ -1,5 +1,129 @@
 # Active Context - Enclavr
 
+## Current Work Focus
+Docker debug and health check - all services running normally.
+
+## Latest Changes (2026-03-12)
+- Docker debug completed: All 5 services healthy and running
+  - coturn: Up 23 hours (healthy)
+  - frontend: Up 23 hours (healthy)
+  - postgres: Up 23 hours (healthy)
+  - redis: Up 23 hours (healthy)
+  - server: Up 23 hours (running)
+- Historical non-critical warnings (TLS certs, migration idempotency) - no action needed
+- All services fixed and operational
+  - docs: bba8d12 (v2026.03.12)
+  - frontend: 98c4679 (v2026.03.12-1)
+  - infra: d45431f (v2026.03.12)
+  - server: 2c48097 (v2026.03.12)
+  - No new commits to fetch - already synchronized with remote
+
+## Previous Changes (2026-03-12)
+- Branch/tag management across all 5 repos completed
+
+## Latest Changes (2026-03-12)
+- Branch/tag management across all 5 repos completed
+- Branch/Tag Management Results
+| Repo | Stale Branches | Tag v2026.03.12 |
+|------|----------------|-----------------|
+| enclavr (root) | None (main only) | Already exists |
+| frontend | None (main only) | Already exists |
+| server | None (main only) | Already exists |
+| infra | None (main only) | Already exists |
+| docs | None (main only) | Already exists |
+
+All repositories in clean state - only main branch exists, today's release tag already present.
+
+## Latest Changes (2026-03-12)
+- Debug session completed: ALL 5 repos analyzed
+
+### Debug Results
+| Check | Result |
+|-------|--------|
+| Sentry errors | 0 unresolved ✅ |
+| Server runtime | OK ✅ |
+| Frontend | Running ✅ |
+| Docker containers | All healthy (5/5) ✅ |
+| Frontend tests | 594 passed ✅ |
+| Server tests | All passed ✅ |
+| Server lint | 0 issues ✅ |
+| Frontend lint | 0 issues ✅ |
+
+### Docker Status
+- coturn: Up 23 hours (healthy)
+- frontend: Up 23 hours (healthy) 
+- postgres: Up 23 hours (healthy)
+- redis: Up 23 hours (healthy)
+- server: Up 23 hours (running)
+
+### Issues Found & Fixed
+- None - system is healthy
+
+### Neon MCP
+- Not available in environment
+
+## Latest Changes (2026-03-12)
+- Release analysis: ALL 5 repos analyzed
+
+### Releases Analyzed
+| Repo | Releases | Latest Tag | Notes |
+|------|----------|------------|-------|
+| enclavr (root) | 0 | - | No releases |
+| frontend | 2 | v2026.03.11 | Daily release |
+| server | 2 | v2026.03.11 | Daily release |
+| infra | 2 | v2026.03.11 | CI robustness fix |
+| docs | 1 | v2026.03.10 | - |
+
+### Details
+- **frontend**: v2026.03.11 (daily), v2026.03.10
+- **server**: v2026.03.11 (daily), v2026.03.10
+- **infra**: v2026.03.11 (Fix CI robustness when .env.example doesn't exist), v2026.03.10
+- **docs**: v2026.03.10
+- **root**: No releases (monorepo tracks submodules)
+
+### Notes
+- All repos follow daily release pattern (vYYYY.MM.DD)
+- No assets attached to any releases
+- No docs updates needed
+
+## Latest Changes (2026-03-12)
+- Branch/tag management across all 5 repos completed
+
+### Branch/Tag Management Results
+| Repo | Stale Branches | Tag v2026.03.12 |
+|------|----------------|-----------------|
+| enclavr (root) | None (main only) | Already exists |
+| frontend | None (main only) | Already exists |
+| server | None (main only) | Already exists |
+| infra | None (main only) | Already exists |
+| docs | None (main only) | Already exists |
+
+All repositories in clean state - only main branch exists, today's release tag already present.
+
+## Latest Changes (2026-03-12)
+- Releases analyzed across all 5 enclavr repositories
+
+### Releases Analyzed
+| Repo | Recent Releases | Latest Tag |
+|------|----------------|------------|
+| enclavr/enclavr | 0 | N/A |
+| enclavr/frontend | 2 | v2026.03.11 |
+| enclavr/server | 2 | v2026.03.11 |
+| enclavr/infra | 2 | v2026.03.11 |
+| enclavr/docs | 1 | v2026.03.10 |
+
+### Details
+- **frontend**: v2026.03.11 (daily release), v2026.03.10
+- **server**: v2026.03.11 (daily release), v2026.03.10
+- **infra**: v2026.03.11 (CI robustness fix), v2026.03.10
+- **docs**: v2026.03.10
+- **root**: No releases (monorepo tracks submodules)
+
+### Notes
+- All repos follow daily release pattern (vYYYY.MM.DD)
+- No assets attached to any releases
+- Infra v2026.03.11 includes CI fix for .env.example handling
+
 ## Latest Changes (2026-03-12)
 - PR review: All 5 repos reviewed via gh pr list
 - enclavr/enclavr: 0 open PRs ✅
