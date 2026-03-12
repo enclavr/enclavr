@@ -1,6 +1,24 @@
 # Active Context - Enclavr
 
 ## Latest Changes (2026-03-12)
+- Docker debugging: All 5 services verified running and healthy
+  - coturn: Up 23 hours (healthy)
+  - frontend: Up 22 hours (healthy)
+  - postgres: Up 23 hours (healthy)
+  - redis: Up 23 hours (healthy)
+  - server: Up 22 hours (running)
+- Historical migration errors from 2026-03-11 identified (not blocking current operation)
+- No services required fixing
+
+## Latest Changes (2026-03-12)
+- Submodule update: All submodules already at latest remote commits
+  - docs: bba8d12 (v2026.03.11-4)
+  - frontend: d17c029 (v2026.03.11-7)
+  - infra: d45431f (v2026.03.10-2)
+  - server: 2c48097 (v2026.03.11-12)
+  - No new commits to fetch - already synchronized with remote
+
+## Latest Changes (2026-03-12)
 - Frontend: Fixed TypeScript error in useMediaQuery test
   - Resolved TypeScript 'never' type error by casting changeHandler to proper function type
   - Converted test to async to properly wait for state updates
