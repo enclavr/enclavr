@@ -1,6 +1,30 @@
 # Active Context - Enclavr
 
 ## Latest Update (2026-03-13)
+- Sentry MCP diagnostic completed
+- Authenticated as: enclavr.dev@gmail.com (ID: 4307519)
+- Organization: enclavr (https://enclavr.sentry.io)
+- Projects: api, frontend, test-project
+
+### Sentry Search Results
+| Query | Result |
+|-------|--------|
+| Unresolved errors | 0 issues ✅ |
+| Crashes | 0 issues ✅ |
+| Errors from last 24h | 0 errors ✅ |
+| Slow transactions | 5 found (all acceptable) |
+
+### Transaction Performance (p75)
+- POST /api/auth/login: 60.8ms (4 requests)
+- POST /api/room/join: 6.7ms (1 request)
+- GET /api/rooms: 1.2ms (11 requests)
+- GET /api/room: 0.8ms (1 request)
+- GET /api/auth/oidc/config: 0.4ms (36 requests)
+
+### Issues Analyzed & Resolved
+- 0 issues found - system is healthy
+
+## Latest Update (2026-03-13)
 - PR review: ALL 5 repos reviewed via gh api repos/<repo>/pulls
 - enclavr/enclavr: 0 open PRs ✅
 - enclavr/frontend: 0 open PRs ✅
