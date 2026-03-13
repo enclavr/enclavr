@@ -1,6 +1,14 @@
 # Active Context - Enclavr
 
 ## Latest Update (2026-03-13)
+- Submodule update completed
+- Frontend: c319ec4 → 77379c6 (v2026.03.13-3)
+- docs: remains at c681fa9 (dirty)
+- infra: remains at 7f99045
+- server: remains at e784f03
+- Committed: "chore: update submodules to latest"
+
+## Latest Update (2026-03-13)
 - Sentry MCP diagnostic completed
 - Authenticated as: enclavr.dev@gmail.com (ID: 4307519)
 - Organization: enclavr (https://enclavr.sentry.io)
