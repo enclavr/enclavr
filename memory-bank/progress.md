@@ -2,6 +2,11 @@
 
 ## What Works
 
+### Branch/Tag Management (Mar 14, 2026)
+- All 5 repos: Only main branch exists (trunk-based development)
+- All repos: Created v2026.03.14 release tag
+- No stale branches to delete
+
 ### InviteLink Feature (Mar 11, 2026)
 - Server: Added InviteLink model and handler for shareable room invites
   - InviteLink model: Code, RoomID, CreatedBy, Title, Description, MaxUses, Uses, IsPermanent, IsEnabled, ExpiresAt
