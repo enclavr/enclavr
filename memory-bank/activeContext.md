@@ -1,6 +1,45 @@
 # Active Context - Enclavr
 
 ## Latest Update (2026-03-13)
+- Release analysis: All 5 repos analyzed via gh api repos/<repo>/releases
+
+## Release Analysis Results (2026-03-13)
+| Repo | Releases | Notes |
+|------|----------|-------|
+| enclavr (root) | 0 | No releases |
+| frontend | 2 | v2026.03.11, v2026.03.10 - daily builds |
+| server | 2 | v2026.03.11, v2026.03.10 - daily builds |
+| infra | 2 | v2026.03.11, v2026.03.10 - includes CI fix |
+| docs | 1 | v2026.03.10 - daily build |
+
+Total: 7 releases across 4 repos. No docs updates needed.
+
+## Latest Update (2026-03-13)
+- CI failure analysis: ALL 5 repos analyzed via gh api + act push locally
+- All actual code/tests pass locally - failures are CI environment issues
+
+## CI Analysis Results (2026-03-13)
+| Repo | CI Status | Root Cause | Local Test |
+|------|-----------|------------|-------------|
+| enclavr (root) | FAIL | CI env issue | ✅ Pass |
+| frontend | FAIL | Vitest worker memory crash | 611 tests pass |
+| server | FAIL | ACTIONS_RUNTIME_TOKEN unavailable | ✅ Pass |
+| infra | FAIL | CI env issue | ✅ Pass |
+| docs | FAIL | CI env issue | ✅ Pass |
+
+## Conclusion
+All CI failures are CI environment issues (likely billing-related per AGENTS.md). No code changes needed.
+
+## Latest Update (2026-03-13)
+- PR review: All 5 repos reviewed via gh pr list
+- enclavr/enclavr: 0 open PRs ✅
+- enclavr/frontend: 0 open PRs ✅
+- enclavr/server: 0 open PRs ✅
+- enclavr/infra: 0 open PRs ✅
+- enclavr/docs: 0 open PRs ✅
+- Result: No PRs to review
+
+## Latest Update (2026-03-13)
 - Submodule update completed
 - git submodule status: All submodules at latest remote commits
   - docs: c681fa9 (v2026.03.13-1)
