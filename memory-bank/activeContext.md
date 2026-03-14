@@ -1,7 +1,59 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Submodule maintenance completed
+Docker debug completed - all services healthy
+
+## Latest Update (2026-03-14)
+- **Docker Debug**: All 5 services verified healthy
+  - coturn: Up 34 hours (healthy)
+  - frontend: Up 34 hours (healthy)
+  - postgres: Up 34 hours (healthy)
+  - redis: Up 34 hours (healthy)
+  - server: Up 22 hours
+- Logs showed transient DB connection errors that auto-resolved
+- No manual fixes required
+
+## Latest Update (2026-03-14)
+- Proactive improvements completed
+
+## Latest Update (2026-03-14)
+- **Release Analysis**: Analyzed recent releases across all 5 repos
+  - enclavr/enclavr: 0 releases
+  - enclavr/frontend: 2 releases (v2026.03.11, v2026.03.10)
+  - enclavr/server: 2 releases (v2026.03.11, v2026.03.10)
+  - enclavr/infra: 2 releases (v2026.03.11, v2026.03.10)
+  - enclavr/docs: 1 release (v2026.03.10)
+  - Most releases are automated daily releases
+  - infra v2026.03.11 has custom note: "Fix CI robustness when .env.example doesn't exist"
+  - No custom assets in any release
+  - No documentation updates needed
+
+## Latest Update (2026-03-14)
+- **PR Review**: Reviewed all 5 repos for open PRs
+  - enclavr/enclavr: 0 open PRs
+  - enclavr/frontend: 0 open PRs
+  - enclavr/server: 0 open PRs
+  - enclavr/infra: 0 open PRs
+  - enclavr/docs: 0 open PRs
+  - No PRs require approval
+
+## Latest Update (2026-03-14)
+Database performance optimization completed
+
+## Latest Update (2026-03-14)
+- **Database Debug**: Analyzed local PostgreSQL via Docker
+  - Connected to infra-postgres-1 container
+  - Found 20 tables with adequate base indexes
+  - Identified missing indexes for performance
+  - Added 3 new indexes:
+    - idx_voice_sessions_user_id (user lookups)
+    - idx_direct_messages_participants (sender_id, receiver_id, created_at)
+    - idx_user_rooms_user_room (unique composite)
+  - Total indexes: 46 custom indexes
+  - pg_stat_statements available but not preloaded (minor config issue)
+
+## Latest Update (2026-03-14)
+- Submodule maintenance completed
 
 ## Latest Update (2026-03-14)
 - **Submodule Update**: All 4 submodules already at latest remote commits
