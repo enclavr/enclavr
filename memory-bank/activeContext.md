@@ -1,14 +1,27 @@
 # Active Context - Root Monorepo
 
 ## Current Work Focus
-Docker debugging and verification task.
+PR review task - checking all repos for open PRs.
 
 ## Latest Update (2026-03-14)
-- Docker debugging: Verified all services running (coturn, frontend, postgres, redis, server)
-- All services healthy with no current errors
-- Historical transient DB connection errors from March 11-12 have recovered
-- Release analysis: Checked all 5 repos
-- Branch/tag maintenance: Verified all repos have only main branch, v2026.03.14 tag exists
+- Reviewed all 5 repos for open PRs
+- No open PRs found in any repository
+- PRs reviewed:
+  - enclavr/enclavr (root): 0 PRs
+  - enclavr/frontend: 0 PRs
+  - enclavr/server: 0 PRs
+  - enclavr/infra: 0 PRs
+  - enclavr/docs: 0 PRs
+
+## Latest Update (2026-03-14)
+- Analyzed all 5 repos for open issues
+- Fixed enclavr/docs issue #1: Updated outdated documentation
+  - Added presence-api.html for user presence status endpoints
+  - Added push-api.html for push notification subscription management
+  - Updated rooms-api.html and admin-api.html with latest endpoints
+  - Updated sidebar with new API navigation links
+  - Committed and pushed to docs repo (a42cc61)
+  - Updated root repo to point to new docs commit (664e10b)
 
 ## Release Analysis (2026-03-14)
 - enclavr/root: 0 releases
