@@ -1,9 +1,39 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Submodule update completed
+Branch and tag management completed across all 5 repos
 
 ## Latest Update (2026-03-14)
+- Branch/tag management completed:
+  - enclavr (root): only main branch, tag v2026.03.14 exists
+  - frontend: only main branch, tag v2026.03.14 exists
+  - server: only main branch, tag v2026.03.14 exists
+  - infra: only main branch, tag v2026.03.14 exists
+  - docs: only main branch, tag v2026.03.14 exists
+- No stale branches to delete in any repo
+- All release tags already exist
+- Analyzed releases in all 5 repos
+
+## Latest Update (2026-03-14)
+- Reviewed PRs in all 5 repos:
+  - enclavr (root): 0 open PRs
+  - frontend: 0 open PRs
+  - server: 0 open PRs
+  - infra: 0 open PRs
+  - docs: 0 open PRs
+- No PRs to review or approve
+
+## Latest Update (2026-03-14)
+- Analyzed issues in all repos:
+  - enclavr (root): 0 open issues
+  - frontend: 0 open issues  
+  - server: 0 open issues
+  - infra: 0 open issues
+  - docs: 1 open issue (#1 - "Outdated and doesn't match latest version at all")
+- Fixed docs#1: Updated PostgreSQL version from 15 to 18 in index.html (docker-compose.yml uses postgres:18.3-alpine)
+- Pushed fix to docs repo and updated root submodule
+
+## Previous Update (2026-03-14)
 - Checked git submodule status - all 4 submodules at latest commits
 - Ran git submodule update --remote --merge - no updates available
 - All submodules already at latest:
