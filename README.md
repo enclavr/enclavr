@@ -70,8 +70,8 @@ docker compose up -d
 ```
 
 **First Login:**
-- Username: `admin`
-- Password: Set `ADMIN_PASSWORD` in `.env` (default: admin123)
+- The first user to register via the API will become admin (if ADMIN_PASSWORD is not set)
+- Or set ADMIN_PASSWORD in .env to create a default admin user on startup
 
 ## Documentation
 
