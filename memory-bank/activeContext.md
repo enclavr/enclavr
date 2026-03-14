@@ -1,82 +1,21 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements completed
+Database debugging completed - Neon MCP analysis done
 
 ## Latest Update (2026-03-14)
-- Committed and pushed changes across submodules:
-  - server: Added login attempt tracking + session management (security improvement)
-  - frontend: Increased Node.js memory for tests (4GB → 8GB)
-  - infra: Fixed working-directory in CI workflow
-- Updated root submodule references
-- All changes pushed to remote
-
-## Latest Update (2026-03-14)
-- Proactive improvements completed
-
-## Latest Update (2026-03-14)
-- Branch/tag management completed:
-  - enclavr (root): only main branch, tag v2026.03.14 exists
-  - frontend: only main branch, tag v2026.03.14 exists
-  - server: only main branch, tag v2026.03.14 exists
-  - infra: only main branch, tag v2026.03.14 exists
-  - docs: only main branch, tag v2026.03.14 exists
-- No stale branches to delete in any repo
-- All release tags already exist
-- Analyzed releases in all 5 repos
-
-## Latest Update (2026-03-14)
-- Reviewed PRs in all 5 repos:
-  - enclavr (root): 0 open PRs
-  - frontend: 0 open PRs
-  - server: 0 open PRs
-  - infra: 0 open PRs
-  - docs: 0 open PRs
-- No PRs to review or approve
-
-## Latest Update (2026-03-14)
-- Analyzed issues in all repos:
-  - enclavr (root): 0 open issues
-  - frontend: 0 open issues  
-  - server: 0 open issues
-  - infra: 0 open issues
-  - docs: 1 open issue (#1 - "Outdated and doesn't match latest version at all")
-- Fixed docs#1: Updated PostgreSQL version from 15 to 18 in index.html (docker-compose.yml uses postgres:18.3-alpine)
-- Pushed fix to docs repo and updated root submodule
-
-## Previous Update (2026-03-14)
-- Checked git submodule status - all 4 submodules at latest commits
-- Ran git submodule update --remote --merge - no updates available
-- All submodules already at latest:
-  - docs: v2026.03.14-2
-  - frontend: v2026.03.14-3
-  - infra: v2026.03.14-2
-  - server: v2026.03.14-1
-
-## Previous Update (2026-03-14)
-- Debugging completed
+- Debugged Neon database (envlavr-dev, project: dawn-flower-74504084):
+  - Listed tables: 39 user tables + 2 Neon system views
+  - Analyzed slow queries: Found 10 queries (all Neon infrastructure ops, max 45ms)
+  - Reviewed schema for messages, users, rooms, sessions, user_rooms tables
+  - All tables have proper indexes:
+    - messages: 6 indexes (room_id, user_id, created_at, FTS, partial is_deleted)
+    - users: 4 indexes (email, username unique, deleted_at)
+    - rooms: 5 indexes (name unique, deleted_at, created_by, category_id)
+    - sessions: 4 indexes (token unique, user_id, expires_at)
+    - user_rooms: 5 indexes (user_id, room_id, composite unique, role)
+  - No schema or performance issues found
+  - DB is healthy
 
 ## Previous Update (2026-03-14)
 - Proactive improvements completed
-- All repos have only main branch - no stale branches to delete
-- All repos already have today's release tag v2026.03.14 - no tags created
-
-## Previous Update (2026-03-14)
-- Analyzed releases in all 5 repos: enclavr (root), frontend, server, infra, docs
-- Found daily release cadence: v2026.03.11 released across most repos
-- No documentation updates needed
-
-## Previous Update (2026-03-14)
-- PR review completed - no open PRs in any repos
-
-## Previous Update (2026-03-14)
-- Submodules checked for updates - all already at latest commits
-
-## Previous Update (2026-03-14)
-- Debugging completed
-
-## Latest Changes (2026-03-14)
-- Fixed issue #1: Corrected admin password documentation in root README (was incorrectly stating "default: admin123", actually defaults to empty with first-user-becomes-admin behavior)
-- Added admin configuration variables (ADMIN_USERNAME, ADMIN_PASSWORD, ADMIN_EMAIL, FIRST_USER_IS_ADMIN) to infra/.env.example
-- All fixes pushed to remote
-- Ran branch/tag maintenance across all 5 repos (enclavr, frontend, server, infra, docs) - all have only main branch and v2026.03.14 tag already exists
