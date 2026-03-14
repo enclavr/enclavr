@@ -1,7 +1,18 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Branch and tag management completed across all 5 repos
+Proactive improvements completed
+
+## Latest Update (2026-03-14)
+- Committed and pushed changes across submodules:
+  - server: Added login attempt tracking + session management (security improvement)
+  - frontend: Increased Node.js memory for tests (4GB → 8GB)
+  - infra: Fixed working-directory in CI workflow
+- Updated root submodule references
+- All changes pushed to remote
+
+## Latest Update (2026-03-14)
+- Proactive improvements completed
 
 ## Latest Update (2026-03-14)
 - Branch/tag management completed:
