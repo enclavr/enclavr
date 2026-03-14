@@ -1,14 +1,14 @@
 # Active Context - Root Monorepo
 
 ## Current Work Focus
-Submodule update check completed - all submodules already at latest
+Docker debugging and verification task.
 
 ## Latest Update (2026-03-14)
-- Submodule update check: all submodules already at latest
-- Sentry MCP debugging completed
-- All systems operational - no errors or crashes
-- Verified DSNs for api and frontend projects
-- Debugging completed
+- Docker debugging: Verified all services running (coturn, frontend, postgres, redis, server)
+- All services healthy with no current errors
+- Historical transient DB connection errors from March 11-12 have recovered
+- Release analysis: Checked all 5 repos
+- Branch/tag maintenance: Verified all repos have only main branch, v2026.03.14 tag exists
 
 ## Release Analysis (2026-03-14)
 - enclavr/root: 0 releases
@@ -20,10 +20,14 @@ Submodule update check completed - all submodules already at latest
 Total: 7 releases analyzed, no assets, no docs updates needed
 
 ## Latest Changes (2026-03-14)
+- Fixed enclavr/enclavr issue #1: Clarified database environment variables in .env.example
+  - Added clearer comments explaining POSTGRES_* (container init) vs DB_* (server connection)
+  - Both variable sets are used for different purposes
 - Updated frontend submodule to latest (37fc466)
 - Committed as "chore: update submodules to latest"
 - Branch/tag maintenance: Checked all 5 repos - all have only main branch, no stale branches
 - All repos already have today's release tag v2026.03.14
+- Verified GitHub labels across all 5 repositories - all required labels already exist
 
 ## Previous Changes (2026-03-14)
 - Debugging completed
