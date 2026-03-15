@@ -1,121 +1,27 @@
 # Active Context - enclavr-root
 
 ## Latest Update (Mar 15, 2026)
-- Submodule update attempted: git submodule update --remote --merge
-  - docs: v2026.03.15-3 (no new commits - already at latest)
-  - frontend: v2026.03.15-2 (no new commits - already at latest)
-  - infra: v2026.03.15 (no new commits - already at latest)
-  - server: v2026.03.15-1 (no new commits - already at latest)
-- All submodules already at latest remote commits
-- No commit needed (no changes to submodule references)
-
-## Latest Update (Mar 15, 2026)
-- Docker Debug: All services healthy and running
-  - coturn: Up 13 hours (healthy)
-  - frontend: Up 13 hours (healthy)
-  - postgres: Up 13 hours (healthy)
-  - redis: Up 13 hours (healthy)
-  - server: Up 13 hours
-- No services required fixing
-- Historical transient db connection errors (Mar 14) resolved automatically
-
-## Latest Update (Mar 15, 2026)
-- Sentry Debugging completed:
-  - Organization: enclavr (region: us.sentry.io)
-  - User: enclavr.dev@gmail.com (ID: 4307519)
-  - Projects: api, frontend, test-project
-  - DSNs verified:
-    - api: https://bc4efb79c26f87983bdc64b05e8ed834@o4511001039011840.ingest.us.sentry.io/4511001064701952
-    - frontend: https://6774674f354796de422f5d12c1be29f4@o4511001039011840.ingest.us.sentry.io/4511001065160704
-  - Issues searched: "unresolved errors", "crashes", "all issues" - 0 found
-  - Events searched: "errors from last 24h" for api and frontend - 0 found
-  - Slow transactions found (performance data, not errors):
-    - POST /api/auth/login: 60.8ms p75 (4 calls) - slowest
-    - POST /api/room/join: 6.7ms p75 (1 call)
-    - GET /api/rooms: 1.2ms p75 (11 calls)
-    - GET /api/room: 0.8ms p75 (1 call)
-    - GET /api/auth/oidc/config: 0.41ms p75 (36 calls)
-  - No issues to resolve - all services healthy
-
-## Latest Update (Mar 15, 2026)
-- PR Review completed across all 5 repos:
-  - enclavr/enclavr: 0 open PRs
-  - enclavr/frontend: 0 open PRs
-  - enclavr/server: 0 open PRs
-  - enclavr/infra: 0 open PRs
-  - enclavr/docs: 0 open PRs
-- No PRs to review or approve
-
-## Latest Update (Mar 15, 2026)
-- Docker Debug: All services healthy and running
-  - coturn: Up 12 hours (healthy)
-  - frontend: Up 12 hours (healthy)
-  - postgres: Up 12 hours (healthy)
-  - redis: Up 12 hours (healthy)
-  - server: Up 12 hours
-- No services required fixing
-
-## Latest Update (Mar 15, 2026)
 - Branch/Tag Maintenance completed across all 5 repos:
-  - enclavr/enclavr: No stale branches (only main), tag v2026.03.15 already existed
-  - enclavr/frontend: No stale branches (only main), tag v2026.03.15 already existed
-  - enclavr/server: No stale branches (only main), tag v2026.03.15 already existed (verified)
-  - enclavr/infra: No stale branches (only main), tag v2026.03.15 already existed
-  - enclavr/docs: No stale branches (only main), tag v2026.03.15 already existed
-- All repos verified clean - no branches deleted, all tags present
+  - **enclavr (root)**: Only main branch exists, no stale branches. Tag v2026.03.15 already exists.
+  - **enclavr/frontend**: Only main branch exists, no stale branches. Tag v2026.03.15 already exists.
+  - **enclavr/server**: Only main branch exists, no stale branches. Tag v2026.03.15 already exists.
+  - **enclavr/infra**: Only main branch exists, no stale branches. Tag v2026.03.15 already exists.
+  - **enclavr/docs**: Only main branch exists, no stale branches. Tag v2026.03.15 already exists.
+- No branches deleted (all repos have only main branch)
+- No tags created (v2026.03.15 already exists in all repos)
 
-## Latest Update (Mar 15, 2026)
+## Previous Update (Mar 15, 2026)
 - Release Analysis completed across all 5 repos:
-  - **enclavr (root)**: 0 releases - Monorepo container, no releases expected
+  - **enclavr (root)**: 0 releases - Monorepo container (404 not found)
   - **enclavr/frontend**: 2 releases (v2026.03.11, v2026.03.10) - Daily releases
   - **enclavr/server**: 2 releases (v2026.03.11, v2026.03.10) - Daily releases
-  - **enclavr/infra**: 2 releases (v2026.03.11 - "Fix CI robustness when .env.example doesn't exist", v2026.03.10)
-  - **enclavr/docs**: 1 release (v2026.03.10) - Missing v2026.03.11 (no new content changes)
-- Assets: None (no binary assets in any release)
-- Notes: All daily automated releases. No documentation updates needed.
-
-## Latest Update (Mar 15, 2026)
-- PR Review completed across all 5 repos:
-  - enclavr/enclavr: 0 open PRs
-  - enclavr/frontend: 0 open PRs
-  - enclavr/server: 0 open PRs
-  - enclavr/infra: 0 open PRs
-  - enclavr/docs: 0 open PRs
-  - enclavr/enclavr: 0 open issues
-  - enclavr/frontend: 0 open issues
-  - enclavr/server: 0 open issues
-  - enclavr/infra: 0 open issues
-  - enclavr/docs: 1 open issue (#1 - "Outdated and doesn't match latest version at all")
-    - Fixed: Updated database-models.html from 57 to 62 models
-    - Added missing models: RoomBookmark, MessageEditHistory, UserActivity, RoomParticipant, NotificationPreferences
-    - Committed and pushed to docs repo (commit 7098097)
-    - Updated root submodule reference (commit f5fd392)
-
-## Latest Update (Mar 15, 2026)
-- Branch/Tag Maintenance completed across all 5 repos:
-  - enclavr/enclavr: No stale branches, created tag v2026.03.15
-  - enclavr/frontend: No stale branches, created tag v2026.03.15
-  - enclavr/server: No stale branches, created tag v2026.03.15
-  - enclavr/infra: No stale branches, created tag v2026.03.15
-  - enclavr/docs: No stale branches, created tag v2026.03.15
-- All repos have only main branch (no stale branches to delete)
-- Today's release tag v2026.03.15 created in all 5 repos
-
-## Latest Update (Mar 15, 2026)
-- Label verification completed across all 5 enclavr repos:
-  - enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs
-- Required labels verified (all already present):
-  - bug:Issue bug (color: ee0701) ✓
-  - feature:Issue feature (color: 008672) ✓
-  - enhancement:Issue enhancement (color: 84b6eb) ✓
-  - documentation:Issue documentation (color: d4c5f9) ✓
-  - security:Issue security (color: ee0701) ✓
-- No new labels created - all required labels already existed
-  - enclavr (root): 0 releases (monorepo container)
-  - enclavr/frontend: 2 releases (v2026.03.11, v2026.03.10) - Daily releases
-  - enclavr/server: 2 releases (v2026.03.11, v2026.03.10) - Daily releases
-  - enclavr/infra: 2 releases (v2026.03.11 - "Fix CI robustness when .env.example doesn't exist", v2026.03.10)
-  - enclavr/docs: 2 releases (v2026.03.10) - Missing v2026.03.11 (no content changes)
+  - **enclavr/infra**: 2 releases (v2026.03.11, v2026.03.10) - Daily releases
+  - **enclavr/docs**: 2 releases (v2026.03.11, v2026.03.10) - Daily releases
+- Latest release notes (v2026.03.11):
+  - Frontend: "Daily release - https://github.com/enclavr/enclavr/compare/v2026.03.10...v2026.03.11"
+  - Server: Same as frontend
+  - Infra: Same as frontend
+  - Docs: "Changes: Infra: Fix CI robustness when .env.example doesn't exist"
 - Assets: None (no binary assets in any release)
 - Notes: All daily automated releases. No documentation updates needed.
 
