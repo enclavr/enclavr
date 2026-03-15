@@ -1,6 +1,33 @@
 # Active Context - enclavr-root
 
 ## Latest Update (Mar 15, 2026)
+- Sentry Debugging completed:
+  - Organization: enclavr (region: us.sentry.io)
+  - User: enclavr.dev@gmail.com (ID: 4307519)
+  - Projects: api, frontend, test-project
+  - DSNs verified:
+    - api: https://bc4efb79c26f87983bdc64b05e8ed834@o4511001039011840.ingest.us.sentry.io/4511001064701952
+    - frontend: https://6774674f354796de422f5d12c1be29f4@o4511001039011840.ingest.us.sentry.io/4511001065160704
+  - Issues searched: "unresolved errors", "crashes", "all issues" - 0 found
+  - Events searched: "errors from last 24h" for api and frontend - 0 found
+  - Slow transactions found (performance data, not errors):
+    - POST /api/auth/login: 60.8ms p75 (4 calls) - slowest
+    - POST /api/room/join: 6.7ms p75 (1 call)
+    - GET /api/rooms: 1.2ms p75 (11 calls)
+    - GET /api/room: 0.8ms p75 (1 call)
+    - GET /api/auth/oidc/config: 0.41ms p75 (36 calls)
+  - No issues to resolve - all services healthy
+
+## Latest Update (Mar 15, 2026)
+- PR Review completed across all 5 repos:
+  - enclavr/enclavr: 0 open PRs
+  - enclavr/frontend: 0 open PRs
+  - enclavr/server: 0 open PRs
+  - enclavr/infra: 0 open PRs
+  - enclavr/docs: 0 open PRs
+- No PRs to review or approve
+
+## Latest Update (Mar 15, 2026)
 - Docker Debug: All services healthy and running
   - coturn: Up 12 hours (healthy)
   - frontend: Up 12 hours (healthy)
