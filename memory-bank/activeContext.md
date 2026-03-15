@@ -1,7 +1,19 @@
 # Active Context - enclavr-root
 
 ## Latest Update (Mar 15, 2026)
-- Proactive analysis completed across all 5 repos:
+- Neon MCP Database Debug completed:
+  - **Project**: envlavr-dev (dawn-flower-74504084) - AWS ap-southeast-1
+  - **PostgreSQL**: Version 17
+  - **Branch**: production (primary, default)
+  - **Tables**: 43 tables (audit_logs, bans, categories, channel_activities, daily_analytics, direct_messages, files, hourly_activities, invites, message_reactions, message_reminders, messages, pinned_messages, poll_options, poll_votes, polls, presences, push_subscriptions, refresh_tokens, reports, room_invites, room_templates, rooms, scheduled_messages, server_emojis, server_settings, server_stickers, sessions, soundboard_sounds, thread_messages, threads, user_notification_settings, user_preferences, user_privacy_settings, user_rooms, users, voice_sessions, webhook_logs, webhooks)
+  - **Slow Queries**: 0 application slow queries found (only internal Neon system queries < 28ms)
+  - **Schema Review**:
+    - messages: Well-indexed (room_id, user_id, created_at DESC, FTS, is_deleted)
+    - users: Well-indexed (email, username, deleted_at)
+    - user_rooms: Well-indexed (user_id, room_id, role, composite unique)
+  - **Result**: Database is healthy - no schema or performance issues found
+
+## Latest Update (Mar 15, 2026)
   - **Docker Services**: All 5 services healthy (frontend, server, postgres, redis, coturn)
   - **Sentry**: 0 errors, 5 slow transactions (all under 61ms p75 - healthy)
   - **GitHub Issues**: 1 open issue (enclavr/docs#1 - docs outdated - already responded, content updated)
