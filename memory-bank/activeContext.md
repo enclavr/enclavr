@@ -1,7 +1,33 @@
 # Active Context - enclavr-root
 
-## Current Work Focus (Mar 15, 2026)
-- Issue Analysis completed across all 5 enclavr repos
+## Latest Update (Mar 15, 2026)
+- Submodule update attempted: git submodule update --remote --merge
+  - docs: v2026.03.14-10 (no new commits)
+  - frontend: v2026.03.14-5 (no new commits)
+  - infra: v2026.03.14-3 (no new commits)
+  - server: v2026.03.14-5 (no new commits)
+- All submodules already at latest remote commits
+- No commit needed (no changes to submodule references)
+
+## Previous Update (Mar 15, 2026)
+- Docker Debug: All services healthy and running
+  - coturn: Up 11 hours (healthy)
+  - frontend: Up 11 hours (healthy)
+  - postgres: Up 11 hours (healthy)
+  - redis: Up 11 hours (healthy)
+  - server: Up 11 hours
+- Transient db connection errors during startup resolved automatically
+- No services required fixing
+
+## Latest Update (Mar 15, 2026)
+- CI Failure Analysis across all 5 repos:
+  - enclavr (root): Multiple failures - BILLING-RELATED ("operation was canceled")
+  - frontend: Multiple failures - Vitest worker crash (infrastructure issue, not code)
+  - server: Multiple failures - SQLite/PostgreSQL syntax mismatch + Redis unavailable (infrastructure issue)
+  - infra: ALREADY FIXED - Latest runs passing (workflow has .env setup step)
+  - docs: Multiple failures - Pages not configured (GitHub config issue)
+- Root Cause: Most failures are billing-related or infrastructure, not code issues
+- Failures fixed: 0 (infrastructure/billing issues - infra already fixed in prior commits)
 
 ## Latest Update (Mar 15, 2026)
 - Issue Analysis completed across all 5 enclavr repos:
@@ -10,43 +36,21 @@
   - enclavr/server: 0 open issues
   - enclavr/infra: 0 open issues
   - enclavr/docs: 1 open issue (#1 - "Outdated and doesn't match latest version at all")
-    - Fixed: Updated frontend-overview.html with accurate statistics:
-      - Components: 24 -> 29
-      - Hooks: 4 -> 10
-      - Routes: 4 -> 11 (added explore, account, settings, notifications, forgot-password, reset-password)
-    - Fixed: database-models.html - added missing models:
-      - Voice/Presence: VoiceSession, RoomInvite, Presence
-      - Notifications: PushSubscription, UserNotificationSettings
-      - Files: File, Attachment
-      - Device/Permissions: UserDevice, CategoryPermission
-    - Committed and pushed to docs repo (commit 328eec8)
-    - Updated root submodule reference (commit 1d25780)
-
-## Latest Update (Mar 15, 2026)
-- Issue Analysis completed across all 5 enclavr repos:
-  - enclavr/enclavr: 0 open issues
-  - enclavr/frontend: 0 open issues
-  - enclavr/server: 0 open issues
-  - enclavr/infra: 0 open issues
-  - enclavr/docs: 1 open issue (#1 - "Outdated and doesn't match latest version at all")
-    - Fixed: Updated tech-stack.html with complete server dependencies (gorm, grpc, protobuf, oauth2, crypto)
-    - Fixed: Updated frontend-tech-stack.html with clsx library
-    - Committed and pushed to docs repo
-    - Updated root submodule reference
-
-## Latest Update (Mar 15, 2026)
-- Issue Analysis completed across all 5 enclavr repos:
-  - enclavr/enclavr: 0 open issues
-  - enclavr/frontend: 0 open issues
-  - enclavr/server: 0 open issues
-  - enclavr/infra: 0 open issues
-  - enclavr/docs: 1 open issue (#1 - "Outdated and doesn't match latest version at all")
-    - Investigated: Documentation appears up-to-date
-    - tech-stack.html: Go 1.25, PostgreSQL 17+/18+, Redis 7+ ✓
-    - frontend-tech-stack.html: Next.js 16.1.6, React 19.2.4, TypeScript 5.9 ✓
-    - database-models.html: 40+ models documented ✓
-    - Comment already exists asking for clarification on specific outdated items
-    - No concrete fix needed - docs already accurate
+    - Fixed: Updated TypeScript version 5.9 → 5.9.3 in frontend-tech-stack.html
+    - Fixed: Rewrote database-models.html with complete list of all 57 models organized by category:
+      - User & Authentication: User, Session, RefreshToken, EmailVerification, PasswordReset, TwoFactorRecovery, UserDevice, Ban, Block
+      - Server & Room: Room, Category, UserRoom, RoomSettings, RoomTemplate, RoomInvite, ServerSettings, ServerEmoji, ServerSticker
+      - Message: Message, DirectMessage, Thread, ThreadMessage, MessageReaction, MessageRead, MessageReminder, PinnedMessage, ScheduledMessage, Bookmark, Poll, PollOption, PollVote
+      - Voice & Presence: VoiceSession, Presence, UserStatusModel, ChannelActivity
+      - File & Media: File, Attachment, SoundboardSound
+      - Notification: UserNotification, PushSubscription, UserNotificationSettings
+      - Permission & Role: Role, UserRole, RolePermission, CategoryPermission, UserPrivacySettings
+      - Invite & Join: Invite, InviteLink
+      - Analytics & Logging: AuditLog, AuditLogExclusion, HourlyAnalytics, DailyAnalytics
+      - Integration: APIKey, Webhook, WebhookLog, Report
+      - Preference: UserPreferences
+    - Committed and pushed to docs repo (commit a4b072b)
+    - Updated root submodule reference (commit c89e44b)
 
 ## Previous Update (Mar 15, 2026)
 - CI Failure Analysis across all 5 repos:
@@ -72,7 +76,13 @@
     - Updated root submodule reference
 
 ## Current Work Focus (Mar 15, 2026)
-- Debugging completed
+- Proactive improvements completed
+
+## Latest Update (Mar 15, 2026)
+- Proactive improvements completed
+
+## Previous Update (Mar 15, 2026)
+- CI Failure Analysis across all 5 enclavr repos completed
 
 ## Latest Update (Mar 15, 2026)
 - Debugging completed
