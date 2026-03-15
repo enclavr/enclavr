@@ -1,6 +1,23 @@
 # Active Context - enclavr-root
 
 ## Latest Update (Mar 15, 2026)
+- Sentry Debug Analysis completed:
+  - **User**: enclavr.dev@gmail.com (ID: 4307519)
+  - **Organization**: enclavr (https://enclavr.sentry.io)
+  - **Projects**: api, frontend, test-project
+  - **Unresolved errors**: 0 issues found
+  - **Crashes**: 0 issues found
+  - **Errors (24h)**: 0 events
+  - **Slow transactions** (found 5):
+    - POST /api/auth/login: p75=60.8ms (4 calls)
+    - POST /api/room/join: p75=6.7ms (1 call)
+    - GET /api/rooms: p75=1.2ms (11 calls)
+    - GET /api/room: p75=0.8ms (1 call)
+    - GET /api/auth/oidc/config: p75=0.4ms (36 calls)
+- **Result**: No issues to fix - system is healthy
+- **Issues resolved**: 0 (no issues found)
+
+## Latest Update (Mar 15, 2026)
 - Submodule update attempted: git submodule update --remote --merge
   - docs: v2026.03.15-3 (no new commits - already at latest)
   - frontend: v2026.03.15-2 (no new commits - already at latest)
