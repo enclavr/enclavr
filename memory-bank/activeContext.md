@@ -1,37 +1,20 @@
 # Active Context - Enclavr Root
 
 ## Current Work Focus
-Submodule maintenance check
+Branch and tag management across all 5 enclavr repositories (2026-03-16)
 
 ## Latest Update (2026-03-16)
-- Submodule update: all submodules already at latest
-- No commit needed
+- Performed branch/tag management across all 5 repos:
+  - enclavr (root): Only main branch, v2026.03.16 tag exists
+  - frontend: Only main branch, v2026.03.16 tag exists
+  - server: Only main branch, v2026.03.16 tag exists
+  - infra: Only main branch, v2026.03.16 tag exists
+  - docs: Only main branch, v2026.03.16 tag exists
 
-### Performance (via sentry_search_events)
-- POST /api/auth/login: 60.8ms p75 (4 calls)
-- POST /api/room/join: 6.7ms p75 (1 call)
-- GET /api/rooms: 1.2ms p75 (11 calls)
-- GET /api/room: 0.8ms p75 (1 call)
-- GET /api/auth/oidc/config: 0.4ms p75 (36 calls)
-
-All performance metrics within acceptable range.
-
-### enclavr/frontend
-- v2026.03.11 (2026-03-11) - Daily release
-- v2026.03.10 (2026-03-10) - Daily release
-
-### enclavr/server
-- v2026.03.11 (2026-03-11) - Daily release
-- v2026.03.10 (2026-03-10) - Daily release
-
-### enclavr/infra
-- v2026.03.11 (2026-03-11) - Fix CI robustness when .env.example doesn't exist
-- v2026.03.10 (2026-03-10) - Daily release
-
-### enclavr/docs
-- v2026.03.10 (2026-03-10) - Daily release
-
-### enclavr (root)
-- No releases found
-
-All repos using daily auto-release pattern with no assets. Infra release included CI fix.
+## Previous Changes (2026-03-16)
+- Analyzed releases in all 5 repos
+- Root monorepo: 0 releases (no releases)
+- frontend: 2 releases (v2026.03.11, v2026.03.10) - daily releases, no assets
+- server: 2 releases (v2026.03.11, v2026.03.10) - daily releases, no assets
+- infra: 2 releases (v2026.03.11, v2026.03.10) - daily releases, no assets
+- docs: 1 release (v2026.03.10) - daily release, no assets
