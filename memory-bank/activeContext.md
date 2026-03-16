@@ -1,12 +1,25 @@
 # Active Context - Enclavr Root
 
 ## Current Work Focus
-Debugging completed
+Sentry debugging completed - No issues found
 
 ## Latest Update (2026-03-16)
-- Debugging completed
-- Docker debug completed: All 5 services running and healthy
-- Services verified: coturn, frontend, postgres, redis, server
+- Sentry debugging completed: All clear, no issues found
+- Verified via Sentry MCP tools:
+  - sentry_whoami: Authenticated as enclavr.dev@gmail.com
+  - sentry_find_organizations: Found enclavr org (us.sentry.io)
+  - sentry_find_projects: 3 projects (api, frontend, test-project)
+  - sentry_search_issues: 0 unresolved errors, 0 crashes
+  - sentry_search_events: 0 errors from last 24h
+
+### Performance (via sentry_search_events)
+- POST /api/auth/login: 60.8ms p75 (4 calls)
+- POST /api/room/join: 6.7ms p75 (1 call)
+- GET /api/rooms: 1.2ms p75 (11 calls)
+- GET /api/room: 0.8ms p75 (1 call)
+- GET /api/auth/oidc/config: 0.4ms p75 (36 calls)
+
+All performance metrics within acceptable range.
 
 ### enclavr/frontend
 - v2026.03.11 (2026-03-11) - Daily release
