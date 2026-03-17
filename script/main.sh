@@ -42,12 +42,14 @@ init_proactive_cooldown
 loop_count=0
 proactive_runs=0
 last_github_check=0
+last_closed_issues_check=0
 last_submodule_update=0
 last_debug_run=0
 last_proactive_run=0
 
 DEBUG_INTERVAL=1800
 PROACTIVE_INTERVAL=1800
+CLOSED_ISSUES_INTERVAL=3600
 
 while true; do
     loop_start=$(date +%s)
@@ -94,13 +96,19 @@ while true; do
 
     # === GitHub Management (periodic) ===
     if [ $((loop_start - last_github_check)) -ge $GITHUB_CHECK_INTERVAL ]; then
-        check_issues
-        check_pulls
-        check_ci
-        check_releases
+        check_issues           # Read comments, interact, close when fixed
+        check_pulls           # Review, test, merge when ready
+        check_ci              # Analyze failures, fix, re-run
+        check_releases        # Analyze, update, create
         manage_labels
         manage_branches
         last_github_check=$loop_start
+    fi
+
+    # === Check closed issues for regressions (hourly) ===
+    if [ $((loop_start - last_closed_issues_check)) -ge $CLOSED_ISSUES_INTERVAL ]; then
+        check_closed_issues    # Monitor for regressions
+        last_closed_issues_check=$loop_start
     fi
 
     # === Proactive Improvements (every 30 minutes regardless of changes) ===

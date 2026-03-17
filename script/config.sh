@@ -25,6 +25,7 @@ KILO_SEARCH_PATHS="/home/dev/.kilo/bin:/usr/local/bin:/usr/bin:/bin"
 OPENCODE_SEARCH_PATHS="/home/dev/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
 
 GITHUB_CHECK_INTERVAL=300
+CLOSED_ISSUES_INTERVAL=3600  # Check closed issues every hour for regressions
 SUBMODULE_INTERVAL=1800
 PROACTIVE_COOLDOWN=1800
 
