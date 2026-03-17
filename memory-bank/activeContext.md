@@ -1,7 +1,23 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements completed
+Sentry MCP debugging - investigating production issues
+
+## Latest Changes (2026-03-17)
+- Ran full Sentry MCP debugging workflow:
+  - User: enclavr.dev@gmail.com
+  - Organization: enclavr (https://enclavr.sentry.io)
+  - Projects: api, frontend, test-project
+  - DSNs verified: api (bc4efb79...), frontend (6774674f...)
+- **Issues searched**: 'unresolved errors' (0 found), 'crashes' (0 found), 'all issues' (0 found)
+- **Events searched**: 'errors from last 24h' (0 found), 'slow transactions' (5 found)
+- Slow transactions: POST /api/auth/login (61ms p75), POST /api/room/join (7ms), GET /api/rooms (1ms)
+- **Issues analyzed: 0** (no issues to fix)
+- **Issues resolved: 0** (system healthy)
+- **No critical issues requiring fixes**
+
+## Previous Update (2026-03-17)
+- Proactive improvements completed
 
 ## Latest Update (2026-03-17)
 - Proactive improvements completed
