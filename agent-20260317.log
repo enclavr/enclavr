@@ -64815,3 +64815,3212 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
+[0m$ [0mgit add -A && git commit -m 'Debug: 2026-03-17 11:25'
+[main ea69607] Debug: 2026-03-17 11:25
+ 2 files changed, 3160 insertions(+), 1 deletion(-)
+[0m
+[0m$ [0mgit add -A && git commit -m 'Debug: 2026-03-17 11:25'
+[main ea69607] Debug: 2026-03-17 11:25
+ 2 files changed, 3160 insertions(+), 1 deletion(-)
+[0m
+[0m$ [0mgit push
+To https://github.com/enclavr/enclavr.git
+   13d8332..ea69607  main -> main
+[0m
+[0m$ [0mgit push
+To https://github.com/enclavr/enclavr.git
+   13d8332..ea69607  main -> main
+[0m
+Done. Committed 2 files (+3160/-1) and pushed to `main`.
+Done. Committed 2 files (+3160/-1) and pushed to `main`.
+[2026-03-17 11:36:06] [INFO] [INFO] Task completed in 30s (exit: 0)
+[2026-03-17 11:36:06] [INFO] [INFO] Task completed in 30s (exit: 0)
+[2026-03-17 11:36:06] [INFO] [INFO] Updated shared state: kilo - git add -A, commit 'Debug: 2026-03-17 11:25', git  - SUCCESS
+[2026-03-17 11:36:06] [INFO] [INFO] Updated shared state: kilo - git add -A, commit 'Debug: 2026-03-17 11:25', git  - SUCCESS
+[2026-03-17 11:36:06] [INFO] ✓ Changes committed and pushed
+[2026-03-17 11:36:06] [INFO] Updating memory bank for server...
+[2026-03-17 11:36:06] [INFO] Updating memory bank for server via Kilo...
+[2026-03-17 11:36:06] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:36:06] [INFO] [INFO] Found context from previous kilo session (truncated)
+[2026-03-17 11:36:06] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:36:06] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[0m
+> code · kilo-auto/free
+[0m
+[0m→ [0mRead server/memory-bank/activeContext.md
+The `activeContext.md` file for the server repository already contains the requested updates:
+
+1. **Current Work Focus** (line 4): Already set to "Debugging completed"
+2. **Latest Update** section (lines 6-7): Already exists with today's date (2026-03-17) and description "Debugging completed"
+
+The file was already updated with exactly what you requested. No changes were needed.
+[2026-03-17 11:36:42] [INFO] [INFO] Task completed in 36s (exit: 0)
+[2026-03-17 11:36:42] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
+[2026-03-17 11:36:42] [INFO] Updating memory bank for frontend...
+[2026-03-17 11:36:42] [INFO] Updating memory bank for frontend via Kilo...
+[2026-03-17 11:36:42] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
+[2026-03-17 11:36:42] [INFO] [INFO] Found context from previous kilo session (truncated)
+[2026-03-17 11:36:42] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:36:42] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
+[0m
+> build · minimax-m2.5-free
+[0m
+[0m→ [0mRead frontend/memory-bank/activeContext.md
+The file `/home/dev/Projects/enclavr/frontend/memory-bank/activeContext.md` already contains the requested updates:
+
+**Updated sections:**
+- **Current Work Focus**: "Debugging completed"
+- **Latest Update (2026-03-17)**: "- Debugging completed"
+- **Previous Update (2026-03-17)**: "- Proactive improvements completed"
+
+The memory bank is already up-to-date with today's date and the requested content.
+[2026-03-17 11:37:11] [INFO] [INFO] Task completed in 29s (exit: 0)
+[2026-03-17 11:37:11] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
+[2026-03-17 11:37:11] [INFO] Updating memory bank for infra...
+[2026-03-17 11:37:11] [INFO] Updating memory bank for infra via Kilo...
+[2026-03-17 11:37:11] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:37:11] [INFO] [INFO] Found context from previous opencode session (truncated)
+[2026-03-17 11:37:11] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:37:11] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[0m
+> code · kilo-auto/free
+[0m
+[0m→ [0mRead infra/memory-bank/activeContext.md
+[0m
+[0m← [0mEdit infra/memory-bank/activeContext.md
+Index: /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
+===================================================================
+--- /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
++++ /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
+@@ -1,11 +1,11 @@
+ # Active Context - Infra
+ 
+ ## Current Work Focus
+-Docker debug completed - all services healthy
++Debugging completed
+ 
+ ## Latest Update (2026-03-17)
+-Docker debug completed - all services healthy
++Debugging completed
+ 
+ ## Latest Changes (2026-03-17)
+ - Verified all 5 Docker services running and healthy
+ - No services required fixing
+
+[0m
+Updated `/home/dev/Projects/enclavr/infra/memory-bank/activeContext.md`:
+
+1. **Current Work Focus**: Changed from "Docker debug completed - all services healthy" to "Debugging completed"
+
+2. **Latest Update (2026-03-17)**: Added new section with "Debugging completed"
+[2026-03-17 11:37:52] [INFO] [INFO] Task completed in 41s (exit: 0)
+[2026-03-17 11:37:52] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
+[2026-03-17 11:37:52] [INFO] Updating memory bank for docs...
+[2026-03-17 11:37:52] [INFO] Updating memory bank for docs via Kilo...
+[2026-03-17 11:37:52] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
+[2026-03-17 11:37:52] [INFO] [INFO] Found context from previous kilo session (truncated)
+[2026-03-17 11:37:52] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:37:52] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
+[0m
+> build · minimax-m2.5-free
+[0m
+[0m→ [0mRead docs/memory-bank/activeContext.md
+The memory bank for `docs` is already up to date:
+
+- **Current Work Focus:** `Debugging completed`
+- **Latest Update:** Mar 17, 2026 - Debugging completed
+
+No changes needed - the file already contains exactly what you requested.
+[2026-03-17 11:41:33] [INFO] [INFO] Task completed in 221s (exit: 0)
+[2026-03-17 11:41:33] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
+[2026-03-17 11:41:33] [INFO] Updating memory bank for root...
+[2026-03-17 11:41:33] [INFO] Updating memory bank for root via Kilo...
+[2026-03-17 11:41:33] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:41:33] [INFO] [INFO] Found context from previous opencode session (truncated)
+[2026-03-17 11:41:33] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:41:33] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[0m
+> code · kilo-auto/free
+[0m
+[0m→ [0mRead memory-bank/activeContext.md
+[0m
+[0m← [0mEdit memory-bank/activeContext.md
+Index: /home/dev/Projects/enclavr/memory-bank/activeContext.md
+===================================================================
+--- /home/dev/Projects/enclavr/memory-bank/activeContext.md
++++ /home/dev/Projects/enclavr/memory-bank/activeContext.md
+@@ -1,10 +1,13 @@
+ # Active Context - enclavr-root
+ 
+ ## Current Work Focus
+-Reviewed PRs in all 5 repos - no open PRs found
++Debugging completed
+ 
+ ## Latest Update (2026-03-17)
++- Debugging completed
++
++## Latest Update (2026-03-17)
+ - Reviewed PRs in all 5 repos via gh api:
+   - enclavr/enclavr (root): 0 PRs
+   - enclavr/frontend: 0 PRs
+   - enclavr/server: 0 PRs
+
+[0m
+Updated the memory bank for the root repository:
+
+1. **Current Work Focus**: Changed from "Reviewed PRs in all 5 repos - no open PRs found" to "Debugging completed"
+
+2. **Added new Latest Update section** (2026-03-17):
+   - "- Debugging completed"
+[2026-03-17 11:42:07] [INFO] [INFO] Task completed in 34s (exit: 0)
+[2026-03-17 11:42:07] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
+[2026-03-17 11:42:07] [INFO] Updating submodules via Kilo...
+[2026-03-17 11:42:07] [INFO] Updating submodules via Kilo...
+[2026-03-17 11:42:07] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
+[2026-03-17 11:42:07] [INFO] [INFO] Found context from previous kilo session (truncated)
+[2026-03-17 11:42:07] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:42:07] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
+[0m
+> build · minimax-m2.5-free
+[0m
+[0m✱ [0mGlob "memory-bank/*.md"[90m 0 matches[0m
+[0m
+[0m$ [0mgit submodule status
+9159e09c8d915b718442100582c98d1b13c07365 docs (v2026.03.17-1-g9159e09)
+ f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8 frontend (v2026.03.15-10-gf4a98a1)
+ 42a945e09b4957f45ad55da078d12ce02867a2da infra (v2026.03.17-1-g42a945e)
+ efb5b1fe3cc5e74decb1088cd18616682b964732 server (v2026.03.17)
+[0m
+[0m$ [0mgit submodule update --remote --merge
+[0m
+[0m$ [0mgit submodule status
+9159e09c8d915b718442100582c98d1b13c07365 docs (v2026.03.17-1-g9159e09)
+ f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8 frontend (v2026.03.15-10-gf4a98a1)
+ 42a945e09b4957f45ad55da078d12ce02867a2da infra (v2026.03.17-1-g42a945e)
+ efb5b1fe3cc5e74decb1088cd18616682b964732 server (v2026.03.17)
+[0m
+[0m✱ [0mGlob "*/memory-bank/*.md"[90m 0 matches[0m
+**Report: submodules updated.**
+
+- No `memory-bank/` directory exists in this repo
+- All submodules already at latest commits (docs, frontend, infra, server)
+- No changes to commit
+[2026-03-17 11:42:45] [INFO] [INFO] Task completed in 38s (exit: 0)
+[2026-03-17 11:42:45] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
+[2026-03-17 11:42:45] [INFO] [INFO] Checking for changes to commit...
+[2026-03-17 11:42:45] [INFO] [INFO] Reviewing changes before commit...
+[2026-03-17 11:42:45] [INFO] [INFO] Running AI review of changes (timeout: 90s)
+[2026-03-17 11:42:45] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:42:45] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:42:45] [INFO] [INFO] Found context from previous opencode session (truncated)
+[2026-03-17 11:42:45] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:42:45] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:42:45] [INFO] [INFO] Found context from previous opencode session (truncated)
+## Last Run (2026-03-17 11:42:45)
+- **Provider**: opencode
+[2026-03-17 11:42:45] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[2026-03-17 11:42:45] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[0m
+> code · kilo-auto/free
+[0m
+[0m
+> code · kilo-auto/free
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   agent-20260317.log
+	modified:   frontend (modified content)
+	modified:   memory-bank/activeContext.md
+	modified:   server (modified content, untracked content)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   agent-20260317.log
+	modified:   frontend (modified content)
+	modified:   memory-bank/activeContext.md
+	modified:   server (modified content, untracked content)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mgit diff
+diff --git a/agent-20260317.log b/agent-20260317.log
+index a99ce9d..98e4f59 100644
+--- a/agent-20260317.log
++++ b/agent-20260317.log
+@@ -64815,3 +64815,244 @@ Changes not staged for commit:
+ 
+ no changes added to commit (use "git add" and/or "git commit -a")
+ [0m
++[0m$ [0mgit add -A && git commit -m 'Debug: 2026-03-17 11:25'
++[main ea69607] Debug: 2026-03-17 11:25
++ 2 files changed, 3160 insertions(+), 1 deletion(-)
++[0m
++[0m$ [0mgit add -A && git commit -m 'Debug: 2026-03-17 11:25'
++[main ea69607] Debug: 2026-03-17 11:25
++ 2 files changed, 3160 insertions(+), 1 deletion(-)
++[0m
++[0m$ [0mgit push
++To https://github.com/enclavr/enclavr.git
++   13d8332..ea69607  main -> main
++[0m
++[0m$ [0mgit push
++To https://github.com/enclavr/enclavr.git
++   13d8332..ea69607  main -> main
++[0m
++Done. Committed 2 files (+3160/-1) and pushed to `main`.
++Done. Committed 2 files (+3160/-1) and pushed to `main`.
++[2026-03-17 11:36:06] [INFO] [INFO] Task completed in 30s (exit: 0)
++[2026-03-17 11:36:06] [INFO] [INFO] Task completed in 30s (exit: 0)
++[2026-03-17 11:36:06] [INFO] [INFO] Updated shared state: kilo - git add -A, commit 'Debug: 2026-03-17 11:25', git  - SUCCESS
++[2026-03-17 11:36:06] [INFO] [INFO] Updated shared state: kilo - git add -A, commit 'Debug: 2026-03-17 11:25', git  - SUCCESS
++[2026-03-17 11:36:06] [INFO] ✓ Changes committed and pushed
++[2026-03-17 11:36:06] [INFO] Updating memory bank for server...
++[2026-03-17 11:36:06] [INFO] Updating memory bank for server via Kilo...
++[2026-03-17 11:36:06] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:36:06] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:36:06] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:36:06] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m→ [0mRead server/memory-bank/activeContext.md
++The `activeContext.md` file for the server repository already contains the requested updates:
++
++1. **Current Work Focus** (line 4): Already set to "Debugging completed"
++2. **Latest Update** section (lines 6-7): Already exists with today's date (2026-03-17) and description "Debugging completed"
++
++The file was already updated with exactly what you requested. No changes were needed.
++[2026-03-17 11:36:42] [INFO] [INFO] Task completed in 36s (exit: 0)
++[2026-03-17 11:36:42] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
++[2026-03-17 11:36:42] [INFO] Updating memory bank for frontend...
++[2026-03-17 11:36:42] [INFO] Updating memory bank for frontend via Kilo...
++[2026-03-17 11:36:42] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
++[2026-03-17 11:36:42] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:36:42] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:36:42] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
++[0m
++> build · minimax-m2.5-free
++[0m
++[0m→ [0mRead frontend/memory-bank/activeContext.md
++The file `/home/dev/Projects/enclavr/frontend/memory-bank/activeContext.md` already contains the requested updates:
++
++**Updated sections:**
++- **Current Work Focus**: "Debugging completed"
++- **Latest Update (2026-03-17)**: "- Debugging completed"
++- **Previous Update (2026-03-17)**: "- Proactive improvements completed"
++
++The memory bank is already up-to-date with today's date and the requested content.
++[2026-03-17 11:37:11] [INFO] [INFO] Task completed in 29s (exit: 0)
++[2026-03-17 11:37:11] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
++[2026-03-17 11:37:11] [INFO] Updating memory bank for infra...
++[2026-03-17 11:37:11] [INFO] Updating memory bank for infra via Kilo...
++[2026-03-17 11:37:11] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:37:11] [INFO] [INFO] Found context from previous opencode session (truncated)
++[2026-03-17 11:37:11] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:37:11] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m→ [0mRead infra/memory-bank/activeContext.md
++[0m
++[0m← [0mEdit infra/memory-bank/activeContext.md
++Index: /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
++===================================================================
++--- /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
+++++ /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
++@@ -1,11 +1,11 @@
++ # Active Context - Infra
++ 
++ ## Current Work Focus
++-Docker debug completed - all services healthy
+++Debugging completed
++ 
++ ## Latest Update (2026-03-17)
++-Docker debug completed - all services healthy
+++Debugging completed
++ 
++ ## Latest Changes (2026-03-17)
++ - Verified all 5 Docker services running and healthy
++ - No services required fixing
++
++[0m
++Updated `/home/dev/Projects/enclavr/infra/memory-bank/activeContext.md`:
++
++1. **Current Work Focus**: Changed from "Docker debug completed - all services healthy" to "Debugging completed"
++
++2. **Latest Update (2026-03-17)**: Added new section with "Debugging completed"
++[2026-03-17 11:37:52] [INFO] [INFO] Task completed in 41s (exit: 0)
++[2026-03-17 11:37:52] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
++[2026-03-17 11:37:52] [INFO] Updating memory bank for docs...
++[2026-03-17 11:37:52] [INFO] Updating memory bank for docs via Kilo...
++[2026-03-17 11:37:52] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
++[2026-03-17 11:37:52] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:37:52] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:37:52] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
++[0m
++> build · minimax-m2.5-free
++[0m
++[0m→ [0mRead docs/memory-bank/activeContext.md
++The memory bank for `docs` is already up to date:
++
++- **Current Work Focus:** `Debugging completed`
++- **Latest Update:** Mar 17, 2026 - Debugging completed
++
++No changes needed - the file already contains exactly what you requested.
++[2026-03-17 11:41:33] [INFO] [INFO] Task completed in 221s (exit: 0)
++[2026-03-17 11:41:33] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
++[2026-03-17 11:41:33] [INFO] Updating memory bank for root...
++[2026-03-17 11:41:33] [INFO] Updating memory bank for root via Kilo...
++[2026-03-17 11:41:33] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:41:33] [INFO] [INFO] Found context from previous opencode session (truncated)
++[2026-03-17 11:41:33] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:41:33] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m→ [0mRead memory-bank/activeContext.md
++[0m
++[0m← [0mEdit memory-bank/activeContext.md
++Index: /home/dev/Projects/enclavr/memory-bank/activeContext.md
++===================================================================
++--- /home/dev/Projects/enclavr/memory-bank/activeContext.md
+++++ /home/dev/Projects/enclavr/memory-bank/activeContext.md
++@@ -1,10 +1,13 @@
++ # Active Context - enclavr-root
++ 
++ ## Current Work Focus
++-Reviewed PRs in all 5 repos - no open PRs found
+++Debugging completed
++ 
++ ## Latest Update (2026-03-17)
+++- Debugging completed
+++
+++## Latest Update (2026-03-17)
++ - Reviewed PRs in all 5 repos via gh api:
++   - enclavr/enclavr (root): 0 PRs
++   - enclavr/frontend: 0 PRs
++   - enclavr/server: 0 PRs
++
++[0m
++Updated the memory bank for the root repository:
++
++1. **Current Work Focus**: Changed from "Reviewed PRs in all 5 repos - no open PRs found" to "Debugging completed"
++
++2. **Added new Latest Update section** (2026-03-17):
++   - "- Debugging completed"
++[2026-03-17 11:42:07] [INFO] [INFO] Task completed in 34s (exit: 0)
++[2026-03-17 11:42:07] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
++[2026-03-17 11:42:07] [INFO] Updating submodules via Kilo...
++[2026-03-17 11:42:07] [INFO] Updating submodules via Kilo...
++[2026-03-17 11:42:07] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
++[2026-03-17 11:42:07] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:42:07] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:42:07] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
++[0m
++> build · minimax-m2.5-free
++[0m
++[0m✱ [0mGlob "memory-bank/*.md"[90m 0 matches[0m
++[0m
++[0m$ [0mgit submodule status
++9159e09c8d915b718442100582c98d1b13c07365 docs (v2026.03.17-1-g9159e09)
++ f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8 frontend (v2026.03.15-10-gf4a98a1)
++ 42a945e09b4957f45ad55da078d12ce02867a2da infra (v2026.03.17-1-g42a945e)
++ efb5b1fe3cc5e74decb1088cd18616682b964732 server (v2026.03.17)
++[0m
++[0m$ [0mgit submodule update --remote --merge
++[0m
++[0m$ [0mgit submodule status
++9159e09c8d915b718442100582c98d1b13c07365 docs (v2026.03.17-1-g9159e09)
++ f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8 frontend (v2026.03.15-10-gf4a98a1)
++ 42a945e09b4957f45ad55da078d12ce02867a2da infra (v2026.03.17-1-g42a945e)
++ efb5b1fe3cc5e74decb1088cd18616682b964732 server (v2026.03.17)
++[0m
++[0m✱ [0mGlob "*/memory-bank/*.md"[90m 0 matches[0m
++**Report: submodules updated.**
++
++- No `memory-bank/` directory exists in this repo
++- All submodules already at latest commits (docs, frontend, infra, server)
++- No changes to commit
++[2026-03-17 11:42:45] [INFO] [INFO] Task completed in 38s (exit: 0)
++[2026-03-17 11:42:45] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
++[2026-03-17 11:42:45] [INFO] [INFO] Checking for changes to commit...
++[2026-03-17 11:42:45] [INFO] [INFO] Reviewing changes before commit...
++[2026-03-17 11:42:45] [INFO] [INFO] Running AI review of changes (timeout: 90s)
++[2026-03-17 11:42:45] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:42:45] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:42:45] [INFO] [INFO] Found context from previous opencode session (truncated)
++[2026-03-17 11:42:45] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:42:45] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:42:45] [INFO] [INFO] Found context from previous opencode session (truncated)
++## Last Run (2026-03-17 11:42:45)
++- **Provider**: opencode
++[2026-03-17 11:42:45] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[2026-03-17 11:42:45] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m
++> code · kilo-auto/free
++[0m
++[0m$ [0mgit status
++On branch main
++Your branch is up to date with 'origin/main'.
++
++Changes not staged for commit:
++  (use "git add <file>..." to update what will be committed)
++  (use "git restore <file>..." to discard changes in working directory)
++  (commit or discard the untracked or modified content in submodules)
++	modified:   agent-20260317.log
++	modified:   frontend (modified content)
++	modified:   memory-bank/activeContext.md
++	modified:   server (modified content, untracked content)
++
++no changes added to commit (use "git add" and/or "git commit -a")
++[0m
++[0m$ [0mgit status
++On branch main
++Your branch is up to date with 'origin/main'.
++
++Changes not staged for commit:
++  (use "git add <file>..." to update what will be committed)
++  (use "git restore <file>..." to discard changes in working directory)
++  (commit or discard the untracked or modified content in submodules)
++	modified:   agent-20260317.log
++	modified:   frontend (modified content)
++	modified:   memory-bank/activeContext.md
++	modified:   server (modified content, untracked content)
++
++no changes added to commit (use "git add" and/or "git commit -a")
++[0m
+diff --git a/frontend b/frontend
+--- a/frontend
++++ b/frontend
+@@ -1 +1 @@
+-Subproject commit f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8
++Subproject commit f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8-dirty
+diff --git a/memory-bank/activeContext.md b/memory-bank/activeContext.md
+index 28d193d..b2bde50 100644
+--- a/memory-bank/activeContext.md
++++ b/memory-bank/activeContext.md
+@@ -1,7 +1,10 @@
+ # Active Context - enclavr-root
+ 
+ ## Current Work Focus
+-Reviewed PRs in all 5 repos - no open PRs found
++Debugging completed
++
++## Latest Update (2026-03-17)
++- Debugging completed
+ 
+ ## Latest Update (2026-03-17)
+ - Reviewed PRs in all 5 repos via gh api:
+diff --git a/server b/server
+--- a/server
++++ b/server
+@@ -1 +1 @@
+-Subproject commit efb5b1fe3cc5e74decb1088cd18616682b964732
++Subproject commit efb5b1fe3cc5e74decb1088cd18616682b964732-dirty
+[0m
+[0m$ [0mgit diff
+diff --git a/agent-20260317.log b/agent-20260317.log
+index a99ce9d..98e4f59 100644
+--- a/agent-20260317.log
++++ b/agent-20260317.log
+@@ -64815,3 +64815,244 @@ Changes not staged for commit:
+ 
+ no changes added to commit (use "git add" and/or "git commit -a")
+ [0m
++[0m$ [0mgit add -A && git commit -m 'Debug: 2026-03-17 11:25'
++[main ea69607] Debug: 2026-03-17 11:25
++ 2 files changed, 3160 insertions(+), 1 deletion(-)
++[0m
++[0m$ [0mgit add -A && git commit -m 'Debug: 2026-03-17 11:25'
++[main ea69607] Debug: 2026-03-17 11:25
++ 2 files changed, 3160 insertions(+), 1 deletion(-)
++[0m
++[0m$ [0mgit push
++To https://github.com/enclavr/enclavr.git
++   13d8332..ea69607  main -> main
++[0m
++[0m$ [0mgit push
++To https://github.com/enclavr/enclavr.git
++   13d8332..ea69607  main -> main
++[0m
++Done. Committed 2 files (+3160/-1) and pushed to `main`.
++Done. Committed 2 files (+3160/-1) and pushed to `main`.
++[2026-03-17 11:36:06] [INFO] [INFO] Task completed in 30s (exit: 0)
++[2026-03-17 11:36:06] [INFO] [INFO] Task completed in 30s (exit: 0)
++[2026-03-17 11:36:06] [INFO] [INFO] Updated shared state: kilo - git add -A, commit 'Debug: 2026-03-17 11:25', git  - SUCCESS
++[2026-03-17 11:36:06] [INFO] [INFO] Updated shared state: kilo - git add -A, commit 'Debug: 2026-03-17 11:25', git  - SUCCESS
++[2026-03-17 11:36:06] [INFO] ✓ Changes committed and pushed
++[2026-03-17 11:36:06] [INFO] Updating memory bank for server...
++[2026-03-17 11:36:06] [INFO] Updating memory bank for server via Kilo...
++[2026-03-17 11:36:06] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:36:06] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:36:06] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:36:06] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m→ [0mRead server/memory-bank/activeContext.md
++The `activeContext.md` file for the server repository already contains the requested updates:
++
++1. **Current Work Focus** (line 4): Already set to "Debugging completed"
++2. **Latest Update** section (lines 6-7): Already exists with today's date (2026-03-17) and description "Debugging completed"
++
++The file was already updated with exactly what you requested. No changes were needed.
++[2026-03-17 11:36:42] [INFO] [INFO] Task completed in 36s (exit: 0)
++[2026-03-17 11:36:42] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
++[2026-03-17 11:36:42] [INFO] Updating memory bank for frontend...
++[2026-03-17 11:36:42] [INFO] Updating memory bank for frontend via Kilo...
++[2026-03-17 11:36:42] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
++[2026-03-17 11:36:42] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:36:42] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:36:42] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
++[0m
++> build · minimax-m2.5-free
++[0m
++[0m→ [0mRead frontend/memory-bank/activeContext.md
++The file `/home/dev/Projects/enclavr/frontend/memory-bank/activeContext.md` already contains the requested updates:
++
++**Updated sections:**
++- **Current Work Focus**: "Debugging completed"
++- **Latest Update (2026-03-17)**: "- Debugging completed"
++- **Previous Update (2026-03-17)**: "- Proactive improvements completed"
++
++The memory bank is already up-to-date with today's date and the requested content.
++[2026-03-17 11:37:11] [INFO] [INFO] Task completed in 29s (exit: 0)
++[2026-03-17 11:37:11] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
++[2026-03-17 11:37:11] [INFO] Updating memory bank for infra...
++[2026-03-17 11:37:11] [INFO] Updating memory bank for infra via Kilo...
++[2026-03-17 11:37:11] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:37:11] [INFO] [INFO] Found context from previous opencode session (truncated)
++[2026-03-17 11:37:11] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:37:11] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m→ [0mRead infra/memory-bank/activeContext.md
++[0m
++[0m← [0mEdit infra/memory-bank/activeContext.md
++Index: /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
++===================================================================
++--- /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
+++++ /home/dev/Projects/enclavr/infra/memory-bank/activeContext.md
++@@ -1,11 +1,11 @@
++ # Active Context - Infra
++ 
++ ## Current Work Focus
++-Docker debug completed - all services healthy
+++Debugging completed
++ 
++ ## Latest Update (2026-03-17)
++-Docker debug completed - all services healthy
+++Debugging completed
++ 
++ ## Latest Changes (2026-03-17)
++ - Verified all 5 Docker services running and healthy
++ - No services required fixing
++
++[0m
++Updated `/home/dev/Projects/enclavr/infra/memory-bank/activeContext.md`:
++
++1. **Current Work Focus**: Changed from "Docker debug completed - all services healthy" to "Debugging completed"
++
++2. **Latest Update (2026-03-17)**: Added new section with "Debugging completed"
++[2026-03-17 11:37:52] [INFO] [INFO] Task completed in 41s (exit: 0)
++[2026-03-17 11:37:52] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
++[2026-03-17 11:37:52] [INFO] Updating memory bank for docs...
++[2026-03-17 11:37:52] [INFO] Updating memory bank for docs via Kilo...
++[2026-03-17 11:37:52] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
++[2026-03-17 11:37:52] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:37:52] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:37:52] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
++[0m
++> build · minimax-m2.5-free
++[0m
++[0m→ [0mRead docs/memory-bank/activeContext.md
++The memory bank for `docs` is already up to date:
++
++- **Current Work Focus:** `Debugging completed`
++- **Latest Update:** Mar 17, 2026 - Debugging completed
++
++No changes needed - the file already contains exactly what you requested.
++[2026-03-17 11:41:33] [INFO] [INFO] Task completed in 221s (exit: 0)
++[2026-03-17 11:41:33] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
++[2026-03-17 11:41:33] [INFO] Updating memory bank for root...
++[2026-03-17 11:41:33] [INFO] Updating memory bank for root via Kilo...
++[2026-03-17 11:41:33] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:41:33] [INFO] [INFO] Found context from previous opencode session (truncated)
++[2026-03-17 11:41:33] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:41:33] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m→ [0mRead memory-bank/activeContext.md
++[0m
++[0m← [0mEdit memory-bank/activeContext.md
++Index: /home/dev/Projects/enclavr/memory-bank/activeContext.md
++===================================================================
++--- /home/dev/Projects/enclavr/memory-bank/activeContext.md
+++++ /home/dev/Projects/enclavr/memory-bank/activeContext.md
++@@ -1,10 +1,13 @@
++ # Active Context - enclavr-root
++ 
++ ## Current Work Focus
++-Reviewed PRs in all 5 repos - no open PRs found
+++Debugging completed
++ 
++ ## Latest Update (2026-03-17)
+++- Debugging completed
+++
+++## Latest Update (2026-03-17)
++ - Reviewed PRs in all 5 repos via gh api:
++   - enclavr/enclavr (root): 0 PRs
++   - enclavr/frontend: 0 PRs
++   - enclavr/server: 0 PRs
++
++[0m
++Updated the memory bank for the root repository:
++
++1. **Current Work Focus**: Changed from "Reviewed PRs in all 5 repos - no open PRs found" to "Debugging completed"
++
++2. **Added new Latest Update section** (2026-03-17):
++   - "- Debugging completed"
++[2026-03-17 11:42:07] [INFO] [INFO] Task completed in 34s (exit: 0)
++[2026-03-17 11:42:07] [INFO] [INFO] Updated shared state: kilo - run - SUCCESS
++[2026-03-17 11:42:07] [INFO] Updating submodules via Kilo...
++[2026-03-17 11:42:07] [INFO] Updating submodules via Kilo...
++[2026-03-17 11:42:07] [INFO] Found opencode at: /home/dev/.opencode/bin/opencode
++[2026-03-17 11:42:07] [INFO] [INFO] Found context from previous kilo session (truncated)
++[2026-03-17 11:42:07] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:42:07] [INFO] [INFO] Executing task with opencode... (timeout: 600s)
++[0m
++> build · minimax-m2.5-free
++[0m
++[0m✱ [0mGlob "memory-bank/*.md"[90m 0 matches[0m
++[0m
++[0m$ [0mgit submodule status
++9159e09c8d915b718442100582c98d1b13c07365 docs (v2026.03.17-1-g9159e09)
++ f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8 frontend (v2026.03.15-10-gf4a98a1)
++ 42a945e09b4957f45ad55da078d12ce02867a2da infra (v2026.03.17-1-g42a945e)
++ efb5b1fe3cc5e74decb1088cd18616682b964732 server (v2026.03.17)
++[0m
++[0m$ [0mgit submodule update --remote --merge
++[0m
++[0m$ [0mgit submodule status
++9159e09c8d915b718442100582c98d1b13c07365 docs (v2026.03.17-1-g9159e09)
++ f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8 frontend (v2026.03.15-10-gf4a98a1)
++ 42a945e09b4957f45ad55da078d12ce02867a2da infra (v2026.03.17-1-g42a945e)
++ efb5b1fe3cc5e74decb1088cd18616682b964732 server (v2026.03.17)
++[0m
++[0m✱ [0mGlob "*/memory-bank/*.md"[90m 0 matches[0m
++**Report: submodules updated.**
++
++- No `memory-bank/` directory exists in this repo
++- All submodules already at latest commits (docs, frontend, infra, server)
++- No changes to commit
++[2026-03-17 11:42:45] [INFO] [INFO] Task completed in 38s (exit: 0)
++[2026-03-17 11:42:45] [INFO] [INFO] Updated shared state: opencode - run - SUCCESS
++[2026-03-17 11:42:45] [INFO] [INFO] Checking for changes to commit...
++[2026-03-17 11:42:45] [INFO] [INFO] Reviewing changes before commit...
++[2026-03-17 11:42:45] [INFO] [INFO] Running AI review of changes (timeout: 90s)
++[2026-03-17 11:42:45] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:42:45] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
++[2026-03-17 11:42:45] [INFO] [INFO] Found context from previous opencode session (truncated)
++[2026-03-17 11:42:45] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:42:45] [INFO] [INFO] Context from previous session:
++[2026-03-17 11:42:45] [INFO] [INFO] Found context from previous opencode session (truncated)
++## Last Run (2026-03-17 11:42:45)
++- **Provider**: opencode
++[2026-03-17 11:42:45] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[2026-03-17 11:42:45] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
++[0m
++> code · kilo-auto/free
++[0m
++[0m
++> code · kilo-auto/free
++[0m
++[0m$ [0mgit status
++On branch main
++Your branch is up to date with 'origin/main'.
++
++Changes not staged for commit:
++  (use "git add <file>..." to update what will be committed)
++  (use "git restore <file>..." to discard changes in working directory)
++  (commit or discard the untracked or modified content in submodules)
++	modified:   agent-20260317.log
++	modified:   frontend (modified content)
++	modified:   memory-bank/activeContext.md
++	modified:   server (modified content, untracked content)
++
++no changes added to commit (use "git add" and/or "git commit -a")
++[0m
++[0m$ [0mgit status
++On branch main
++Your branch is up to date with 'origin/main'.
++
++Changes not staged for commit:
++  (use "git add <file>..." to update what will be committed)
++  (use "git restore <file>..." to discard changes in working directory)
++  (commit or discard the untracked or modified content in submodules)
++	modified:   agent-20260317.log
++	modified:   frontend (modified content)
++	modified:   memory-bank/activeContext.md
++	modified:   server (modified content, untracked content)
++
++no changes added to commit (use "git add" and/or "git commit -a")
++[0m
+diff --git a/frontend b/frontend
+--- a/frontend
++++ b/frontend
+@@ -1 +1 @@
+-Subproject commit f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8
++Subproject commit f4a98a13cd2ffca43a9b7fb2ef3d39b7417760e8-dirty
+diff --git a/memory-bank/activeContext.md b/memory-bank/activeContext.md
+index 28d193d..b2bde50 100644
+--- a/memory-bank/activeContext.md
++++ b/memory-bank/activeContext.md
+@@ -1,7 +1,10 @@
+ # Active Context - enclavr-root
+ 
+ ## Current Work Focus
+-Reviewed PRs in all 5 repos - no open PRs found
++Debugging completed
++
++## Latest Update (2026-03-17)
++- Debugging completed
+ 
+ ## Latest Update (2026-03-17)
+ - Reviewed PRs in all 5 repos via gh api:
+diff --git a/server b/server
+--- a/server
++++ b/server
+@@ -1 +1 @@
+-Subproject commit efb5b1fe3cc5e74decb1088cd18616682b964732
++Subproject commit efb5b1fe3cc5e74decb1088cd18616682b964732-dirty
+[0m
+[0m$ [0mcd server && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   internal/config/config.go
+	modified:   internal/database/database.go
+	modified:   internal/handlers/auditlog.go
+	modified:   internal/handlers/auth.go
+	modified:   internal/handlers/preferences.go
+	modified:   internal/models/extended.go
+	modified:   internal/models/models.go
+	modified:   internal/services/email.go
+	modified:   internal/services/oauth.go
+	modified:   pkg/middleware/endpoint_ratelimit.go
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	migrations/012_add_enhanced_features.up.sql
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mcd server && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   internal/config/config.go
+	modified:   internal/database/database.go
+	modified:   internal/handlers/auditlog.go
+	modified:   internal/handlers/auth.go
+	modified:   internal/handlers/preferences.go
+	modified:   internal/models/extended.go
+	modified:   internal/models/models.go
+	modified:   internal/services/email.go
+	modified:   internal/services/oauth.go
+	modified:   pkg/middleware/endpoint_ratelimit.go
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	migrations/012_add_enhanced_features.up.sql
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mcd frontend && git status
+HEAD detached at f4a98a1
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   bun.lock
+	modified:   package.json
+	modified:   vitest.config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mcd frontend && git status
+HEAD detached at f4a98a1
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   bun.lock
+	modified:   package.json
+	modified:   vitest.config.ts
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mcd server && git diff
+diff --git a/internal/config/config.go b/internal/config/config.go
+index f6acfa8..f27de44 100644
+--- a/internal/config/config.go
++++ b/internal/config/config.go
+@@ -46,18 +46,20 @@ type DatabaseConfig struct {
+ }
+ 
+ type AuthConfig struct {
+-	JWTSecret          string
+-	JWTExpiration      time.Duration
+-	RefreshExpiration  time.Duration
+-	OIDCEnabled        bool
+-	OIDCIssuerURL      string
+-	OIDCClientID       string
+-	OIDCClientSecret   string
+-	OAuthEnabled       bool
+-	GoogleClientID     string
+-	GoogleClientSecret string
+-	GitHubClientID     string
+-	GitHubClientSecret string
++	JWTSecret           string
++	JWTExpiration       time.Duration
++	RefreshExpiration   time.Duration
++	OIDCEnabled         bool
++	OIDCIssuerURL       string
++	OIDCClientID        string
++	OIDCClientSecret    string
++	OAuthEnabled        bool
++	GoogleClientID      string
++	GoogleClientSecret  string
++	GitHubClientID      string
++	GitHubClientSecret  string
++	DiscordClientID     string
++	DiscordClientSecret string
+ }
+ 
+ type EmailConfig struct {
+@@ -124,18 +126,20 @@ func Load() *Config {
+ 			SSLMode:  getEnv("DB_SSLMODE", "disable"),
+ 		},
+ 		Auth: AuthConfig{
+-			JWTSecret:          getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
+-			JWTExpiration:      getDurationEnv("JWT_EXPIRATION", 24*time.Hour),
+-			RefreshExpiration:  getDurationEnv("REFRESH_EXPIRATION", 7*24*time.Hour),
+-			OIDCEnabled:        getEnvBool("OIDC_ENABLED", false),
+-			OIDCIssuerURL:      getEnv("OIDC_ISSUER_URL", ""),
+-			OIDCClientID:       getEnv("OIDC_CLIENT_ID", ""),
+-			OIDCClientSecret:   getEnv("OIDC_CLIENT_SECRET", ""),
+-			OAuthEnabled:       getEnvBool("OAUTH_ENABLED", false),
+-			GoogleClientID:     getEnv("GOOGLE_CLIENT_ID", ""),
+-			GoogleClientSecret: getEnv("GOOGLE_CLIENT_SECRET", ""),
+-			GitHubClientID:     getEnv("GITHUB_CLIENT_ID", ""),
+-			GitHubClientSecret: getEnv("GITHUB_CLIENT_SECRET", ""),
++			JWTSecret:           getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
++			JWTExpiration:       getDurationEnv("JWT_EXPIRATION", 24*time.Hour),
++			RefreshExpiration:   getDurationEnv("REFRESH_EXPIRATION", 7*24*time.Hour),
++			OIDCEnabled:         getEnvBool("OIDC_ENABLED", false),
++			OIDCIssuerURL:       getEnv("OIDC_ISSUER_URL", ""),
++			OIDCClientID:        getEnv("OIDC_CLIENT_ID", ""),
++			OIDCClientSecret:    getEnv("OIDC_CLIENT_SECRET", ""),
++			OAuthEnabled:        getEnvBool("OAUTH_ENABLED", false),
++			GoogleClientID:      getEnv("GOOGLE_CLIENT_ID", ""),
++			GoogleClientSecret:  getEnv("GOOGLE_CLIENT_SECRET", ""),
++			GitHubClientID:      getEnv("GITHUB_CLIENT_ID", ""),
++			GitHubClientSecret:  getEnv("GITHUB_CLIENT_SECRET", ""),
++			DiscordClientID:     getEnv("DISCORD_CLIENT_ID", ""),
++			DiscordClientSecret: getEnv("DISCORD_CLIENT_SECRET", ""),
+ 		},
+ 		Email: EmailConfig{
+ 			SMTPHost:     getEnv("SMTP_HOST", ""),
+diff --git a/internal/database/database.go b/internal/database/database.go
+index d8353e4..9f90a28 100644
+--- a/internal/database/database.go
++++ b/internal/database/database.go
+@@ -100,6 +100,8 @@ func (d *Database) Migrate() error {
+ 		&models.RolePermission{},
+ 		&models.UserRole{},
+ 		&models.UserNotification{},
++		&models.MessageAttachmentMetadata{},
++		&models.AttachmentShare{},
+ 	)
+ 	if err != nil {
+ 		return err
+@@ -198,6 +200,16 @@ func (d *Database) Migrate() error {
+ 	d.Exec("CREATE INDEX IF NOT EXISTS idx_scheduled_messages_room_scheduled ON scheduled_messages(room_id, scheduled_at ASC) WHERE is_sent = false AND is_cancelled = false")
+ 	d.Exec("CREATE INDEX IF NOT EXISTS idx_message_reminders_user_triggered ON message_reminders(user_id, remind_at ASC) WHERE is_triggered = false")
+ 
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_presence_status ON presences(status, last_seen DESC)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_categories_sort_order ON categories(sort_order)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_oauth_accounts_user_provider ON oauth_accounts(user_id, provider)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_user_rooms_by_role ON user_rooms(room_id, role)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_messages_search ON messages USING gin(to_tsvector('english', content))")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_password_resets_token ON password_resets(token) WHERE used = false")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_email_verifications_token ON email_verifications(token) WHERE used = false")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_attachment_share_url ON attachment_shares(share_url)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_attachment_share_attachment ON attachment_shares(attachment_id)")
++
+ 	log.Println("Database migration completed")
+ 	return nil
+ }
+diff --git a/internal/handlers/auditlog.go b/internal/handlers/auditlog.go
+index bed67d6..b321485 100644
+--- a/internal/handlers/auditlog.go
++++ b/internal/handlers/auditlog.go
+@@ -22,15 +22,20 @@ func NewAuditHandler(db *database.Database) *AuditHandler {
+ }
+ 
+ type AuditLogResponse struct {
+-	ID         uuid.UUID          `json:"id"`
+-	UserID     uuid.UUID          `json:"user_id"`
+-	Username   string             `json:"username"`
+-	Action     models.AuditAction `json:"action"`
+-	TargetType string             `json:"target_type"`
+-	TargetID   uuid.UUID          `json:"target_id"`
+-	Details    string             `json:"details"`
+-	IPAddress  string             `json:"ip_address"`
+-	CreatedAt  time.Time          `json:"created_at"`
++	ID           uuid.UUID          `json:"id"`
++	UserID       uuid.UUID          `json:"user_id"`
++	Username     string             `json:"username"`
++	Action       models.AuditAction `json:"action"`
++	TargetType   string             `json:"target_type"`
++	TargetID     uuid.UUID          `json:"target_id"`
++	Details      string             `json:"details"`
++	OldValue     string             `json:"old_value"`
++	NewValue     string             `json:"new_value"`
++	IPAddress    string             `json:"ip_address"`
++	UserAgent    string             `json:"user_agent"`
++	Success      bool               `json:"success"`
++	ErrorMessage string             `json:"error_message"`
++	CreatedAt    time.Time          `json:"created_at"`
+ }
+ 
+ type AuditLogListResponse struct {
+@@ -115,15 +120,20 @@ func (h *AuditHandler) GetAuditLogs(w http.ResponseWriter, r *http.Request) {
+ 
+ 	for i, log := range logs {
+ 		logResponses[i] = AuditLogResponse{
+-			ID:         log.ID,
+-			UserID:     log.UserID,
+-			Username:   userIDToUsername[log.UserID],
+-			Action:     log.Action,
+-			TargetType: log.TargetType,
+-			TargetID:   log.TargetID,
+-			Details:    log.Details,
+-			IPAddress:  log.IPAddress,
+-			CreatedAt:  log.CreatedAt,
++			ID:           log.ID,
++			UserID:       log.UserID,
++			Username:     userIDToUsername[log.UserID],
++			Action:       log.Action,
++			TargetType:   log.TargetType,
++			TargetID:     log.TargetID,
++			Details:      log.Details,
++			OldValue:     log.OldValue,
++			NewValue:     log.NewValue,
++			IPAddress:    log.IPAddress,
++			UserAgent:    log.UserAgent,
++			Success:      log.Success,
++			ErrorMessage: log.ErrorMessage,
++			CreatedAt:    log.CreatedAt,
+ 		}
+ 	}
+ 
+@@ -148,13 +158,22 @@ func (h *AuditHandler) GetAuditLogs(w http.ResponseWriter, r *http.Request) {
+ }
+ 
+ func (h *AuditHandler) LogAction(userID uuid.UUID, action models.AuditAction, targetType string, targetID uuid.UUID, details string, ipAddress string) {
++	h.LogActionWithDetails(userID, action, targetType, targetID, details, "", "", ipAddress, "", true, "")
++}
++
++func (h *AuditHandler) LogActionWithDetails(userID uuid.UUID, action models.AuditAction, targetType string, targetID uuid.UUID, details string, oldValue string, newValue string, ipAddress string, userAgent string, success bool, errorMessage string) {
+ 	log := models.AuditLog{
+-		UserID:     userID,
+-		Action:     action,
+-		TargetType: targetType,
+-		TargetID:   targetID,
+-		Details:    details,
+-		IPAddress:  ipAddress,
++		UserID:       userID,
++		Action:       action,
++		TargetType:   targetType,
++		TargetID:     targetID,
++		Details:      details,
++		OldValue:     oldValue,
++		NewValue:     newValue,
++		IPAddress:    ipAddress,
++		UserAgent:    userAgent,
++		Success:      success,
++		ErrorMessage: errorMessage,
+ 	}
+ 
+ 	if err := h.db.Create(&log).Error; err != nil {
+diff --git a/internal/handlers/auth.go b/internal/handlers/auth.go
+index ef92a6f..932a70b 100644
+--- a/internal/handlers/auth.go
++++ b/internal/handlers/auth.go
+@@ -424,6 +424,9 @@ func (h *AuthHandler) sendAuthResponseWithRotation(w http.ResponseWriter, user *
+ 		return
+ 	}
+ 
++	var existingSessionCount int64
++	h.db.Model(&models.Session{}).Where("user_id = ? AND user_agent = ? AND expires_at > ?", user.ID, r.UserAgent(), time.Now()).Count(&existingSessionCount)
++
+ 	session := models.Session{
+ 		ID:        sessionID,
+ 		UserID:    user.ID,
+@@ -445,6 +448,19 @@ func (h *AuthHandler) sendAuthResponseWithRotation(w http.ResponseWriter, user *
+ 	}
+ 	h.db.Create(&dbRefreshToken)
+ 
++	if existingSessionCount == 0 && h.emailService != nil && h.emailService.IsEnabled() {
++		go func() {
++			_ = h.emailService.SendNewDeviceLoginEmail(
++				context.Background(),
++				services.EmailRecipient{To: user.Email, Name: user.DisplayName},
++				extractDeviceName(r.UserAgent()),
++				r.RemoteAddr,
++				"Unknown",
++				time.Now().Format("January 2, 2006 at 3:04 PM"),
++			)
++		}()
++	}
++
+ 	response := AuthResponse{
+ 		AccessToken:  accessToken,
+ 		RefreshToken: refreshToken,
+@@ -467,6 +483,39 @@ func (h *AuthHandler) sendAuthResponseWithRotation(w http.ResponseWriter, user *
+ 	}
+ }
+ 
++func extractDeviceName(userAgent string) string {
++	if userAgent == "" {
++		return "Unknown Device"
++	}
++	switch {
++	case contains(userAgent, "Chrome"):
++		return "Chrome Browser"
++	case contains(userAgent, "Firefox"):
++		return "Firefox Browser"
++	case contains(userAgent, "Safari"):
++		return "Safari Browser"
++	case contains(userAgent, "Edge"):
++		return "Edge Browser"
++	case contains(userAgent, "Mobile"):
++		return "Mobile Device"
++	default:
++		return "Unknown Device"
++	}
++}
++
++func contains(s, substr string) bool {
++	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsAt(s, substr))
++}
++
++func containsAt(s, substr string) bool {
++	for i := 0; i <= len(s)-len(substr); i++ {
++		if s[i:i+len(substr)] == substr {
++			return true
++		}
++	}
++	return false
++}
++
+ func (h *AuthHandler) GetMe(w http.ResponseWriter, r *http.Request) {
+ 	userID, ok := r.Context().Value(middleware.UserIDKey).(uuid.UUID)
+ 	if !ok {
+@@ -714,19 +763,43 @@ func (h *AuthHandler) CompletePasswordReset(w http.ResponseWriter, r *http.Reque
+ 		return
+ 	}
+ 
++	var user models.User
++	if err := h.db.First(&user, claims.UserID).Error; err != nil {
++		http.Error(w, "User not found", http.StatusNotFound)
++		return
++	}
++
++	var passwordHistory []models.PasswordHistory
++	h.db.Where("user_id = ?", user.ID).Order("created_at DESC").Limit(5).Find(&passwordHistory)
++	historyHashes := make([]string, len(passwordHistory))
++	for i, ph := range passwordHistory {
++		historyHashes[i] = ph.PasswordHash
++	}
++
++	if err := h.authService.CheckPasswordHistory(req.NewPassword, historyHashes); err != nil {
++		http.Error(w, err.Error(), http.StatusBadRequest)
++		return
++	}
++
++	oldPasswordHash := user.PasswordHash
++
+ 	hashedPassword, err := h.authService.HashPassword(req.NewPassword)
+ 	if err != nil {
+ 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+ 		return
+ 	}
+ 
+-	var user models.User
+-	if err := h.db.First(&user, claims.UserID).Error; err != nil {
+-		http.Error(w, "User not found", http.StatusNotFound)
+-		return
++	if oldPasswordHash != "" {
++		historyEntry := models.PasswordHistory{
++			ID:           uuid.New(),
++			UserID:       user.ID,
++			PasswordHash: oldPasswordHash,
++		}
++		h.db.Create(&historyEntry)
+ 	}
+ 
+ 	h.db.Model(&user).Update("password_hash", hashedPassword)
++	h.db.Model(&user).Update("password_changed_at", time.Now())
+ 	h.db.Model(&resetToken).Update("used", true)
+ 	h.db.Where("user_id = ?", user.ID).Delete(&models.TwoFactorRecovery{})
+ 
+@@ -869,13 +942,45 @@ func (h *AuthHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
+ 		return
+ 	}
+ 
++	var passwordHistory []models.PasswordHistory
++	h.db.Where("user_id = ?", user.ID).Order("created_at DESC").Limit(5).Find(&passwordHistory)
++	historyHashes := make([]string, len(passwordHistory))
++	for i, ph := range passwordHistory {
++		historyHashes[i] = ph.PasswordHash
++	}
++
++	if err := h.authService.CheckPasswordHistory(req.NewPassword, historyHashes); err != nil {
++		http.Error(w, err.Error(), http.StatusBadRequest)
++		return
++	}
++
++	oldPasswordHash := user.PasswordHash
++
+ 	hashedPassword, err := h.authService.HashPassword(req.NewPassword)
+ 	if err != nil {
+ 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+ 		return
+ 	}
+ 
++	if oldPasswordHash != "" {
++		historyEntry := models.PasswordHistory{
++			ID:           uuid.New(),
++			UserID:       user.ID,
++			PasswordHash: oldPasswordHash,
++		}
++		h.db.Create(&historyEntry)
++
++		var count int64
++		h.db.Model(&models.PasswordHistory{}).Where("user_id = ?", user.ID).Count(&count)
++		if count > 5 {
++			h.db.Model(&models.PasswordHistory{}).
++				Where("user_id = ? AND id NOT IN (SELECT id FROM password_history WHERE user_id = ? ORDER BY created_at DESC LIMIT 5)", user.ID, user.ID).
++				Delete(&models.PasswordHistory{})
++		}
++	}
++
+ 	h.db.Model(&user).Update("password_hash", hashedPassword)
++	h.db.Model(&user).Update("password_changed_at", time.Now())
+ 
+ 	h.db.Where("user_id = ?", user.ID).Delete(&models.RefreshToken{})
+ 
+@@ -893,4 +998,78 @@ func (h *AuthHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
+ 	})
+ }
+ 
++func (h *AuthHandler) DeleteAccount(w http.ResponseWriter, r *http.Request) {
++	userID, ok := r.Context().Value(middleware.UserIDKey).(uuid.UUID)
++	if !ok {
++		http.Error(w, "Unauthorized", http.StatusUnauthorized)
++		return
++	}
++
++	var req struct {
++		Password string `json:"password"`
++	}
++	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
++		http.Error(w, "Invalid request body", http.StatusBadRequest)
++		return
++	}
++
++	if req.Password == "" {
++		http.Error(w, "Password is required to delete account", http.StatusBadRequest)
++		return
++	}
++
++	var user models.User
++	if err := h.db.First(&user, userID).Error; err != nil {
++		http.Error(w, "User not found", http.StatusNotFound)
++		return
++	}
++
++	if user.OIDCSubject == "" {
++		if !h.authService.CheckPassword(req.Password, user.PasswordHash) {
++			http.Error(w, "Invalid password", http.StatusUnauthorized)
++			return
++		}
++	}
++
++	tx := h.db.Begin()
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.Session{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete sessions", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.RefreshToken{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete refresh tokens", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.PasswordHistory{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete password history", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.TwoFactorRecovery{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete 2FA recovery", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Delete(&user).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete account", http.StatusInternalServerError)
++		return
++	}
++
++	tx.Commit()
++
++	w.Header().Set("Content-Type", "application/json")
++	json.NewEncoder(w).Encode(map[string]interface{}{
++		"success": true,
++		"message": "Account deleted successfully",
++	})
++}
++
+ var _ = context.Background
+diff --git a/internal/handlers/preferences.go b/internal/handlers/preferences.go
+index 346ab2c..fd33f0e 100644
+--- a/internal/handlers/preferences.go
++++ b/internal/handlers/preferences.go
+@@ -21,17 +21,27 @@ func NewPreferencesHandler(db *database.Database) *PreferencesHandler {
+ }
+ 
+ type UpdatePreferencesRequest struct {
+-	Theme            *string `json:"theme"`
+-	Language         *string `json:"language"`
+-	Timezone         *string `json:"timezone"`
+-	MessagePreview   *bool   `json:"message_preview"`
+-	CompactMode      *bool   `json:"compact_mode"`
+-	ShowOnlineStatus *bool   `json:"show_online_status"`
+-	AnimatedEmoji    *bool   `json:"animated_emoji"`
+-	AutoPlayGifs     *bool   `json:"auto_play_gifs"`
+-	ReducedMotion    *bool   `json:"reduced_motion"`
+-	HighContrastMode *bool   `json:"high_contrast_mode"`
+-	TextSize         *string `json:"text_size"`
++	Theme               *string `json:"theme"`
++	Language            *string `json:"language"`
++	Timezone            *string `json:"timezone"`
++	MessagePreview      *bool   `json:"message_preview"`
++	CompactMode         *bool   `json:"compact_mode"`
++	ShowOnlineStatus    *bool   `json:"show_online_status"`
++	AnimatedEmoji       *bool   `json:"animated_emoji"`
++	AutoPlayGifs        *bool   `json:"auto_play_gifs"`
++	ReducedMotion       *bool   `json:"reduced_motion"`
++	HighContrastMode    *bool   `json:"high_contrast_mode"`
++	TextSize            *string `json:"text_size"`
++	NotificationSound   *string `json:"notification_sound"`
++	DesktopNotification *bool   `json:"desktop_notification"`
++	MobileNotification  *bool   `json:"mobile_notification"`
++	MentionNotification *bool   `json:"mention_notification"`
++	DmNotification      *bool   `json:"dm_notification"`
++	ShowTypingIndicator *bool   `json:"show_typing_indicator"`
++	ShowReadReceipts    *bool   `json:"show_read_receipts"`
++	AutoScrollMessages  *bool   `json:"auto_scroll_messages"`
++	Use24HourFormat     *bool   `json:"use_24_hour_format"`
++	DisplayMode         *string `json:"display_mode"`
+ }
+ 
+ func (h *PreferencesHandler) GetPreferences(w http.ResponseWriter, r *http.Request) {
+@@ -45,18 +55,28 @@ func (h *PreferencesHandler) GetPreferences(w http.ResponseWriter, r *http.Reque
+ 	if err := h.db.Where("user_id = ?", userID).First(&preferences).Error; err != nil {
+ 		if err.Error() == "record not found" {
+ 			preferences = models.UserPreferences{
+-				UserID:           userID,
+-				Theme:            "dark",
+-				Language:         "en",
+-				Timezone:         "UTC",
+-				MessagePreview:   true,
+-				CompactMode:      false,
+-				ShowOnlineStatus: true,
+-				AnimatedEmoji:    true,
+-				AutoPlayGifs:     true,
+-				ReducedMotion:    false,
+-				HighContrastMode: false,
+-				TextSize:         "medium",
++				UserID:              userID,
++				Theme:               "dark",
++				Language:            "en",
++				Timezone:            "UTC",
++				MessagePreview:      true,
++				CompactMode:         false,
++				ShowOnlineStatus:    true,
++				AnimatedEmoji:       true,
++				AutoPlayGifs:        true,
++				ReducedMotion:       false,
++				HighContrastMode:    false,
++				TextSize:            "medium",
++				NotificationSound:   "default",
++				DesktopNotification: true,
++				MobileNotification:  true,
++				MentionNotification: true,
++				DmNotification:      true,
++				ShowTypingIndicator: true,
++				ShowReadReceipts:    true,
++				AutoScrollMessages:  true,
++				Use24HourFormat:     false,
++				DisplayMode:         "card",
+ 			}
+ 			if err := h.db.Create(&preferences).Error; err != nil {
+ 				http.Error(w, "Failed to create preferences", http.StatusInternalServerError)
+diff --git a/internal/models/extended.go b/internal/models/extended.go
+index 9d080bb..7608f93 100644
+--- a/internal/models/extended.go
++++ b/internal/models/extended.go
+@@ -8,23 +8,27 @@ import (
+ )
+ 
+ type Attachment struct {
+-	ID           uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+-	MessageID    uuid.UUID      `gorm:"type:uuid;not null;index" json:"message_id"`
+-	FileID       uuid.UUID      `gorm:"type:uuid;not null" json:"file_id"`
+-	UserID       uuid.UUID      `gorm:"type:uuid;not null" json:"user_id"`
+-	FileName     string         `gorm:"size:255;not null" json:"file_name"`
+-	FileSize     int64          `gorm:"not null" json:"file_size"`
+-	ContentType  string         `gorm:"size:100;not null" json:"content_type"`
+-	ThumbnailURL string         `gorm:"size:500" json:"thumbnail_url"`
+-	Width        int            `json:"width"`
+-	Height       int            `json:"height"`
+-	Duration     int            `json:"duration"`
+-	AltText      string         `gorm:"size:500" json:"alt_text"`
+-	IsVoiceMemo  bool           `gorm:"default:false" json:"is_voice_memo"`
+-	WaveformData string         `gorm:"type:text" json:"waveform_data"`
+-	Metadata     string         `gorm:"type:jsonb" json:"metadata"`
+-	CreatedAt    time.Time      `json:"created_at"`
+-	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
++	ID            uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
++	MessageID     uuid.UUID      `gorm:"type:uuid;not null;index" json:"message_id"`
++	FileID        uuid.UUID      `gorm:"type:uuid;not null" json:"file_id"`
++	UserID        uuid.UUID      `gorm:"type:uuid;not null;index" json:"user_id"`
++	FileName      string         `gorm:"size:255;not null" json:"file_name"`
++	FileSize      int64          `gorm:"not null" json:"file_size"`
++	ContentType   string         `gorm:"size:100;not null" json:"content_type"`
++	ThumbnailURL  string         `gorm:"size:500" json:"thumbnail_url"`
++	Width         int            `json:"width"`
++	Height        int            `json:"height"`
++	Duration      int            `json:"duration"`
++	AltText       string         `gorm:"size:500" json:"alt_text"`
++	IsVoiceMemo   bool           `gorm:"default:false" json:"is_voice_memo"`
++	WaveformData  string         `gorm:"type:text" json:"waveform_data"`
++	Metadata      string         `gorm:"type:jsonb" json:"metadata"`
++	IsShared      bool           `gorm:"default:false" json:"is_shared"`
++	ShareCount    int            `gorm:"default:0" json:"share_count"`
++	DownloadCount int            `gorm:"default:0" json:"download_count"`
++	ViewCount     int            `gorm:"default:0" json:"view_count"`
++	CreatedAt     time.Time      `json:"created_at"`
++	DeletedAt     gorm.DeletedAt `gorm:"index" json:"-"`
+ 
+ 	Message Message `gorm:"foreignKey:MessageID" json:"-"`
+ 	File    File    `gorm:"foreignKey:FileID" json:"-"`
+@@ -155,3 +159,32 @@ func (mam *MessageAttachmentMetadata) BeforeCreate(tx *gorm.DB) error {
+ 	}
+ 	return nil
+ }
++
++type AttachmentShare struct {
++	ID            uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
++	AttachmentID  uuid.UUID      `gorm:"type:uuid;not null;index" json:"attachment_id"`
++	SharedBy      uuid.UUID      `gorm:"type:uuid;not null" json:"shared_by"`
++	ShareURL      string         `gorm:"size:500;uniqueIndex" json:"share_url"`
++	Password      string         `gorm:"size:255" json:"-"`
++	ExpiresAt     *time.Time     `json:"expires_at"`
++	MaxDownloads  int            `gorm:"default:0" json:"max_downloads"`
++	DownloadCount int            `gorm:"default:0" json:"download_count"`
++	ViewCount     int            `gorm:"default:0" json:"view_count"`
++	IsActive      bool           `gorm:"default:true" json:"is_active"`
++	CreatedAt     time.Time      `json:"created_at"`
++	UpdatedAt     time.Time      `json:"updated_at"`
++	DeletedAt     gorm.DeletedAt `gorm:"index" json:"-"`
++
++	Attachment Attachment `gorm:"foreignKey:AttachmentID" json:"-"`
++	User       User       `gorm:"foreignKey:SharedBy" json:"-"`
++}
++
++func (as *AttachmentShare) BeforeCreate(tx *gorm.DB) error {
++	if as.ID == uuid.Nil {
++		as.ID = uuid.New()
++	}
++	if as.CreatedAt.IsZero() {
++		as.CreatedAt = time.Now()
++	}
++	return nil
++}
+diff --git a/internal/models/models.go b/internal/models/models.go
+index 85a9fb6..d472f29 100644
+--- a/internal/models/models.go
++++ b/internal/models/models.go
+@@ -62,12 +62,17 @@ func (r *Room) BeforeCreate(tx *gorm.DB) error {
+ }
+ 
+ type Category struct {
+-	ID        uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+-	Name      string         `gorm:"uniqueIndex;not null;size:100" json:"name"`
+-	SortOrder int            `gorm:"default:0" json:"sort_order"`
+-	CreatedAt time.Time      `json:"created_at"`
+-	UpdatedAt time.Time      `json:"updated_at"`
+-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
++	ID          uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
++	Name        string         `gorm:"uniqueIndex;not null;size:100" json:"name"`
++	Description string         `gorm:"size:500" json:"description"`
++	Icon        string         `gorm:"size:100" json:"icon"`
++	Color       string         `gorm:"size:20" json:"color"`
++	SortOrder   int            `gorm:"default:0" json:"sort_order"`
++	IsPrivate   bool           `gorm:"default:false" json:"is_private"`
++	CreatedBy   uuid.UUID      `gorm:"type:uuid;not null" json:"created_by"`
++	CreatedAt   time.Time      `json:"created_at"`
++	UpdatedAt   time.Time      `json:"updated_at"`
++	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
+ 
+ 	Rooms []Room `gorm:"foreignKey:CategoryID" json:"-"`
+ }
+@@ -667,33 +672,54 @@ func (ca *ChannelActivity) BeforeCreate(tx *gorm.DB) error {
+ type AuditAction string
+ 
+ const (
+-	AuditActionMessageDelete  AuditAction = "message_delete"
+-	AuditActionMessageEdit    AuditAction = "message_edit"
+-	AuditActionUserKick       AuditAction = "user_kick"
+-	AuditActionUserBan        AuditAction = "user_ban"
+-	AuditActionUserUnban      AuditAction = "user_unban"
+-	AuditActionRoleChange     AuditAction = "role_change"
+-	AuditActionRoomCreate     AuditAction = "room_create"
+-	AuditActionRoomDelete     AuditAction = "room_delete"
+-	AuditActionRoomUpdate     AuditAction = "room_update"
+-	AuditActionCategoryCreate AuditAction = "category_create"
+-	AuditActionCategoryDelete AuditAction = "category_delete"
+-	AuditActionInviteCreate   AuditAction = "invite_create"
+-	AuditActionInviteRevoke   AuditAction = "invite_revoke"
+-	AuditActionSettingsChange AuditAction = "settings_change"
+-	AuditActionWebhookCreate  AuditAction = "webhook_create"
+-	AuditActionWebhookDelete  AuditAction = "webhook_delete"
++	AuditActionMessageDelete      AuditAction = "message_delete"
++	AuditActionMessageEdit        AuditAction = "message_edit"
++	AuditActionUserKick           AuditAction = "user_kick"
++	AuditActionUserBan            AuditAction = "user_ban"
++	AuditActionUserUnban          AuditAction = "user_unban"
++	AuditActionRoleChange         AuditAction = "role_change"
++	AuditActionRoomCreate         AuditAction = "room_create"
++	AuditActionRoomDelete         AuditAction = "room_delete"
++	AuditActionRoomUpdate         AuditAction = "room_update"
++	AuditActionCategoryCreate     AuditAction = "category_create"
++	AuditActionCategoryDelete     AuditAction = "category_delete"
++	AuditActionCategoryUpdate     AuditAction = "category_update"
++	AuditActionInviteCreate       AuditAction = "invite_create"
++	AuditActionInviteRevoke       AuditAction = "invite_revoke"
++	AuditActionSettingsChange     AuditAction = "settings_change"
++	AuditActionWebhookCreate      AuditAction = "webhook_create"
++	AuditActionWebhookDelete      AuditAction = "webhook_delete"
++	AuditActionUserLogin          AuditAction = "user_login"
++	AuditActionUserLogout         AuditAction = "user_logout"
++	AuditActionUserRegister       AuditAction = "user_register"
++	AuditActionUserPasswordChange AuditAction = "user_password_change"
++	AuditActionUserEmailChange    AuditAction = "user_email_change"
++	AuditActionFileUpload         AuditAction = "file_upload"
++	AuditActionFileDelete         AuditAction = "file_delete"
++	AuditActionVoiceJoin          AuditAction = "voice_join"
++	AuditActionVoiceLeave         AuditAction = "voice_leave"
++	AuditActionPollCreate         AuditAction = "poll_create"
++	AuditActionPollVote           AuditAction = "poll_vote"
++	AuditActionPollEnd            AuditAction = "poll_end"
++	AuditActionThreadCreate       AuditAction = "thread_create"
++	AuditActionReactionAdd        AuditAction = "reaction_add"
++	AuditActionReactionRemove     AuditAction = "reaction_remove"
+ )
+ 
+ type AuditLog struct {
+-	ID         uuid.UUID   `gorm:"type:uuid;primary_key" json:"id"`
+-	UserID     uuid.UUID   `gorm:"type:uuid;not null;index" json:"user_id"`
+-	Action     AuditAction `gorm:"type:varchar(50);not null;index" json:"action"`
+-	TargetType string      `gorm:"size:50;not null" json:"target_type"`
+-	TargetID   uuid.UUID   `gorm:"type:uuid;not null" json:"target_id"`
+-	Details    string      `gorm:"type:text" json:"details"`
+-	IPAddress  string      `gorm:"size:45" json:"ip_address"`
+-	CreatedAt  time.Time   `json:"created_at"`
++	ID           uuid.UUID   `gorm:"type:uuid;primary_key" json:"id"`
++	UserID       uuid.UUID   `gorm:"type:uuid;not null;index" json:"user_id"`
++	Action       AuditAction `gorm:"type:varchar(50);not null;index" json:"action"`
++	TargetType   string      `gorm:"size:50;not null" json:"target_type"`
++	TargetID     uuid.UUID   `gorm:"type:uuid;not null" json:"target_id"`
++	Details      string      `gorm:"type:text" json:"details"`
++	OldValue     string      `gorm:"type:jsonb" json:"old_value"`
++	NewValue     string      `gorm:"type:jsonb" json:"new_value"`
++	IPAddress    string      `gorm:"size:45" json:"ip_address"`
++	UserAgent    string      `gorm:"size:500" json:"user_agent"`
++	Success      bool        `gorm:"default:true" json:"success"`
++	ErrorMessage string      `gorm:"size:500" json:"error_message"`
++	CreatedAt    time.Time   `json:"created_at"`
+ 
+ 	User User `gorm:"foreignKey:UserID" json:"-"`
+ }
+@@ -806,21 +832,31 @@ func (b *Bookmark) BeforeCreate(tx *gorm.DB) error {
+ }
+ 
+ type UserPreferences struct {
+-	ID               uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+-	UserID           uuid.UUID `gorm:"type:uuid;not null;uniqueIndex" json:"user_id"`
+-	Theme            string    `gorm:"size:20;default:'dark'" json:"theme"`
+-	Language         string    `gorm:"size:10;default:'en'" json:"language"`
+-	Timezone         string    `gorm:"size:50;default:'UTC'" json:"timezone"`
+-	MessagePreview   bool      `gorm:"default:true" json:"message_preview"`
+-	CompactMode      bool      `gorm:"default:false" json:"compact_mode"`
+-	ShowOnlineStatus bool      `gorm:"default:true" json:"show_online_status"`
+-	AnimatedEmoji    bool      `gorm:"default:true" json:"animated_emoji"`
+-	AutoPlayGifs     bool      `gorm:"default:true" json:"auto_play_gifs"`
+-	ReducedMotion    bool      `gorm:"default:false" json:"reduced_motion"`
+-	HighContrastMode bool      `gorm:"default:false" json:"high_contrast_mode"`
+-	TextSize         string    `gorm:"size:10;default:'medium'" json:"text_size"`
+-	CreatedAt        time.Time `json:"created_at"`
+-	UpdatedAt        time.Time `json:"updated_at"`
++	ID                  uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
++	UserID              uuid.UUID `gorm:"type:uuid;not null;uniqueIndex" json:"user_id"`
++	Theme               string    `gorm:"size:20;default:'dark'" json:"theme"`
++	Language            string    `gorm:"size:10;default:'en'" json:"language"`
++	Timezone            string    `gorm:"size:50;default:'UTC'" json:"timezone"`
++	MessagePreview      bool      `gorm:"default:true" json:"message_preview"`
++	CompactMode         bool      `gorm:"default:false" json:"compact_mode"`
++	ShowOnlineStatus    bool      `gorm:"default:true" json:"show_online_status"`
++	AnimatedEmoji       bool      `gorm:"default:true" json:"animated_emoji"`
++	AutoPlayGifs        bool      `gorm:"default:true" json:"auto_play_gifs"`
++	ReducedMotion       bool      `gorm:"default:false" json:"reduced_motion"`
++	HighContrastMode    bool      `gorm:"default:false" json:"high_contrast_mode"`
++	TextSize            string    `gorm:"size:10;default:'medium'" json:"text_size"`
++	NotificationSound   string    `gorm:"size:50;default:'default'" json:"notification_sound"`
++	DesktopNotification bool      `gorm:"default:true" json:"desktop_notification"`
++	MobileNotification  bool      `gorm:"default:true" json:"mobile_notification"`
++	MentionNotification bool      `gorm:"default:true" json:"mention_notification"`
++	DmNotification      bool      `gorm:"default:true" json:"dm_notification"`
++	ShowTypingIndicator bool      `gorm:"default:true" json:"show_typing_indicator"`
++	ShowReadReceipts    bool      `gorm:"default:true" json:"show_read_receipts"`
++	AutoScrollMessages  bool      `gorm:"default:true" json:"auto_scroll_messages"`
++	Use24HourFormat     bool      `gorm:"default:false" json:"use_24_hour_format"`
++	DisplayMode         string    `gorm:"size:20;default:'card'" json:"display_mode"`
++	CreatedAt           time.Time `json:"created_at"`
++	UpdatedAt           time.Time `json:"updated_at"`
+ 
+ 	User User `gorm:"foreignKey:UserID" json:"-"`
+ }
+diff --git a/internal/services/email.go b/internal/services/email.go
+index bbe5926..48475a8 100644
+--- a/internal/services/email.go
++++ b/internal/services/email.go
+@@ -108,6 +108,11 @@ func (es *EmailService) loadDefaultTemplates() {
+ 			HTMLBody: twoFactorHTML,
+ 			TextBody: twoFactorText,
+ 		},
++		"new_device_login": {
++			Subject:  "New Device Login Detected",
++			HTMLBody: newDeviceLoginHTML,
++			TextBody: newDeviceLoginText,
++		},
+ 	}
+ 
+ 	for name, tmpl := range templates {
+@@ -367,6 +372,16 @@ func (es *EmailService) SendTwoFactorCodeEmail(ctx context.Context, to EmailReci
+ 	})
+ }
+ 
++func (es *EmailService) SendNewDeviceLoginEmail(ctx context.Context, to EmailRecipient, device, ip, location, loginTime string) error {
++	return es.SendTemplate(ctx, to, "new_device_login", EmailData{
++		"Name":     to.Name,
++		"Device":   device,
++		"IP":       ip,
++		"Location": location,
++		"Time":     loginTime,
++	})
++}
++
+ func (es *EmailService) IsEnabled() bool {
+ 	return es.enabled
+ }
+@@ -396,6 +411,8 @@ func (es *EmailService) ParseTemplate(name string) (*templateInfo, error) {
+ 		subject = "Your Password Has Been Changed"
+ 	case "two_factor_code":
+ 		subject = "Your Two-Factor Authentication Code"
++	case "new_device_login":
++		subject = "New Device Login Detected"
+ 	}
+ 
+ 	return &templateInfo{t, subject}, nil
+@@ -602,6 +619,55 @@ This code will expire in 5 minutes.
+ 
+ If you didn't request this code, please ignore this email.`
+ 
++var newDeviceLoginHTML = `<!DOCTYPE html>
++<html>
++<head>
++    <meta charset="utf-8">
++    <title>New Device Login</title>
++</head>
++<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
++    <h2>New Device Login</h2>
++    
++    <p>Hi {{.Name}},</p>
++    
++    <p>We detected a new login to your Enclavr account.</p>
++    
++    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 6px; margin: 20px 0;">
++        <p style="margin: 5px 0;"><strong>Device:</strong> {{.Device}}</p>
++        <p style="margin: 5px 0;"><strong>IP Address:</strong> {{.IP}}</p>
++        <p style="margin: 5px 0;"><strong>Location:</strong> {{.Location}}</p>
++        <p style="margin: 5px 0;"><strong>Time:</strong> {{.Time}}</p>
++    </div>
++    
++    <p>If this was you, you can ignore this email.</p>
++    
++    <p>If you didn't log in, please:</p>
++    <ul>
++        <li>Change your password immediately</li>
++        <li>Enable two-factor authentication</li>
++        <li>Review your account settings</li>
++    </ul>
++</body>
++</html>`
++
++var newDeviceLoginText = `New Device Login
++
++Hi {{.Name}},
++
++We detected a new login to your Enclavr account.
++
++Device: {{.Device}}
++IP Address: {{.IP}}
++Location: {{.Location}}
++Time: {{.Time}}
++
++If this was you, you can ignore this email.
++
++If you didn't log in, please:
++- Change your password immediately
++- Enable two-factor authentication
++- Review your account settings`
++
+ func nowFormat(format string) string {
+ 	return time.Now().Format(format)
+ }
+diff --git a/internal/services/oauth.go b/internal/services/oauth.go
+index f94980f..f2dd49d 100644
+--- a/internal/services/oauth.go
++++ b/internal/services/oauth.go
+@@ -21,8 +21,9 @@ import (
+ type OAuthProvider string
+ 
+ const (
+-	ProviderGoogle OAuthProvider = "google"
+-	ProviderGitHub OAuthProvider = "github"
++	ProviderGoogle  OAuthProvider = "google"
++	ProviderGitHub  OAuthProvider = "github"
++	ProviderDiscord OAuthProvider = "discord"
+ )
+ 
+ type OAuthUserInfo struct {
+@@ -33,10 +34,16 @@ type OAuthUserInfo struct {
+ 	AvatarURL string
+ }
+ 
++var discordEndpoint = oauth2.Endpoint{
++	AuthURL:  "https://discord.com/api/oauth2/authorize",
++	TokenURL: "https://discord.com/api/oauth2/token",
++}
++
+ type OAuthService struct {
+-	googleConfig *oauth2.Config
+-	githubConfig *oauth2.Config
+-	enabled      bool
++	googleConfig  *oauth2.Config
++	githubConfig  *oauth2.Config
++	discordConfig *oauth2.Config
++	enabled       bool
+ }
+ 
+ func NewOAuthService(cfg *config.AuthConfig) *OAuthService {
+@@ -62,6 +69,15 @@ func NewOAuthService(cfg *config.AuthConfig) *OAuthService {
+ 				Endpoint:     github.Endpoint,
+ 			}
+ 		}
++
++		if cfg.DiscordClientID != "" && cfg.DiscordClientSecret != "" {
++			s.discordConfig = &oauth2.Config{
++				ClientID:     cfg.DiscordClientID,
++				ClientSecret: cfg.DiscordClientSecret,
++				Scopes:       []string{"identify", "email"},
++				Endpoint:     discordEndpoint,
++			}
++		}
+ 	}
+ 
+ 	return s
+@@ -80,6 +96,8 @@ func (s *OAuthService) IsProviderEnabled(provider OAuthProvider) bool {
+ 		return s.googleConfig != nil
+ 	case ProviderGitHub:
+ 		return s.githubConfig != nil
++	case ProviderDiscord:
++		return s.discordConfig != nil
+ 	}
+ 	return false
+ }
+@@ -91,6 +109,8 @@ func (s *OAuthService) GetAuthURL(provider OAuthProvider, state string, redirect
+ 		config = s.googleConfig
+ 	case ProviderGitHub:
+ 		config = s.githubConfig
++	case ProviderDiscord:
++		config = s.discordConfig
+ 	default:
+ 		return "", fmt.Errorf("unsupported provider: %s", provider)
+ 	}
+@@ -109,6 +129,8 @@ func (s *OAuthService) ExchangeCode(ctx context.Context, provider OAuthProvider,
+ 		config = s.googleConfig
+ 	case ProviderGitHub:
+ 		config = s.githubConfig
++	case ProviderDiscord:
++		config = s.discordConfig
+ 	default:
+ 		return nil, fmt.Errorf("unsupported provider: %s", provider)
+ 	}
+@@ -131,6 +153,8 @@ func (s *OAuthService) GetUserInfo(ctx context.Context, provider OAuthProvider,
+ 		return s.getGoogleUserInfo(ctx, token)
+ 	case ProviderGitHub:
+ 		return s.getGitHubUserInfo(ctx, token)
++	case ProviderDiscord:
++		return s.getDiscordUserInfo(ctx, token)
+ 	default:
+ 		return nil, fmt.Errorf("unsupported provider: %s", provider)
+ 	}
+@@ -257,6 +281,55 @@ func (s *OAuthService) getGitHubPrimaryEmail(ctx context.Context, token *oauth2.
+ 	return "", nil
+ }
+ 
++func (s *OAuthService) getDiscordUserInfo(ctx context.Context, token *oauth2.Token) (*OAuthUserInfo, error) {
++	client := s.discordConfig.Client(ctx, token)
++
++	resp, err := client.Get("https://discord.com/api/users/@me")
++	if err != nil {
++		return nil, fmt.Errorf("failed to get user info: %w", err)
++	}
++	defer resp.Body.Close()
++
++	if resp.StatusCode != http.StatusOK {
++		return nil, fmt.Errorf("discord userinfo returned status %d", resp.StatusCode)
++	}
++
++	var data struct {
++		ID         string `json:"id"`
++		Username   string `json:"username"`
++		GlobalName string `json:"global_name"`
++		Avatar     string `json:"avatar"`
++		Email      string `json:"email"`
++		Verified   bool   `json:"verified"`
++	}
++
++	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
++		return nil, fmt.Errorf("failed to decode user info: %w", err)
++	}
++
++	if data.Email == "" || !data.Verified {
++		return nil, fmt.Errorf("email not verified")
++	}
++
++	avatarURL := ""
++	if data.Avatar != "" {
++		avatarURL = fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.png", data.ID, data.Avatar)
++	}
++
++	name := data.GlobalName
++	if name == "" {
++		name = data.Username
++	}
++
++	return &OAuthUserInfo{
++		Provider:  ProviderDiscord,
++		Subject:   data.ID,
++		Email:     data.Email,
++		Name:      name,
++		AvatarURL: avatarURL,
++	}, nil
++}
++
+ func (s *OAuthService) FindOrCreateUser(db *gorm.DB, userInfo *OAuthUserInfo) (*models.User, error) {
+ 	var user models.User
+ 
+diff --git a/pkg/middleware/endpoint_ratelimit.go b/pkg/middleware/endpoint_ratelimit.go
+index bfc1033..d0fe237 100644
+--- a/pkg/middleware/endpoint_ratelimit.go
++++ b/pkg/middleware/endpoint_ratelimit.go
+@@ -243,10 +243,15 @@ func (b *EndpointRateLimiterBuilder) Build() *EndpointRateLimiter {
+ }
+ 
+ var DefaultEndpointRateLimiter = NewEndpointRateLimiterBuilder().
+-	AddEndpoint("/api/auth/login", 5, time.Minute).
+-	AddEndpoint("/api/auth/register", 3, time.Minute).
+-	AddEndpoint("/api/auth/reset-password", 3, time.Minute).
+-	AddEndpoint("/api/messages", 60, time.Minute).
+-	AddEndpoint("/api/rooms", 30, time.Minute).
+-	AddEndpoint("/api/webhooks", 20, time.Minute).
++	AddEndpoint("/api/v1/auth/login", 5, time.Minute).
++	AddEndpoint("/api/v1/auth/register", 3, time.Minute).
++	AddEndpoint("/api/v1/auth/reset-password", 3, time.Minute).
++	AddEndpoint("/api/v1/auth/oauth/callback", 10, time.Minute).
++	AddEndpoint("/api/v1/auth/2fa/setup", 3, time.Hour).
++	AddEndpoint("/api/v1/auth/2fa/disable", 3, time.Hour).
++	AddEndpoint("/api/v1/auth/account/delete", 3, time.Hour).
++	AddEndpoint("/api/v1/auth/password/change", 5, time.Hour).
++	AddEndpoint("/api/v1/messages", 60, time.Minute).
++	AddEndpoint("/api/v1/rooms", 30, time.Minute).
++	AddEndpoint("/api/v1/webhooks", 20, time.Minute).
+ 	Build()
+[0m
+[0m$ [0mcd server && git diff
+diff --git a/internal/config/config.go b/internal/config/config.go
+index f6acfa8..f27de44 100644
+--- a/internal/config/config.go
++++ b/internal/config/config.go
+@@ -46,18 +46,20 @@ type DatabaseConfig struct {
+ }
+ 
+ type AuthConfig struct {
+-	JWTSecret          string
+-	JWTExpiration      time.Duration
+-	RefreshExpiration  time.Duration
+-	OIDCEnabled        bool
+-	OIDCIssuerURL      string
+-	OIDCClientID       string
+-	OIDCClientSecret   string
+-	OAuthEnabled       bool
+-	GoogleClientID     string
+-	GoogleClientSecret string
+-	GitHubClientID     string
+-	GitHubClientSecret string
++	JWTSecret           string
++	JWTExpiration       time.Duration
++	RefreshExpiration   time.Duration
++	OIDCEnabled         bool
++	OIDCIssuerURL       string
++	OIDCClientID        string
++	OIDCClientSecret    string
++	OAuthEnabled        bool
++	GoogleClientID      string
++	GoogleClientSecret  string
++	GitHubClientID      string
++	GitHubClientSecret  string
++	DiscordClientID     string
++	DiscordClientSecret string
+ }
+ 
+ type EmailConfig struct {
+@@ -124,18 +126,20 @@ func Load() *Config {
+ 			SSLMode:  getEnv("DB_SSLMODE", "disable"),
+ 		},
+ 		Auth: AuthConfig{
+-			JWTSecret:          getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
+-			JWTExpiration:      getDurationEnv("JWT_EXPIRATION", 24*time.Hour),
+-			RefreshExpiration:  getDurationEnv("REFRESH_EXPIRATION", 7*24*time.Hour),
+-			OIDCEnabled:        getEnvBool("OIDC_ENABLED", false),
+-			OIDCIssuerURL:      getEnv("OIDC_ISSUER_URL", ""),
+-			OIDCClientID:       getEnv("OIDC_CLIENT_ID", ""),
+-			OIDCClientSecret:   getEnv("OIDC_CLIENT_SECRET", ""),
+-			OAuthEnabled:       getEnvBool("OAUTH_ENABLED", false),
+-			GoogleClientID:     getEnv("GOOGLE_CLIENT_ID", ""),
+-			GoogleClientSecret: getEnv("GOOGLE_CLIENT_SECRET", ""),
+-			GitHubClientID:     getEnv("GITHUB_CLIENT_ID", ""),
+-			GitHubClientSecret: getEnv("GITHUB_CLIENT_SECRET", ""),
++			JWTSecret:           getEnv("JWT_SECRET", "your-secret-key-change-in-production"),
++			JWTExpiration:       getDurationEnv("JWT_EXPIRATION", 24*time.Hour),
++			RefreshExpiration:   getDurationEnv("REFRESH_EXPIRATION", 7*24*time.Hour),
++			OIDCEnabled:         getEnvBool("OIDC_ENABLED", false),
++			OIDCIssuerURL:       getEnv("OIDC_ISSUER_URL", ""),
++			OIDCClientID:        getEnv("OIDC_CLIENT_ID", ""),
++			OIDCClientSecret:    getEnv("OIDC_CLIENT_SECRET", ""),
++			OAuthEnabled:        getEnvBool("OAUTH_ENABLED", false),
++			GoogleClientID:      getEnv("GOOGLE_CLIENT_ID", ""),
++			GoogleClientSecret:  getEnv("GOOGLE_CLIENT_SECRET", ""),
++			GitHubClientID:      getEnv("GITHUB_CLIENT_ID", ""),
++			GitHubClientSecret:  getEnv("GITHUB_CLIENT_SECRET", ""),
++			DiscordClientID:     getEnv("DISCORD_CLIENT_ID", ""),
++			DiscordClientSecret: getEnv("DISCORD_CLIENT_SECRET", ""),
+ 		},
+ 		Email: EmailConfig{
+ 			SMTPHost:     getEnv("SMTP_HOST", ""),
+diff --git a/internal/database/database.go b/internal/database/database.go
+index d8353e4..9f90a28 100644
+--- a/internal/database/database.go
++++ b/internal/database/database.go
+@@ -100,6 +100,8 @@ func (d *Database) Migrate() error {
+ 		&models.RolePermission{},
+ 		&models.UserRole{},
+ 		&models.UserNotification{},
++		&models.MessageAttachmentMetadata{},
++		&models.AttachmentShare{},
+ 	)
+ 	if err != nil {
+ 		return err
+@@ -198,6 +200,16 @@ func (d *Database) Migrate() error {
+ 	d.Exec("CREATE INDEX IF NOT EXISTS idx_scheduled_messages_room_scheduled ON scheduled_messages(room_id, scheduled_at ASC) WHERE is_sent = false AND is_cancelled = false")
+ 	d.Exec("CREATE INDEX IF NOT EXISTS idx_message_reminders_user_triggered ON message_reminders(user_id, remind_at ASC) WHERE is_triggered = false")
+ 
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_presence_status ON presences(status, last_seen DESC)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_categories_sort_order ON categories(sort_order)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_oauth_accounts_user_provider ON oauth_accounts(user_id, provider)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_user_rooms_by_role ON user_rooms(room_id, role)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_messages_search ON messages USING gin(to_tsvector('english', content))")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_password_resets_token ON password_resets(token) WHERE used = false")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_email_verifications_token ON email_verifications(token) WHERE used = false")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_attachment_share_url ON attachment_shares(share_url)")
++	d.Exec("CREATE INDEX IF NOT EXISTS idx_attachment_share_attachment ON attachment_shares(attachment_id)")
++
+ 	log.Println("Database migration completed")
+ 	return nil
+ }
+diff --git a/internal/handlers/auditlog.go b/internal/handlers/auditlog.go
+index bed67d6..b321485 100644
+--- a/internal/handlers/auditlog.go
++++ b/internal/handlers/auditlog.go
+@@ -22,15 +22,20 @@ func NewAuditHandler(db *database.Database) *AuditHandler {
+ }
+ 
+ type AuditLogResponse struct {
+-	ID         uuid.UUID          `json:"id"`
+-	UserID     uuid.UUID          `json:"user_id"`
+-	Username   string             `json:"username"`
+-	Action     models.AuditAction `json:"action"`
+-	TargetType string             `json:"target_type"`
+-	TargetID   uuid.UUID          `json:"target_id"`
+-	Details    string             `json:"details"`
+-	IPAddress  string             `json:"ip_address"`
+-	CreatedAt  time.Time          `json:"created_at"`
++	ID           uuid.UUID          `json:"id"`
++	UserID       uuid.UUID          `json:"user_id"`
++	Username     string             `json:"username"`
++	Action       models.AuditAction `json:"action"`
++	TargetType   string             `json:"target_type"`
++	TargetID     uuid.UUID          `json:"target_id"`
++	Details      string             `json:"details"`
++	OldValue     string             `json:"old_value"`
++	NewValue     string             `json:"new_value"`
++	IPAddress    string             `json:"ip_address"`
++	UserAgent    string             `json:"user_agent"`
++	Success      bool               `json:"success"`
++	ErrorMessage string             `json:"error_message"`
++	CreatedAt    time.Time          `json:"created_at"`
+ }
+ 
+ type AuditLogListResponse struct {
+@@ -115,15 +120,20 @@ func (h *AuditHandler) GetAuditLogs(w http.ResponseWriter, r *http.Request) {
+ 
+ 	for i, log := range logs {
+ 		logResponses[i] = AuditLogResponse{
+-			ID:         log.ID,
+-			UserID:     log.UserID,
+-			Username:   userIDToUsername[log.UserID],
+-			Action:     log.Action,
+-			TargetType: log.TargetType,
+-			TargetID:   log.TargetID,
+-			Details:    log.Details,
+-			IPAddress:  log.IPAddress,
+-			CreatedAt:  log.CreatedAt,
++			ID:           log.ID,
++			UserID:       log.UserID,
++			Username:     userIDToUsername[log.UserID],
++			Action:       log.Action,
++			TargetType:   log.TargetType,
++			TargetID:     log.TargetID,
++			Details:      log.Details,
++			OldValue:     log.OldValue,
++			NewValue:     log.NewValue,
++			IPAddress:    log.IPAddress,
++			UserAgent:    log.UserAgent,
++			Success:      log.Success,
++			ErrorMessage: log.ErrorMessage,
++			CreatedAt:    log.CreatedAt,
+ 		}
+ 	}
+ 
+@@ -148,13 +158,22 @@ func (h *AuditHandler) GetAuditLogs(w http.ResponseWriter, r *http.Request) {
+ }
+ 
+ func (h *AuditHandler) LogAction(userID uuid.UUID, action models.AuditAction, targetType string, targetID uuid.UUID, details string, ipAddress string) {
++	h.LogActionWithDetails(userID, action, targetType, targetID, details, "", "", ipAddress, "", true, "")
++}
++
++func (h *AuditHandler) LogActionWithDetails(userID uuid.UUID, action models.AuditAction, targetType string, targetID uuid.UUID, details string, oldValue string, newValue string, ipAddress string, userAgent string, success bool, errorMessage string) {
+ 	log := models.AuditLog{
+-		UserID:     userID,
+-		Action:     action,
+-		TargetType: targetType,
+-		TargetID:   targetID,
+-		Details:    details,
+-		IPAddress:  ipAddress,
++		UserID:       userID,
++		Action:       action,
++		TargetType:   targetType,
++		TargetID:     targetID,
++		Details:      details,
++		OldValue:     oldValue,
++		NewValue:     newValue,
++		IPAddress:    ipAddress,
++		UserAgent:    userAgent,
++		Success:      success,
++		ErrorMessage: errorMessage,
+ 	}
+ 
+ 	if err := h.db.Create(&log).Error; err != nil {
+diff --git a/internal/handlers/auth.go b/internal/handlers/auth.go
+index ef92a6f..932a70b 100644
+--- a/internal/handlers/auth.go
++++ b/internal/handlers/auth.go
+@@ -424,6 +424,9 @@ func (h *AuthHandler) sendAuthResponseWithRotation(w http.ResponseWriter, user *
+ 		return
+ 	}
+ 
++	var existingSessionCount int64
++	h.db.Model(&models.Session{}).Where("user_id = ? AND user_agent = ? AND expires_at > ?", user.ID, r.UserAgent(), time.Now()).Count(&existingSessionCount)
++
+ 	session := models.Session{
+ 		ID:        sessionID,
+ 		UserID:    user.ID,
+@@ -445,6 +448,19 @@ func (h *AuthHandler) sendAuthResponseWithRotation(w http.ResponseWriter, user *
+ 	}
+ 	h.db.Create(&dbRefreshToken)
+ 
++	if existingSessionCount == 0 && h.emailService != nil && h.emailService.IsEnabled() {
++		go func() {
++			_ = h.emailService.SendNewDeviceLoginEmail(
++				context.Background(),
++				services.EmailRecipient{To: user.Email, Name: user.DisplayName},
++				extractDeviceName(r.UserAgent()),
++				r.RemoteAddr,
++				"Unknown",
++				time.Now().Format("January 2, 2006 at 3:04 PM"),
++			)
++		}()
++	}
++
+ 	response := AuthResponse{
+ 		AccessToken:  accessToken,
+ 		RefreshToken: refreshToken,
+@@ -467,6 +483,39 @@ func (h *AuthHandler) sendAuthResponseWithRotation(w http.ResponseWriter, user *
+ 	}
+ }
+ 
++func extractDeviceName(userAgent string) string {
++	if userAgent == "" {
++		return "Unknown Device"
++	}
++	switch {
++	case contains(userAgent, "Chrome"):
++		return "Chrome Browser"
++	case contains(userAgent, "Firefox"):
++		return "Firefox Browser"
++	case contains(userAgent, "Safari"):
++		return "Safari Browser"
++	case contains(userAgent, "Edge"):
++		return "Edge Browser"
++	case contains(userAgent, "Mobile"):
++		return "Mobile Device"
++	default:
++		return "Unknown Device"
++	}
++}
++
++func contains(s, substr string) bool {
++	return len(s) >= len(substr) && (s == substr || len(s) > 0 && containsAt(s, substr))
++}
++
++func containsAt(s, substr string) bool {
++	for i := 0; i <= len(s)-len(substr); i++ {
++		if s[i:i+len(substr)] == substr {
++			return true
++		}
++	}
++	return false
++}
++
+ func (h *AuthHandler) GetMe(w http.ResponseWriter, r *http.Request) {
+ 	userID, ok := r.Context().Value(middleware.UserIDKey).(uuid.UUID)
+ 	if !ok {
+@@ -714,19 +763,43 @@ func (h *AuthHandler) CompletePasswordReset(w http.ResponseWriter, r *http.Reque
+ 		return
+ 	}
+ 
++	var user models.User
++	if err := h.db.First(&user, claims.UserID).Error; err != nil {
++		http.Error(w, "User not found", http.StatusNotFound)
++		return
++	}
++
++	var passwordHistory []models.PasswordHistory
++	h.db.Where("user_id = ?", user.ID).Order("created_at DESC").Limit(5).Find(&passwordHistory)
++	historyHashes := make([]string, len(passwordHistory))
++	for i, ph := range passwordHistory {
++		historyHashes[i] = ph.PasswordHash
++	}
++
++	if err := h.authService.CheckPasswordHistory(req.NewPassword, historyHashes); err != nil {
++		http.Error(w, err.Error(), http.StatusBadRequest)
++		return
++	}
++
++	oldPasswordHash := user.PasswordHash
++
+ 	hashedPassword, err := h.authService.HashPassword(req.NewPassword)
+ 	if err != nil {
+ 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+ 		return
+ 	}
+ 
+-	var user models.User
+-	if err := h.db.First(&user, claims.UserID).Error; err != nil {
+-		http.Error(w, "User not found", http.StatusNotFound)
+-		return
++	if oldPasswordHash != "" {
++		historyEntry := models.PasswordHistory{
++			ID:           uuid.New(),
++			UserID:       user.ID,
++			PasswordHash: oldPasswordHash,
++		}
++		h.db.Create(&historyEntry)
+ 	}
+ 
+ 	h.db.Model(&user).Update("password_hash", hashedPassword)
++	h.db.Model(&user).Update("password_changed_at", time.Now())
+ 	h.db.Model(&resetToken).Update("used", true)
+ 	h.db.Where("user_id = ?", user.ID).Delete(&models.TwoFactorRecovery{})
+ 
+@@ -869,13 +942,45 @@ func (h *AuthHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
+ 		return
+ 	}
+ 
++	var passwordHistory []models.PasswordHistory
++	h.db.Where("user_id = ?", user.ID).Order("created_at DESC").Limit(5).Find(&passwordHistory)
++	historyHashes := make([]string, len(passwordHistory))
++	for i, ph := range passwordHistory {
++		historyHashes[i] = ph.PasswordHash
++	}
++
++	if err := h.authService.CheckPasswordHistory(req.NewPassword, historyHashes); err != nil {
++		http.Error(w, err.Error(), http.StatusBadRequest)
++		return
++	}
++
++	oldPasswordHash := user.PasswordHash
++
+ 	hashedPassword, err := h.authService.HashPassword(req.NewPassword)
+ 	if err != nil {
+ 		http.Error(w, "Failed to hash password", http.StatusInternalServerError)
+ 		return
+ 	}
+ 
++	if oldPasswordHash != "" {
++		historyEntry := models.PasswordHistory{
++			ID:           uuid.New(),
++			UserID:       user.ID,
++			PasswordHash: oldPasswordHash,
++		}
++		h.db.Create(&historyEntry)
++
++		var count int64
++		h.db.Model(&models.PasswordHistory{}).Where("user_id = ?", user.ID).Count(&count)
++		if count > 5 {
++			h.db.Model(&models.PasswordHistory{}).
++				Where("user_id = ? AND id NOT IN (SELECT id FROM password_history WHERE user_id = ? ORDER BY created_at DESC LIMIT 5)", user.ID, user.ID).
++				Delete(&models.PasswordHistory{})
++		}
++	}
++
+ 	h.db.Model(&user).Update("password_hash", hashedPassword)
++	h.db.Model(&user).Update("password_changed_at", time.Now())
+ 
+ 	h.db.Where("user_id = ?", user.ID).Delete(&models.RefreshToken{})
+ 
+@@ -893,4 +998,78 @@ func (h *AuthHandler) ChangePassword(w http.ResponseWriter, r *http.Request) {
+ 	})
+ }
+ 
++func (h *AuthHandler) DeleteAccount(w http.ResponseWriter, r *http.Request) {
++	userID, ok := r.Context().Value(middleware.UserIDKey).(uuid.UUID)
++	if !ok {
++		http.Error(w, "Unauthorized", http.StatusUnauthorized)
++		return
++	}
++
++	var req struct {
++		Password string `json:"password"`
++	}
++	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
++		http.Error(w, "Invalid request body", http.StatusBadRequest)
++		return
++	}
++
++	if req.Password == "" {
++		http.Error(w, "Password is required to delete account", http.StatusBadRequest)
++		return
++	}
++
++	var user models.User
++	if err := h.db.First(&user, userID).Error; err != nil {
++		http.Error(w, "User not found", http.StatusNotFound)
++		return
++	}
++
++	if user.OIDCSubject == "" {
++		if !h.authService.CheckPassword(req.Password, user.PasswordHash) {
++			http.Error(w, "Invalid password", http.StatusUnauthorized)
++			return
++		}
++	}
++
++	tx := h.db.Begin()
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.Session{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete sessions", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.RefreshToken{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete refresh tokens", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.PasswordHistory{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete password history", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Where("user_id = ?", userID).Delete(&models.TwoFactorRecovery{}).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete 2FA recovery", http.StatusInternalServerError)
++		return
++	}
++
++	if err := tx.Delete(&user).Error; err != nil {
++		tx.Rollback()
++		http.Error(w, "Failed to delete account", http.StatusInternalServerError)
++		return
++	}
++
++	tx.Commit()
++
++	w.Header().Set("Content-Type", "application/json")
++	json.NewEncoder(w).Encode(map[string]interface{}{
++		"success": true,
++		"message": "Account deleted successfully",
++	})
++}
++
+ var _ = context.Background
+diff --git a/internal/handlers/preferences.go b/internal/handlers/preferences.go
+index 346ab2c..fd33f0e 100644
+--- a/internal/handlers/preferences.go
++++ b/internal/handlers/preferences.go
+@@ -21,17 +21,27 @@ func NewPreferencesHandler(db *database.Database) *PreferencesHandler {
+ }
+ 
+ type UpdatePreferencesRequest struct {
+-	Theme            *string `json:"theme"`
+-	Language         *string `json:"language"`
+-	Timezone         *string `json:"timezone"`
+-	MessagePreview   *bool   `json:"message_preview"`
+-	CompactMode      *bool   `json:"compact_mode"`
+-	ShowOnlineStatus *bool   `json:"show_online_status"`
+-	AnimatedEmoji    *bool   `json:"animated_emoji"`
+-	AutoPlayGifs     *bool   `json:"auto_play_gifs"`
+-	ReducedMotion    *bool   `json:"reduced_motion"`
+-	HighContrastMode *bool   `json:"high_contrast_mode"`
+-	TextSize         *string `json:"text_size"`
++	Theme               *string `json:"theme"`
++	Language            *string `json:"language"`
++	Timezone            *string `json:"timezone"`
++	MessagePreview      *bool   `json:"message_preview"`
++	CompactMode         *bool   `json:"compact_mode"`
++	ShowOnlineStatus    *bool   `json:"show_online_status"`
++	AnimatedEmoji       *bool   `json:"animated_emoji"`
++	AutoPlayGifs        *bool   `json:"auto_play_gifs"`
++	ReducedMotion       *bool   `json:"reduced_motion"`
++	HighContrastMode    *bool   `json:"high_contrast_mode"`
++	TextSize            *string `json:"text_size"`
++	NotificationSound   *string `json:"notification_sound"`
++	DesktopNotification *bool   `json:"desktop_notification"`
++	MobileNotification  *bool   `json:"mobile_notification"`
++	MentionNotification *bool   `json:"mention_notification"`
++	DmNotification      *bool   `json:"dm_notification"`
++	ShowTypingIndicator *bool   `json:"show_typing_indicator"`
++	ShowReadReceipts    *bool   `json:"show_read_receipts"`
++	AutoScrollMessages  *bool   `json:"auto_scroll_messages"`
++	Use24HourFormat     *bool   `json:"use_24_hour_format"`
++	DisplayMode         *string `json:"display_mode"`
+ }
+ 
+ func (h *PreferencesHandler) GetPreferences(w http.ResponseWriter, r *http.Request) {
+@@ -45,18 +55,28 @@ func (h *PreferencesHandler) GetPreferences(w http.ResponseWriter, r *http.Reque
+ 	if err := h.db.Where("user_id = ?", userID).First(&preferences).Error; err != nil {
+ 		if err.Error() == "record not found" {
+ 			preferences = models.UserPreferences{
+-				UserID:           userID,
+-				Theme:            "dark",
+-				Language:         "en",
+-				Timezone:         "UTC",
+-				MessagePreview:   true,
+-				CompactMode:      false,
+-				ShowOnlineStatus: true,
+-				AnimatedEmoji:    true,
+-				AutoPlayGifs:     true,
+-				ReducedMotion:    false,
+-				HighContrastMode: false,
+-				TextSize:         "medium",
++				UserID:              userID,
++				Theme:               "dark",
++				Language:            "en",
++				Timezone:            "UTC",
++				MessagePreview:      true,
++				CompactMode:         false,
++				ShowOnlineStatus:    true,
++				AnimatedEmoji:       true,
++				AutoPlayGifs:        true,
++				ReducedMotion:       false,
++				HighContrastMode:    false,
++				TextSize:            "medium",
++				NotificationSound:   "default",
++				DesktopNotification: true,
++				MobileNotification:  true,
++				MentionNotification: true,
++				DmNotification:      true,
++				ShowTypingIndicator: true,
++				ShowReadReceipts:    true,
++				AutoScrollMessages:  true,
++				Use24HourFormat:     false,
++				DisplayMode:         "card",
+ 			}
+ 			if err := h.db.Create(&preferences).Error; err != nil {
+ 				http.Error(w, "Failed to create preferences", http.StatusInternalServerError)
+diff --git a/internal/models/extended.go b/internal/models/extended.go
+index 9d080bb..7608f93 100644
+--- a/internal/models/extended.go
++++ b/internal/models/extended.go
+@@ -8,23 +8,27 @@ import (
+ )
+ 
+ type Attachment struct {
+-	ID           uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+-	MessageID    uuid.UUID      `gorm:"type:uuid;not null;index" json:"message_id"`
+-	FileID       uuid.UUID      `gorm:"type:uuid;not null" json:"file_id"`
+-	UserID       uuid.UUID      `gorm:"type:uuid;not null" json:"user_id"`
+-	FileName     string         `gorm:"size:255;not null" json:"file_name"`
+-	FileSize     int64          `gorm:"not null" json:"file_size"`
+-	ContentType  string         `gorm:"size:100;not null" json:"content_type"`
+-	ThumbnailURL string         `gorm:"size:500" json:"thumbnail_url"`
+-	Width        int            `json:"width"`
+-	Height       int            `json:"height"`
+-	Duration     int            `json:"duration"`
+-	AltText      string         `gorm:"size:500" json:"alt_text"`
+-	IsVoiceMemo  bool           `gorm:"default:false" json:"is_voice_memo"`
+-	WaveformData string         `gorm:"type:text" json:"waveform_data"`
+-	Metadata     string         `gorm:"type:jsonb" json:"metadata"`
+-	CreatedAt    time.Time      `json:"created_at"`
+-	DeletedAt    gorm.DeletedAt `gorm:"index" json:"-"`
++	ID            uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
++	MessageID     uuid.UUID      `gorm:"type:uuid;not null;index" json:"message_id"`
++	FileID        uuid.UUID      `gorm:"type:uuid;not null" json:"file_id"`
++	UserID        uuid.UUID      `gorm:"type:uuid;not null;index" json:"user_id"`
++	FileName      string         `gorm:"size:255;not null" json:"file_name"`
++	FileSize      int64          `gorm:"not null" json:"file_size"`
++	ContentType   string         `gorm:"size:100;not null" json:"content_type"`
++	ThumbnailURL  string         `gorm:"size:500" json:"thumbnail_url"`
++	Width         int            `json:"width"`
++	Height        int            `json:"height"`
++	Duration      int            `json:"duration"`
++	AltText       string         `gorm:"size:500" json:"alt_text"`
++	IsVoiceMemo   bool           `gorm:"default:false" json:"is_voice_memo"`
++	WaveformData  string         `gorm:"type:text" json:"waveform_data"`
++	Metadata      string         `gorm:"type:jsonb" json:"metadata"`
++	IsShared      bool           `gorm:"default:false" json:"is_shared"`
++	ShareCount    int            `gorm:"default:0" json:"share_count"`
++	DownloadCount int            `gorm:"default:0" json:"download_count"`
++	ViewCount     int            `gorm:"default:0" json:"view_count"`
++	CreatedAt     time.Time      `json:"created_at"`
++	DeletedAt     gorm.DeletedAt `gorm:"index" json:"-"`
+ 
+ 	Message Message `gorm:"foreignKey:MessageID" json:"-"`
+ 	File    File    `gorm:"foreignKey:FileID" json:"-"`
+@@ -155,3 +159,32 @@ func (mam *MessageAttachmentMetadata) BeforeCreate(tx *gorm.DB) error {
+ 	}
+ 	return nil
+ }
++
++type AttachmentShare struct {
++	ID            uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
++	AttachmentID  uuid.UUID      `gorm:"type:uuid;not null;index" json:"attachment_id"`
++	SharedBy      uuid.UUID      `gorm:"type:uuid;not null" json:"shared_by"`
++	ShareURL      string         `gorm:"size:500;uniqueIndex" json:"share_url"`
++	Password      string         `gorm:"size:255" json:"-"`
++	ExpiresAt     *time.Time     `json:"expires_at"`
++	MaxDownloads  int            `gorm:"default:0" json:"max_downloads"`
++	DownloadCount int            `gorm:"default:0" json:"download_count"`
++	ViewCount     int            `gorm:"default:0" json:"view_count"`
++	IsActive      bool           `gorm:"default:true" json:"is_active"`
++	CreatedAt     time.Time      `json:"created_at"`
++	UpdatedAt     time.Time      `json:"updated_at"`
++	DeletedAt     gorm.DeletedAt `gorm:"index" json:"-"`
++
++	Attachment Attachment `gorm:"foreignKey:AttachmentID" json:"-"`
++	User       User       `gorm:"foreignKey:SharedBy" json:"-"`
++}
++
++func (as *AttachmentShare) BeforeCreate(tx *gorm.DB) error {
++	if as.ID == uuid.Nil {
++		as.ID = uuid.New()
++	}
++	if as.CreatedAt.IsZero() {
++		as.CreatedAt = time.Now()
++	}
++	return nil
++}
+diff --git a/internal/models/models.go b/internal/models/models.go
+index 85a9fb6..d472f29 100644
+--- a/internal/models/models.go
++++ b/internal/models/models.go
+@@ -62,12 +62,17 @@ func (r *Room) BeforeCreate(tx *gorm.DB) error {
+ }
+ 
+ type Category struct {
+-	ID        uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
+-	Name      string         `gorm:"uniqueIndex;not null;size:100" json:"name"`
+-	SortOrder int            `gorm:"default:0" json:"sort_order"`
+-	CreatedAt time.Time      `json:"created_at"`
+-	UpdatedAt time.Time      `json:"updated_at"`
+-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
++	ID          uuid.UUID      `gorm:"type:uuid;primary_key" json:"id"`
++	Name        string         `gorm:"uniqueIndex;not null;size:100" json:"name"`
++	Description string         `gorm:"size:500" json:"description"`
++	Icon        string         `gorm:"size:100" json:"icon"`
++	Color       string         `gorm:"size:20" json:"color"`
++	SortOrder   int            `gorm:"default:0" json:"sort_order"`
++	IsPrivate   bool           `gorm:"default:false" json:"is_private"`
++	CreatedBy   uuid.UUID      `gorm:"type:uuid;not null" json:"created_by"`
++	CreatedAt   time.Time      `json:"created_at"`
++	UpdatedAt   time.Time      `json:"updated_at"`
++	DeletedAt   gorm.DeletedAt `gorm:"index" json:"-"`
+ 
+ 	Rooms []Room `gorm:"foreignKey:CategoryID" json:"-"`
+ }
+@@ -667,33 +672,54 @@ func (ca *ChannelActivity) BeforeCreate(tx *gorm.DB) error {
+ type AuditAction string
+ 
+ const (
+-	AuditActionMessageDelete  AuditAction = "message_delete"
+-	AuditActionMessageEdit    AuditAction = "message_edit"
+-	AuditActionUserKick       AuditAction = "user_kick"
+-	AuditActionUserBan        AuditAction = "user_ban"
+-	AuditActionUserUnban      AuditAction = "user_unban"
+-	AuditActionRoleChange     AuditAction = "role_change"
+-	AuditActionRoomCreate     AuditAction = "room_create"
+-	AuditActionRoomDelete     AuditAction = "room_delete"
+-	AuditActionRoomUpdate     AuditAction = "room_update"
+-	AuditActionCategoryCreate AuditAction = "category_create"
+-	AuditActionCategoryDelete AuditAction = "category_delete"
+-	AuditActionInviteCreate   AuditAction = "invite_create"
+-	AuditActionInviteRevoke   AuditAction = "invite_revoke"
+-	AuditActionSettingsChange AuditAction = "settings_change"
+-	AuditActionWebhookCreate  AuditAction = "webhook_create"
+-	AuditActionWebhookDelete  AuditAction = "webhook_delete"
++	AuditActionMessageDelete      AuditAction = "message_delete"
++	AuditActionMessageEdit        AuditAction = "message_edit"
++	AuditActionUserKick           AuditAction = "user_kick"
++	AuditActionUserBan            AuditAction = "user_ban"
++	AuditActionUserUnban          AuditAction = "user_unban"
++	AuditActionRoleChange         AuditAction = "role_change"
++	AuditActionRoomCreate         AuditAction = "room_create"
++	AuditActionRoomDelete         AuditAction = "room_delete"
++	AuditActionRoomUpdate         AuditAction = "room_update"
++	AuditActionCategoryCreate     AuditAction = "category_create"
++	AuditActionCategoryDelete     AuditAction = "category_delete"
++	AuditActionCategoryUpdate     AuditAction = "category_update"
++	AuditActionInviteCreate       AuditAction = "invite_create"
++	AuditActionInviteRevoke       AuditAction = "invite_revoke"
++	AuditActionSettingsChange     AuditAction = "settings_change"
++	AuditActionWebhookCreate      AuditAction = "webhook_create"
++	AuditActionWebhookDelete      AuditAction = "webhook_delete"
++	AuditActionUserLogin          AuditAction = "user_login"
++	AuditActionUserLogout         AuditAction = "user_logout"
++	AuditActionUserRegister       AuditAction = "user_register"
++	AuditActionUserPasswordChange AuditAction = "user_password_change"
++	AuditActionUserEmailChange    AuditAction = "user_email_change"
++	AuditActionFileUpload         AuditAction = "file_upload"
++	AuditActionFileDelete         AuditAction = "file_delete"
++	AuditActionVoiceJoin          AuditAction = "voice_join"
++	AuditActionVoiceLeave         AuditAction = "voice_leave"
++	AuditActionPollCreate         AuditAction = "poll_create"
++	AuditActionPollVote           AuditAction = "poll_vote"
++	AuditActionPollEnd            AuditAction = "poll_end"
++	AuditActionThreadCreate       AuditAction = "thread_create"
++	AuditActionReactionAdd        AuditAction = "reaction_add"
++	AuditActionReactionRemove     AuditAction = "reaction_remove"
+ )
+ 
+ type AuditLog struct {
+-	ID         uuid.UUID   `gorm:"type:uuid;primary_key" json:"id"`
+-	UserID     uuid.UUID   `gorm:"type:uuid;not null;index" json:"user_id"`
+-	Action     AuditAction `gorm:"type:varchar(50);not null;index" json:"action"`
+-	TargetType string      `gorm:"size:50;not null" json:"target_type"`
+-	TargetID   uuid.UUID   `gorm:"type:uuid;not null" json:"target_id"`
+-	Details    string      `gorm:"type:text" json:"details"`
+-	IPAddress  string      `gorm:"size:45" json:"ip_address"`
+-	CreatedAt  time.Time   `json:"created_at"`
++	ID           uuid.UUID   `gorm:"type:uuid;primary_key" json:"id"`
++	UserID       uuid.UUID   `gorm:"type:uuid;not null;index" json:"user_id"`
++	Action       AuditAction `gorm:"type:varchar(50);not null;index" json:"action"`
++	TargetType   string      `gorm:"size:50;not null" json:"target_type"`
++	TargetID     uuid.UUID   `gorm:"type:uuid;not null" json:"target_id"`
++	Details      string      `gorm:"type:text" json:"details"`
++	OldValue     string      `gorm:"type:jsonb" json:"old_value"`
++	NewValue     string      `gorm:"type:jsonb" json:"new_value"`
++	IPAddress    string      `gorm:"size:45" json:"ip_address"`
++	UserAgent    string      `gorm:"size:500" json:"user_agent"`
++	Success      bool        `gorm:"default:true" json:"success"`
++	ErrorMessage string      `gorm:"size:500" json:"error_message"`
++	CreatedAt    time.Time   `json:"created_at"`
+ 
+ 	User User `gorm:"foreignKey:UserID" json:"-"`
+ }
+@@ -806,21 +832,31 @@ func (b *Bookmark) BeforeCreate(tx *gorm.DB) error {
+ }
+ 
+ type UserPreferences struct {
+-	ID               uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
+-	UserID           uuid.UUID `gorm:"type:uuid;not null;uniqueIndex" json:"user_id"`
+-	Theme            string    `gorm:"size:20;default:'dark'" json:"theme"`
+-	Language         string    `gorm:"size:10;default:'en'" json:"language"`
+-	Timezone         string    `gorm:"size:50;default:'UTC'" json:"timezone"`
+-	MessagePreview   bool      `gorm:"default:true" json:"message_preview"`
+-	CompactMode      bool      `gorm:"default:false" json:"compact_mode"`
+-	ShowOnlineStatus bool      `gorm:"default:true" json:"show_online_status"`
+-	AnimatedEmoji    bool      `gorm:"default:true" json:"animated_emoji"`
+-	AutoPlayGifs     bool      `gorm:"default:true" json:"auto_play_gifs"`
+-	ReducedMotion    bool      `gorm:"default:false" json:"reduced_motion"`
+-	HighContrastMode bool      `gorm:"default:false" json:"high_contrast_mode"`
+-	TextSize         string    `gorm:"size:10;default:'medium'" json:"text_size"`
+-	CreatedAt        time.Time `json:"created_at"`
+-	UpdatedAt        time.Time `json:"updated_at"`
++	ID                  uuid.UUID `gorm:"type:uuid;primary_key" json:"id"`
++	UserID              uuid.UUID `gorm:"type:uuid;not null;uniqueIndex" json:"user_id"`
++	Theme               string    `gorm:"size:20;default:'dark'" json:"theme"`
++	Language            string    `gorm:"size:10;default:'en'" json:"language"`
++	Timezone            string    `gorm:"size:50;default:'UTC'" json:"timezone"`
++	MessagePreview      bool      `gorm:"default:true" json:"message_preview"`
++	CompactMode         bool      `gorm:"default:false" json:"compact_mode"`
++	ShowOnlineStatus    bool      `gorm:"default:true" json:"show_online_status"`
++	AnimatedEmoji       bool      `gorm:"default:true" json:"animated_emoji"`
++	AutoPlayGifs        bool      `gorm:"default:true" json:"auto_play_gifs"`
++	ReducedMotion       bool      `gorm:"default:false" json:"reduced_motion"`
++	HighContrastMode    bool      `gorm:"default:false" json:"high_contrast_mode"`
++	TextSize            string    `gorm:"size:10;default:'medium'" json:"text_size"`
++	NotificationSound   string    `gorm:"size:50;default:'default'" json:"notification_sound"`
++	DesktopNotification bool      `gorm:"default:true" json:"desktop_notification"`
++	MobileNotification  bool      `gorm:"default:true" json:"mobile_notification"`
++	MentionNotification bool      `gorm:"default:true" json:"mention_notification"`
++	DmNotification      bool      `gorm:"default:true" json:"dm_notification"`
++	ShowTypingIndicator bool      `gorm:"default:true" json:"show_typing_indicator"`
++	ShowReadReceipts    bool      `gorm:"default:true" json:"show_read_receipts"`
++	AutoScrollMessages  bool      `gorm:"default:true" json:"auto_scroll_messages"`
++	Use24HourFormat     bool      `gorm:"default:false" json:"use_24_hour_format"`
++	DisplayMode         string    `gorm:"size:20;default:'card'" json:"display_mode"`
++	CreatedAt           time.Time `json:"created_at"`
++	UpdatedAt           time.Time `json:"updated_at"`
+ 
+ 	User User `gorm:"foreignKey:UserID" json:"-"`
+ }
+diff --git a/internal/services/email.go b/internal/services/email.go
+index bbe5926..48475a8 100644
+--- a/internal/services/email.go
++++ b/internal/services/email.go
+@@ -108,6 +108,11 @@ func (es *EmailService) loadDefaultTemplates() {
+ 			HTMLBody: twoFactorHTML,
+ 			TextBody: twoFactorText,
+ 		},
++		"new_device_login": {
++			Subject:  "New Device Login Detected",
++			HTMLBody: newDeviceLoginHTML,
++			TextBody: newDeviceLoginText,
++		},
+ 	}
+ 
+ 	for name, tmpl := range templates {
+@@ -367,6 +372,16 @@ func (es *EmailService) SendTwoFactorCodeEmail(ctx context.Context, to EmailReci
+ 	})
+ }
+ 
++func (es *EmailService) SendNewDeviceLoginEmail(ctx context.Context, to EmailRecipient, device, ip, location, loginTime string) error {
++	return es.SendTemplate(ctx, to, "new_device_login", EmailData{
++		"Name":     to.Name,
++		"Device":   device,
++		"IP":       ip,
++		"Location": location,
++		"Time":     loginTime,
++	})
++}
++
+ func (es *EmailService) IsEnabled() bool {
+ 	return es.enabled
+ }
+@@ -396,6 +411,8 @@ func (es *EmailService) ParseTemplate(name string) (*templateInfo, error) {
+ 		subject = "Your Password Has Been Changed"
+ 	case "two_factor_code":
+ 		subject = "Your Two-Factor Authentication Code"
++	case "new_device_login":
++		subject = "New Device Login Detected"
+ 	}
+ 
+ 	return &templateInfo{t, subject}, nil
+@@ -602,6 +619,55 @@ This code will expire in 5 minutes.
+ 
+ If you didn't request this code, please ignore this email.`
+ 
++var newDeviceLoginHTML = `<!DOCTYPE html>
++<html>
++<head>
++    <meta charset="utf-8">
++    <title>New Device Login</title>
++</head>
++<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
++    <h2>New Device Login</h2>
++    
++    <p>Hi {{.Name}},</p>
++    
++    <p>We detected a new login to your Enclavr account.</p>
++    
++    <div style="background-color: #f5f5f5; padding: 15px; border-radius: 6px; margin: 20px 0;">
++        <p style="margin: 5px 0;"><strong>Device:</strong> {{.Device}}</p>
++        <p style="margin: 5px 0;"><strong>IP Address:</strong> {{.IP}}</p>
++        <p style="margin: 5px 0;"><strong>Location:</strong> {{.Location}}</p>
++        <p style="margin: 5px 0;"><strong>Time:</strong> {{.Time}}</p>
++    </div>
++    
++    <p>If this was you, you can ignore this email.</p>
++    
++    <p>If you didn't log in, please:</p>
++    <ul>
++        <li>Change your password immediately</li>
++        <li>Enable two-factor authentication</li>
++        <li>Review your account settings</li>
++    </ul>
++</body>
++</html>`
++
++var newDeviceLoginText = `New Device Login
++
++Hi {{.Name}},
++
++We detected a new login to your Enclavr account.
++
++Device: {{.Device}}
++IP Address: {{.IP}}
++Location: {{.Location}}
++Time: {{.Time}}
++
++If this was you, you can ignore this email.
++
++If you didn't log in, please:
++- Change your password immediately
++- Enable two-factor authentication
++- Review your account settings`
++
+ func nowFormat(format string) string {
+ 	return time.Now().Format(format)
+ }
+diff --git a/internal/services/oauth.go b/internal/services/oauth.go
+index f94980f..f2dd49d 100644
+--- a/internal/services/oauth.go
++++ b/internal/services/oauth.go
+@@ -21,8 +21,9 @@ import (
+ type OAuthProvider string
+ 
+ const (
+-	ProviderGoogle OAuthProvider = "google"
+-	ProviderGitHub OAuthProvider = "github"
++	ProviderGoogle  OAuthProvider = "google"
++	ProviderGitHub  OAuthProvider = "github"
++	ProviderDiscord OAuthProvider = "discord"
+ )
+ 
+ type OAuthUserInfo struct {
+@@ -33,10 +34,16 @@ type OAuthUserInfo struct {
+ 	AvatarURL string
+ }
+ 
++var discordEndpoint = oauth2.Endpoint{
++	AuthURL:  "https://discord.com/api/oauth2/authorize",
++	TokenURL: "https://discord.com/api/oauth2/token",
++}
++
+ type OAuthService struct {
+-	googleConfig *oauth2.Config
+-	githubConfig *oauth2.Config
+-	enabled      bool
++	googleConfig  *oauth2.Config
++	githubConfig  *oauth2.Config
++	discordConfig *oauth2.Config
++	enabled       bool
+ }
+ 
+ func NewOAuthService(cfg *config.AuthConfig) *OAuthService {
+@@ -62,6 +69,15 @@ func NewOAuthService(cfg *config.AuthConfig) *OAuthService {
+ 				Endpoint:     github.Endpoint,
+ 			}
+ 		}
++
++		if cfg.DiscordClientID != "" && cfg.DiscordClientSecret != "" {
++			s.discordConfig = &oauth2.Config{
++				ClientID:     cfg.DiscordClientID,
++				ClientSecret: cfg.DiscordClientSecret,
++				Scopes:       []string{"identify", "email"},
++				Endpoint:     discordEndpoint,
++			}
++		}
+ 	}
+ 
+ 	return s
+@@ -80,6 +96,8 @@ func (s *OAuthService) IsProviderEnabled(provider OAuthProvider) bool {
+ 		return s.googleConfig != nil
+ 	case ProviderGitHub:
+ 		return s.githubConfig != nil
++	case ProviderDiscord:
++		return s.discordConfig != nil
+ 	}
+ 	return false
+ }
+@@ -91,6 +109,8 @@ func (s *OAuthService) GetAuthURL(provider OAuthProvider, state string, redirect
+ 		config = s.googleConfig
+ 	case ProviderGitHub:
+ 		config = s.githubConfig
++	case ProviderDiscord:
++		config = s.discordConfig
+ 	default:
+ 		return "", fmt.Errorf("unsupported provider: %s", provider)
+ 	}
+@@ -109,6 +129,8 @@ func (s *OAuthService) ExchangeCode(ctx context.Context, provider OAuthProvider,
+ 		config = s.googleConfig
+ 	case ProviderGitHub:
+ 		config = s.githubConfig
++	case ProviderDiscord:
++		config = s.discordConfig
+ 	default:
+ 		return nil, fmt.Errorf("unsupported provider: %s", provider)
+ 	}
+@@ -131,6 +153,8 @@ func (s *OAuthService) GetUserInfo(ctx context.Context, provider OAuthProvider,
+ 		return s.getGoogleUserInfo(ctx, token)
+ 	case ProviderGitHub:
+ 		return s.getGitHubUserInfo(ctx, token)
++	case ProviderDiscord:
++		return s.getDiscordUserInfo(ctx, token)
+ 	default:
+ 		return nil, fmt.Errorf("unsupported provider: %s", provider)
+ 	}
+@@ -257,6 +281,55 @@ func (s *OAuthService) getGitHubPrimaryEmail(ctx context.Context, token *oauth2.
+ 	return "", nil
+ }
+ 
++func (s *OAuthService) getDiscordUserInfo(ctx context.Context, token *oauth2.Token) (*OAuthUserInfo, error) {
++	client := s.discordConfig.Client(ctx, token)
++
++	resp, err := client.Get("https://discord.com/api/users/@me")
++	if err != nil {
++		return nil, fmt.Errorf("failed to get user info: %w", err)
++	}
++	defer resp.Body.Close()
++
++	if resp.StatusCode != http.StatusOK {
++		return nil, fmt.Errorf("discord userinfo returned status %d", resp.StatusCode)
++	}
++
++	var data struct {
++		ID         string `json:"id"`
++		Username   string `json:"username"`
++		GlobalName string `json:"global_name"`
++		Avatar     string `json:"avatar"`
++		Email      string `json:"email"`
++		Verified   bool   `json:"verified"`
++	}
++
++	if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
++		return nil, fmt.Errorf("failed to decode user info: %w", err)
++	}
++
++	if data.Email == "" || !data.Verified {
++		return nil, fmt.Errorf("email not verified")
++	}
++
++	avatarURL := ""
++	if data.Avatar != "" {
++		avatarURL = fmt.Sprintf("https://cdn.discordapp.com/avatars/%s/%s.png", data.ID, data.Avatar)
++	}
++
++	name := data.GlobalName
++	if name == "" {
++		name = data.Username
++	}
++
++	return &OAuthUserInfo{
++		Provider:  ProviderDiscord,
++		Subject:   data.ID,
++		Email:     data.Email,
++		Name:      name,
++		AvatarURL: avatarURL,
++	}, nil
++}
++
+ func (s *OAuthService) FindOrCreateUser(db *gorm.DB, userInfo *OAuthUserInfo) (*models.User, error) {
+ 	var user models.User
+ 
+diff --git a/pkg/middleware/endpoint_ratelimit.go b/pkg/middleware/endpoint_ratelimit.go
+index bfc1033..d0fe237 100644
+--- a/pkg/middleware/endpoint_ratelimit.go
++++ b/pkg/middleware/endpoint_ratelimit.go
+@@ -243,10 +243,15 @@ func (b *EndpointRateLimiterBuilder) Build() *EndpointRateLimiter {
+ }
+ 
+ var DefaultEndpointRateLimiter = NewEndpointRateLimiterBuilder().
+-	AddEndpoint("/api/auth/login", 5, time.Minute).
+-	AddEndpoint("/api/auth/register", 3, time.Minute).
+-	AddEndpoint("/api/auth/reset-password", 3, time.Minute).
+-	AddEndpoint("/api/messages", 60, time.Minute).
+-	AddEndpoint("/api/rooms", 30, time.Minute).
+-	AddEndpoint("/api/webhooks", 20, time.Minute).
++	AddEndpoint("/api/v1/auth/login", 5, time.Minute).
++	AddEndpoint("/api/v1/auth/register", 3, time.Minute).
++	AddEndpoint("/api/v1/auth/reset-password", 3, time.Minute).
++	AddEndpoint("/api/v1/auth/oauth/callback", 10, time.Minute).
++	AddEndpoint("/api/v1/auth/2fa/setup", 3, time.Hour).
++	AddEndpoint("/api/v1/auth/2fa/disable", 3, time.Hour).
++	AddEndpoint("/api/v1/auth/account/delete", 3, time.Hour).
++	AddEndpoint("/api/v1/auth/password/change", 5, time.Hour).
++	AddEndpoint("/api/v1/messages", 60, time.Minute).
++	AddEndpoint("/api/v1/rooms", 30, time.Minute).
++	AddEndpoint("/api/v1/webhooks", 20, time.Minute).
+ 	Build()
+[0m
+[0m$ [0mcd frontend && git diff
+diff --git a/bun.lock b/bun.lock
+index 1dff9fa..30b48e5 100644
+--- a/bun.lock
++++ b/bun.lock
+@@ -39,7 +39,7 @@
+         "tailwindcss": "^4.2.1",
+         "typescript": "^5.9.3",
+         "typescript-eslint": "^8.0.0",
+-        "vitest": "^4.0.18",
++        "vitest": "^4.1.0",
+       },
+     },
+   },
+@@ -634,17 +634,17 @@
+ 
+     "@vitest/coverage-v8": ["@vitest/coverage-v8@4.0.18", "", { "dependencies": { "@bcoe/v8-coverage": "^1.0.2", "@vitest/utils": "4.0.18", "ast-v8-to-istanbul": "^0.3.10", "istanbul-lib-coverage": "^3.2.2", "istanbul-lib-report": "^3.0.1", "istanbul-reports": "^3.2.0", "magicast": "^0.5.1", "obug": "^2.1.1", "std-env": "^3.10.0", "tinyrainbow": "^3.0.3" }, "peerDependencies": { "@vitest/browser": "4.0.18", "vitest": "4.0.18" }, "optionalPeers": ["@vitest/browser"] }, "sha512-7i+N2i0+ME+2JFZhfuz7Tg/FqKtilHjGyGvoHYQ6iLV0zahbsJ9sljC9OcFcPDbhYKCet+sG8SsVqlyGvPflZg=="],
+ 
+-    "@vitest/expect": ["@vitest/expect@4.0.18", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "@types/chai": "^5.2.2", "@vitest/spy": "4.0.18", "@vitest/utils": "4.0.18", "chai": "^6.2.1", "tinyrainbow": "^3.0.3" } }, "sha512-8sCWUyckXXYvx4opfzVY03EOiYVxyNrHS5QxX3DAIi5dpJAAkyJezHCP77VMX4HKA2LDT/Jpfo8i2r5BE3GnQQ=="],
++    "@vitest/expect": ["@vitest/expect@4.1.0", "", { "dependencies": { "@standard-schema/spec": "^1.1.0", "@types/chai": "^5.2.2", "@vitest/spy": "4.1.0", "@vitest/utils": "4.1.0", "chai": "^6.2.2", "tinyrainbow": "^3.0.3" } }, "sha512-EIxG7k4wlWweuCLG9Y5InKFwpMEOyrMb6ZJ1ihYu02LVj/bzUwn2VMU+13PinsjRW75XnITeFrQBMH5+dLvCDA=="],
+ 
+-    "@vitest/mocker": ["@vitest/mocker@4.0.18", "", { "dependencies": { "@vitest/spy": "4.0.18", "estree-walker": "^3.0.3", "magic-string": "^0.30.21" }, "peerDependencies": { "msw": "^2.4.9", "vite": "^6.0.0 || ^7.0.0-0" }, "optionalPeers": ["msw", "vite"] }, "sha512-HhVd0MDnzzsgevnOWCBj5Otnzobjy5wLBe4EdeeFGv8luMsGcYqDuFRMcttKWZA5vVO8RFjexVovXvAM4JoJDQ=="],
++    "@vitest/mocker": ["@vitest/mocker@4.1.0", "", { "dependencies": { "@vitest/spy": "4.1.0", "estree-walker": "^3.0.3", "magic-string": "^0.30.21" }, "peerDependencies": { "msw": "^2.4.9", "vite": "^6.0.0 || ^7.0.0 || ^8.0.0-0" }, "optionalPeers": ["msw", "vite"] }, "sha512-evxREh+Hork43+Y4IOhTo+h5lGmVRyjqI739Rz4RlUPqwrkFFDF6EMvOOYjTx4E8Tl6gyCLRL8Mu7Ry12a13Tw=="],
+ 
+-    "@vitest/pretty-format": ["@vitest/pretty-format@4.0.18", "", { "dependencies": { "tinyrainbow": "^3.0.3" } }, "sha512-P24GK3GulZWC5tz87ux0m8OADrQIUVDPIjjj65vBXYG17ZeU3qD7r+MNZ1RNv4l8CGU2vtTRqixrOi9fYk/yKw=="],
++    "@vitest/pretty-format": ["@vitest/pretty-format@4.1.0", "", { "dependencies": { "tinyrainbow": "^3.0.3" } }, "sha512-3RZLZlh88Ib0J7NQTRATfc/3ZPOnSUn2uDBUoGNn5T36+bALixmzphN26OUD3LRXWkJu4H0s5vvUeqBiw+kS0A=="],
+ 
+-    "@vitest/runner": ["@vitest/runner@4.0.18", "", { "dependencies": { "@vitest/utils": "4.0.18", "pathe": "^2.0.3" } }, "sha512-rpk9y12PGa22Jg6g5M3UVVnTS7+zycIGk9ZNGN+m6tZHKQb7jrP7/77WfZy13Y/EUDd52NDsLRQhYKtv7XfPQw=="],
++    "@vitest/runner": ["@vitest/runner@4.1.0", "", { "dependencies": { "@vitest/utils": "4.1.0", "pathe": "^2.0.3" } }, "sha512-Duvx2OzQ7d6OjchL+trw+aSrb9idh7pnNfxrklo14p3zmNL4qPCDeIJAK+eBKYjkIwG96Bc6vYuxhqDXQOWpoQ=="],
+ 
+-    "@vitest/snapshot": ["@vitest/snapshot@4.0.18", "", { "dependencies": { "@vitest/pretty-format": "4.0.18", "magic-string": "^0.30.21", "pathe": "^2.0.3" } }, "sha512-PCiV0rcl7jKQjbgYqjtakly6T1uwv/5BQ9SwBLekVg/EaYeQFPiXcgrC2Y7vDMA8dM1SUEAEV82kgSQIlXNMvA=="],
++    "@vitest/snapshot": ["@vitest/snapshot@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "@vitest/utils": "4.1.0", "magic-string": "^0.30.21", "pathe": "^2.0.3" } }, "sha512-0Vy9euT1kgsnj1CHttwi9i9o+4rRLEaPRSOJ5gyv579GJkNpgJK+B4HSv/rAWixx2wdAFci1X4CEPjiu2bXIMg=="],
+ 
+-    "@vitest/spy": ["@vitest/spy@4.0.18", "", {}, "sha512-cbQt3PTSD7P2OARdVW3qWER5EGq7PHlvE+QfzSC0lbwO+xnt7+XH06ZzFjFRgzUX//JmpxrCu92VdwvEPlWSNw=="],
++    "@vitest/spy": ["@vitest/spy@4.1.0", "", {}, "sha512-pz77k+PgNpyMDv2FV6qmk5ZVau6c3R8HC8v342T2xlFxQKTrSeYw9waIJG8KgV9fFwAtTu4ceRzMivPTH6wSxw=="],
+ 
+     "@vitest/utils": ["@vitest/utils@4.0.18", "", { "dependencies": { "@vitest/pretty-format": "4.0.18", "tinyrainbow": "^3.0.3" } }, "sha512-msMRKLMVLWygpK3u2Hybgi4MNjcYJvwTb0Ru09+fOyCXIgT5raYP041DRRdiJiI3k/2U6SEbAETB3YtBrUkCFA=="],
+ 
+@@ -862,7 +862,7 @@
+ 
+     "es-iterator-helpers": ["es-iterator-helpers@1.2.2", "", { "dependencies": { "call-bind": "^1.0.8", "call-bound": "^1.0.4", "define-properties": "^1.2.1", "es-abstract": "^1.24.1", "es-errors": "^1.3.0", "es-set-tostringtag": "^2.1.0", "function-bind": "^1.1.2", "get-intrinsic": "^1.3.0", "globalthis": "^1.0.4", "gopd": "^1.2.0", "has-property-descriptors": "^1.0.2", "has-proto": "^1.2.0", "has-symbols": "^1.1.0", "internal-slot": "^1.1.0", "iterator.prototype": "^1.1.5", "safe-array-concat": "^1.1.3" } }, "sha512-BrUQ0cPTB/IwXj23HtwHjS9n7O4h9FX94b4xc5zlTHxeLgTAdzYUDyy6KdExAl9lbN5rtfe44xpjpmj9grxs5w=="],
+ 
+-    "es-module-lexer": ["es-module-lexer@1.7.0", "", {}, "sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA=="],
++    "es-module-lexer": ["es-module-lexer@2.0.0", "", {}, "sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw=="],
+ 
+     "es-object-atoms": ["es-object-atoms@1.1.1", "", { "dependencies": { "es-errors": "^1.3.0" } }, "sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA=="],
+ 
+@@ -1578,7 +1578,7 @@
+ 
+     "vite": ["vite@7.3.1", "", { "dependencies": { "esbuild": "^0.27.0", "fdir": "^6.5.0", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rollup": "^4.43.0", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "jiti": ">=1.21.0", "less": "^4.0.0", "lightningcss": "^1.21.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "jiti", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA=="],
+ 
+-    "vitest": ["vitest@4.0.18", "", { "dependencies": { "@vitest/expect": "4.0.18", "@vitest/mocker": "4.0.18", "@vitest/pretty-format": "4.0.18", "@vitest/runner": "4.0.18", "@vitest/snapshot": "4.0.18", "@vitest/spy": "4.0.18", "@vitest/utils": "4.0.18", "es-module-lexer": "^1.7.0", "expect-type": "^1.2.2", "magic-string": "^0.30.21", "obug": "^2.1.1", "pathe": "^2.0.3", "picomatch": "^4.0.3", "std-env": "^3.10.0", "tinybench": "^2.9.0", "tinyexec": "^1.0.2", "tinyglobby": "^0.2.15", "tinyrainbow": "^3.0.3", "vite": "^6.0.0 || ^7.0.0", "why-is-node-running": "^2.3.0" }, "peerDependencies": { "@edge-runtime/vm": "*", "@opentelemetry/api": "^1.9.0", "@types/node": "^20.0.0 || ^22.0.0 || >=24.0.0", "@vitest/browser-playwright": "4.0.18", "@vitest/browser-preview": "4.0.18", "@vitest/browser-webdriverio": "4.0.18", "@vitest/ui": "4.0.18", "happy-dom": "*", "jsdom": "*" }, "optionalPeers": ["@edge-runtime/vm", "@opentelemetry/api", "@types/node", "@vitest/browser-playwright", "@vitest/browser-preview", "@vitest/browser-webdriverio", "@vitest/ui", "happy-dom", "jsdom"], "bin": { "vitest": "vitest.mjs" } }, "sha512-hOQuK7h0FGKgBAas7v0mSAsnvrIgAvWmRFjmzpJ7SwFHH3g1k2u37JtYwOwmEKhK6ZO3v9ggDBBm0La1LCK4uQ=="],
++    "vitest": ["vitest@4.1.0", "", { "dependencies": { "@vitest/expect": "4.1.0", "@vitest/mocker": "4.1.0", "@vitest/pretty-format": "4.1.0", "@vitest/runner": "4.1.0", "@vitest/snapshot": "4.1.0", "@vitest/spy": "4.1.0", "@vitest/utils": "4.1.0", "es-module-lexer": "^2.0.0", "expect-type": "^1.3.0", "magic-string": "^0.30.21", "obug": "^2.1.1", "pathe": "^2.0.3", "picomatch": "^4.0.3", "std-env": "^4.0.0-rc.1", "tinybench": "^2.9.0", "tinyexec": "^1.0.2", "tinyglobby": "^0.2.15", "tinyrainbow": "^3.0.3", "vite": "^6.0.0 || ^7.0.0 || ^8.0.0-0", "why-is-node-running": "^2.3.0" }, "peerDependencies": { "@edge-runtime/vm": "*", "@opentelemetry/api": "^1.9.0", "@types/node": "^20.0.0 || ^22.0.0 || >=24.0.0", "@vitest/browser-playwright": "4.1.0", "@vitest/browser-preview": "4.1.0", "@vitest/browser-webdriverio": "4.1.0", "@vitest/ui": "4.1.0", "happy-dom": "*", "jsdom": "*" }, "optionalPeers": ["@edge-runtime/vm", "@opentelemetry/api", "@types/node", "@vitest/browser-playwright", "@vitest/browser-preview", "@vitest/browser-webdriverio", "@vitest/ui", "happy-dom", "jsdom"], "bin": { "vitest": "vitest.mjs" } }, "sha512-YbDrMF9jM2Lqc++2530UourxZHmkKLxrs4+mYhEwqWS97WJ7wOYEkcr+QfRgJ3PW9wz3odRijLZjHEaRLTNbqw=="],
+ 
+     "w3c-xmlserializer": ["w3c-xmlserializer@5.0.0", "", { "dependencies": { "xml-name-validator": "^5.0.0" } }, "sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA=="],
+ 
+@@ -1672,6 +1672,14 @@
+ 
+     "@typescript-eslint/visitor-keys/eslint-visitor-keys": ["eslint-visitor-keys@5.0.1", "", {}, "sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA=="],
+ 
++    "@vitest/expect/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "@vitest/runner/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "@vitest/snapshot/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "@vitest/utils/@vitest/pretty-format": ["@vitest/pretty-format@4.0.18", "", { "dependencies": { "tinyrainbow": "^3.0.3" } }, "sha512-P24GK3GulZWC5tz87ux0m8OADrQIUVDPIjjj65vBXYG17ZeU3qD7r+MNZ1RNv4l8CGU2vtTRqixrOi9fYk/yKw=="],
++
+     "ajv-formats/ajv": ["ajv@8.18.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A=="],
+ 
+     "eslint/@eslint/js": ["@eslint/js@9.39.3", "", {}, "sha512-1B1VkCq6FuUNlQvlBYb+1jDu/gV297TIs/OeiaSR9l1H27SVW55ONE1e1Vp16NqP683+xEGzxYtv4XCiDPaQiw=="],
+@@ -1720,9 +1728,11 @@
+ 
+     "vite/fsevents": ["fsevents@2.3.3", "", { "os": "darwin" }, "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="],
+ 
+-    "webpack/enhanced-resolve": ["enhanced-resolve@5.20.0", "", { "dependencies": { "graceful-fs": "^4.2.4", "tapable": "^2.3.0" } }, "sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ=="],
++    "vitest/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "vitest/std-env": ["std-env@4.0.0", "", {}, "sha512-zUMPtQ/HBY3/50VbpkupYHbRroTRZJPRLvreamgErJVys0ceuzMkD44J/QjqhHjOzK42GQ3QZIeFG1OYfOtKqQ=="],
+ 
+-    "webpack/es-module-lexer": ["es-module-lexer@2.0.0", "", {}, "sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw=="],
++    "webpack/enhanced-resolve": ["enhanced-resolve@5.20.0", "", { "dependencies": { "graceful-fs": "^4.2.4", "tapable": "^2.3.0" } }, "sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ=="],
+ 
+     "webpack/eslint-scope": ["eslint-scope@5.1.1", "", { "dependencies": { "esrecurse": "^4.3.0", "estraverse": "^4.1.1" } }, "sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw=="],
+ 
+diff --git a/package.json b/package.json
+index 28be9f6..f4bf742 100644
+--- a/package.json
++++ b/package.json
+@@ -51,6 +51,6 @@
+     "tailwindcss": "^4.2.1",
+     "typescript": "^5.9.3",
+     "typescript-eslint": "^8.0.0",
+-    "vitest": "^4.0.18"
++    "vitest": "^4.1.0"
+   }
+ }
+diff --git a/vitest.config.ts b/vitest.config.ts
+index 56966f2..02b1d68 100644
+--- a/vitest.config.ts
++++ b/vitest.config.ts
+@@ -9,9 +9,6 @@ export default defineConfig({
+     globals: true,
+     setupFiles: ['./src/test/setup.ts'],
+     include: ['src/**/*.test.{ts,tsx}'],
+-    pool: 'vmForks',
+-    maxWorkers: 1,
+-    isolate: false,
+     testTimeout: 30000,
+     hookTimeout: 30000,
+     sequence: {
+[0m
+[0m$ [0mcd frontend && git diff
+diff --git a/bun.lock b/bun.lock
+index 1dff9fa..30b48e5 100644
+--- a/bun.lock
++++ b/bun.lock
+@@ -39,7 +39,7 @@
+         "tailwindcss": "^4.2.1",
+         "typescript": "^5.9.3",
+         "typescript-eslint": "^8.0.0",
+-        "vitest": "^4.0.18",
++        "vitest": "^4.1.0",
+       },
+     },
+   },
+@@ -634,17 +634,17 @@
+ 
+     "@vitest/coverage-v8": ["@vitest/coverage-v8@4.0.18", "", { "dependencies": { "@bcoe/v8-coverage": "^1.0.2", "@vitest/utils": "4.0.18", "ast-v8-to-istanbul": "^0.3.10", "istanbul-lib-coverage": "^3.2.2", "istanbul-lib-report": "^3.0.1", "istanbul-reports": "^3.2.0", "magicast": "^0.5.1", "obug": "^2.1.1", "std-env": "^3.10.0", "tinyrainbow": "^3.0.3" }, "peerDependencies": { "@vitest/browser": "4.0.18", "vitest": "4.0.18" }, "optionalPeers": ["@vitest/browser"] }, "sha512-7i+N2i0+ME+2JFZhfuz7Tg/FqKtilHjGyGvoHYQ6iLV0zahbsJ9sljC9OcFcPDbhYKCet+sG8SsVqlyGvPflZg=="],
+ 
+-    "@vitest/expect": ["@vitest/expect@4.0.18", "", { "dependencies": { "@standard-schema/spec": "^1.0.0", "@types/chai": "^5.2.2", "@vitest/spy": "4.0.18", "@vitest/utils": "4.0.18", "chai": "^6.2.1", "tinyrainbow": "^3.0.3" } }, "sha512-8sCWUyckXXYvx4opfzVY03EOiYVxyNrHS5QxX3DAIi5dpJAAkyJezHCP77VMX4HKA2LDT/Jpfo8i2r5BE3GnQQ=="],
++    "@vitest/expect": ["@vitest/expect@4.1.0", "", { "dependencies": { "@standard-schema/spec": "^1.1.0", "@types/chai": "^5.2.2", "@vitest/spy": "4.1.0", "@vitest/utils": "4.1.0", "chai": "^6.2.2", "tinyrainbow": "^3.0.3" } }, "sha512-EIxG7k4wlWweuCLG9Y5InKFwpMEOyrMb6ZJ1ihYu02LVj/bzUwn2VMU+13PinsjRW75XnITeFrQBMH5+dLvCDA=="],
+ 
+-    "@vitest/mocker": ["@vitest/mocker@4.0.18", "", { "dependencies": { "@vitest/spy": "4.0.18", "estree-walker": "^3.0.3", "magic-string": "^0.30.21" }, "peerDependencies": { "msw": "^2.4.9", "vite": "^6.0.0 || ^7.0.0-0" }, "optionalPeers": ["msw", "vite"] }, "sha512-HhVd0MDnzzsgevnOWCBj5Otnzobjy5wLBe4EdeeFGv8luMsGcYqDuFRMcttKWZA5vVO8RFjexVovXvAM4JoJDQ=="],
++    "@vitest/mocker": ["@vitest/mocker@4.1.0", "", { "dependencies": { "@vitest/spy": "4.1.0", "estree-walker": "^3.0.3", "magic-string": "^0.30.21" }, "peerDependencies": { "msw": "^2.4.9", "vite": "^6.0.0 || ^7.0.0 || ^8.0.0-0" }, "optionalPeers": ["msw", "vite"] }, "sha512-evxREh+Hork43+Y4IOhTo+h5lGmVRyjqI739Rz4RlUPqwrkFFDF6EMvOOYjTx4E8Tl6gyCLRL8Mu7Ry12a13Tw=="],
+ 
+-    "@vitest/pretty-format": ["@vitest/pretty-format@4.0.18", "", { "dependencies": { "tinyrainbow": "^3.0.3" } }, "sha512-P24GK3GulZWC5tz87ux0m8OADrQIUVDPIjjj65vBXYG17ZeU3qD7r+MNZ1RNv4l8CGU2vtTRqixrOi9fYk/yKw=="],
++    "@vitest/pretty-format": ["@vitest/pretty-format@4.1.0", "", { "dependencies": { "tinyrainbow": "^3.0.3" } }, "sha512-3RZLZlh88Ib0J7NQTRATfc/3ZPOnSUn2uDBUoGNn5T36+bALixmzphN26OUD3LRXWkJu4H0s5vvUeqBiw+kS0A=="],
+ 
+-    "@vitest/runner": ["@vitest/runner@4.0.18", "", { "dependencies": { "@vitest/utils": "4.0.18", "pathe": "^2.0.3" } }, "sha512-rpk9y12PGa22Jg6g5M3UVVnTS7+zycIGk9ZNGN+m6tZHKQb7jrP7/77WfZy13Y/EUDd52NDsLRQhYKtv7XfPQw=="],
++    "@vitest/runner": ["@vitest/runner@4.1.0", "", { "dependencies": { "@vitest/utils": "4.1.0", "pathe": "^2.0.3" } }, "sha512-Duvx2OzQ7d6OjchL+trw+aSrb9idh7pnNfxrklo14p3zmNL4qPCDeIJAK+eBKYjkIwG96Bc6vYuxhqDXQOWpoQ=="],
+ 
+-    "@vitest/snapshot": ["@vitest/snapshot@4.0.18", "", { "dependencies": { "@vitest/pretty-format": "4.0.18", "magic-string": "^0.30.21", "pathe": "^2.0.3" } }, "sha512-PCiV0rcl7jKQjbgYqjtakly6T1uwv/5BQ9SwBLekVg/EaYeQFPiXcgrC2Y7vDMA8dM1SUEAEV82kgSQIlXNMvA=="],
++    "@vitest/snapshot": ["@vitest/snapshot@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "@vitest/utils": "4.1.0", "magic-string": "^0.30.21", "pathe": "^2.0.3" } }, "sha512-0Vy9euT1kgsnj1CHttwi9i9o+4rRLEaPRSOJ5gyv579GJkNpgJK+B4HSv/rAWixx2wdAFci1X4CEPjiu2bXIMg=="],
+ 
+-    "@vitest/spy": ["@vitest/spy@4.0.18", "", {}, "sha512-cbQt3PTSD7P2OARdVW3qWER5EGq7PHlvE+QfzSC0lbwO+xnt7+XH06ZzFjFRgzUX//JmpxrCu92VdwvEPlWSNw=="],
++    "@vitest/spy": ["@vitest/spy@4.1.0", "", {}, "sha512-pz77k+PgNpyMDv2FV6qmk5ZVau6c3R8HC8v342T2xlFxQKTrSeYw9waIJG8KgV9fFwAtTu4ceRzMivPTH6wSxw=="],
+ 
+     "@vitest/utils": ["@vitest/utils@4.0.18", "", { "dependencies": { "@vitest/pretty-format": "4.0.18", "tinyrainbow": "^3.0.3" } }, "sha512-msMRKLMVLWygpK3u2Hybgi4MNjcYJvwTb0Ru09+fOyCXIgT5raYP041DRRdiJiI3k/2U6SEbAETB3YtBrUkCFA=="],
+ 
+@@ -862,7 +862,7 @@
+ 
+     "es-iterator-helpers": ["es-iterator-helpers@1.2.2", "", { "dependencies": { "call-bind": "^1.0.8", "call-bound": "^1.0.4", "define-properties": "^1.2.1", "es-abstract": "^1.24.1", "es-errors": "^1.3.0", "es-set-tostringtag": "^2.1.0", "function-bind": "^1.1.2", "get-intrinsic": "^1.3.0", "globalthis": "^1.0.4", "gopd": "^1.2.0", "has-property-descriptors": "^1.0.2", "has-proto": "^1.2.0", "has-symbols": "^1.1.0", "internal-slot": "^1.1.0", "iterator.prototype": "^1.1.5", "safe-array-concat": "^1.1.3" } }, "sha512-BrUQ0cPTB/IwXj23HtwHjS9n7O4h9FX94b4xc5zlTHxeLgTAdzYUDyy6KdExAl9lbN5rtfe44xpjpmj9grxs5w=="],
+ 
+-    "es-module-lexer": ["es-module-lexer@1.7.0", "", {}, "sha512-jEQoCwk8hyb2AZziIOLhDqpm5+2ww5uIE6lkO/6jcOCusfk6LhMHpXXfBLXTZ7Ydyt0j4VoUQv6uGNYbdW+kBA=="],
++    "es-module-lexer": ["es-module-lexer@2.0.0", "", {}, "sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw=="],
+ 
+     "es-object-atoms": ["es-object-atoms@1.1.1", "", { "dependencies": { "es-errors": "^1.3.0" } }, "sha512-FGgH2h8zKNim9ljj7dankFPcICIK9Cp5bm+c2gQSYePhpaG5+esrLODihIorn+Pe6FGJzWhXQotPv73jTaldXA=="],
+ 
+@@ -1578,7 +1578,7 @@
+ 
+     "vite": ["vite@7.3.1", "", { "dependencies": { "esbuild": "^0.27.0", "fdir": "^6.5.0", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rollup": "^4.43.0", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "jiti": ">=1.21.0", "less": "^4.0.0", "lightningcss": "^1.21.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "jiti", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-w+N7Hifpc3gRjZ63vYBXA56dvvRlNWRczTdmCBBa+CotUzAPf5b7YMdMR/8CQoeYE5LX3W4wj6RYTgonm1b9DA=="],
+ 
+-    "vitest": ["vitest@4.0.18", "", { "dependencies": { "@vitest/expect": "4.0.18", "@vitest/mocker": "4.0.18", "@vitest/pretty-format": "4.0.18", "@vitest/runner": "4.0.18", "@vitest/snapshot": "4.0.18", "@vitest/spy": "4.0.18", "@vitest/utils": "4.0.18", "es-module-lexer": "^1.7.0", "expect-type": "^1.2.2", "magic-string": "^0.30.21", "obug": "^2.1.1", "pathe": "^2.0.3", "picomatch": "^4.0.3", "std-env": "^3.10.0", "tinybench": "^2.9.0", "tinyexec": "^1.0.2", "tinyglobby": "^0.2.15", "tinyrainbow": "^3.0.3", "vite": "^6.0.0 || ^7.0.0", "why-is-node-running": "^2.3.0" }, "peerDependencies": { "@edge-runtime/vm": "*", "@opentelemetry/api": "^1.9.0", "@types/node": "^20.0.0 || ^22.0.0 || >=24.0.0", "@vitest/browser-playwright": "4.0.18", "@vitest/browser-preview": "4.0.18", "@vitest/browser-webdriverio": "4.0.18", "@vitest/ui": "4.0.18", "happy-dom": "*", "jsdom": "*" }, "optionalPeers": ["@edge-runtime/vm", "@opentelemetry/api", "@types/node", "@vitest/browser-playwright", "@vitest/browser-preview", "@vitest/browser-webdriverio", "@vitest/ui", "happy-dom", "jsdom"], "bin": { "vitest": "vitest.mjs" } }, "sha512-hOQuK7h0FGKgBAas7v0mSAsnvrIgAvWmRFjmzpJ7SwFHH3g1k2u37JtYwOwmEKhK6ZO3v9ggDBBm0La1LCK4uQ=="],
++    "vitest": ["vitest@4.1.0", "", { "dependencies": { "@vitest/expect": "4.1.0", "@vitest/mocker": "4.1.0", "@vitest/pretty-format": "4.1.0", "@vitest/runner": "4.1.0", "@vitest/snapshot": "4.1.0", "@vitest/spy": "4.1.0", "@vitest/utils": "4.1.0", "es-module-lexer": "^2.0.0", "expect-type": "^1.3.0", "magic-string": "^0.30.21", "obug": "^2.1.1", "pathe": "^2.0.3", "picomatch": "^4.0.3", "std-env": "^4.0.0-rc.1", "tinybench": "^2.9.0", "tinyexec": "^1.0.2", "tinyglobby": "^0.2.15", "tinyrainbow": "^3.0.3", "vite": "^6.0.0 || ^7.0.0 || ^8.0.0-0", "why-is-node-running": "^2.3.0" }, "peerDependencies": { "@edge-runtime/vm": "*", "@opentelemetry/api": "^1.9.0", "@types/node": "^20.0.0 || ^22.0.0 || >=24.0.0", "@vitest/browser-playwright": "4.1.0", "@vitest/browser-preview": "4.1.0", "@vitest/browser-webdriverio": "4.1.0", "@vitest/ui": "4.1.0", "happy-dom": "*", "jsdom": "*" }, "optionalPeers": ["@edge-runtime/vm", "@opentelemetry/api", "@types/node", "@vitest/browser-playwright", "@vitest/browser-preview", "@vitest/browser-webdriverio", "@vitest/ui", "happy-dom", "jsdom"], "bin": { "vitest": "vitest.mjs" } }, "sha512-YbDrMF9jM2Lqc++2530UourxZHmkKLxrs4+mYhEwqWS97WJ7wOYEkcr+QfRgJ3PW9wz3odRijLZjHEaRLTNbqw=="],
+ 
+     "w3c-xmlserializer": ["w3c-xmlserializer@5.0.0", "", { "dependencies": { "xml-name-validator": "^5.0.0" } }, "sha512-o8qghlI8NZHU1lLPrpi2+Uq7abh4GGPpYANlalzWxyWteJOCsr/P+oPBA49TOLu5FTZO4d3F9MnWJfiMo4BkmA=="],
+ 
+@@ -1672,6 +1672,14 @@
+ 
+     "@typescript-eslint/visitor-keys/eslint-visitor-keys": ["eslint-visitor-keys@5.0.1", "", {}, "sha512-tD40eHxA35h0PEIZNeIjkHoDR4YjjJp34biM0mDvplBe//mB+IHCqHDGV7pxF+7MklTvighcCPPZC7ynWyjdTA=="],
+ 
++    "@vitest/expect/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "@vitest/runner/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "@vitest/snapshot/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "@vitest/utils/@vitest/pretty-format": ["@vitest/pretty-format@4.0.18", "", { "dependencies": { "tinyrainbow": "^3.0.3" } }, "sha512-P24GK3GulZWC5tz87ux0m8OADrQIUVDPIjjj65vBXYG17ZeU3qD7r+MNZ1RNv4l8CGU2vtTRqixrOi9fYk/yKw=="],
++
+     "ajv-formats/ajv": ["ajv@8.18.0", "", { "dependencies": { "fast-deep-equal": "^3.1.3", "fast-uri": "^3.0.1", "json-schema-traverse": "^1.0.0", "require-from-string": "^2.0.2" } }, "sha512-PlXPeEWMXMZ7sPYOHqmDyCJzcfNrUr3fGNKtezX14ykXOEIvyK81d+qydx89KY5O71FKMPaQ2vBfBFI5NHR63A=="],
+ 
+     "eslint/@eslint/js": ["@eslint/js@9.39.3", "", {}, "sha512-1B1VkCq6FuUNlQvlBYb+1jDu/gV297TIs/OeiaSR9l1H27SVW55ONE1e1Vp16NqP683+xEGzxYtv4XCiDPaQiw=="],
+@@ -1720,9 +1728,11 @@
+ 
+     "vite/fsevents": ["fsevents@2.3.3", "", { "os": "darwin" }, "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw=="],
+ 
+-    "webpack/enhanced-resolve": ["enhanced-resolve@5.20.0", "", { "dependencies": { "graceful-fs": "^4.2.4", "tapable": "^2.3.0" } }, "sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ=="],
++    "vitest/@vitest/utils": ["@vitest/utils@4.1.0", "", { "dependencies": { "@vitest/pretty-format": "4.1.0", "convert-source-map": "^2.0.0", "tinyrainbow": "^3.0.3" } }, "sha512-XfPXT6a8TZY3dcGY8EdwsBulFCIw+BeeX0RZn2x/BtiY/75YGh8FeWGG8QISN/WhaqSrE2OrlDgtF8q5uhOTmw=="],
++
++    "vitest/std-env": ["std-env@4.0.0", "", {}, "sha512-zUMPtQ/HBY3/50VbpkupYHbRroTRZJPRLvreamgErJVys0ceuzMkD44J/QjqhHjOzK42GQ3QZIeFG1OYfOtKqQ=="],
+ 
+-    "webpack/es-module-lexer": ["es-module-lexer@2.0.0", "", {}, "sha512-5POEcUuZybH7IdmGsD8wlf0AI55wMecM9rVBTI/qEAy2c1kTOm3DjFYjrBdI2K3BaJjJYfYFeRtM0t9ssnRuxw=="],
++    "webpack/enhanced-resolve": ["enhanced-resolve@5.20.0", "", { "dependencies": { "graceful-fs": "^4.2.4", "tapable": "^2.3.0" } }, "sha512-/ce7+jQ1PQ6rVXwe+jKEg5hW5ciicHwIQUagZkp6IufBoY3YDgdTTY1azVs0qoRgVmvsNB+rbjLJxDAeHHtwsQ=="],
+ 
+     "webpack/eslint-scope": ["eslint-scope@5.1.1", "", { "dependencies": { "esrecurse": "^4.3.0", "estraverse": "^4.1.1" } }, "sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw=="],
+ 
+diff --git a/package.json b/package.json
+index 28be9f6..f4bf742 100644
+--- a/package.json
++++ b/package.json
+@@ -51,6 +51,6 @@
+     "tailwindcss": "^4.2.1",
+     "typescript": "^5.9.3",
+     "typescript-eslint": "^8.0.0",
+-    "vitest": "^4.0.18"
++    "vitest": "^4.1.0"
+   }
+ }
+diff --git a/vitest.config.ts b/vitest.config.ts
+index 56966f2..02b1d68 100644
+--- a/vitest.config.ts
++++ b/vitest.config.ts
+@@ -9,9 +9,6 @@ export default defineConfig({
+     globals: true,
+     setupFiles: ['./src/test/setup.ts'],
+     include: ['src/**/*.test.{ts,tsx}'],
+-    pool: 'vmForks',
+-    maxWorkers: 1,
+-    isolate: false,
+     testTimeout: 30000,
+     hookTimeout: 30000,
+     sequence: {
+[0m
+APPROVE: Changes are legitimate feature additions including Discord OAuth integration, account deletion, enhanced audit logging, password history, new device notifications, extended user preferences, and performance indexes. No secrets, dangerous operations, broken code, or malicious code detected.
+APPROVE: Changes are legitimate feature additions including Discord OAuth integration, account deletion, enhanced audit logging, password history, new device notifications, extended user preferences, and performance indexes. No secrets, dangerous operations, broken code, or malicious code detected.
+[2026-03-17 11:43:40] [INFO] [INFO] Task completed in 55s (exit: 0)
+[2026-03-17 11:43:40] [INFO] [INFO] Task completed in 55s (exit: 0)
+[2026-03-17 11:43:40] [INFO] [INFO] Updated shared state: kilo - Review uncommitted changes:
+1. git status + git di - SUCCESS
+[2026-03-17 11:43:40] [INFO] [INFO] Updated shared state: kilo - Review uncommitted changes:
+1. git status + git di - SUCCESS
+[2026-03-17 11:43:40] [INFO] [INFO] Review APPROVED: Changes are legitimate feature additions including Discord OAuth integration, account deletion, enhanced audit logging, password history, new device notifications, extended user preferences, and performance indexes. No secrets, dangerous operations, broken code, or malicious code detected.
+[2026-03-17 11:43:40] [INFO] [INFO] Committing and pushing...
+[2026-03-17 11:43:40] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:43:40] [INFO] Found kilo at: /home/dev/.kilo/bin/kilo
+[2026-03-17 11:43:40] [INFO] [INFO] Found context from previous kilo session (truncated)
+[2026-03-17 11:43:40] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:43:40] [INFO] [INFO] Context from previous session:
+[2026-03-17 11:43:40] [INFO] [INFO] Found context from previous kilo session (truncated)
+## Last Run (2026-03-17 11:43:40)
+- **Provider**: kilo
+[2026-03-17 11:43:40] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[2026-03-17 11:43:40] [INFO] [INFO] Executing task with kilo... (timeout: 600s)
+[0m
+> code · kilo-auto/free
+[0m
+[0m
+> code · kilo-auto/free
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   agent-20260317.log
+	modified:   frontend (modified content)
+	modified:   memory-bank/activeContext.md
+	modified:   server (modified content, untracked content)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+  (commit or discard the untracked or modified content in submodules)
+	modified:   agent-20260317.log
+	modified:   frontend (modified content)
+	modified:   memory-bank/activeContext.md
+	modified:   server (modified content, untracked content)
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
