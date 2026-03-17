@@ -1,7 +1,15 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Debugging completed
+Regression monitoring for recently closed issues across all enclavr repos
+
+## Latest Changes (2026-03-18)
+- Ran regression monitoring check on all 5 repos
+- Verified fixes for closed issues are still in place:
+  - enclavr/enclavr #2: mobile sidebar - CSS fix verified (padding-top: 80px for header)
+  - enclavr/enclavr #1: duplicate .env vars - verified no duplicates
+  - enclavr/docs #1: outdated docs - recent commits present
+- All closed issues verified - no regressions detected
 
 ## Latest Update (2026-03-18)
 - Debugging completed
