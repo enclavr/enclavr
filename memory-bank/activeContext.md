@@ -1,7 +1,69 @@
-# Active Context - Enclavr Root
+# Active Context - enclavr-root
 
 ## Current Work Focus
-Debugging completed
+Proactive improvements completed
+
+## Latest Update (2026-03-17)
+- Proactive improvements completed
+
+## Latest Changes (2026-03-17)
+- Branch and tag management completed across all 5 repos:
+  - **enclavr/enclavr (root)**: Tag v2026.03.17 created
+  - **enclavr/frontend**: Tag v2026.03.17 created, no stale branches
+  - **enclavr/server**: Tag v2026.03.17 created, no stale branches
+  - **enclavr/infra**: Tag v2026.03.17 created, no stale branches
+  - **enclavr/docs**: Tag v2026.03.17 created, no stale branches
+- All repositories now have daily release tags
+- No stale branches found in any repository (only main branch exists)
+
+## Latest Changes (2026-03-17)
+- Analyzed CI failures in all 5 repos via gh api
+- All failures confirmed as billing-related (GitHub Actions minutes limit)
+- Evidence: "operation was canceled", "runner has received shutdown signal"
+- Server tests pass locally (TestRefreshToken/valid_refresh_token passes)
+- Docs repo: old workflow deleted, current CI runs successful
+- Per AGENTS.md: billing failures auto-resolve at month start
+- **Failures fixed: 0** (all billing-related, not code issues)
+
+## Latest Update (2026-03-17)
+- Reviewed PRs in all 5 repos via gh api:
+  - enclavr/enclavr (root): 0 PRs
+  - enclavr/frontend: 0 PRs
+  - enclavr/server: 0 PRs
+  - enclavr/infra: 0 PRs
+  - enclavr/docs: 0 PRs
+- **Total PRs reviewed: 0** (none open in any repository)
+
+## Latest Update (2026-03-17)
+- Docker debug completed
+- All 5 Docker services verified healthy:
+  - coturn: Up 2 days (healthy)
+  - frontend: Up 2 days (healthy)
+  - postgres: Up 2 days (healthy)
+  - redis: Up 2 days (healthy)
+  - server: Up 2 days
+- NO services needed fixing
+
+## Previous Update (2026-03-17)
+- Reviewed PRs in all 5 repos via gh api:
+  - enclavr/enclavr (root): 0 PRs
+  - enclavr/frontend: 0 PRs
+  - enclavr/server: 0 PRs
+  - enclavr/infra: 0 PRs
+  - enclavr/docs: 0 PRs
+- **Total PRs reviewed: 0** (none open in any repository)
+
+## Latest Update (2026-03-17)
+- Analyzed ALL 5 repos for open issues via gh api:
+  - enclavr/enclavr (root): 0 issues
+  - enclavr/frontend: 0 issues
+  - enclavr/server: 0 issues
+  - enclavr/infra: 0 issues
+  - enclavr/docs: 0 issues
+- **Total issues addressed: 0** (no open issues to fix)
+
+## Latest Update (2026-03-17)
+- Debugging completed
 
 ## Latest Update (2026-03-17)
 - Debugging completed
