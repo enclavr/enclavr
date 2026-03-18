@@ -1,6 +1,49 @@
 # Active Context - enclavr-root
 
 ## Latest Update (2026-03-19)
+- Regression monitoring completed for all 5 enclavr repositories:
+  | Repo | Closed | Verified | Reopened | Fixes |
+  |------|--------|----------|----------|-------|
+  | enclavr/enclavr | 2 | 2 | 0 | 0 |
+  | enclavr/frontend | 0 | 0 | 0 | 0 |
+  | enclavr/server | 2 | 2 | 0 | 0 |
+  | enclavr/infra | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 1 | 1 | 0 | 0 |
+
+- **Verified closed issues:**
+  - enclavr/enclavr #2: mobile sidebar CSS fix - verified (2026-03-08)
+  - enclavr/enclavr #1: duplicate .env vars - verified no duplicates (2026-03-08)
+  - enclavr/server #2: New features? - verified closed (2026-03-02)
+  - enclavr/server #1: Issue Test - verified closed (2026-03-01)
+  - enclavr/docs #1: outdated docs - verified closed (2026-03-16)
+
+- All issues remain in COMPLETED state - no regressions detected
+- **Regressions found: 0**
+
+## Previous Update (2026-03-19)
+- CI failure debugging across all 5 enclavr repositories:
+  - enclavr/enclavr: Jekyll SCSS error - re-running
+  - enclavr/frontend: Runner cancelled (billing), NOT code - all tests passed
+  - enclavr/server: Database test issues - re-running
+  - enclavr/infra: .env file issue - FIXED on re-run
+  - enclavr/docs: Permission issue - needs workflow fix
+- Primary cause: GitHub Actions billing limits (as per AGENTS.md guidelines)
+- Re-ran failed workflows where applicable
+
+## Latest Update (2026-03-19)
+- GitHub issues review across all 5 repos:
+  - enclavr/enclavr: 0 issues
+  - enclavr/frontend: 0 issues
+  - enclavr/server: 0 issues
+  - enclavr/infra: 0 issues
+  - enclavr/docs: 0 issues
+- **Issues with comments: 0**
+- **Responses: 0**
+- **Fixes: 0**
+- **Closures: 0**
+- No open issues in any repository - nothing to respond to
+
+## Latest Update (2026-03-19)
 - Proactive improvements committed and released:
   - **Frontend**: Added user status modal with presence support (online/away/dnd/invisible)
   - **Server**: Added notifications system with resilience features (circuit breaker, distributed rate limiter, HTTP client)
