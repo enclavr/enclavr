@@ -1,7 +1,26 @@
 # Active Context - enclavr-root
 
 ## Latest Update (2026-03-18)
-- Submodule update completed
+- Release management across all 5 repos:
+  - **enclavr/enclavr**: v2026.03.18-2 created ✅
+  - **enclavr/frontend**: No new commits since v2026.03.18-1
+  - **enclavr/server**: v2026.03.18-2 created ✅ (new features: sticker packs, room ratings, activity logs, room metrics)
+  - **enclavr/infra**: No new commits since v2026.03.18
+  - **enclavr/docs**: No new commits since v2026.03.18
+- Created v2026.03.18-2 for server: StickerPack, RoomRating, UserActivityLog, RoomMetric models
+- Updated root submodules, pushed to remote (commit: 4530329)
+- All release notes comprehensive with full changelogs
+
+## Previous Update (2026-03-18)
+  - enclavr/enclavr: 0 open PRs
+  - enclavr/frontend: 0 open PRs
+  - enclavr/server: 0 open PRs
+  - enclavr/infra: 0 open PRs
+  - enclavr/docs: 0 open PRs
+- **Open PRs reviewed: 0**
+- **Merged: 0**
+- **Closed: 0**
+- No issues in any repository
 - docs submodule updated to f0570dc (was 9a49e6a)
 - Committed as: 24fa842 "chore: update submodules to latest"
 
