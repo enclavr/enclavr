@@ -1,7 +1,37 @@
 # Active Context - enclavr-root
 
-## Latest Update (2026-03-18)
-- PR review across all 5 repos completed:
+## Latest Update (2026-03-19)
+- Proactive improvements committed and released:
+  - **Frontend**: Added user status modal with presence support (online/away/dnd/invisible)
+  - **Server**: Added notifications system with resilience features (circuit breaker, distributed rate limiter, HTTP client)
+  - Root updated with submodule pointers
+- Releases created:
+  - enclavr/enclavr: v2026.03.19 ✅
+  - enclavr/frontend: v2026.03.19 ✅
+  - enclavr/server: v2026.03.19 ✅
+  - enclavr/infra: No changes
+  - enclavr/docs: No changes
+
+## Previous Update (2026-03-18)
+- Release analysis across all 5 repos completed:
+  | Repo | Releases | Analyzed | Updated | Notes |
+  |------|----------|----------|---------|-------|
+  | enclavr/enclavr | v2026.03.18-3 | ✅ | No | 1 commit (submodule update) - no new release needed |
+  | enclavr/frontend | v2026.03.18-2 | ✅ | No | Up to date, 0 commits ahead |
+  | enclavr/server | v2026.03.18-3 | ✅ | No | Up to date, 0 commits ahead |
+  | enclavr/infra | v2026.03.18 | ✅ | No | Up to date, 0 commits ahead |
+  | enclavr/docs | v2026.03.18 | ✅ | No | Up to date, 0 commits ahead |
+
+- **Release details:**
+  - **Root**: v2026.03.18-3 - submodule update, release notes complete ✅
+  - **Frontend**: v2026.03.18-2 - bug fix release, minimal notes ✅
+  - **Server**: v2026.03.18-3 - webhook delivery, rate limiter, full changelog ✅
+  - **Infra**: v2026.03.18 - Docker compose improvements ✅
+  - **Docs**: v2026.03.18 - comprehensive update ✅
+- All 5 repos have comprehensive release notes
+- Root has 1 new commit (submodule pointer) - no new release needed
+
+## Previous Update (2026-03-18)
   - **enclavr/enclavr**: 0 open PRs
   - **enclavr/frontend**: 0 open PRs
   - **enclavr/server**: 0 open PRs

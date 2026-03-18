@@ -16,6 +16,7 @@ The agent uses Model Context Protocol (MCP) tools for:
 - **Documentation:** Context7 MCP tools for library/framework docs
 - **Git:** Git MCP tools for version control
 - **Error Tracking:** Sentry MCP tools for production monitoring
+- **Browser Automation:** Chrome DevTools MCP tools for web testing and UI verification
 - **Web:** websearch, webfetch, codesearch for current information
 
 See [AGENTS.md](./AGENTS.md) for detailed MCP tool documentation.
