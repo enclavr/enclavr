@@ -1,7 +1,26 @@
 # Active Context - enclavr-root
 
+## Latest Update (2026-03-18)
+- Proactive improvements completed
+
 ## Current Work Focus
-Branch and tag management - verified all 5 repos have no stale branches and v2026.03.18 tag exists.
+Added new server features - sticker packs, room ratings, activity logs, room metrics
+
+## Latest Changes (2026-03-18)
+- Server proactive improvements:
+  - Added migration 015 for new tables (sticker_packs, room_ratings, user_activity_logs, room_metrics)
+  - Added StickerPack model with premium/price support
+  - Added RoomRating model with 1-5 star ratings
+  - Added UserActivityLog for tracking user actions
+  - Added RoomMetric for daily room statistics
+  - Added handlers for all new models with full CRUD operations
+  - All changes committed and pushed to remote (commit: 244d0c2)
+  - Root repo updated (commit: b02a4af)
+- Sentry shows no errors - system healthy
+- Frontend CI failure is runner cancellation (billing limit - NOT fixing per AGENTS.md)
+
+## Previous Changes (2026-03-18)
+- Branch and tag management - verified all 5 repos have no stale branches and v2026.03.18 tag exists.
 
 ## Latest Changes (2026-03-18)
 - Branch/tag management across all 5 repos completed:
@@ -364,7 +383,7 @@ Branch and tag management - verified all 5 repos have no stale branches and v202
 - No submodule changes to commit (already at latest)
 
 ## Current Work Focus
-Debugging completed
+Proactive improvements completed
 
 ## Latest Update (2026-03-18)
 - Debugging completed
