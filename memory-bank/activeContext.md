@@ -1,6 +1,11 @@
 # Active Context - enclavr-root
 
 ## Latest Update (2026-03-18)
+- Submodule update completed
+- docs submodule updated to f0570dc (was 9a49e6a)
+- Committed as: 24fa842 "chore: update submodules to latest"
+
+## Previous Update (2026-03-18)
 - Proactive improvements completed
 
 ## Current Work Focus
