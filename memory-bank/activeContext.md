@@ -1,7 +1,89 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements completed
+Submodule update completed - all submodules already at latest commits
+
+## Latest Changes (2026-03-20)
+- Branch and tag management across all 5 repos:
+  | Repo | Branches Deleted | Tags Created | Notes |
+  |------|-----------------|--------------|-------|
+  | enclavr/enclavr | 0 | v2026.03.20 created | Only main branch |
+  | enclavr/frontend | 0 | v2026.03.20 created | Only main branch |
+  | enclavr/server | 0 | v2026.03.20 created | Only main branch |
+  | enclavr/infra | 0 | v2026.03.20 created | Only main branch |
+  | enclavr/docs | 0 | v2026.03.20 created | Only main branch |
+- All repos use trunk-based development (only main branch exists)
+- No stale branches found in any repository
+- Release tag v2026.03.20 created and pushed to all repos
+
+## Previous Changes (2026-03-20)
+- Release management completed for all 5 repos - created v2026.03.20-1 releases
+
+## Latest Changes (2026-03-20)
+- Release management across all 5 repos:
+  | Repo | Releases | Analyzed | Updated | Notes |
+  |------|----------|----------|---------|-------|
+  | enclavr/enclavr | 11 total, latest v2026.03.20-1 | ✅ | ✅ | Created v2026.03.20-1 |
+  | enclavr/frontend | 9 total, latest v2026.03.20-1 | ✅ | ✅ | Created v2026.03.20-1 |
+  | enclavr/server | 10 total, latest v2026.03.20-1 | ✅ | ✅ | Created v2026.03.20-1 |
+  | enclavr/infra | 5 total, latest v2026.03.19 | ✅ | No | 0 commits - no release |
+  | enclavr/docs | 3 total, latest v2026.03.18 | ✅ | No | 0 commits - no release |
+
+- Created releases:
+  - enclavr/enclavr: https://github.com/enclavr/enclavr/releases/tag/v2026.03.20-1
+  - enclavr/frontend: https://github.com/enclavr/frontend/releases/tag/v2026.03.20-1
+  - enclavr/server: https://github.com/enclavr/server/releases/tag/v2026.03.20-1
+
+- Frontend: useChatSearch, useMediaDevices hooks
+- Server: scheduled messages, message reminders, WebSocket improvements
+- Infra/docs: No changes - no release needed
+
+## Previous Changes (2026-03-20)
+- PR review across all 5 enclavr repositories:
+  | Repo | Open PRs | Reviewed | Merged | Closed |
+  |------|----------|----------|--------|--------|
+  | enclavr/enclavr | 0 | 0 | 0 | 0 |
+  | enclavr/frontend | 0 | 0 | 0 | 0 |
+  | enclavr/server | 0 | 0 | 0 | 0 |
+  | enclavr/infra | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 0 | 0 | 0 | 0 |
+- No open PRs in any repository
+- All repositories use trunk-based development (commits go directly to main)
+
+## Previous Changes (2026-03-20)
+- Submodule update completed:
+  - Ran git submodule status
+  - Ran git submodule update --remote --merge
+  - All 4 submodules already at latest remote commits
+  - No submodule pointer changes to commit
+- Submodules aligned:
+  - docs: e7e9d22 (v2026.03.18-1)
+  - frontend: 20700c8 (v2026.03.18-6)
+  - infra: 72a1a0e (v2026.03.19)
+  - server: 5416d5c (v2026.03.18-12)
+
+## Latest Changes (2026-03-20)
+- Submodule update completed:
+  - Ran git submodule status
+  - Ran git submodule update --remote --merge
+  - All 4 submodules already at latest remote commits
+  - No submodule pointer changes to commit
+- Submodules aligned:
+  - docs: e7e9d22 (v2026.03.18-1)
+  - frontend: 20700c8 (v2026.03.18-6)
+  - infra: 72a1a0e (v2026.03.19)
+  - server: 5416d5c (v2026.03.18-12)
+
+## Previous Changes (2026-03-19)
+- Database analysis - checked for performance issues
+
+## Latest Changes (2026-03-19)
+- Database analysis completed (local PostgreSQL via Docker)
+- Database is empty (fresh development environment - all tables have 0 rows)
+- Found 6 FK columns without indexes: invites(created_by), pinned_messages(pinned_by), room_invites(room_id), rooms(category_id), voice_sessions(user_id), webhooks(created_by)
+- These are not critical since tables are empty
+- Schema is well-designed with proper foreign keys
+- **Result: No database issues found**
 
 ## Latest Update (2026-03-19)
 - Proactive improvements completed
