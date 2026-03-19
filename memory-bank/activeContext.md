@@ -1,9 +1,137 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements completed
+Server proactive improvements completed: scheduled messages feature and bug fixes.
+
+## Latest Changes (2026-03-19)
+- Server proactive improvements completed:
+  - Added ScheduledMessage model with improved schema (SendAt, SentAt, DeletedAt)
+  - Added ScheduledMessageHandler with full CRUD operations:
+    - GetScheduledMessages (list, filter pending)
+    - GetScheduledMessage (single by ID)
+    - CreateScheduledMessage (with room membership validation)
+    - UpdateScheduledMessage (edit content/send time)
+    - DeleteScheduledMessage (remove)
+    - CancelScheduledMessage (soft cancel)
+  - Fixed privacy handler to properly preserve boolean field values
+  - Removed GORM default tags that were causing test failures
+  - All tests pass, lint passes
+  - Changes committed (server: 74553c6)
+  - Root updated (effe94b)
+
+- GitHub issues checked - no open issues in any repository
+- Frontend clean, no changes needed
+
+## Previous Changes (2026-03-19)
+- Branch and tag management completed across all 5 repos:
+  | Repo | Branches Deleted | Tags Created | Notes |
+  |------|-----------------|--------------|-------|
+  | enclavr/enclavr | 0 | 0 | Today's tag v2026.03.19 already exists |
+  | enclavr/frontend | 0 | 0 | Today's tag v2026.03.19 already exists |
+  | enclavr/server | 0 | 0 | Today's tag v2026.03.19 already exists |
+  | enclavr/infra | 0 | 0 | Today's tag v2026.03.19 already exists |
+  | enclavr/docs | 0 | 0 | Today's tag v2026.03.19 already exists |
+
+- All repositories use trunk-based development (only main branch)
+- No stale branches to delete in any repository
+- No new tags created (all repos already have v2026.03.19 from yesterday)
+
+## Latest Changes (2026-03-19)
+- Release management and analysis for all Enclavr repositories.
+
+## Latest Changes (2026-03-19)
+- Release analysis across all 5 repos completed:
+  | Repo | Releases | Analyzed | Updated | Notes |
+  |------|----------|----------|---------|-------|
+  | enclavr/enclavr | 10 total, latest v2026.03.19-4 | ✅ | ✅ | Release notes complete |
+  | enclavr/frontend | 8 total, latest v2026.03.19-2 | ✅ | ✅ | Release notes complete |
+  | enclavr/server | 9 total, latest v2026.03.19-2 | ✅ | ✅ | Release notes complete |
+  | enclavr/infra | 5 total, latest v2026.03.19 | ✅ | ✅ | Release notes complete |
+  | enclavr/docs | 3 total, latest v2026.03.18 | ✅ | ✅ | Release notes complete |
+
+- Commits since last release: 0 for all repos
+- All release notes are complete with comprehensive changelogs
+- All repos have 0 assets (expected - source-only repos)
+- No new releases needed - all repos up to date
+
+## Latest Changes (2026-03-19)
+- PR review across all 5 repos completed:
+  | Repo | Open PRs | Reviewed | Merged | Closed |
+  |------|----------|----------|--------|--------|
+  | enclavr/enclavr | 0 | 0 | 0 | 0 |
+  | enclavr/frontend | 0 | 0 | 0 | 0 |
+  | enclavr/server | 0 | 0 | 0 | 0 |
+  | enclavr/infra | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 0 | 0 | 0 | 0 |
+- No open PRs in any repository
+
+## Previous Changes (2026-03-19)
+- Submodule update across all 4 enclavr submodules.
+  - Ran git submodule status
+  - Ran git submodule update --remote --merge
+  - All 4 submodules already at latest remote commits
+  - No submodule pointer changes to commit
+- Submodules aligned:
+  - docs: e7e9d22 (v2026.03.18)
+  - frontend: e5cc627 (v2026.03.18-5)
+  - infra: 72a1a0e (v2026.03.19)
+  - server: 52a1492 (v2026.03.18-10)
+
+## Previous Changes (2026-03-19)
+- Branch and tag management completed across all repos:
+  | Repo | Branches Deleted | Tags Created | Notes |
+  |------|------------------|--------------|-------|
+  | enclavr/enclavr | None | None | Today's tag exists: v2026.03.19 |
+  | enclavr/frontend | None | None | Today's tag exists: v2026.03.19 |
+  | enclavr/server | None | None | Today's tag exists: v2026.03.19 |
+  | enclavr/infra | None | None | Today's tag exists: v2026.03.19 |
+  | enclavr/docs | None | None | Today's tag exists: v2026.03.19 |
+
+- All repositories have only main branch (no stale branches)
+- Today's release tags already exist in all repositories
+
+## Previous Changes (2026-03-19)
+- Release analysis and creation across all repos:
+  | Repo | Releases | Analyzed | Updated | Notes |
+  |------|----------|----------|---------|-------|
+  | enclavr/enclavr | 10 total, latest v2026.03.19-4 | ✅ | ✅ | Created v2026.03.19-4 for useChatSearch, WebSocket events |
+  | enclavr/frontend | 8 total, latest v2026.03.19-2 | ✅ | ✅ | Created v2026.03.19-2 for useChatSearch hook |
+  | enclavr/server | 9 total, latest v2026.03.19-2 | ✅ | ✅ | Created v2026.03.19-2 for WebSocket improvements |
+  | enclavr/infra | 5 total, latest v2026.03.19 | ✅ | No | Up to date |
+  | enclavr/docs | 3 total, latest v2026.03.18 | ✅ | No | Up to date |
+
+- Created releases:
+  - enclavr/enclavr: https://github.com/enclavr/enclavr/releases/tag/v2026.03.19-4
+  - enclavr/frontend: https://github.com/enclavr/frontend/releases/tag/v2026.03.19-2
+  - enclavr/server: https://github.com/enclavr/server/releases/tag/v2026.03.19-2
+
+## Previous Changes (2026-03-19)
+- PR review across all 5 repos completed:
+  | Repo | Open PRs | Reviewed | Merged | Closed |
+  |------|----------|----------|--------|--------|
+  | enclavr/enclavr | 0 | 0 | 0 | 0 |
+  | enclavr/frontend | 0 | 0 | 0 | 0 |
+  | enclavr/server | 0 | 0 | 0 | 0 |
+  | enclavr/infra | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 0 | 0 | 0 | 0 |
+- No open PRs in any repository
+
+## Previous Changes (2026-03-19)
+- Submodule update completed
 
 ## Latest Update (2026-03-19)
+- Submodule update completed:
+  - Ran git submodule status
+  - Ran git submodule update --remote --merge
+  - Frontend: New commit (useChatSearch hook) - committed and pushed
+  - Root: Committed submodule update (commit: 638aabd)
+- Submodules aligned:
+  - docs: e7e9d22 (v2026.03.18)
+  - frontend: e5cc627 (v2026.03.18-5) - NEW
+  - infra: 72a1a0e (v2026.03.19)
+  - server: 52a1492 (v2026.03.18-10)
+
+## Previous Update (2026-03-19)
 - Proactive improvements completed
 
 ## Latest Changes (2026-03-19)
