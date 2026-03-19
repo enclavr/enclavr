@@ -1,7 +1,76 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-PR review session - checked all 5 enclavr repositories for open pull requests.
+Proactive improvements completed - added useMediaDevices hook for frontend.
+
+## Latest Changes (2026-03-19)
+- Frontend proactive improvements:
+  - Added useMediaDevices hook for enumerating audio/video devices
+  - Added useMediaStream hook for managing media streams
+  - Supports device permission requests and device change detection
+  - Useful for voice chat app device selection
+  - All lint and typecheck passes
+  - Changes committed and pushed (frontend: aed3caa)
+  - Root updated (commit: 2e44c50)
+- Created v2026.03.19-1 release for frontend
+
+- Regression monitoring completed for all 5 enclavr repositories:
+  | Repo | Closed | Verified | Reopened | Fixes |
+  |------|--------|----------|----------|-------|
+  | enclavr/enclavr | 2 | 2 | 0 | 0 |
+  | enclavr/frontend | 0 | 0 | 0 | 0 |
+  | enclavr/server | 2 | 2 | 0 | 0 |
+  | enclavr/infra | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 1 | 1 | 0 | 0 |
+
+- **Verified closed issues:**
+  - enclavr/enclavr #2: mobile sidebar CSS fix - verified closed (2026-03-08)
+  - enclavr/enclavr #1: duplicate .env vars - verified no duplicates (2026-03-08)
+  - enclavr/server #2: "New features?" - verified closed (2026-03-02)
+  - enclavr/server #1: "Issue Test" - verified closed (2026-03-01)
+  - enclavr/docs #1: outdated docs - verified closed (2026-03-16)
+
+- All issues remain in CLOSED state - no regressions detected
+- **Regressions found: 0**
+- Verified .env.example fix still in place
+- Verified docs submodule updated
+- No revert commits found
+- Frontend lint passes
+- Server lint: 1 pre-existing issue (unrelated to monitored issues)
+
+## Previous Update (2026-03-19)
+- Release management across all 5 repos:
+  | Repo | Releases | Latest Tag | Commits Since | Notes |
+  |------|----------|------------|---------------|-------|
+  | enclavr/enclavr | 6 | v2026.03.19 | 7 | Maintenance (submodule updates) - no new release needed |
+  | enclavr/frontend | 6 | v2026.03.19 | 0 | All current |
+  | enclavr/server | 7 | v2026.03.19 | 0 | All current |
+  | enclavr/infra | 3 | v2026.03.18 | 0 | All current |
+  | enclavr/docs | 3 | v2026.03.18 | 0 | All current |
+- Release notes analyzed:
+  - All releases have comprehensive changelog-style notes
+  - All releases have empty assets (code-only repos - no binaries)
+  - Root: 7 commits since last release (submodule pointer updates, debug/proactive commits)
+  - No new release needed - commits are maintenance only
+- All submodules aligned: docs v2026.03.18, frontend v2026.03.18-3, infra v2026.03.19, server v2026.03.18-6
+
+## Previous Update (2026-03-19)
+- Label verification across all enclavr repositories.
+
+## Latest Changes (2026-03-19)
+- Verified standard labels in all 5 enclavr repositories:
+  - enclavr/enclavr (root): All 5 labels exist with correct colors ✓
+  - enclavr/frontend: All 5 labels exist with correct colors ✓
+  - enclavr/server: All 5 labels exist with correct colors ✓
+  - enclavr/infra: All 5 labels exist with correct colors ✓
+  - enclavr/docs: All 5 labels exist with correct colors ✓
+- Labels verified with correct colors:
+  - bug:Issue bug (#ee0701) ✓
+  - feature:Issue feature (#008672) ✓
+  - enhancement:Issue enhancement (#84b6eb) ✓
+  - documentation:Issue documentation (#d4c5f9) ✓
+  - security:Issue security (#ee0701) ✓
+- **Labels created: 0** (all labels already existed)
 
 ## Latest Changes (2026-03-19)
 - PR review across all repositories:
