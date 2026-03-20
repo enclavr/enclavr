@@ -1,32 +1,29 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Debugging completed
+Sentry monitoring - no critical issues found
 
 ## Latest Update (2026-03-20)
-Debugging completed
+- Analyzed Sentry issues across enclavr organization
+- No critical errors, unresolved issues, or crashes detected
+- All repos operational
 
 ## Latest Changes (2026-03-20)
-- **Debug Session Results:**
-  - Sentry: No errors found (clean)
-  - Server: All tests passing
-  - Frontend tests: Running (partial timeout)
-  - PostgreSQL: Healthy, indexes properly configured
-  - Redis: Healthy with all modules loaded
+- **Server (auth):**
+  - Added PasswordResetRateLimiter for rate limiting password reset requests
+  - Added NotBefore claim to JWT tokens based on password change time
+  - Added password expiry flag in login response
+  - Added session management endpoints (GetSessions, RevokeSession, RevokeAllSessions)
+  - Added 2FA recovery code support for account recovery
+  - Added token rotation endpoint
+- **Frontend:**
+  - Added RoomPermissionsModal component for managing room member permissions
+  - Added comprehensive test coverage
+- **Submodules updated:** server, frontend, docs
+- **Previous:** Regression monitoring completed
 
-- **Infra Fixes (committed ce6d199):**
-  - Frontend healthcheck: Fixed to use curl/wget fallback (nginx:alpine edge case)
-  - Coturn: Added explicit --lt-cred-mech flag
-  - Coturn: Disabled TLS warnings (--no-tls) since no certs configured
-  - All 5 containers now showing healthy status
+## Previous Changes (2026-03-20)
+- Regression Monitoring Completed - no regressions detected
+- GitHub PR review completed - no open PRs across all repos
+- Branch/Tag management completed
 
-- Frontend proactive improvements (fdabcd0):
-  - Added useKeyboardShortcuts hook
-  - Added useAudioLevel hook  
-  - Added appearance settings page
-  - Added tests for new features
-
-- Server proactive improvements (c1991a4):
-  - Added ENCRYPTION_KEY to .env.example
-  - Added SearchRooms API endpoint
-  - Added typing throttle (2s) for WebSocket
