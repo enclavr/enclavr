@@ -1,7 +1,46 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Regression monitoring completed - no issues found
+CI fixes and proactive improvements across all repositories.
+
+## Latest Changes (2026-03-21)
+- **Frontend Fix:**
+  - Fixed TypeScript error: Added missing `BlockEvent` and `DeliveryStatus` types to `@/types`
+  - The useDMWebSocket hook was importing types that didn't exist
+  - Committed and pushed: "fix: add missing BlockEvent and DeliveryStatus types"
+  - All lint/typecheck pass
+- **Root Update:**
+  - Updated frontend submodule to v2026.03.20-7
+  - Committed: "chore: update frontend submodule to v2026.03.20-7"
+- **CI Analysis:**
+  - Server CI failures analyzed - PostgreSQL-specific SQL in SQLite tests
+  - Server CI already has skip patterns for PostgreSQL-only tests
+  - All tests pass with correct skip patterns
+
+## Previous Changes (2026-03-21)
+- **Branch/Tag Management:**
+  - Checked all 5 repos: root, frontend, server, infra, docs
+  - No stale branches found (all repos use trunk-based development with main branch only)
+  - Created release tags v2026.03.21 in all 5 repositories:
+    - enclavr/root: tag created and pushed
+    - enclavr/frontend: tag created (commit 3408fc1)
+    - enclavr/server: tag created (commit 4e22e9a)
+    - enclavr/infra: tag created (commit ce6d199)
+    - enclavr/docs: tag created (commit 88f1dee)
+- **Release Management:**
+  - Created root v2026.03.21-1 (submodule updates)
+  - Created frontend v2026.03.20-7 (useDMWebSocket hook)
+  - Created docs v2026.03.20 (activeContext updates)
+  - Server and infra already at latest (v2026.03.20-5, v2026.03.20-2)
+  - Pushed submodule update to root: 5b00228
+  - All lint/tests pass
+
+## Previous Changes (2026-03-21)
+- PR review: No open PRs in any of the 5 repos (enclavr, frontend, server, infra, docs)
+- Updated docs submodule to v2026.03.19-1-g88f1dee
+- Updated frontend submodule to v2026.03.20-11-g3408fc1
+- Committed: "chore: update submodules to latest"
+- Root commit: 5b00228
 
 ## Latest Update (2026-03-20)
 - Release analysis completed across all 5 repos
