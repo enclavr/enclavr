@@ -1,8 +1,10 @@
-# Product Context - Root Monorepo
+# Product Context - enclavr-root
 
 ## Purpose
-Root monorepo that tracks submodules for the Enclavr voice chat platform.
+Root monorepo for Enclavr - a self-hosted voice chat platform.
 
 ## Key Features
-- Git submodules for independent component development
-- Shared memory-bank system for agent context
+- Voice chat rooms
+- WebRTC for audio
+- WebSocket for real-time communication
+- Self-hosted deployment via Docker Compose

@@ -1,9 +1,11 @@
-# Project Brief - Root Monorepo
+# Project Brief - enclavr-root
 
 ## Goal
-Manage the Enclavr monorepo with git submodules for independent component development.
+Manage the Enclavr monorepo as an autonomous agent, handling issues, PRs, and proactive improvements.
 
 ## Requirements
-- Maintain git submodules for frontend, server, infra, docs
-- Track issues across all repositories
-- Maintain memory-bank for agent context
+- Monitor GitHub issues across 5 repos
+- Respond to user feedback and bug reports
+- Implement fixes and close issues
+- Run proactive improvements every 30 minutes
+- Maintain memory bank for context

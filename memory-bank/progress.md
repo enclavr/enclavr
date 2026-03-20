@@ -1,9 +1,24 @@
-# Progress - Root Monorepo
+# Progress - enclavr-root
 
 ## What Works
-- Git submodules for frontend, server, infra, docs
-- Docker Compose deployment
-- Memory bank tracking system
+- All 5 repos operational
+- CI/CD workflows in place
+- Monorepo structure with git submodules
+
+## Latest Additions (2026-03-20)
+- **Frontend**: useKeyboardShortcuts, useAudioLevel hooks, appearance page
+- **Server**: ENCRYPTION_KEY config, SearchRooms endpoint, typing throttle
+- **Infra**: CI workflow improvements
+
+## CI Status (2026-03-20)
+### Known Issues (Not Code Related)
+- **Frontend CI**: Runner shutdown signals - GitHub Actions infrastructure/billing issue. IGNORE per AGENTS.md guidelines.
+- **Root Pages Deploy**: GitHub Pages may not be configured (404 errors)
+- **Docs Trigger Deploy**: Permission issue with repository dispatch event
+
+### Fixed
+- **Server TestRefreshToken**: Fixed by commit 5416d5c (Auth config now set in test setup)
 
 ## What's Left to Build
-- [ ] Continue monitoring issues across repos
+- [ ] Monitor for new issues
+- [ ] Implement proactive improvements on schedule
