@@ -1,17 +1,19 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-GitHub issue management review across all 5 Enclavr repositories
+Regression monitoring for recently closed issues across all enclavr repositories
 
 ## Latest Update (2026-03-20)
-- Submodule update checked - all submodules already at latest remote versions
-- Debugging completed
-- Analyzed Sentry issues across enclavr organization
-- No critical errors, unresolved issues, or crashes detected
-- All repos operational
-- GitHub issue management review completed - no open issues in any repo
+- Regression monitoring completed across all 5 repos
+- Verified 5 closed issues - no regressions detected
+- No issues were reopened
 
 ## Latest Changes (2026-03-20)
+- **Release Management:**
+  - Created frontend v2026.03.20-5 (RoomPermissionsModal component)
+  - Created server v2026.03.20-3 (auth/security features)
+  - Updated infra v2026.03.20-1 release notes
+  - Created root v2026.03.20-5 (submodule updates)
 - **Server (auth):**
   - Added PasswordResetRateLimiter for rate limiting password reset requests
   - Added NotBefore claim to JWT tokens based on password change time
@@ -22,8 +24,9 @@ GitHub issue management review across all 5 Enclavr repositories
 - **Frontend:**
   - Added RoomPermissionsModal component for managing room member permissions
   - Added comprehensive test coverage
-- **Submodules updated:** server, frontend, docs
-- **Previous:** Regression monitoring completed
+- **Infra:**
+  - Improved container healthchecks with curl/wget fallback
+  - Updated Coturn configuration (--lt-cred-mech, --no-tls)
 
 ## Previous Changes (2026-03-20)
 - Regression Monitoring Completed - no regressions detected
