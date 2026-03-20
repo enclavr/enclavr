@@ -1,9 +1,24 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Submodule maintenance completed
+Branch and tag management for all 5 repositories
 
 ## Latest Changes (2026-03-20)
+- Ran branch/tag maintenance across all repositories (root, frontend, server, infra, docs)
+- All repositories use trunk-based development (main branch only)
+- Today's release tag v2026.03.20 already exists in all repos
+- No stale branches to delete
+
+## Latest Changes (2026-03-20)
+- **Release Management:**
+  - Created frontend v2026.03.20-6 (RoomPermissionsModal, frontend redesign)
+  - Created server v2026.03.20-4 (encryption key config, room search, scheduled messages)
+  - Created infra v2026.03.20-2 (healthchecks, Coturn config)
+  - Created docs v2026.03.19 (Jekyll disabled, model docs)
+  - Created root v2026.03.20-6 (submodule updates)
+- All submodules updated and committed
+
+## Previous Changes (2026-03-20)
 - **Submodule Update:**
   - Ran `git submodule update --remote --merge`
   - docs: merged in 9a49e6a (v2026.03.19)
@@ -40,6 +55,12 @@ Submodule maintenance completed
 - **Infra:**
   - Improved container healthchecks with curl/wget fallback
   - Updated Coturn configuration (--lt-cred-mech, --no-tls)
+
+## Latest Changes (2026-03-20)
+- **PR Review Completed:**
+  - Reviewed all 5 repos: enclavr, frontend, server, infra, docs
+  - Open PRs: 0 across all repositories
+  - No reviews, merges, or closes needed
 
 ## Previous Changes (2026-03-20)
 - Regression Monitoring Completed - no regressions detected
