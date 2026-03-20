@@ -1,10 +1,16 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Debugging completed
+Regression monitoring completed
 
 ## Latest Update (2026-03-21)
-- Debugging completed
+- Regression monitoring completed across all 5 repos
+- Verified fixes for 5 closed issues - no regressions detected
+- No issues were reopened
+- enclavr#2 (mobile sidebar): fix verified (z-index 1001, toggle present)
+- enclavr#1 (.env.example): fix verified (clear comments in place)
+- server#2, server#1: informational issues, no fix needed
+- docs#1: docs verified as up-to-date
 
 ## Latest Changes (2026-03-21)
 - **Frontend Fix:**
