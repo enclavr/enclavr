@@ -1,9 +1,64 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements completed
+Regression monitoring across all 5 repos.
+
+## Latest Changes (2026-03-21)
+- **Regression Monitoring Completed:**
+  - Checked all 5 repos for recently closed issues
+  - enclavr/enclavr: 2 closed issues verified
+  - enclavr/frontend: 0 closed issues
+  - enclavr/server: 2 closed issues verified (informational)
+  - enclavr/infra: 0 closed issues
+  - enclavr/docs: 1 closed issue verified
+  - No regressions detected
+  - No issues reopened
+
+| Repo | Closed | Verified | Reopened | Fixes |
+|------|--------|----------|----------|-------|
+| enclavr/enclavr | 2 | 2 | 0 | ✅ |
+| enclavr/frontend | 0 | 0 | 0 | ✅ |
+| enclavr/server | 2 | 2 | 0 | ✅ |
+| enclavr/infra | 0 | 0 | 0 | ✅ |
+| enclavr/docs | 1 | 1 | 0 | ✅ |
+
+Verified fixes:
+- enclavr#2 (mobile sidebar): toggle button with z-index 1002 in place
+- enclavr#1 (.env.example): clear comments distinguish DB sections
+- server#2: informational question, no fix needed
+- server#1: test issue, no fix needed  
+- docs#1: docs up-to-date with recent commits
+
+## Latest Changes (2026-03-21)
+- Analyzed releases across all 5 repos (enclavr, frontend, server, infra, docs)
+- Created new releases:
+  - frontend v2026.03.20-8: Add missing BlockEvent and DeliveryStatus types
+  - server v2026.03.20-6: Add database query optimization indexes
+  - root v2026.03.21-2: Submodule updates
+- All releases have complete release notes
+- No assets required for these releases (all are code-only)
+- infra and docs: No new releases needed (no significant changes)
 
 ## Latest Update (2026-03-21)
+- PR review across all 5 repos completed
+- enclavr/enclavr: 0 open PRs
+- enclavr/frontend: 0 open PRs
+- enclavr/server: 0 open PRs
+- enclavr/infra: 0 open PRs
+- enclavr/docs: 0 open PRs
+- No reviews, merges, or closes needed
+
+## Latest Update (2026-03-21)
+- Ran git submodule update --remote --merge
+- All submodules already at latest
+- docs: v2026.03.21, frontend: v2026.03.21-1, infra: v2026.03.21, server: v2026.03.21-1
+- No changes to commit
+
+## Latest Update (2026-03-21)
+- Database analysis completed
+- No database issues found
+- Sentry: No database errors/failures in last 24 hours
+- Schema: All indexes properly configured (migrations 003-021)
 - Proactive improvements completed
 
 ## Latest Update (2026-03-21)
