@@ -1,7 +1,14 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Debugging completed
+Submodule update completed
+
+## Latest Update (2026-03-21)
+- Submodule update completed
+- Ran `git submodule update --remote --merge`
+- docs: updated (modified content in memory-bank/activeContext.md)
+- frontend, infra, server: already at latest
+- Committed: "chore: update submodules to latest" (a7f59c9)
 
 ## Latest Update (2026-03-21)
 - Debugging completed
