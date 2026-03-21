@@ -1,30 +1,38 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Regression monitoring across all 5 repos.
+Proactive improvements completed
+
+## Latest Update (2026-03-21)
+- **Submodule Updates:**
+  - Server: Fixed lint errors in dm_hub.go (removed unused fields, removed unused function, added error checking for json.Unmarshal)
+  - Server: Added GetUserRooms endpoint for fetching user's joined rooms with member counts
+  - Frontend: Enhanced notifications page with push service integration
+  - Docs: Memory bank update
+- All lint/tests pass
+- Created releases: enclavr v2026.03.21, frontend v2026.03.20-8, server v2026.03.20-6
 
 ## Latest Changes (2026-03-21)
-- **Regression Monitoring Completed:**
-  - Checked all 5 repos for recently closed issues
-  - enclavr/enclavr: 2 closed issues verified
-  - enclavr/frontend: 0 closed issues
-  - enclavr/server: 2 closed issues verified (informational)
-  - enclavr/infra: 0 closed issues
-  - enclavr/docs: 1 closed issue verified
-  - No regressions detected
-  - No issues reopened
+- **Server Fixes:**
+  - Removed unused fields (hub, connectedAt, sequence) from DMClient struct
+  - Removed unused sendToUser function from DMHub
+  - Added `_ =` to ignore json.Unmarshal return values in 3 places
+  - Added GetUserRooms endpoint returning user's joined rooms with member counts
+  - All tests pass, lint clean
 
-| Repo | Closed | Verified | Reopened | Fixes |
-|------|--------|----------|----------|-------|
-| enclavr/enclavr | 2 | 2 | 0 | ✅ |
-| enclavr/frontend | 0 | 0 | 0 | ✅ |
-| enclavr/server | 2 | 2 | 0 | ✅ |
-| enclavr/infra | 0 | 0 | 0 | ✅ |
-| enclavr/docs | 1 | 1 | 0 | ✅ |
+- **Frontend Features:**
+  - Enhanced notifications page with push service integration
+  - Added subscription management for push notifications
+  - Added browser push support detection
+  - Added loading states and back button navigation
+  - Updated field naming to match server API (snake_case)
+  - Lint passes
 
-Verified fixes:
-- enclavr#2 (mobile sidebar): toggle button with z-index 1002 in place
-- enclavr#1 (.env.example): clear comments distinguish DB sections
+- **Submodule Updates:**
+  - Updated docs submodule to v2026.03.20-1
+  - Updated frontend submodule to v2026.03.20-8
+  - Updated server submodule to v2026.03.20-6
+  - Created root release v2026.03.21
 - server#2: informational question, no fix needed
 - server#1: test issue, no fix needed  
 - docs#1: docs up-to-date with recent commits
