@@ -1,48 +1,26 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-PR review completed across all 5 repos
+Regression monitoring across all 5 repos
 
 ## Latest Update (2026-03-22)
-- **PR Review Across All 5 Repos:**
-  | Repo | Open PRs | Reviewed | Merged | Closed |
-  |------|----------|----------|--------|--------|
-  | enclavr/enclavr | 0 | 0 | 0 | 0 |
+- **Regression Monitoring Results:**
+  | Repo | Closed | Verified | Reopened | Fixes |
+  |------|--------|----------|----------|-------|
+  | enclavr/enclavr | 2 | 2 | 0 | 0 |
   | enclavr/frontend | 0 | 0 | 0 | 0 |
-  | enclavr/server | 0 | 0 | 0 | 0 |
+  | enclavr/server | 3 | 3 | 0 | 0 |
   | enclavr/infra | 0 | 0 | 0 | 0 |
-  | enclavr/docs | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 1 | 1 | 0 | 0 |
 
-- All 5 repositories have no open PRs - no reviews, merges, or closes needed
-
-## Latest Update (2026-03-22)
-- Submodule update completed
-- Ran `git submodule update --remote --merge`
-- docs: merged in 44e9d8af (already up to date)
-- frontend, infra, server: already at latest
-- No changes to commit (working tree clean)
-
-## Latest Update (2026-03-22)
-- **Fixed: server#3 - Database migration creates indexes on non-existent tables**
-  - Added TableName() functions to UserStatusModel and RoomFeatured
-  - Root cause: GORM default pluralization didn't match migration table names
-  - UserStatusModel: 'user_statuses' (matching migration 014)
-  - RoomFeatured: 'room_featured' (matching migration 021)
-  - All tests pass, lint clean
-  - Committed and pushed to server
-
-## Latest Update (2026-03-22)
-- **Fixed: frontend#2 - Sentry TypeError on 409 room join response**
-  - The Sentry beforeSend handler was throwing a TypeError when the originalException was a string
-  - Fixed by adding a null check and handling string errors separately
-  - Root cause: The 'in' operator cannot be used on string primitives
-  - Fix applied to sentry.client.config.tsx
-  - Typecheck: PASS
-  - Lint: PASS (1 warning - same as before)
-  - Committed and pushed to frontend
-
-## Latest Update (2026-03-22)
-- Proactive improvements completed
+- **Verified closed issues:**
+  - enclavr#2: "mobile layout sidebar for docs incorrect placement" - FIX VERIFIED (CSS has z-index:1001, mobile-open class, toggle)
+  - enclavr#1: "Duplicate variables in .env.example" - FIX VERIFIED (clarified in place)
+  - server#3: "Database migration creates indexes on non-existent tables" - FIX VERIFIED (TableName() functions added)
+  - server#2: "New features?" - informational, no fix needed
+  - server#1: "Issue Test" - test issue, no fix needed
+  - docs#1: "Outdated and doesn't match latest version at all" - FIX VERIFIED (docs up to date)
+- **No regressions detected** - all closed issues remain closed
 
 ## Latest Changes (2026-03-22)
 - **Release Analysis Completed for All Repos:**
