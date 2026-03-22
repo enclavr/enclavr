@@ -1,7 +1,30 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Tabs component added to frontend UI library.
+Release management - analyzing recent releases across all 5 repos
+
+## Latest Changes (2026-03-23)
+- **Release Analysis Completed:**
+  | Repo | Releases | Analyzed | Updated | Notes |
+  |------|----------|----------|---------|-------|
+  | enclavr/enclavr | v2026.03.23 | ✓ | - | Complete |
+  | enclavr/frontend | v2026.03.23 | ✓ | - | Complete |
+  | enclavr/server | v2026.03.23 | ✓ | - | Complete |
+  | enclavr/infra | v2026.03.22 | ✓ | - | Complete |
+  | enclavr/docs | v2026.03.23 | ✓ | - | Complete |
+
+- Release v2026.03.23 Summary:
+  - enclavr/enclavr: Sentry client init, Neon PostgreSQL, GitHub Pages, API fixes
+  - enclavr/frontend: Sentry fix (TypeError on 409 responses)
+  - enclavr/server: TableName() fixes for migrations
+  - enclavr/infra: NEXT_PUBLIC_* build args fix
+  - enclavr/docs: GitHub Pages deployment
+
+- infra has 1 new commit since v2026.03.22 (monitoring stack with Prometheus/Grafana)
+- No new releases needed - all repos have latest releases or just 1 commit behind
+
+## Previous Changes (2026-03-23)
+- Previous daily release cycle completed
 
 ## Latest Changes (2026-03-23)
 - **Frontend Tabs Component:**
