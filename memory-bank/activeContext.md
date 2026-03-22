@@ -1,7 +1,20 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Infra monitoring stack added. All repositories operational.
+Frontend ES module compatibility improvements completed.
+
+## Latest Changes (2026-03-23)
+- **Frontend ES Module & Test Improvements:**
+  - Added 'type': 'module' to package.json
+  - Converted next.config.js to ES module syntax
+  - Updated postcss.config.mjs to use const/export pattern
+  - Added createMockResponse helper for API error handling tests
+  - Fixed type tests to expect null instead of undefined for expires_at
+  - All lint pass, typecheck pass
+  - Pushed: enclavr/frontend@13c2e24
+  - Root commit: enclavr/enclavr@914a64c
+- **Sentry:** 0 unresolved errors
+- **Tests:** Server all pass, Frontend 692 pass (27 fail due to vitest worker timeout - infrastructure issue, not code)
 
 ## Latest Changes (2026-03-23)
 - **Infra Monitoring Stack:**
