@@ -1,7 +1,44 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Fixed missing preference fields in server preferences handler (UpdatePreferences was not applying NotificationSound, DesktopNotification, MobileNotification, MentionNotification, DmNotification, ShowTypingIndicator, ShowReadReceipts, AutoScrollMessages, Use24HourFormat, DisplayMode).
+PR review completed - all repositories have 0 open PRs. CI runs analyzed - no actionable failures. Sentry: 0 unresolved errors.
+
+## Latest Changes (2026-03-23)
+- **PR Review Across All 5 Repos:**
+  - enclavr/enclavr: 0 open PRs
+  - enclavr/frontend: 0 open PRs
+  - enclavr/server: 0 open PRs
+  - enclavr/infra: 0 open PRs
+  - enclavr/docs: 0 open PRs
+  - No reviews, merges, or closes needed
+- **CI Analysis:**
+  - Frontend CI runs: some show "failure" but tests actually canceled (not code failures)
+  - Server CI: Recent runs show success
+  - No actionable CI failures found
+- **Sentry:** 0 unresolved errors
+
+## Latest Changes (2026-03-23)
+- **GitHub Issues Review:**
+  - enclavr/frontend: 0 open issues
+  - enclavr/server: 0 open issues
+  - enclavr/infra: 0 open issues
+  - enclavr/docs: 0 open issues
+  - All 6 closed issues verified (frontend#2 Sentry TypeError fix confirmed in code)
+- **Sentry Analysis:**
+  - 0 unresolved errors found
+  - frontend#2 (TypeError on 409 room join): FIX VERIFIED - sentry.client.config.tsx lines 49-58 properly handle 409 responses
+  - No new bugs found
+
+## Latest Changes (2026-03-23)
+- Added Select component with custom dropdown UI
+- Uses useMemo for computed selected label (React 19 compatible)
+- Supports options with disabled states, labels, and values
+- Follows glass-input styling with backdrop blur
+- Frontend lint: PASS
+- Frontend typecheck: PASS
+- Server tests: PASS
+- Server lint: PASS
+- Pushed: enclavr/frontend@3040845, root commit e50ce19
 
 ## Latest Changes (2026-03-22)
 - Fixed UpdatePreferences handler to apply all preference fields from request
