@@ -171,7 +171,12 @@ cp .env.example .env
 docker compose up -d
 ```
 
-**PostgreSQL 18+ Note:** When using PostgreSQL 18+, the volume path changed:
+**Neon (Default):** The server now defaults to Neon PostgreSQL. Set `NEON_CONNECTION_STRING` in your environment:
+```bash
+NEON_CONNECTION_STRING=postgres://user:password@host.neon.tech/neondb?sslmode=require
+```
+
+**PostgreSQL 18+ Note:** When using self-hosted PostgreSQL 18+, the volume path changed:
 - Old: `/var/lib/postgresql/data`
 - New: `/var/lib/postgresql/18/docker`
 - Set `PGDATA: /var/lib/postgresql/18/docker` environment variable
