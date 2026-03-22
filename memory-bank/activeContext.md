@@ -1,7 +1,37 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Sentry analysis completed - no critical errors found.
+Release management completed for all 5 repos
+
+## Latest Changes (2026-03-22)
+- **Release Analysis Completed for All Repos:**
+  | Repo | Releases | Analyzed | Updated | Notes |
+  |------|----------|----------|---------|-------|
+  | enclavr/enclavr | v2026.03.22 | ✓ | - | Complete |
+  | enclavr/frontend | v2026.03.22 | ✓ | - | Complete |
+  | enclavr/server | v2026.03.22 | ✓ | - | Complete |
+  | enclavr/infra | v2026.03.22 | ✓ | - | Complete |
+  | enclavr/docs | v2026.03.22 | ✓ | - | Complete |
+
+- **Release v2026.03.22 Summary:**
+  - enclavr/enclavr: Sentry client init, Neon PostgreSQL, GitHub Pages, API fixes
+  - enclavr/frontend: Sentry client init, API fixes, Joined button feature, test fixtures
+  - enclavr/server: Neon PostgreSQL integration, hub.go refactoring, API fixes
+  - enclavr/infra: NEXT_PUBLIC_* build args fix
+  - enclavr/docs: GitHub Pages workflow, Neon docs updates
+- All release notes complete and match commits
+- No new releases needed (all repos at latest)
+- No commits since v2026.03.22
+
+## Latest Update (2026-03-22)
+- Submodule update completed
+- Ran `git submodule update --remote --merge`
+- docs, frontend, infra, server: already at latest (no new remote commits)
+- Submodules have local uncommitted changes but no new commits to merge
+- No changes to commit at root level
+
+## Latest Update (2026-03-22)
+- Debugging completed
 
 ## Latest Update (2026-03-22)
 - Analyzed Sentry issues
