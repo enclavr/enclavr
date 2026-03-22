@@ -6,6 +6,22 @@
 - Monorepo structure with git submodules
 
 ## Latest Additions (2026-03-23)
+- **Server ImportPrivacySettings:**
+  - Added ImportPrivacySettings handler to privacy.go
+  - Matches ImportPreferences functionality for complete CRUD
+  - Validates string settings (everyone, friends, none) before applying
+  - Tests pass, lint clean
+  - Pushed to remote: enclavr/server@2d4be63
+
+- **Infra Monitoring Stack:**
+  - Added Prometheus for metrics collection (port 9090)
+  - Added Grafana with system overview dashboard (port 3030)
+  - Added node-exporter for system metrics (port 9100)
+  - Added postgres-exporter for database metrics (port 9187)
+  - Added redis-exporter for cache metrics (port 9121)
+  - Updated coturn to 4.9.0-alpine (security update)
+  - Config validated, pushed to remote: enclavr/infra@7ca4dfe
+
 - **Frontend Select Component**:
   - Added Select dropdown component with Apple Liquid Glass design
   - Uses useMemo for computed selected label (React 19 compatible)

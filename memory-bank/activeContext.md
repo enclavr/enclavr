@@ -1,7 +1,50 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-PR review completed - all repositories have 0 open PRs. CI runs analyzed - no actionable failures. Sentry: 0 unresolved errors.
+Infra monitoring stack added. All repositories operational.
+
+## Latest Changes (2026-03-23)
+- **Infra Monitoring Stack:**
+  - Added Prometheus for metrics collection (port 9090)
+  - Added Grafana with system overview dashboard (port 3030)
+  - Added node-exporter for system metrics (port 9100)
+  - Added postgres-exporter for database metrics (port 9187)
+  - Added redis-exporter for cache metrics (port 9121)
+  - Updated coturn to 4.9.0-alpine (security update)
+  - Docker config validated and pushed to remote: enclavr/infra@7ca4dfe
+
+## Latest Changes (2026-03-23)
+- **Server Feature:**
+  - Added ImportPrivacySettings handler to match ImportPreferences
+  - Provides complete CRUD interface (Get, Update, Export, Import, Reset)
+  - Validates string settings (everyone, friends, none) before applying
+  - All tests pass, lint clean
+  - Pushed: enclavr/server@2d4be63
+
+## Latest Changes (2026-03-23)
+- **Server Feature:**
+  - Added ImportPrivacySettings handler to match ImportPreferences
+  - Provides complete CRUD interface (Get, Update, Export, Import, Reset)
+  - Validates string settings (everyone, friends, none) before applying
+  - All tests pass, lint clean
+  - Pushed: enclavr/server@2d4be63
+- **Root Update:**
+  - Updated server submodule to latest
+  - Pushed: enclavr/enclavr@bfeb569
+
+## Latest Changes (2026-03-23)
+- **PR Review Across All 5 Repos:**
+  - enclavr/enclavr: 0 open PRs
+  - enclavr/frontend: 0 open PRs
+  - enclavr/server: 0 open PRs
+  - enclavr/infra: 0 open PRs
+  - enclavr/docs: 0 open PRs
+  - No reviews, merges, or closes needed
+- **CI Analysis:**
+  - Frontend CI runs: some show "failure" but tests actually canceled (not code failures)
+  - Server CI: Recent runs show success
+  - No actionable CI failures found
+- **Sentry:** 0 unresolved errors
 
 ## Latest Changes (2026-03-23)
 - **PR Review Across All 5 Repos:**
