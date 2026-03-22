@@ -1,7 +1,72 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Self-host testing completed - 3 bugs found and issues created
+Regression monitoring across all 5 repositories completed.
+
+## Latest Changes (2026-03-22)
+- **Regression Monitoring Results:**
+  | Repo | Closed | Verified | Reopened | Fixes |
+  |------|--------|----------|----------|-------|
+  | enclavr/enclavr | 2 | 2 | 0 | 0 |
+  | enclavr/frontend | 0 | 0 | 0 | 0 |
+  | enclavr/server | 0 | 0 | 0 | 0 |
+  | enclavr/infra | 0 | 0 | 0 | 0 |
+  | enclavr/docs | 1 | 1 | 0 | 0 |
+
+- **Verified closed issues:**
+  - enclavr#2: "mobile layout sidebar for docs incorrect placement" - FIX VERIFIED
+  - enclavr#1: "Duplicate variables in .env.example" - FIX VERIFIED
+  - docs#1: "Outdated and doesn't match latest version at all" - FIX VERIFIED
+- **New open issues (not regressions):**
+  - frontend#1: "Self-host: Frontend TypeScript test files have outdated type mocks"
+  - frontend#2: "Self-host: Sentry reports TypeError on 409 room join response"
+- **No regressions detected** - all closed issues remain closed
+
+## Latest Changes (2026-03-22)
+- **Branch/Tag Management:**
+  - Checked all 5 repos: enclavr, frontend, server, infra, docs
+  - No stale branches found (all repos use trunk-based development with main branch only)
+  - Release tag v2026.03.22 already exists in all repositories:
+    - enclavr/enclavr: tag exists
+    - enclavr/frontend: tag exists
+    - enclavr/server: tag exists
+    - enclavr/infra: tag exists
+    - enclavr/docs: tag exists
+
+## Previous Changes (2026-03-22)
+Label standardization verified across all 5 repositories.
+
+## Latest Changes (2026-03-22)
+- Verified standard labels in all 5 enclavr repositories:
+  - enclavr/enclavr: bug(#ee0701), feature(#008672), enhancement(#84b6eb), documentation(#d4c5f9), security(#ee0701) - all present
+  - enclavr/frontend: all 5 labels present with correct colors
+  - enclavr/server: all 5 labels present with correct colors
+  - enclavr/infra: all 5 labels present with correct colors
+  - enclavr/docs: all 5 labels present with correct colors
+- No labels needed to be created - all standard labels already exist with correct colors
+
+## Latest Changes (2026-03-22)
+- Release management - Created v2026.03.22 releases for all 5 repositories.
+
+## Latest Changes (2026-03-22)
+- Created v2026.03.22 release for enclavr (root monorepo)
+- Created v2026.03.22 release for frontend (Sentry fix, API updates)
+- Created v2026.03.22 release for server (Neon PostgreSQL integration)
+- Created v2026.03.22 release for infra (Docker build args fix)
+- Created v2026.03.22 release for docs (GitHub Pages workflow)
+- Updated submodules to latest tags
+
+## Latest Update (2026-03-22)
+- **PR Review Across All 5 Repos:**
+  - enclavr/enclavr: 0 open PRs
+  - enclavr/frontend: 0 open PRs
+  - enclavr/server: 0 open PRs
+  - enclavr/infra: 0 open PRs
+  - enclavr/docs: 0 open PRs
+  - No reviews, merges, or closes needed
+
+## Latest Update (2026-03-22)
+- Debugging completed
 
 ## Latest Changes (2026-03-22)
 - **Self-Host Testing Results:**
