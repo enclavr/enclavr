@@ -16,6 +16,7 @@ source "$SCRIPT_DIR/labels.sh"
 source "$SCRIPT_DIR/branches.sh"
 source "$SCRIPT_DIR/proactive.sh"
 source "$SCRIPT_DIR/debug.sh"
+source "$SCRIPT_DIR/selfhost-debug.sh"
 
 init_logging
 

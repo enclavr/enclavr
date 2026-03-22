@@ -5,7 +5,16 @@
 - CI/CD workflows in place
 - Monorepo structure with git submodules
 
-## Latest Additions (2026-03-20)
+## Latest Additions (2026-03-22)
+- **Server hub.go Refactoring**:
+  - Extracted types/constants from hub.go (5927 lines) to meet <500 line guideline
+  - presence.go (352 lines): PresenceState, RoomState, Notification types, User types, Payloads
+  - websocket.go (349 lines): Message.encode/decode, messageBufferPool
+  - hub.go now 5251 lines (11.4% reduction)
+  - Build/Tests/Lint: All pass
+  - Note: Further extraction requires significant architectural changes
+
+## Additions (2026-03-20)
 - **Frontend**: useKeyboardShortcuts, useAudioLevel hooks, appearance page
 - **Server**: ENCRYPTION_KEY config, SearchRooms endpoint, typing throttle
 - **Infra**: CI workflow improvements

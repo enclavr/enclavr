@@ -1,9 +1,70 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Label standardization across all 5 repositories
+Self-host testing completed - 3 bugs found and issues created
+
+## Latest Changes (2026-03-22)
+- **Self-Host Testing Results:**
+  - Docker services: All 5 running (postgres, redis, server, frontend, coturn)
+  - Health checks: PASS (server :8080, frontend :3000)
+  - Server build/tests: PASS
+  - Frontend typecheck: FAILED (27 TypeScript errors in test files)
+  - Frontend lint: PASS (1 warning)
+  - Browser tests: PASS (Rooms, DM, Explore pages load correctly)
+  - Sentry: 10 errors in last 24h (TypeError on 409 responses)
+  - Database: 10 tables missing indexes (scheduled_messages, message_reminders, etc.)
+- **Issues Created:**
+  - server#3: Database migration creates indexes on non-existent tables
+  - frontend#1: TypeScript test files have outdated type mocks
+  - frontend#2: Sentry reports TypeError on 409 room join response
+
+## Previous Changes (2026-03-22)
+- Server hub.go refactoring - extracting types and functions to reduce file size below 500 lines
+
+## Latest Changes (2026-03-22)
+- **Server hub.go Refactoring:**
+  - Extracted types/constants to new files to meet <500 line guideline
+  - Created presence.go (352 lines): Presence types, Room types, Notification types, User types, Payload types, Subscription/storage types
+  - Extended websocket.go (349 lines): Added Message.encode() and Message.decode() methods, messageBufferPool
+  - Result: hub.go reduced from 5927 to 5251 lines (11.4% reduction, 676 lines extracted)
+  - Build: PASS
+  - Tests: PASS
+  - Lint: CLEAN
+  - Remaining: hub.go still at 5251 lines (target: <500). Further extraction requires significant architectural changes due to tightly coupled Hub/Client methods
 
 ## Latest Changes (2026-03-21)
+- **Branch/Tag Management:**
+  - Checked all 5 repos: enclavr, frontend, server, infra, docs
+  - No stale branches found (all repos use trunk-based development with main branch only)
+  - Release tag v2026.03.21 already exists in all repositories:
+    - enclavr/enclavr: tag exists
+    - enclavr/frontend: tag exists
+    - enclavr/server: tag updated to latest main commit (d25143f)
+    - enclavr/infra: tag exists
+    - enclavr/docs: tag exists
+
+## Latest Update (2026-03-21)
+- **Regression Monitoring Completed:**
+  - Checked all 5 repos: enclavr, frontend, server, infra, docs
+  - Closed issues: enclavr(2), server(2), docs(1) = 5 total
+  - Verified: 5
+  - Reopened: 0
+  - Fixes needed: 0
+  - All closed issues remain closed - no regressions detected
+
+## Latest Changes (2026-03-21)
+- **Branch/Tag Management:**
+  - Checked all 5 repos: enclavr, frontend, server, infra, docs
+  - No stale branches found (all repos use trunk-based development with main branch only)
+  - Release tag v2026.03.21 already exists in all repositories:
+    - enclavr/enclavr: tag exists
+    - enclavr/frontend: tag exists
+    - enclavr/server: tag updated to latest main commit (d25143f)
+    - enclavr/infra: tag exists
+    - enclavr/docs: tag exists
+
+## Latest Changes (2026-03-21)
+- Label standardization across all 5 repositories
 - Verified and confirmed all 5 standard labels exist in all repositories:
   - enclavr/enclavr: bug, feature, enhancement, documentation, security - all present
   - enclavr/frontend: bug, feature, enhancement, documentation, security - all present
