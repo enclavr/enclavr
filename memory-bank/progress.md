@@ -6,6 +6,14 @@
 - Monorepo structure with git submodules
 
 ## Latest Additions (2026-03-23)
+- **Frontend Tabs Component:**
+  - Added Tabs, TabsList, TabsTrigger, TabsContent components
+  - Follows Apple Liquid Glass design pattern
+  - Supports keyboard navigation and ARIA attributes
+  - Includes disabled state support
+  - Lint passes, typecheck passes
+  - Pushed to remote: enclavr/frontend@1558332
+
 - **Frontend ES Module & Test Improvements:**
   - Added 'type': 'module' to package.json for ES modules
   - Converted next.config.js to ES module syntax

@@ -1,7 +1,17 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Frontend ES module compatibility improvements completed.
+Tabs component added to frontend UI library.
+
+## Latest Changes (2026-03-23)
+- **Frontend Tabs Component:**
+  - Added Tabs, TabsList, TabsTrigger, TabsContent components
+  - Follows Apple Liquid Glass design pattern
+  - Supports keyboard navigation and ARIA attributes
+  - Includes disabled state support
+  - Lint pass, typecheck pass
+  - Pushed: enclavr/frontend@1558332
+  - Root commit: enclavr/enclavr@e002d47
 
 ## Latest Changes (2026-03-23)
 - **Frontend ES Module & Test Improvements:**
