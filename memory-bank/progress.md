@@ -5,7 +5,26 @@
 - CI/CD workflows in place
 - Monorepo structure with git submodules
 
+## Latest Additions (2026-03-23)
+- **Frontend Select Component**:
+  - Added Select dropdown component with Apple Liquid Glass design
+  - Uses useMemo for computed selected label (React 19 compatible)
+  - Supports options with disabled states, labels, and values
+  - Follows glass-input styling with backdrop blur
+  - Lint passes, typecheck passes
+  - Pushed to remote: enclavr/frontend@3040845
+
 ## Latest Additions (2026-03-22)
+- **Frontend Sentry Fix & Skeleton Components**:
+  - Fixed beforeSend handler to properly handle non-Error objects
+  - Added try-catch to prevent TypeError on invalid error objects
+  - Filter out expected 409 conflict errors from Sentry reporting
+  - Added Skeleton, SkeletonCard, SkeletonList, SkeletonAvatar components
+  - Added Badge and Toast components (recreated)
+  - All components follow Apple Liquid Glass design pattern
+  - Lint passes, typecheck passes
+  - Pushed to remote: enclavr/frontend@decd630
+
 - **Frontend Badge & Toast Components**:
   - Added Badge component with variants (default, success, warning, error, info, outline)
   - Added NotificationBadge component for notification counts
