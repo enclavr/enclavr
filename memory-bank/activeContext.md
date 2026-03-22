@@ -1,7 +1,16 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements completed
+Fixed missing preference fields in server preferences handler (UpdatePreferences was not applying NotificationSound, DesktopNotification, MobileNotification, MentionNotification, DmNotification, ShowTypingIndicator, ShowReadReceipts, AutoScrollMessages, Use24HourFormat, DisplayMode).
+
+## Latest Changes (2026-03-22)
+- Fixed UpdatePreferences handler to apply all preference fields from request
+- All server tests pass
+- Server lint passes
+- Frontend has test infrastructure issues (18 tests fail due to worker forks timeout, not code issues - 523 tests pass)
+
+## Previous Changes (2026-03-22)
+- Script/main.sh was simplified into a unified autonomous agent loop
 
 ## Latest Update (2026-03-22)
 - **Regression Monitoring Results:**
