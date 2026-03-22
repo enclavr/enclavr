@@ -1,10 +1,14 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Debugging completed
+Submodule update completed
 
 ## Latest Update (2026-03-22)
-- Debugging completed
+- Submodule update completed
+- Ran `git submodule update --remote --merge`
+- docs: merged in 44e9d8af (already up to date)
+- frontend, infra, server: already at latest
+- No changes to commit (working tree clean)
 
 ## Latest Update (2026-03-22)
 - **Fixed: server#3 - Database migration creates indexes on non-existent tables**
