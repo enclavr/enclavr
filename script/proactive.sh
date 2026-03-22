@@ -32,6 +32,8 @@ set_proactive_cooldown() {
     echo "$current_time" > "$PROACTIVE_COOLDOWN_FILE"
 }
 
+PROACTIVE_MCP_REFS="Use MCP tools: Sentry (sentry_search_issues, sentry_search_events, sentry_analyze_issue_with_seer, sentry_update_issue), Neon (neon_run_sql, neon_list_slow_queries, neon_explain_sql_statement, neon_get_database_tables), Chrome DevTools (chrome-devtools_navigate_page, chrome-devtools_take_snapshot, chrome-devtools_list_console_messages), Context7 (context7_resolve-library-id, context7_query-docs), Git (mcp-server-git_git_status, mcp-server-git_git_diff)."
+
 run_proactive() {
     log "Proactive improvements - adding new features + maintaining existing code..."
 
@@ -41,24 +43,27 @@ run_proactive() {
 
     set_proactive_cooldown
 
+    log_debug "$PROACTIVE_MCP_REFS"
+
     local TASK=""
+    local MCP_REF="$PROACTIVE_MCP_REFS"
     if [ -d "server" ] && [ -d "frontend" ]; then
         case $((RANDOM % 8)) in
-            0) TASK="1) MAINTENANCE: Run code review, fix bugs, add tests for uncovered code, refactor messy functions, update dependencies. 2) NEW FEATURE: Add a new API endpoint (e.g., user profile, settings, message reactions, room invites). Design, implement, test." ;;
-            1) TASK="1) MAINTENANCE: Fix TypeScript errors, add unit tests, improve component structure, clean up unused code. 2) NEW FEATURE: Add a new UI component/page (e.g., settings page, room wizard, profile modal). Design, implement, test." ;;
-            2) TASK="1) MAINTENANCE: Review WebSocket handlers, fix edge cases, add connection error handling, improve logging. 2) NEW FEATURE: Add new WebSocket event (typing indicators, online users, room notifications). Design, implement, test." ;;
-            3) TASK="1) MAINTENANCE: Review database queries, add indexes, optimize slow queries, clean up migrations. 2) NEW FEATURE: Add new database model (audit logs, preferences, categories, attachments). Design, implement, add migrations." ;;
-            4) TASK="1) MAINTENANCE: Fix lint errors, improve test coverage, refactor hooks, add error boundaries. 2) NEW FEATURE: Add new React hook or utility (useMediaQuery, useDebounce, useLocalStorage). Design, implement, test." ;;
-            5) TASK="1) MAINTENANCE: Review middleware, add rate limiting, improve error handling, enhance logging. 2) NEW FEATURE: Add new service (caching, notifications, webhooks). Design, implement, test." ;;
-            6) TASK="1) MAINTENANCE: Security audit, fix vulnerabilities, update auth flows, improve token handling. 2) NEW FEATURE: Add authentication feature (OAuth, 2FA, password reset). Design, implement, test." ;;
-            7) TASK="1) MAINTENANCE: Improve real-time code, handle reconnection, add message validation, clean up. 2) NEW FEATURE: Add real-time feature (read receipts, editing, threading, blocking). Design, implement, test." ;;
+            0) TASK="$MCP_REF 1) MAINTENANCE: Run code review, fix bugs, add tests for uncovered code, refactor messy functions, update dependencies. 2) NEW FEATURE: Add a new API endpoint (e.g., user profile, settings, message reactions, room invites). Design, implement, test." ;;
+            1) TASK="$MCP_REF 1) MAINTENANCE: Fix TypeScript errors, add unit tests, improve component structure, clean up unused code. 2) NEW FEATURE: Add a new UI component/page (e.g., settings page, room wizard, profile modal). Design, implement, test." ;;
+            2) TASK="$MCP_REF 1) MAINTENANCE: Review WebSocket handlers, fix edge cases, add connection error handling, improve logging. 2) NEW FEATURE: Add new WebSocket event (typing indicators, online users, room notifications). Design, implement, test." ;;
+            3) TASK="$MCP_REF 1) MAINTENANCE: Review database queries, add indexes, optimize slow queries, clean up migrations. 2) NEW FEATURE: Add new database model (audit logs, preferences, categories, attachments). Design, implement, add migrations." ;;
+            4) TASK="$MCP_REF 1) MAINTENANCE: Fix lint errors, improve test coverage, refactor hooks, add error boundaries. 2) NEW FEATURE: Add new React hook or utility (useMediaQuery, useDebounce, useLocalStorage). Design, implement, test." ;;
+            5) TASK="$MCP_REF 1) MAINTENANCE: Review middleware, add rate limiting, improve error handling, enhance logging. 2) NEW FEATURE: Add new service (caching, notifications, webhooks). Design, implement, test." ;;
+            6) TASK="$MCP_REF 1) MAINTENANCE: Security audit, fix vulnerabilities, update auth flows, improve token handling. 2) NEW FEATURE: Add authentication feature (OAuth, 2FA, password reset). Design, implement, test." ;;
+            7) TASK="$MCP_REF 1) MAINTENANCE: Improve real-time code, handle reconnection, add message validation, clean up. 2) NEW FEATURE: Add real-time feature (read receipts, editing, threading, blocking). Design, implement, test." ;;
         esac
     elif [ -d "server" ]; then
-        TASK="1) MAINTENANCE: Code review, bug fixes, test coverage, refactoring, dependency updates. 2) NEW FEATURE: Add new API endpoint, database model, middleware, or service. Design, implement, test, document."
+        TASK="$MCP_REF 1) MAINTENANCE: Code review, bug fixes, test coverage, refactoring, dependency updates. 2) NEW FEATURE: Add new API endpoint, database model, middleware, or service. Design, implement, test, document."
     elif [ -d "frontend" ]; then
-        TASK="1) MAINTENANCE: TypeScript fixes, test coverage, component refactoring, lint cleanup. 2) NEW FEATURE: Add new UI component, page, React hook, or utility. Design, implement, test."
+        TASK="$MCP_REF 1) MAINTENANCE: TypeScript fixes, test coverage, component refactoring, lint cleanup. 2) NEW FEATURE: Add new UI component, page, React hook, or utility. Design, implement, test."
     else
-        TASK="1) MAINTENANCE: Analyze project, fix issues, improve structure, update docs. 2) NEW FEATURE: Implement a missing feature. Check existing features first, then add something new."
+        TASK="$MCP_REF 1) MAINTENANCE: Analyze project, fix issues, improve structure, update docs. 2) NEW FEATURE: Implement a missing feature. Check existing features first, then add something new."
     fi
 
     log_info "Proactive task selected: $TASK"
