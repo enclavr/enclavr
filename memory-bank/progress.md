@@ -6,6 +6,15 @@
 - Monorepo structure with git submodules
 
 ## Latest Additions (2026-03-22)
+- **Frontend Badge & Toast Components**:
+  - Added Badge component with variants (default, success, warning, error, info, outline)
+  - Added NotificationBadge component for notification counts
+  - Added Toast notification system with toast(), removeToast(), useToast(), ToastContainer
+  - Uses useSyncExternalStore for optimal React 19 performance
+  - Follows Apple Liquid Glass design pattern
+  - Tests: 12 passing, typecheck passes, lint passes
+  - Pushed to remote: enclavr/frontend@74b2ec1
+
 - **Server hub.go Refactoring**:
   - Extracted types/constants from hub.go (5927 lines) to meet <500 line guideline
   - presence.go (352 lines): PresenceState, RoomState, Notification types, User types, Payloads
