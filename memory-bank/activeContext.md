@@ -1,7 +1,16 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-Proactive improvements - Fixed Sentry TypeError on 409 responses
+Database analysis - Fixed table name mismatch issue in server
+
+## Latest Update (2026-03-22)
+- **Fixed: server#3 - Database migration creates indexes on non-existent tables**
+  - Added TableName() functions to UserStatusModel and RoomFeatured
+  - Root cause: GORM default pluralization didn't match migration table names
+  - UserStatusModel: 'user_statuses' (matching migration 014)
+  - RoomFeatured: 'room_featured' (matching migration 021)
+  - All tests pass, lint clean
+  - Committed and pushed to server
 
 ## Latest Update (2026-03-22)
 - **Fixed: frontend#2 - Sentry TypeError on 409 room join response**
