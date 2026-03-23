@@ -33,6 +33,27 @@ check_gh_cli || exit 1
 
 find_agent "kilo" || log_warn "kilo not found"
 
+start_chrome_for_testing() {
+    if curl -s http://localhost:9222/json/version >/dev/null 2>&1; then
+        log_debug "Chrome already running with remote debugging"
+        return 0
+    fi
+    
+    log "Starting Chrome for browser testing..."
+    google-chrome --headless=new --remote-debugging-port=9222 --no-sandbox --disable-gpu --disable-dev-shm-usage >/dev/null 2>&1 &
+    CHROME_PID=$!
+    
+    sleep 2
+    
+    if curl -s http://localhost:9222/json/version >/dev/null 2>&1; then
+        log "Chrome started successfully (PID: $CHROME_PID)"
+        return 0
+    else
+        log_warn "Chrome may have failed to start"
+        return 1
+    fi
+}
+
 # OPTIMIZE: Cache memory bank once at startup (~500 tokens saved per loop)
 cache_memory_bank
 log_debug "Memory bank cached for session"
@@ -151,6 +172,10 @@ while true; do
         TASK="Analyze server changes and run tests, lint, then implement improvements"
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
         TARGET_REPO="frontend"
+        
+        # Start Chrome for browser testing if not running
+        start_chrome_for_testing
+        
         TASK="For frontend changes:
 1. Run tests: bun run test:run
 2. Run lint: bun run lint

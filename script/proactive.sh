@@ -41,6 +41,15 @@ run_proactive() {
         return 1
     fi
 
+    # Start Chrome for browser testing if doing frontend work
+    if [ -d "frontend" ]; then
+        if ! curl -s http://localhost:9222/json/version >/dev/null 2>&1; then
+            log "Starting Chrome for browser testing..."
+            google-chrome --headless=new --remote-debugging-port=9222 --no-sandbox --disable-gpu --disable-dev-shm-usage >/dev/null 2>&1 &
+            sleep 2
+        fi
+    fi
+
     set_proactive_cooldown
 
     log_debug "$PROACTIVE_MCP_REFS"

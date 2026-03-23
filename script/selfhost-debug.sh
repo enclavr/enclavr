@@ -12,6 +12,13 @@ source "$SCRIPT_DIR/github.sh"
 run_selfhost_debug() {
     log "Running self-host testing and debugging..."
 
+    # Start Chrome for browser testing if not running
+    if ! curl -s http://localhost:9222/json/version >/dev/null 2>&1; then
+        log "Starting Chrome for browser testing..."
+        google-chrome --headless=new --remote-debugging-port=9222 --no-sandbox --disable-gpu --disable-dev-shm-usage >/dev/null 2>&1 &
+        sleep 2
+    fi
+
     if ! check_rate_limit; then
         return 1
     fi
