@@ -32,7 +32,6 @@ log "==================================="
 check_gh_cli || exit 1
 
 find_agent "kilo" || log_warn "kilo not found"
-find_agent "opencode" || log_warn "opencode not found"
 
 # OPTIMIZE: Cache memory bank once at startup (~500 tokens saved per loop)
 cache_memory_bank

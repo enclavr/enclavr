@@ -1,27 +1,15 @@
 # Active Context - enclavr-root
 
 ## Latest Changes (2026-03-23)
-- **Submodule update check:** All submodules already at latest version
-- Branch/tag management: All 5 repos checked - no stale branches, all have v2026.03.23 tags
-- Submodules updated: docs (dirty - memory-bank changes), frontend/infra/server at tracked commits
-- Commit: 67d34f8 - chore: update submodules to latest
-- PR review completed: no open PRs in any enclavr repos
+- **Regression Monitoring (2026-03-23):** Completed regression check across all 5 repos
+- Results: **No regressions detected** - all closed issues remain fixed
+- Typecheck: Frontend passes
+- Database indexes: server uses tableExists() guards for conditional indexes
 
 ## Current Work Focus
 Proactive improvements completed
 
-## Latest Update (2026-03-23)
-Proactive improvements completed
-
-## Database Analysis (2026-03-23)
-- Project: envlavr-dev (dawn-flower-74504084) - Neon PostgreSQL 17
-- Slow queries: 10 (all Neon internal ops - migration_id, health_check)
-- Application queries: No slow queries detected
-- Tables analyzed: messages, users, rooms, presences, refresh_tokens, sessions, blocked_users, invites, user_rooms
-- Index coverage: All tables have proper indexes for PKs, FKs, and common query patterns
-- Result: **No database issues found**
-
-## Regression Monitoring (2026-03-23)
+## Regression Monitoring Results (2026-03-23)
 | Repo | Closed | Verified | Reopened | Fixes |
 |------|--------|----------|----------|-------|
 | enclavr/enclavr | 2 | 2 | 0 | All OK |
@@ -30,11 +18,21 @@ Proactive improvements completed
 | enclavr/infra | 0 | - | - | None |
 | enclavr/docs | 1 | 1 | 0 | All OK |
 
-**Summary:** No regressions detected. All fixes verified:
-- Mobile sidebar CSS (enclavr) - deployed
-- Duplicate .env vars (enclavr/infra) - commit 895bd64
-- TypeScript mock types (frontend) - typecheck passes
-- Sentry beforeSend (frontend) - try-catch in place
-- TableName functions (server) - commit f282351
-- Database migration indexes (server) - commit 789abc1
-- Docs version (docs) - no repro, closed not_planned
+**Summary:** No regressions detected.
+
+**Verified fixes:**
+- enclavr/enclavr#2 (mobile sidebar): Docs deployed to GitHub Pages
+- enclavr/enclavr#1 (duplicate .env): Fixed in infra commit 895bd64
+- enclavr/frontend#1 (TypeScript mocks): Typecheck passes
+- enclavr/frontend#2 (Sentry error): Fixed with try-catch in sentry.client.config.tsx
+- enclavr/server#3 (db indexes): Fixed - uses tableExists() guards
+- enclavr/server#2 (features): Feature request, closed not_planned
+- enclavr/server#1 (issue test): Test issue, closed not_planned
+- enclavr/docs#1 (outdated): Closed not_planned - user confusion
+
+## Latest Update (2026-03-23)
+Proactive improvements completed
+
+## Previous Changes (2026-03-22)
+- CI failure analysis across all repos (infrastructure issues, not code)
+- Database analysis (Neon) - no issues found

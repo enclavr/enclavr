@@ -32,12 +32,7 @@ find_agent() {
 }
 
 get_next_provider() {
-    local current="$1"
-    if [ "$current" = "kilo" ]; then
-        echo "opencode"
-    else
-        echo "kilo"
-    fi
+    echo "kilo"
 }
 
 get_shared_context() {

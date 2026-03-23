@@ -1,6 +1,6 @@
 [submodule "frontend"]
 	path = frontend
-	url = https://github.com/enclavr/frontend.git
+	url = ../frontend
 [submodule "server"]
 	path = server
 	url = https://github.com/enclavr/server.git
