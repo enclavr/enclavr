@@ -152,7 +152,18 @@ while true; do
         TASK="Analyze server changes and run tests, lint, then implement improvements"
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
         TARGET_REPO="frontend"
-        TASK="Analyze frontend changes and run tests, lint, then implement improvements"
+        TASK="For frontend changes:
+1. Run tests: bun run test:run
+2. Run lint: bun run lint
+3. Run typecheck: bun run typecheck
+4. Start dev server: cd frontend && bun run dev &
+5. Wait for server to start
+6. USE Chrome DevTools MCP to verify:
+   - chrome-devtools_navigate_page to http://localhost:3000
+   - chrome-devtools_take_snapshot to check page renders
+   - chrome-devtools_list_console_messages for errors
+7. Fix any visual or console issues found
+8. Commit changes"
     elif echo "$CHANGED_FILES" | grep -q "infra/"; then
         TARGET_REPO="infra"
         TASK="Analyze infra changes, verify Docker configuration"
