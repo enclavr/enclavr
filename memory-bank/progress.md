@@ -80,14 +80,16 @@
 - **Server**: ENCRYPTION_KEY config, SearchRooms endpoint, typing throttle
 - **Infra**: CI workflow improvements
 
-## CI Status (2026-03-20)
+## CI Status (2026-03-23)
 ### Known Issues (Not Code Related)
-- **Frontend CI**: Runner shutdown signals - GitHub Actions infrastructure/billing issue. IGNORE per AGENTS.md guidelines.
-- **Root Pages Deploy**: GitHub Pages may not be configured (404 errors)
-- **Docs Trigger Deploy**: Permission issue with repository dispatch event
+- **Frontend CI**: Runner shutdown signals (exit code 143) - GitHub Actions infrastructure/billing issue. IGNORE per AGENTS.md guidelines.
+- **Root Pages Deploy**: GitHub Pages not enabled (404 errors)
+- **Docs Trigger Deploy**: Permission issue with repository dispatch event - needs workflow permissions
+- **Infra CI**: Missing .env file in CI runner
 
 ### Fixed
 - **Server TestRefreshToken**: Fixed by commit 5416d5c (Auth config now set in test setup)
+- **Server Redis tests**: Fixed by commit 23393144240 (skip Redis tests in Neon CI)
 
 ## What's Left to Build
 - [ ] Monitor for new issues
