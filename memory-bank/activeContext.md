@@ -1,19 +1,24 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-GitHub PR management - reviewing and merging PRs across all repos
+CI failure analysis - checking all 5 repos for failed CI runs
 
 ## Latest Update (2026-03-25)
-- Checked all 5 repos for open PRs
-- enclavr repo: 0 open PRs
-- frontend repo: 0 open PRs
-- server repo: 0 open PRs
-- infra repo: 0 open PRs
-- docs repo: 0 open PRs
-- No PRs to review or merge
+- Analyzed CI failures across all 5 repos
+- enclavr/root: 25 failures - pages build from early March (infrastructure)
+- enclavr/frontend: 30 failures - test timeouts/cancellations (infrastructure)
+- enclavr/server: 29 failures - recent tests require Neon DB
+- enclavr/infra: 18 failures - some from Mar 17
+- enclavr/docs: 4 failures - deployment triggers (Mar 8-10)
+
+## Root Cause Analysis
+- Most failures are infrastructure (billing limits, timeouts, cancellations)
+- Frontend: All tests pass but exceed timeout (code 143 = cancelled)
+- Server: Recent failures require NEON_CONNECTION_STRING env var
+- Root/infra/docs: Old failures from early March
 
 ## Latest Changes (2026-03-25)
-- PR Management: All 5 repos have no open PRs
+- CI Analysis: Identified infrastructure vs code issues
 
 ## Previous Changes (2026-03-25)
-- GitHub issue management - all repos checked for open issues
+- Issue Management: Closed #62 - Submodules already at latest commits
