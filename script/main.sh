@@ -169,7 +169,12 @@ while true; do
 
     if echo "$CHANGED_FILES" | grep -q "server/"; then
         TARGET_REPO="server"
-        TASK="Analyze server changes and run tests, lint, then implement improvements"
+        TASK="Analyze server changes and run tests, lint, then implement improvements
+
+IMPORTANT: Before starting, create a GitHub issue:
+1. Use 'gh issue create --title \"Auto: [timestamp] - server\" --body \"Task: [task description]\" --repo enclavr/server'
+2. Note the issue number
+3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/server' and add a comment with resolution details"
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
         TARGET_REPO="frontend"
         
@@ -182,18 +187,35 @@ while true; do
 3. Run typecheck: bun run typecheck
 4. Start dev server: cd frontend && bun run dev &
 5. Wait for server to start
-6. USE Chrome DevTools MCP to verify:
-   - chrome-devtools_navigate_page to http://localhost:3000
-   - chrome-devtools_take_snapshot to check page renders
-   - chrome-devtools_list_console_messages for errors
+6. REQUIRED - You MUST use Chrome DevTools MCP to verify:
+   - chrome-devtools_list_pages to list available pages
+   - chrome-devtools_navigate_page --type url --url http://localhost:3000
+   - chrome-devtools_take_snapshot to verify page renders correctly
+   - chrome-devtools_list_console_messages to check for JavaScript errors
+   - chrome-devtools_list_network_requests to verify API calls work
 7. Fix any visual or console issues found
-8. Commit changes"
+8. Commit changes
+
+IMPORTANT: Before starting, create a GitHub issue:
+1. Use 'gh issue create --title \"Auto: [timestamp] - frontend\" --body \"Task: [task description]\" --repo enclavr/frontend'
+2. Note the issue number
+3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/frontend' and add a comment with resolution details"
     elif echo "$CHANGED_FILES" | grep -q "infra/"; then
         TARGET_REPO="infra"
-        TASK="Analyze infra changes, verify Docker configuration"
+        TASK="Analyze infra changes, verify Docker configuration
+
+IMPORTANT: Before starting, create a GitHub issue:
+1. Use 'gh issue create --title \"Auto: [timestamp] - infra\" --body \"Task: [task description]\" --repo enclavr/infra'
+2. Note the issue number
+3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/infra' and add a comment with resolution details"
     else
         TARGET_REPO="root"
-        TASK="Analyze project state and implement improvements per AGENTS.md"
+        TASK="Analyze project state and implement improvements per AGENTS.md
+
+IMPORTANT: Before starting, create a GitHub issue:
+1. Use 'gh issue create --title \"Auto: [timestamp]\" --body \"Task: [task description]\" --repo enclavr/enclavr'
+2. Note the issue number
+3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/enclavr' and add a comment with resolution details"
     fi
 
     log_info "Target repository: $TARGET_REPO"
