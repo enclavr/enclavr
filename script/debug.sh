@@ -22,6 +22,11 @@ $DEBUG_MCP_REFS
 
 Run tests: server='go test', frontend='bun run test:run'
 
+IMPORTANT: Before starting, create a GitHub issue:
+1. Use 'gh issue create --title \"Debug: [timestamp]\" --body \"Task: [description]\" --repo enclavr/enclavr'
+2. Note the issue number
+3. After completing, resolve with 'gh issue close <number> --repo enclavr/enclavr' and add resolution comment
+
 Report: issues found & fixed."
 
     run_kilo run "$task"

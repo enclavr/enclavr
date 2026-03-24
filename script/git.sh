@@ -103,6 +103,11 @@ Update submodules:
 2. git submodule update --remote --merge
 3. Stage+commit 'chore: update submodules to latest' if changed
 
+IMPORTANT: Before starting, create a GitHub issue:
+1. Use 'gh issue create --title \"Chore: Update submodules\" --body \"Task: Update all submodules to latest\" --repo enclavr/enclavr'
+2. Note the issue number
+3. After completing, resolve with 'gh issue close <number> --repo enclavr/enclavr' and add resolution comment
+
 Report: submodules updated."
 
     run_kilo run "$task"
