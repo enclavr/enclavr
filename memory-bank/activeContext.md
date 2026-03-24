@@ -4,9 +4,8 @@
 Submodule maintenance - checked and updated all submodules to latest commits.
 
 ## Latest Changes (2026-03-25)
-- Ran git submodule update --remote --merge
-- No updates available - all submodules already at latest commits
-- Created and resolved GitHub issue #31 for tracking
+- Closed issue #28 "Chore: Update submodules" - submodules already at latest
+- All enclavr repos verified: no open issues remain
 
 ## Previous Changes (2026-03-25)
 - Checked all 5 repos for open issues and PRs (enclavr/enclavr, enclavr/frontend, enclavr/server, enclavr/infra, enclavr/docs)
