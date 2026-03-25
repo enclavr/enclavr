@@ -96,6 +96,19 @@ commit_and_push() {
 update_submodules_via_kilo() {
     log "Updating submodules via Kilo..."
 
+    # First check if there are actually submodule updates needed
+    local needs_update=false
+    if [ -f "$PROJECT_DIR/.gitmodules" ]; then
+        if git submodule status 2>/dev/null | grep -q "^+"; then
+            needs_update=true
+        fi
+    fi
+
+    if [ "$needs_update" = "false" ]; then
+        log "Submodules already at latest - skipping update"
+        return 0
+    fi
+
     local task="$PROMPT_PREFIX
 
 Update submodules:
@@ -103,12 +116,7 @@ Update submodules:
 2. git submodule update --remote --merge
 3. Stage+commit 'chore: update submodules to latest' if changed
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Chore: Update submodules\" --body \"Task: Update all submodules to latest\" --repo enclavr/enclavr'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/enclavr' and add resolution comment
-
-Report: submodules updated."
+IMPORTANT: Only create a GitHub issue if you find actual problems during the update (e.g., merge conflicts, build failures). Do NOT create issues for successful routine updates."
 
     run_kilo run "$task"
     return $?

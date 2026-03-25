@@ -439,6 +439,41 @@ chrome-devtools_close_page --pageId 1
 - ✅ Use for performance analysis
 - 🚫 Don't use for API testing (use actual HTTP requests instead)
 
+### MANDATORY: Chrome DevTools Usage for Frontend Work
+
+**⚠️ ALL frontend work MUST verify changes in a real browser using Chrome DevTools MCP tools.**
+
+This is a strict requirement, not a suggestion. The autonomous agent will not have proper confidence that frontend changes work without browser verification.
+
+```bash
+# REQUIRED: Every frontend task must include these steps:
+# 1. Start the frontend dev server: cd frontend && bun run dev &
+# 2. Wait for server to be ready on port 3000
+# 3. Use Chrome DevTools MCP to verify:
+
+# List available pages to confirm Chrome is running
+chrome-devtools_list_pages
+
+# Navigate to the frontend
+chrome-devtools_navigate_page --type "url" --url "http://localhost:3000"
+
+# Take a snapshot to verify page renders
+chrome-devtools_take_snapshot
+
+# Check console for JavaScript errors
+chrome-devtools_list_console_messages
+
+# Verify API calls are working
+chrome-devtools_list_network_requests
+
+# If issues found, fix them and re-verify
+```
+
+**Consequences of not following:**
+- Frontend changes cannot be considered complete without browser verification
+- Always start Chrome before frontend work: `google-chrome --headless=new --remote-debugging-port=9222`
+- If Chrome DevTools tools are not available, the task should report failure
+
 ### Neon Database MCP Tools
 
 Use these tools for PostgreSQL database operations on the server.

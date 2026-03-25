@@ -18,12 +18,15 @@ can_run_proactive() {
     current_time=$(date +%s)
     time_since_proactive=$((current_time - last_proactive))
 
+    # FIXED: Was using -lt (less than) which was backwards
+    # Should run if time since last proactive is GREATER than cooldown
     if [ $time_since_proactive -lt $PROACTIVE_COOLDOWN ]; then
         remaining=$((PROACTIVE_COOLDOWN - time_since_proactive))
-        log "[COOLDOWN] ${remaining}s remaining"
+        log "[COOLDOWN] ${remaining}s remaining (last ran: ${time_since_proactive}s ago, cooldown: ${PROACTIVE_COOLDOWN}s)"
         return 1
     fi
 
+    log "[COOLDOWN] Ready to run proactive (last ran: ${time_since_proactive}s ago)"
     return 0
 }
 
@@ -60,10 +63,7 @@ run_proactive() {
         case $((RANDOM % 8)) in
             0) TASK="$MCP_REF 1) MAINTENANCE: Run code review, fix bugs, add tests for uncovered code, refactor messy functions, update dependencies. 2) NEW FEATURE: Add a new API endpoint (e.g., user profile, settings, message reactions, room invites). Design, implement, test.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server' or 'enclavr/frontend'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo <repo>' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or feature gaps that need tracking. Do NOT create issues just to track routine work. If you find a real bug, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [file/component]\" --repo enclavr/server" ;;
             1) TASK="$MCP_REF 1) MAINTENANCE: Fix TypeScript errors, add unit tests, improve component structure, clean up unused code. 2) NEW FEATURE: Add a new UI component/page (e.g., settings page, room wizard, profile modal). Design, implement, test.
 
 BROWSER VERIFICATION REQUIRED: After changes, you MUST verify the frontend works in a browser:
@@ -73,22 +73,13 @@ BROWSER VERIFICATION REQUIRED: After changes, you MUST verify the frontend works
 4. Use chrome-devtools_list_console_messages to check for errors
 5. Use chrome-devtools_list_network_requests to verify API calls work
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/frontend'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/frontend' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or feature gaps that need tracking. Do NOT create issues just to track routine work. If you find a real bug, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [component]\" --repo enclavr/frontend" ;;
             2) TASK="$MCP_REF 1) MAINTENANCE: Review WebSocket handlers, fix edge cases, add connection error handling, improve logging. 2) NEW FEATURE: Add new WebSocket event (typing indicators, online users, room notifications). Design, implement, test.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/server' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or feature gaps that need tracking. Do NOT create issues just to track routine work. If you find a real bug, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [handler]\" --repo enclavr/server" ;;
             3) TASK="$MCP_REF 1) MAINTENANCE: Review database queries, add indexes, optimize slow queries, clean up migrations. 2) NEW FEATURE: Add new database model (audit logs, preferences, categories, attachments). Design, implement, add migrations.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/server' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or performance issues that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Perf: [description]\" --body \"Problem: [performance issue]\nImpact: [user impact]\nFound in: [query/file]\" --repo enclavr/server" ;;
             4) TASK="$MCP_REF 1) MAINTENANCE: Fix lint errors, improve test coverage, refactor hooks, add error boundaries. 2) NEW FEATURE: Add new React hook or utility (useMediaQuery, useDebounce, useLocalStorage). Design, implement, test.
 
 BROWSER VERIFICATION REQUIRED: After changes, you MUST verify the frontend works in a browser:
@@ -97,36 +88,21 @@ BROWSER VERIFICATION REQUIRED: After changes, you MUST verify the frontend works
 3. Use chrome-devtools_take_snapshot to verify page renders
 4. Use chrome-devtools_list_console_messages to check for errors
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/frontend'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/frontend' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or lint issues that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [hook/component]\" --repo enclavr/frontend" ;;
             5) TASK="$MCP_REF 1) MAINTENANCE: Review middleware, add rate limiting, improve error handling, enhance logging. 2) NEW FEATURE: Add new service (caching, notifications, webhooks). Design, implement, test.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/server' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or security issues that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [middleware/service]\" --repo enclavr/server" ;;
             6) TASK="$MCP_REF 1) MAINTENANCE: Security audit, fix vulnerabilities, update auth flows, improve token handling. 2) NEW FEATURE: Add authentication feature (OAuth, 2FA, password reset). Design, implement, test.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/server' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual security vulnerabilities or auth bugs that need tracking. Do NOT create issues just to track routine work. If you find a real security issue, create an issue with: gh issue create --title \"Security: [description]\" --body \"Problem: [vulnerability]\nSeverity: [critical/high/medium]\nFound in: [component]\nCVE (if applicable): [id]\" --repo enclavr/server --label security" ;;
             7) TASK="$MCP_REF 1) MAINTENANCE: Improve real-time code, handle reconnection, add message validation, clean up. 2) NEW FEATURE: Add real-time feature (read receipts, editing, threading, blocking). Design, implement, test.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/server' and add resolution comment" ;;
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs in real-time code that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [component]\" --repo enclavr/server" ;;
         esac
     elif [ -d "server" ]; then
         TASK="$MCP_REF 1) MAINTENANCE: Code review, bug fixes, test coverage, refactoring, dependency updates. 2) NEW FEATURE: Add new API endpoint, database model, middleware, or service. Design, implement, test, document.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/server' and add resolution comment"
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [file/component]\" --repo enclavr/server"
     elif [ -d "frontend" ]; then
         TASK="$MCP_REF 1) MAINTENANCE: TypeScript fixes, test coverage, component refactoring, lint cleanup. 2) NEW FEATURE: Add new UI component, page, React hook, or utility. Design, implement, test.
 
@@ -136,17 +112,11 @@ BROWSER VERIFICATION REQUIRED: After changes, you MUST verify the frontend works
 3. Use chrome-devtools_take_snapshot to verify page renders
 4. Use chrome-devtools_list_console_messages to check for errors
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [feature area]\" --body \"Task: [description]\" --repo enclavr/frontend'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/frontend' and add resolution comment"
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken]\nExpected: [what should happen]\nFound in: [component]\" --repo enclavr/frontend"
     else
         TASK="$MCP_REF 1) MAINTENANCE: Analyze project, fix issues, improve structure, update docs. 2) NEW FEATURE: Implement a missing feature. Check existing features first, then add something new.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Proactive: [description]\" --body \"Task: [description]\" --repo enclavr/enclavr'
-2. Note the issue number
-3. After completing, resolve with 'gh issue close <number> --repo enclavr/enclavr' and add resolution comment"
+IMPORTANT: GitHub issues should ONLY be created if you find actual bugs or missing features that need tracking. Do NOT create issues just to track routine work. If you find a real issue, create an issue with: gh issue create --title \"Bug: [description]\" --body \"Problem: [what's broken or missing]\nExpected: [what should exist]\nFound in: [area]\" --repo enclavr/enclavr"
     fi
 
     log_info "Proactive task selected: $TASK"

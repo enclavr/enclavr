@@ -159,9 +159,6 @@ while true; do
         fi
     fi
 
-    # === Check for local changes ===
-    # Note: Proactive improvements now run on timer (see above), not just when no changes
-
     # === Changes detected ===
     log "Changes detected"
 
@@ -169,12 +166,9 @@ while true; do
 
     if echo "$CHANGED_FILES" | grep -q "server/"; then
         TARGET_REPO="server"
-        TASK="Analyze server changes and run tests, lint, then implement improvements
+        TASK="Analyze server changes and run tests, lint, then implement improvements.
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Auto: [timestamp] - server\" --body \"Task: [task description]\" --repo enclavr/server'
-2. Note the issue number
-3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/server' and add a comment with resolution details"
+IMPORTANT: First detect if there are actual issues to fix. Check test failures, lint errors, type errors. ONLY create a GitHub issue if you find a real bug or problem that needs tracking. Do NOT create issues for tracking task work itself."
     elif echo "$CHANGED_FILES" | grep -q "frontend/"; then
         TARGET_REPO="frontend"
         
@@ -196,26 +190,17 @@ IMPORTANT: Before starting, create a GitHub issue:
 7. Fix any visual or console issues found
 8. Commit changes
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Auto: [timestamp] - frontend\" --body \"Task: [task description]\" --repo enclavr/frontend'
-2. Note the issue number
-3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/frontend' and add a comment with resolution details"
+IMPORTANT: First detect if there are actual issues to fix. Check test failures, lint errors, type errors, console errors. ONLY create a GitHub issue if you find a real bug or problem that needs tracking. Do NOT create issues for tracking task work itself."
     elif echo "$CHANGED_FILES" | grep -q "infra/"; then
         TARGET_REPO="infra"
         TASK="Analyze infra changes, verify Docker configuration
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Auto: [timestamp] - infra\" --body \"Task: [task description]\" --repo enclavr/infra'
-2. Note the issue number
-3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/infra' and add a comment with resolution details"
+IMPORTANT: First detect if there are actual issues to fix. Check Docker config validation, container health, connectivity. ONLY create a GitHub issue if you find a real problem that needs tracking. Do NOT create issues for tracking task work itself."
     else
         TARGET_REPO="root"
         TASK="Analyze project state and implement improvements per AGENTS.md
 
-IMPORTANT: Before starting, create a GitHub issue:
-1. Use 'gh issue create --title \"Auto: [timestamp]\" --body \"Task: [task description]\" --repo enclavr/enclavr'
-2. Note the issue number
-3. After completing the task, resolve the issue with 'gh issue close <number> --repo enclavr/enclavr' and add a comment with resolution details"
+IMPORTANT: First detect if there are actual issues to fix. Only create a GitHub issue if you find a real bug, feature request, or problem that needs tracking. Do NOT create issues for tracking task work itself."
     fi
 
     log_info "Target repository: $TARGET_REPO"
