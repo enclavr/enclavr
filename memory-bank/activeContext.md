@@ -1,17 +1,17 @@
 # Active Context - enclavr-root
 
 ## Current Work Focus
-GitHub issue review cycle across all 5 enclavr repositories.
+GitHub PR review cycle across all 5 enclavr repositories.
 
 ## Latest Update (2026-03-26)
-Reviewed all open issues across 5 enclavr repositories - none found
+Reviewed all open PRs across 5 enclavr repositories - none found
 
 ## Latest Changes (2026-03-26)
-- Reviewed all open issues across 5 repos (enclavr, frontend, server, infra, docs)
-- No open issues found in any repository
+- Reviewed all open PRs across 5 repos (enclavr, frontend, server, infra, docs)
+- No open PRs found in any repository
 
 ## Previous Changes (2026-03-26)
-- Reviewed all open PRs across 5 repos - none found
+- Reviewed all open issues across 5 repos - none found
 
 ## Summary
 All 5 repositories have zero open issues:
