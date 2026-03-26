@@ -1,19 +1,8 @@
-# Tech Context - enclavr-root
+# Tech Context - Monorepo Root
 
 ## Technologies Used
-- **gh CLI**: GitHub operations
-- **curl**: API requests
-- **jq**: JSON processing
-- **git submodules**: Multi-repo management
+- Git for version control
+- GitHub for issue management
 
 ## CLI Commands
-```bash
-# Check all repos for issues
-gh issue list -R enclavr/<repo> --state open
-
-# Update submodules
-git submodule update --remote
-
-# Run autonomous agent
-./script/main.sh
-```
+gh issue list
