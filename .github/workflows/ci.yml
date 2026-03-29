@@ -7,9 +7,22 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: CI placeholder
-        run: echo "CI passed for monorepo orchestrator"
+        with:
+          submodules: recursive
+
+      - name: Validate submodule references
+        run: |
+          git submodule status --recursive
+          if git submodule status --recursive | grep -q '^-'; then
+            echo "::error::Submodules are not initialized"
+            exit 1
+          fi
+
+      - name: Validate YAML syntax
+        run: |
+          pip install yamllint
+          yamllint -d relaxed .github/

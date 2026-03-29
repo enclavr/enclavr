@@ -52,7 +52,7 @@ We follow coordinated disclosure. Fixes are held privately until the embargo lif
 
 Enclavr implements defense-in-depth across all layers:
 
-- **Authentication:** JWT with configurable expiry, bcrypt password hashing, TOTP 2FA with AES-256-GCM encrypted secrets, OIDC/WebAuthn support
+- **Authentication:** JWT with configurable expiry, bcrypt password hashing, TOTP 2FA with AES-256-GCM encrypted secrets, OIDC support
 - **Authorization:** Per-user, per-IP, per-endpoint rate limiting with sliding window algorithm
 - **Transport:** TLS via automatic HTTPS (Let's Encrypt), WebSocket over TLS
 - **Container Security:** Least-privilege capabilities, non-root users, read-only filesystems, network isolation
