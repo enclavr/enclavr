@@ -113,17 +113,27 @@ REQUIREMENTS:
    gh api repos/enclavr/enclavr/secret-scanning/alerts
 4. For each Dependabot alert:
    - If it is a GitHub Actions vulnerability, update the action version in .github/workflows/ci.yml
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/enclavr/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+   - If no fix is available and vulnerability does not affect this project, dismiss: gh api -X PATCH repos/enclavr/enclavr/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available -f dismissed_comment='EXPLAIN WHY this does not affect the project'
 5. For each code scanning alert:
-   - If it is a real vulnerability, fix it in the code
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/enclavr/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason=false_positive
+   - Read the actual source code at the reported file:line to understand the context
+   - If it is a real vulnerability, FIX IT. Do NOT dismiss after fixing — let CodeQL auto-resolve on next scan.
+   - ONLY dismiss if you can prove it is a false positive by reading the code. You MUST provide a dismissal comment:
+     gh api -X PATCH repos/enclavr/enclavr/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason='false positive' -f dismissed_comment='EXPLAIN YOUR REASONING (max 280 chars)'
+   - NEVER fix AND dismiss the same alert in one session
+   - NEVER dismiss more than 2 alerts per session without explicit user approval
 6. For each secret scanning alert:
-   - If a real secret was exposed, rotate it and mark resolved
-   - Dismiss false positives
+   - If a real secret was exposed, rotate it and mark resolved: gh api -X PATCH repos/enclavr/enclavr/secret-scanning/alerts/NUMBER -f state=resolved -f resolution=revoked
+   - Only dismiss if confirmed false positive with comment
 7. Verify no secrets in .env.example or AGENTS.md
 8. Commit and push your changes
 
-IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives."
+CRITICAL DISMISSAL RULES:
+- ALWAYS read the source code before dismissing ANY alert
+- ALWAYS include a -f dismissed_comment explaining your reasoning
+- NEVER fix and dismiss the same alert in one session
+- NEVER bulk dismiss — max 2 dismissals per session
+- Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
+- If you fixed a vulnerability, leave the alert for CodeQL to auto-resolve"
 
 # Root - GitHub Files
 PROMPT_ROOT_GITHUB_FILES="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
@@ -541,17 +551,27 @@ REQUIREMENTS:
 4. For each Dependabot alert:
    - If a patch exists, update the dependency: bun update <package>
    - If no patch exists, evaluate if the vulnerability affects this project
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/frontend/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+   - If it does not affect the project, dismiss: gh api -X PATCH repos/enclavr/frontend/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available -f dismissed_comment='EXPLAIN WHY this does not affect the project'
 5. For each code scanning alert:
-   - If it is a real vulnerability, fix it in the code
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/frontend/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason=false_positive
+   - Read the actual source code at the reported file:line to understand the context
+   - If it is a real vulnerability, FIX IT. Do NOT dismiss after fixing — let CodeQL auto-resolve on next scan.
+   - ONLY dismiss if you can prove it is a false positive by reading the code. You MUST provide a dismissal comment:
+     gh api -X PATCH repos/enclavr/frontend/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason='false positive' -f dismissed_comment='EXPLAIN YOUR REASONING (max 280 chars)'
+   - NEVER fix AND dismiss the same alert in one session
+   - NEVER dismiss more than 2 alerts per session without explicit user approval
 6. For each secret scanning alert:
    - If a real secret was exposed, rotate it and mark resolved
-   - Dismiss false positives
+   - Only dismiss if confirmed false positive with comment
 7. Run tests after fixes: bun run lint && bun run typecheck && bun run test:run
 8. Commit and push your changes
 
-IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+CRITICAL DISMISSAL RULES:
+- ALWAYS read the source code before dismissing ANY alert
+- ALWAYS include a -f dismissed_comment explaining your reasoning
+- NEVER fix and dismiss the same alert in one session
+- NEVER bulk dismiss — max 2 dismissals per session
+- Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
+- If you fixed a vulnerability, leave the alert for CodeQL to auto-resolve"
 
 # Server - Security (Dependabot, Code Scanning, Secret Scanning)
 PROMPT_SERVER_SECURITY="You are working on the Enclavr server repository.
@@ -574,23 +594,34 @@ REQUIREMENTS:
 4. For each Dependabot alert:
    - If a patch exists, update the dependency: go get <package>@latest && go mod tidy
    - If no patch exists, evaluate if the vulnerability affects this project
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/server/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+   - If it does not affect the project, dismiss: gh api -X PATCH repos/enclavr/server/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available -f dismissed_comment='EXPLAIN WHY this does not affect the project'
 5. For each code scanning alert:
-   - go/email-injection: Sanitize email content, escape HTML
-   - go/clear-text-logging: Redact sensitive data from logs
-   - go/path-injection: Validate and sanitize file paths
-   - go/cookie-secure-not-set: Set Secure and HttpOnly flags on cookies
-   - go/weak-sensitive-data-hashing: Use bcrypt instead of SHA256 for passwords
-   - actions/missing-workflow-permissions: Add permissions block to GitHub Actions
-   - If it is a real vulnerability, fix it in the code
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/server/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason=false_positive
+   - Read the actual source code at the reported file:line to understand the context BEFORE taking action
+   - Common rules and when they are REAL vs FALSE POSITIVE:
+     * go/email-injection: REAL if user input flows into email without escaping. FALSE POSITIVE if content is already sanitized.
+     * go/clear-text-logging: REAL if passwords/keys are logged. FALSE POSITIVE if only non-sensitive headers are logged.
+     * go/path-injection: REAL if user input used in file paths without validation. FALSE POSITIVE if filepath.Clean + base dir check exists.
+     * go/cookie-secure-not-set: REAL if cookies lack Secure/HttpOnly flags. Fix by adding flags.
+     * go/weak-sensitive-data-hashing: REAL if SHA256 is used on passwords — use bcrypt. FALSE POSITIVE if SHA256 hashes non-password data (IPs, keys) for cache keys.
+     * actions/missing-workflow-permissions: REAL if workflow has no permissions block. Fix by adding permissions.
+   - If it is a real vulnerability, FIX IT. Do NOT dismiss after fixing — let CodeQL auto-resolve on next scan.
+   - ONLY dismiss if you can prove it is a false positive by reading the code. You MUST provide a dismissal comment:
+     gh api -X PATCH repos/enclavr/server/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason='false positive' -f dismissed_comment='EXPLAIN YOUR REASONING (max 280 chars)'
+   - NEVER fix AND dismiss the same alert in one session
+   - NEVER dismiss more than 2 alerts per session without explicit user approval
 6. For each secret scanning alert:
    - If a real secret was exposed, rotate it and mark resolved
-   - Dismiss false positives
+   - Only dismiss if confirmed false positive with comment
 7. Run tests after fixes: go test -v ./... && golangci-lint run ./...
 8. Commit and push your changes
 
-IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+CRITICAL DISMISSAL RULES:
+- ALWAYS read the source code before dismissing ANY alert
+- ALWAYS include a -f dismissed_comment explaining your reasoning
+- NEVER fix and dismiss the same alert in one session
+- NEVER bulk dismiss — max 2 dismissals per session
+- Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
+- If you fixed a vulnerability, leave the alert for CodeQL to auto-resolve"
 
 # Infra - Security (Dependabot, Code Scanning, Secret Scanning)
 PROMPT_INFRA_SECURITY="You are working on the Enclavr infrastructure repository.
@@ -612,17 +643,27 @@ REQUIREMENTS:
 4. For each Dependabot alert:
    - If it is a Docker image vulnerability, update the image tag in docker-compose.yml
    - If it is a GitHub Actions vulnerability, update the action version
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/infra/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
-5. For each code scanning alert:
-   - If it is a real misconfiguration, fix it in docker-compose.yml
-   - Dismiss false positives
+   - If no fix is available and vulnerability does not affect this project, dismiss: gh api -X PATCH repos/enclavr/infra/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available -f dismissed_comment='EXPLAIN WHY this does not affect the project'
+5. For each code scanning alert (Trivy):
+   - Read the actual Dockerfile or docker-compose.yml at the reported location
+   - If it is a real misconfiguration, FIX IT. Do NOT dismiss after fixing — let Trivy auto-resolve on next scan.
+   - ONLY dismiss if you can prove it is a false positive by reading the code. You MUST provide a dismissal comment:
+     gh api -X PATCH repos/enclavr/infra/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason='false positive' -f dismissed_comment='EXPLAIN YOUR REASONING (max 280 chars)'
+   - NEVER fix AND dismiss the same alert in one session
+   - NEVER dismiss more than 2 alerts per session without explicit user approval
 6. For each secret scanning alert:
    - If a real secret was exposed, rotate it and mark resolved
-   - Dismiss false positives
+   - Only dismiss if confirmed false positive with comment
 7. Test after fixes: docker compose config
 8. Commit and push your changes
 
-IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+CRITICAL DISMISSAL RULES:
+- ALWAYS read the source code before dismissing ANY alert
+- ALWAYS include a -f dismissed_comment explaining your reasoning
+- NEVER fix and dismiss the same alert in one session
+- NEVER bulk dismiss — max 2 dismissals per session
+- Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
+- If you fixed a vulnerability, leave the alert for scanner to auto-resolve"
 
 # Docs - Security (Dependabot, Code Scanning, Secret Scanning)
 PROMPT_DOCS_SECURITY="You are working on the Enclavr documentation repository.
@@ -644,17 +685,27 @@ REQUIREMENTS:
 4. For each Dependabot alert:
    - If a patch exists, update the dependency: npm update <package>
    - If no patch exists, evaluate if the vulnerability affects this project
-   - Dismiss false positives: gh api -X PATCH repos/enclavr/docs/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+   - If it does not affect the project, dismiss: gh api -X PATCH repos/enclavr/docs/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available -f dismissed_comment='EXPLAIN WHY this does not affect the project'
 5. For each code scanning alert:
-   - If it is a real vulnerability, fix it
-   - Dismiss false positives
+   - Read the actual source code at the reported location
+   - If it is a real vulnerability, FIX IT. Do NOT dismiss after fixing — let scanner auto-resolve on next scan.
+   - ONLY dismiss if you can prove it is a false positive by reading the code. You MUST provide a dismissal comment:
+     gh api -X PATCH repos/enclavr/docs/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason='false positive' -f dismissed_comment='EXPLAIN YOUR REASONING (max 280 chars)'
+   - NEVER fix AND dismiss the same alert in one session
+   - NEVER dismiss more than 2 alerts per session without explicit user approval
 6. For each secret scanning alert:
    - If a real secret was exposed, rotate it and mark resolved
-   - Dismiss false positives
+   - Only dismiss if confirmed false positive with comment
 7. Run tests after fixes: npx playwright test
 8. Commit and push your changes
 
-IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+CRITICAL DISMISSAL RULES:
+- ALWAYS read the source code before dismissing ANY alert
+- ALWAYS include a -f dismissed_comment explaining your reasoning
+- NEVER fix and dismiss the same alert in one session
+- NEVER bulk dismiss — max 2 dismissals per session
+- Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
+- If you fixed a vulnerability, leave the alert for scanner to auto-resolve"
 
 # Frontend - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
 PROMPT_FRONTEND_GITHUB_FILES="You are working on the Enclavr frontend repository.
