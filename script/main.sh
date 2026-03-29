@@ -3,12 +3,13 @@
 # Enclavr Autonomous Agent Loop
 
 # Sub-repository flags
+ROOT_CHANGED=false
 FRONTEND_CHANGED=false
 SERVER_CHANGED=false
 INFRA_CHANGED=false
 DOCS_CHANGED=false
 
-# Current active repo index (0=frontend, 1=server, 2=infra, 3=docs)
+# Current active repo index (0=root, 1=frontend, 2=server, 3=infra, 4=docs)
 CURRENT_REPO_INDEX=0
 
 # Task type flags
@@ -29,6 +30,141 @@ TASK_STEP=0
 # ============================================
 # AI Prompt Templates
 # ============================================
+
+# Root - Debugging (Fix GitHub Issues)
+PROMPT_ROOT_DEBUGGING="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
+This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr
+- Repository: enclavr/enclavr
+- This repo contains: AGENTS.md, README.md, SECURITY.md, script/, .gitmodules, .env.example
+- Submodules: frontend, server, infra, docs
+
+YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
+
+REQUIREMENTS:
+1. List ALL open GitHub issues: gh issue list -R enclavr/enclavr --state open --limit 50
+2. Sort by priority: fix critical/security bugs first, then high, then medium
+3. For EACH issue you can fix in this session:
+   - Read the issue details and understand what needs to be fixed
+   - Analyze the code to find the root cause
+   - Implement a fix for the issue
+   - Verify submodule references are up to date: git submodule status
+   - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
+4. Fix AT LEAST 2 issues per session if that many are open
+5. If no open issues exist, verify .gitmodules is correct, check AGENTS.md is up to date, verify script/main.sh runs without syntax errors
+6. Commit and push your changes after fixing multiple issues
+
+IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
+Do NOT create new issues. If you find a bug while fixing, fix it immediately."
+
+# Root - Testing Only
+PROMPT_ROOT_TESTING="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
+This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr
+- Repository: enclavr/enclavr
+- This repo contains: AGENTS.md, README.md, SECURITY.md, script/, .gitmodules, .env.example
+
+YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
+
+REQUIREMENTS:
+1. FIRST check existing open issues: gh issue list -R enclavr/enclavr --state open
+   - Do NOT create duplicates of existing issues
+2. Verify submodule integrity: git submodule status
+3. Check .gitmodules for correct URLs and branch tracking
+4. Verify AGENTS.md instructions are accurate
+5. Check script/main.sh for syntax errors: bash -n script/main.sh
+6. Verify .env.example has correct variables
+
+IMPORTANT ISSUE CREATION RULES:
+- ONLY create issues for HIGH priority problems:
+  * Broken submodule references
+  * Incorrect AGENTS.md instructions that could cause agent failures
+  * Script syntax errors or logic bugs
+  * Missing or incorrect .env.example variables
+- DO NOT create issues for:
+  * Minor wording improvements
+  * Theoretical improvements without concrete bugs
+  * Issues that already exist (check first!)
+- MAXIMUM 2 issues per testing session
+- For each issue: clear title, description, file paths, steps to reproduce
+
+IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually matter."
+
+# Root - Security (Dependabot, Code Scanning, Secret Scanning)
+PROMPT_ROOT_SECURITY="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
+This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr
+- Repository: enclavr/enclavr
+
+YOUR TASK: Check and fix GitHub security alerts. Check Dependabot, code scanning, and secret scanning.
+
+REQUIREMENTS:
+1. Check Dependabot alerts:
+   gh api repos/enclavr/enclavr/dependabot/alerts -f state=open --jq '.[] | {number, state, severity, package: .security_advisory.summary, cve: .security_advisory.cve_id}'
+2. Check code scanning alerts:
+   gh api repos/enclavr/enclavr/code-scanning/alerts --jq '.[] | {number, state, rule: .rule.id, severity: .rule.severity}'
+3. Check secret scanning alerts:
+   gh api repos/enclavr/enclavr/secret-scanning/alerts
+4. For each Dependabot alert:
+   - If it is a GitHub Actions vulnerability, update the action version in .github/workflows/ci.yml
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/enclavr/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+5. For each code scanning alert:
+   - If it is a real vulnerability, fix it in the code
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/enclavr/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason=false_positive
+6. For each secret scanning alert:
+   - If a real secret was exposed, rotate it and mark resolved
+   - Dismiss false positives
+7. Verify no secrets in .env.example or AGENTS.md
+8. Commit and push your changes
+
+IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives."
+
+# Root - GitHub Files
+PROMPT_ROOT_GITHUB_FILES="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
+This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr
+- Repository: enclavr/enclavr
+
+YOUR TASK: Audit and update ALL GitHub community/config files to match the current codebase state.
+
+FILES TO AUDIT AND UPDATE:
+1. README.md - Must accurately describe: monorepo structure, submodule repos, quick start commands, features, license
+2. AGENTS.md - Must accurately describe: project structure, commands, CI/CD, MCP tools, agent instructions
+3. CONTRIBUTING.md - Must reference correct repos, tools, and PR process
+4. CODE_OF_CONDUCT.md - Verify enforcement contact email is correct
+5. CHANGELOG.md - Add entries for recent changes, verify dates match git log
+6. SECURITY.md - Verify all security claims match actual code across submodules
+7. LICENSE - Verify it is correct (The Unlicense)
+8. .github/CODEOWNERS - Verify correct owner (@enclavr)
+9. .github/dependabot.yml - Verify ecosystems match actual files in root (github-actions)
+10. .github/workflows/ci.yml - Verify CI steps are functional
+11. .github/ISSUE_TEMPLATE/ - Verify fields are relevant
+12. .github/PULL_REQUEST_TEMPLATE/ - Verify checklist is appropriate
+13. .github/FUNDING.yml - Verify GitHub Sponsors username is correct
+
+REQUIREMENTS:
+1. Read the actual codebase as the source of truth
+2. For EACH file listed above:
+   - Read the file
+   - Cross-reference every claim against the actual code
+   - If something is wrong or outdated, fix it
+   - If something is missing, add it
+3. Verify submodule references in README match .gitmodules
+4. Verify AGENTS.md references correct file paths and commands
+5. Verify SECURITY.md claims match actual submodule implementations
+6. Check for placeholder text that was never filled in
+7. Verify script/main.sh syntax: bash -n script/main.sh
+8. Commit and push your changes
+
+IMPORTANT: Every claim in these files must match the actual codebase. Fix all mismatches."
 
 # Frontend - Add New Features
 PROMPT_FRONTEND_FEATURES="You are working on the Enclavr frontend repository.
@@ -693,6 +829,7 @@ while true; do
     echo "Loop running..."
     
     # Reset all flags
+    ROOT_CHANGED=false
     FRONTEND_CHANGED=false
     SERVER_CHANGED=false
     INFRA_CHANGED=false
@@ -705,10 +842,11 @@ while true; do
     
     # Set the current repo flag based on index
     case $CURRENT_REPO_INDEX in
-        0) FRONTEND_CHANGED=true ;;
-        1) SERVER_CHANGED=true ;;
-        2) INFRA_CHANGED=true ;;
-        3) DOCS_CHANGED=true ;;
+        0) ROOT_CHANGED=true ;;
+        1) FRONTEND_CHANGED=true ;;
+        2) SERVER_CHANGED=true ;;
+        3) INFRA_CHANGED=true ;;
+        4) DOCS_CHANGED=true ;;
     esac
     
     # Set task type based on global step counter (2:2:1:1:1 debug:test:feature:security:github_files ratio)
@@ -722,7 +860,17 @@ while true; do
     esac
     
     # Build the AI prompt based on current flags
-    if [ "$FRONTEND_CHANGED" = true ]; then
+    if [ "$ROOT_CHANGED" = true ]; then
+        if [ "$TESTING_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_ROOT_TESTING"
+        elif [ "$SECURITY_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_ROOT_SECURITY"
+        elif [ "$GITHUB_FILES_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_ROOT_GITHUB_FILES"
+        else
+            AI_PROMPT="$PROMPT_ROOT_DEBUGGING"
+        fi
+    elif [ "$FRONTEND_CHANGED" = true ]; then
         if [ "$ADD_NEW_FEATURES" = true ]; then
             AI_PROMPT="$PROMPT_FRONTEND_FEATURES"
         elif [ "$TESTING_ONLY" = true ]; then
@@ -772,7 +920,7 @@ while true; do
         fi
     fi
     
-    echo "Active repo: $CURRENT_REPO_INDEX (frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, infra=$INFRA_CHANGED, docs=$DOCS_CHANGED)"
+    echo "Active repo: $CURRENT_REPO_INDEX (root=$ROOT_CHANGED, frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, infra=$INFRA_CHANGED, docs=$DOCS_CHANGED)"
     echo "Task step: $TASK_STEP/6 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY, security=$SECURITY_ONLY, github_files=$GITHUB_FILES_ONLY)"
     echo "AI Prompt length: ${#AI_PROMPT} chars"
     
@@ -786,8 +934,8 @@ while true; do
         echo "AI agent FAILED with exit code $EXIT_CODE"
     fi
     
-    # Alternate to next repo for next iteration
-    CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 4 ))
+    # Alternate to next repo for next iteration (5 repos: root, frontend, server, infra, docs)
+    CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 5 ))
     
     # Advance global task step (cycles through 7 steps: D,T,D,T,F,S,G)
     TASK_STEP=$(( (TASK_STEP + 1) % 7 ))
