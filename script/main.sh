@@ -15,12 +15,14 @@ CURRENT_REPO_INDEX=0
 ADD_NEW_FEATURES=false
 TESTING_ONLY=false
 DEBUGGING_ONLY=false
+SECURITY_ONLY=false
 
-# Task type indices for each repo (0=add features, 1=testing, 2=debugging)
-FRONTEND_TASK_INDEX=0
-SERVER_TASK_INDEX=0
-INFRA_TASK_INDEX=0
-DOCS_TASK_INDEX=0
+# Global task step counter - cycles through 6 steps with balanced distribution:
+# Step 0: DEBUG  | Step 1: TEST  | Step 2: DEBUG  | Step 3: TEST  | Step 4: FEATURE | Step 5: SECURITY
+# Ratio: 2 debug : 2 test : 1 feature : 1 security
+# DEBUG = fix/close GitHub issues | TEST = find bugs & create GitHub issues
+# FEATURE = add new features | SECURITY = check dependabot, code scanning, secret scanning
+TASK_STEP=0
 
 # ============================================
 # AI Prompt Templates
@@ -34,13 +36,10 @@ CONTEXT:
 - Tech Stack: Next.js 16.1.6, React 19.2.x, TypeScript 5.9.x, Tailwind CSS 4, Zustand 5.0.11, Bun
 - Location: /home/dev/Projects/enclavr/frontend
 - Design System: Apple Liquid Glass aesthetic (frosted glass, blur effects, translucency)
-- Memory bank at: frontend/memory-bank/
-
 YOUR TASK: Add NEW features to the frontend.
 
 REQUIREMENTS:
-1. Check frontend/memory-bank/activeContext.md and progress.md to understand current state
-2. Check AGENTS.md in the frontend repo for coding standards and patterns
+1. Check AGENTS.md in the frontend repo for coding standards and patterns
 3. Implement a new feature - consider:
    - New UI components in src/components/ui/
    - New pages in src/app/
@@ -66,31 +65,35 @@ CONTEXT:
 - Tech Stack: Next.js 16.1.6, React 19.2.x, TypeScript 5.9.x, Tailwind CSS 4, Zustand 5.0.11, Bun
 - Location: /home/dev/Projects/enclavr/frontend
 - Design System: Apple Liquid Glass aesthetic
-- Memory bank at: frontend/memory-bank/
 
-YOUR TASK: Testing ONLY - find issues and create GitHub issues. DO NOT fix anything yourself.
+YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
 
 REQUIREMENTS:
-1. Check frontend/memory-bank/activeContext.md and progress.md to understand current state
-2. Run existing tests: bun run test:run
-3. Run linting: bun run lint
-4. Run type checking: bun run typecheck
-5. Analyze any test failures or lint errors
-6. Check for console errors using Chrome DevTools MCP:
+1. FIRST check existing open issues: gh issue list -R enclavr/frontend --state open
+   - Do NOT create duplicates of existing issues
+3. Run existing tests: bun run test:run
+4. Run linting: bun run lint
+5. Run type checking: bun run typecheck
+6. Analyze any test failures or lint errors
+7. Check for console errors using Chrome DevTools MCP:
    - chrome-devtools_navigate_page --type url --url http://localhost:3000
    - chrome-devtools_list_console_messages
-7. Look for potential bugs in the codebase:
-   - Check src/components/ for issues
-   - Check src/hooks/ for edge cases
-   - Check src/lib/ for errors
-8. For EACH issue found, create a GitHub issue with:
-   - Clear title describing the bug
-   - Detailed description with steps to reproduce
-   - Expected vs actual behavior
-   - Relevant code snippets and file paths
-9. DO NOT attempt to fix any issues - only document them
 
-IMPORTANT: Run all tests and checks, then create GitHub issues for everything you find. Never modify code to fix bugs."
+IMPORTANT ISSUE CREATION RULES:
+- ONLY create issues for HIGH priority problems:
+  * Security vulnerabilities (XSS, auth bypass, data leaks)
+  * Crashes or unhandled errors
+  * Data loss or corruption bugs
+  * Broken core functionality (login, chat, voice)
+- DO NOT create issues for:
+  * Cosmetic/styling tweaks
+  * Minor lint warnings
+  * Theoretical improvements without concrete bugs
+  * Issues that already exist (check first!)
+- MAXIMUM 3 issues per testing session
+- For each issue: clear title, description, file paths, steps to reproduce
+
+IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually matter."
 
 # Frontend - Debugging (Fix GitHub Issues)
 PROMPT_FRONTEND_DEBUGGING="You are working on the Enclavr frontend repository.
@@ -100,23 +103,25 @@ CONTEXT:
 - Tech Stack: Next.js 16.1.6, React 19.2.x, TypeScript 5.9.x, Tailwind CSS 4, Zustand 5.0.11, Bun
 - Location: /home/dev/Projects/enclavr/frontend
 - Design System: Apple Liquid Glass aesthetic
-- Memory bank at: frontend/memory-bank/
 
-YOUR TASK: Debugging - go through GitHub issues and FIX them. Do NOT create new issues.
+YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
 REQUIREMENTS:
-1. Check frontend/memory-bank/activeContext.md and progress.md to understand current state
-2. List open GitHub issues in the frontend repository: gh issue list -R enclavr/frontend
-3. For each open issue:
+1. List ALL open GitHub issues: gh issue list -R enclavr/frontend --state open --limit 50
+3. Sort by priority: fix critical/security bugs first, then high, then medium
+4. For EACH issue you can fix in this session:
    - Read the issue details and understand what needs to be fixed
    - Analyze the code to find the root cause
    - Implement a fix for the issue
-4. Run tests to verify your fixes: bun run test:run && bun run lint && bun run typecheck
-5. Use Chrome DevTools MCP to verify frontend changes work correctly
-6. Close each issue after fixing with a comment explaining the fix
-7. Commit and push your changes
+   - Run tests to verify: bun run test:run && bun run lint && bun run typecheck
+   - Use Chrome DevTools MCP to verify frontend changes work correctly
+   - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
+5. Fix AT LEAST 3 issues per session if that many are open
+6. If no open issues exist, run tests/lint and fix any failures directly (do not create issues)
+7. Commit and push your changes after fixing multiple issues
 
-IMPORTANT: Focus on fixing existing GitHub issues. Do not create new issues. If an issue is unclear, ask for clarification in a comment."
+IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
+Do NOT create new issues. If you find a bug while fixing, fix it immediately and close any related issue."
 
 # Server - Add New Features
 PROMPT_SERVER_FEATURES="You are working on the Enclavr server repository.
@@ -126,13 +131,11 @@ CONTEXT:
 - Tech Stack: Go 1.25, GORM, PostgreSQL (Neon), gorilla/websocket, Redis pub/sub
 - Location: /home/dev/Projects/enclavr/server
 - Auth: JWT, bcrypt, OIDC, WebAuthn
-- Memory bank at: server/memory-bank/
 
 YOUR TASK: Add NEW features to the server.
 
 REQUIREMENTS:
-1. Check server/memory-bank/activeContext.md and progress.md to understand current state
-2. Check AGENTS.md in the server repo for coding standards
+1. Check AGENTS.md in the server repo for coding standards
 3. Implement a new feature - consider:
    - New API endpoints in internal/handlers/
    - New database models in internal/models/
@@ -155,30 +158,31 @@ CONTEXT:
 - Tech Stack: Go 1.25, GORM, PostgreSQL (Neon), gorilla/websocket, Redis pub/sub
 - Location: /home/dev/Projects/enclavr/server
 - Auth: JWT, bcrypt, OIDC, WebAuthn
-- Memory bank at: server/memory-bank/
 
-YOUR TASK: Testing ONLY - find issues and create GitHub issues. DO NOT fix anything yourself.
+YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
 
 REQUIREMENTS:
-1. Check server/memory-bank/activeContext.md and progress.md to understand current state
-2. Run tests: go test -v ./...
-3. Run linting: golangci-lint run ./...
-4. Check go vet for issues
-5. Analyze any test failures
-6. Look for potential bugs:
-   - Check internal/handlers/ for edge cases
-   - Check internal/websocket/ for race conditions
-   - Check internal/services/ for error handling
-   - Check internal/models/ for validation
-7. Check database migrations in migrations/
-8. For EACH issue found, create a GitHub issue with:
-   - Clear title describing the bug
-   - Detailed description with steps to reproduce
-   - Expected vs actual behavior
-   - Relevant code snippets and file paths
-9. DO NOT attempt to fix any issues - only document them
+1. FIRST check existing open issues: gh issue list -R enclavr/server --state open
+   - Do NOT create duplicates of existing issues
+3. Run tests: go test -v ./...
+4. Run linting: golangci-lint run ./...
+5. Check go vet for issues
+6. Analyze any test failures
 
-IMPORTANT: Run all tests and checks, then create GitHub issues for everything you find. Never modify code to fix bugs."
+IMPORTANT ISSUE CREATION RULES:
+- ONLY create issues for HIGH priority problems:
+  * Security vulnerabilities (SQL injection, auth bypass, data leaks)
+  * Crashes, panics, or unhandled errors
+  * Data corruption or race conditions
+  * Broken core functionality (auth, rooms, messages, voice)
+- DO NOT create issues for:
+  * Code style preferences
+  * Theoretical improvements without concrete bugs
+  * Issues that already exist (check first!)
+- MAXIMUM 3 issues per testing session
+- For each issue: clear title, description, file paths, steps to reproduce
+
+IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually matter."
 
 # Server - Debugging (Fix GitHub Issues)
 PROMPT_SERVER_DEBUGGING="You are working on the Enclavr server repository.
@@ -188,22 +192,24 @@ CONTEXT:
 - Tech Stack: Go 1.25, GORM, PostgreSQL (Neon), gorilla/websocket, Redis pub/sub
 - Location: /home/dev/Projects/enclavr/server
 - Auth: JWT, bcrypt, OIDC, WebAuthn
-- Memory bank at: server/memory-bank/
 
-YOUR TASK: Debugging - go through GitHub issues and FIX them. Do NOT create new issues.
+YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
 REQUIREMENTS:
-1. Check server/memory-bank/activeContext.md and progress.md to understand current state
-2. List open GitHub issues in the server repository: gh issue list -R enclavr/server
-3. For each open issue:
+1. List ALL open GitHub issues: gh issue list -R enclavr/server --state open --limit 50
+3. Sort by priority: fix critical/security bugs first, then high, then medium
+4. For EACH issue you can fix in this session:
    - Read the issue details and understand what needs to be fixed
    - Analyze the code to find the root cause
    - Implement a fix for the issue
-4. Run tests to verify your fixes: go test -v ./... && golangci-lint run ./...
-5. Close each issue after fixing with a comment explaining the fix
-6. Commit and push your changes
+   - Run tests to verify: go test -v ./... && golangci-lint run ./...
+   - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
+5. Fix AT LEAST 3 issues per session if that many are open
+6. If no open issues exist, run tests/lint and fix any failures directly (do not create issues)
+7. Commit and push your changes after fixing multiple issues
 
-IMPORTANT: Focus on fixing existing GitHub issues. Do not create new issues. If an issue is unclear, ask for clarification in a comment."
+IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
+Do NOT create new issues. If you find a bug while fixing, fix it immediately."
 
 # Infra - Add New Features
 PROMPT_INFRA_FEATURES="You are working on the Enclavr infrastructure repository.
@@ -237,22 +243,30 @@ CONTEXT:
 - Location: /home/dev/Projects/enclavr/infra
 - Docker Compose for PostgreSQL, Redis, server, frontend
 
-YOUR TASK: Testing ONLY - find issues and create GitHub issues. DO NOT fix anything yourself.
+YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
 
 REQUIREMENTS:
-1. Validate Docker Compose: docker compose config
-2. Check for issues in docker-compose.yml
-3. Test service health checks
-4. Verify environment variables in .env.example
-5. Check networking between services
-6. Look for security issues in Docker configuration
-7. For EACH issue found, create a GitHub issue with:
-   - Clear title describing the issue
-   - Detailed description with steps to reproduce
-   - Expected vs actual behavior
-8. DO NOT attempt to fix any issues - only document them
+1. FIRST check existing open issues: gh issue list -R enclavr/infra --state open
+   - Do NOT create duplicates of existing issues
+2. Validate Docker Compose: docker compose config
+3. Check for critical issues in docker-compose.yml
+4. Test service health checks
+5. Verify environment variables in .env.example
 
-IMPORTANT: Run all checks, then create GitHub issues for everything you find. Never modify Docker configuration to fix issues."
+IMPORTANT ISSUE CREATION RULES:
+- ONLY create issues for HIGH priority problems:
+  * Security misconfigurations (exposed ports, weak credentials)
+  * Services that cannot start or crash
+  * Missing health checks for critical services
+  * Data loss risks (missing volumes, no backups)
+- DO NOT create issues for:
+  * Minor config preferences
+  * Theoretical improvements
+  * Issues that already exist (check first!)
+- MAXIMUM 2 issues per testing session
+- For each issue: clear title, description, impact assessment
+
+IMPORTANT: Be selective. Quality over quantity. Only report issues that actually matter."
 
 # Infra - Debugging (Fix GitHub Issues)
 PROMPT_INFRA_DEBUGGING="You are working on the Enclavr infrastructure repository.
@@ -262,20 +276,23 @@ CONTEXT:
 - Location: /home/dev/Projects/enclavr/infra
 - Docker Compose for PostgreSQL, Redis, server, frontend
 
-YOUR TASK: Debugging - go through GitHub issues and FIX them. Do NOT create new issues.
+YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
 REQUIREMENTS:
-1. List open GitHub issues in the infra repository: gh issue list -R enclavr/infra
-2. For each open issue:
+1. List ALL open GitHub issues: gh issue list -R enclavr/infra --state open --limit 50
+2. Sort by priority: fix critical/security issues first
+3. For EACH issue you can fix in this session:
    - Read the issue details and understand what needs to be fixed
    - Analyze the Docker configuration to find the root cause
    - Implement a fix for the issue
-3. Test with: docker compose config
-4. Ensure services can start properly
-5. Close each issue after fixing with a comment explaining the fix
-6. Commit and push your changes
+   - Test with: docker compose config
+   - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
+4. Fix AT LEAST 2 issues per session if that many are open
+5. If no open issues exist, run docker compose config and fix any issues directly
+6. Commit and push your changes after fixing multiple issues
 
-IMPORTANT: Focus on fixing existing GitHub issues. Do not create new issues. If an issue is unclear, ask for clarification in a comment."
+IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
+Do NOT create new issues."
 
 # Docs - Add New Features
 PROMPT_DOCS_FEATURES="You are working on the Enclavr documentation repository.
@@ -299,8 +316,7 @@ REQUIREMENTS:
    - Setup guides (installation, configuration)
    - Usage examples
    - Architecture docs
-3. Check docs/memory-bank/activeContext.md for current state
-4. Run playwright tests to verify docs render: npx playwright test
+3. Run playwright tests to verify docs render: npx playwright test
 5. Look at GitHub issues for what needs to be documented
 6. Update existing docs to match current code
 7. Commit and push your changes
@@ -316,23 +332,30 @@ CONTEXT:
 - Static HTML documentation
 - Docs must stay in sync with: frontend, server, infra repositories
 
-YOUR TASK: Testing ONLY - verify docs match reality and create GitHub issues for gaps. DO NOT fix anything yourself.
+YOUR TASK: Testing - find HIGH PRIORITY doc gaps and create GitHub issues. DO NOT fix anything yourself.
 
 REQUIREMENTS:
-1. Check each feature in the other repos against the docs:
-   - Frontend: /home/dev/Projects/enclavr/frontend (check src/components, src/hooks, src/lib)
-   - Server: /home/dev/Projects/enclavr/server (check internal/handlers, internal/services)
-   - Infra: /home/dev/Projects/enclavr/infra (check docker-compose.yml)
-2. For EACH feature missing documentation, create a GitHub issue:
-   - Title: Missing docs: [feature name]
-   - Body: List the feature that exists in code but is not documented
-   - Include file paths where the feature is implemented
-3. Check for broken links: npx playwright test or manual check
-4. Check for typos, grammar issues
-5. Verify code examples in docs match actual code
-6. Check docs/memory-bank/activeContext.md for current state
+1. FIRST check existing open issues: gh issue list -R enclavr/docs --state open
+   - Do NOT create duplicates of existing issues
+2. Check the most critical features in other repos against docs:
+   - Server: /home/dev/Projects/enclavr/server (check for new API endpoints)
+   - Frontend: /home/dev/Projects/enclavr/frontend (check for new components)
+3. Run playwright tests: npx playwright test
+4. Check for broken links or rendering issues
 
-IMPORTANT: Find gaps between code and docs. Create issues for EVERYTHING missing. DO NOT fix anything."
+IMPORTANT ISSUE CREATION RULES:
+- ONLY create issues for significant gaps:
+  * Entirely undocumented new features
+  * Broken documentation pages
+  * Incorrect API documentation (wrong endpoints, parameters)
+- DO NOT create issues for:
+  * Minor wording improvements
+  * Missing code examples (unless the entire page is empty)
+  * Issues that already exist (check first!)
+- MAXIMUM 2 issues per testing session
+- Title format: 'Missing docs: [feature name]' or 'Fix docs: [description]'
+
+IMPORTANT: Be selective. Focus on docs gaps that affect users the most."
 
 # Docs - Debugging (Fix GitHub Issues)
 PROMPT_DOCS_DEBUGGING="You are working on the Enclavr documentation repository.
@@ -343,21 +366,157 @@ CONTEXT:
 - Static HTML documentation
 - Docs must stay in sync with: frontend, server, infra repositories
 
-YOUR TASK: Debugging - go through GitHub issues and FIX them. Do NOT create new issues.
+YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
 REQUIREMENTS:
-1. List open GitHub issues in the docs repository: gh issue list -R enclavr/docs
-2. For each issue:
+1. List ALL open GitHub issues: gh issue list -R enclavr/docs --state open --limit 50
+2. For EACH issue you can fix in this session:
    - Read the issue details
    - If it is about missing docs: check the other repos and add the documentation
    - If it is about broken links/typos: fix them directly
    - If it is about code examples: verify against actual code and fix
-3. Verify fixes by running: npx playwright test
-4. Run tests to ensure docs still render correctly
-5. Close each issue after fixing with a comment
-6. Commit and push your changes
+   - Verify fixes by running: npx playwright test
+   - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
+3. Fix AT LEAST 3 issues per session if that many are open
+4. If no open issues exist, run playwright tests and fix any failures directly
+5. Commit and push your changes after fixing multiple issues
 
-IMPORTANT: Fix existing issues. The goal is 100% docs coverage of all features from other repos."
+IMPORTANT: Fix existing issues aggressively. The goal is 100% docs coverage of all features."
+
+# Frontend - Security (Dependabot, Code Scanning, Secret Scanning)
+PROMPT_FRONTEND_SECURITY="You are working on the Enclavr frontend repository.
+The project is a Next.js 16 + React 19 + TypeScript voice chat platform.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/frontend
+- Repository: enclavr/frontend
+
+YOUR TASK: Check and fix GitHub security alerts. Check Dependabot, code scanning, and secret scanning.
+
+REQUIREMENTS:
+1. Check Dependabot alerts:
+   gh api repos/enclavr/frontend/dependabot/alerts -f state=open --jq '.[] | {number, state, severity, package: .security_advisory.summary, cve: .security_advisory.cve_id, vulnerable_range: .security_vulnerability.vulnerable_version_range, first_patched: .security_vulnerability.first_patched_version.identifier}'
+2. Check code scanning alerts:
+   gh api repos/enclavr/frontend/code-scanning/alerts --jq '.[] | {number, state, rule: .rule.id, severity: .rule.severity, file: .most_recent_instance.location.path, line: .most_recent_instance.location.start_line}'
+3. Check secret scanning alerts:
+   gh api repos/enclavr/frontend/secret-scanning/alerts
+4. For each Dependabot alert:
+   - If a patch exists, update the dependency: bun update <package>
+   - If no patch exists, evaluate if the vulnerability affects this project
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/frontend/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+5. For each code scanning alert:
+   - If it is a real vulnerability, fix it in the code
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/frontend/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason=false_positive
+6. For each secret scanning alert:
+   - If a real secret was exposed, rotate it and mark resolved
+   - Dismiss false positives
+7. Run tests after fixes: bun run lint && bun run typecheck && bun run test:run
+8. Commit and push your changes
+
+IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+
+# Server - Security (Dependabot, Code Scanning, Secret Scanning)
+PROMPT_SERVER_SECURITY="You are working on the Enclavr server repository.
+The project is a Go backend with PostgreSQL and WebSocket for real-time voice chat.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/server
+- Repository: enclavr/server
+- Tech Stack: Go 1.25, GORM, PostgreSQL, gorilla/websocket, Redis
+
+YOUR TASK: Check and fix GitHub security alerts. Check Dependabot, code scanning, and secret scanning.
+
+REQUIREMENTS:
+1. Check Dependabot alerts:
+   gh api repos/enclavr/server/dependabot/alerts -f state=open --jq '.[] | {number, state, severity, package: .security_advisory.summary, cve: .security_advisory.cve_id, vulnerable_range: .security_vulnerability.vulnerable_version_range, first_patched: .security_vulnerability.first_patched_version.identifier}'
+2. Check code scanning alerts:
+   gh api repos/enclavr/server/code-scanning/alerts --jq '.[] | {number, state, rule: .rule.id, severity: .rule.severity, description: .most_recent_instance.message.text, file: .most_recent_instance.location.path, line: .most_recent_instance.location.start_line}'
+3. Check secret scanning alerts:
+   gh api repos/enclavr/server/secret-scanning/alerts
+4. For each Dependabot alert:
+   - If a patch exists, update the dependency: go get <package>@latest && go mod tidy
+   - If no patch exists, evaluate if the vulnerability affects this project
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/server/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+5. For each code scanning alert:
+   - go/email-injection: Sanitize email content, escape HTML
+   - go/clear-text-logging: Redact sensitive data from logs
+   - go/path-injection: Validate and sanitize file paths
+   - go/cookie-secure-not-set: Set Secure and HttpOnly flags on cookies
+   - go/weak-sensitive-data-hashing: Use bcrypt instead of SHA256 for passwords
+   - actions/missing-workflow-permissions: Add permissions block to GitHub Actions
+   - If it is a real vulnerability, fix it in the code
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/server/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason=false_positive
+6. For each secret scanning alert:
+   - If a real secret was exposed, rotate it and mark resolved
+   - Dismiss false positives
+7. Run tests after fixes: go test -v ./... && golangci-lint run ./...
+8. Commit and push your changes
+
+IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+
+# Infra - Security (Dependabot, Code Scanning, Secret Scanning)
+PROMPT_INFRA_SECURITY="You are working on the Enclavr infrastructure repository.
+The project uses Docker Compose for deployment.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/infra
+- Repository: enclavr/infra
+
+YOUR TASK: Check and fix GitHub security alerts. Check Dependabot, code scanning, and secret scanning.
+
+REQUIREMENTS:
+1. Check Dependabot alerts:
+   gh api repos/enclavr/infra/dependabot/alerts -f state=open --jq '.[] | {number, state, severity, package: .security_advisory.summary, cve: .security_advisory.cve_id}'
+2. Check code scanning alerts (Trivy):
+   gh api repos/enclavr/infra/code-scanning/alerts --jq '.[] | {number, state, rule: .rule.id, severity: .rule.severity}'
+3. Check secret scanning alerts:
+   gh api repos/enclavr/infra/secret-scanning/alerts
+4. For each Dependabot alert:
+   - If it is a Docker image vulnerability, update the image tag in docker-compose.yml
+   - If it is a GitHub Actions vulnerability, update the action version
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/infra/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+5. For each code scanning alert:
+   - If it is a real misconfiguration, fix it in docker-compose.yml
+   - Dismiss false positives
+6. For each secret scanning alert:
+   - If a real secret was exposed, rotate it and mark resolved
+   - Dismiss false positives
+7. Test after fixes: docker compose config
+8. Commit and push your changes
+
+IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
+
+# Docs - Security (Dependabot, Code Scanning, Secret Scanning)
+PROMPT_DOCS_SECURITY="You are working on the Enclavr documentation repository.
+Static HTML documentation for the Enclavr voice chat platform.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/docs
+- Repository: enclavr/docs
+
+YOUR TASK: Check and fix GitHub security alerts. Check Dependabot, code scanning, and secret scanning.
+
+REQUIREMENTS:
+1. Check Dependabot alerts:
+   gh api repos/enclavr/docs/dependabot/alerts -f state=open --jq '.[] | {number, state, severity, package: .security_advisory.summary, cve: .security_advisory.cve_id}'
+2. Check code scanning alerts:
+   gh api repos/enclavr/docs/code-scanning/alerts
+3. Check secret scanning alerts:
+   gh api repos/enclavr/docs/secret-scanning/alerts
+4. For each Dependabot alert:
+   - If a patch exists, update the dependency: npm update <package>
+   - If no patch exists, evaluate if the vulnerability affects this project
+   - Dismiss false positives: gh api -X PATCH repos/enclavr/docs/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+5. For each code scanning alert:
+   - If it is a real vulnerability, fix it
+   - Dismiss false positives
+6. For each secret scanning alert:
+   - If a real secret was exposed, rotate it and mark resolved
+   - Dismiss false positives
+7. Run tests after fixes: npx playwright test
+8. Commit and push your changes
+
+IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
 
 # ============================================
 # Main Loop
@@ -374,6 +533,7 @@ while true; do
     ADD_NEW_FEATURES=false
     TESTING_ONLY=false
     DEBUGGING_ONLY=false
+    SECURITY_ONLY=false
     
     # Set the current repo flag based on index
     case $CURRENT_REPO_INDEX in
@@ -383,36 +543,13 @@ while true; do
         3) DOCS_CHANGED=true ;;
     esac
     
-    # Get the task index for the current repo and set task type flag
-    case $CURRENT_REPO_INDEX in
-        0)
-            case $FRONTEND_TASK_INDEX in
-                0) ADD_NEW_FEATURES=true ;;
-                1) TESTING_ONLY=true ;;
-                2) DEBUGGING_ONLY=true ;;
-            esac
-            ;;
-        1)
-            case $SERVER_TASK_INDEX in
-                0) ADD_NEW_FEATURES=true ;;
-                1) TESTING_ONLY=true ;;
-                2) DEBUGGING_ONLY=true ;;
-            esac
-            ;;
-        2)
-            case $INFRA_TASK_INDEX in
-                0) ADD_NEW_FEATURES=true ;;
-                1) TESTING_ONLY=true ;;
-                2) DEBUGGING_ONLY=true ;;
-            esac
-            ;;
-        3)
-            case $DOCS_TASK_INDEX in
-                0) ADD_NEW_FEATURES=true ;;
-                1) TESTING_ONLY=true ;;
-                2) DEBUGGING_ONLY=true ;;
-            esac
-            ;;
+    # Set task type based on global step counter (2:2:1:1 debug:test:feature:security ratio)
+    # Steps 0,2 = debug (fix issues) | Steps 1,3 = test (create issues) | Step 4 = feature | Step 5 = security
+    case $TASK_STEP in
+        0|2) DEBUGGING_ONLY=true ;;
+        1|3) TESTING_ONLY=true ;;
+        4)   ADD_NEW_FEATURES=true ;;
+        5)   SECURITY_ONLY=true ;;
     esac
     
     # Build the AI prompt based on current flags
@@ -421,6 +558,8 @@ while true; do
             AI_PROMPT="$PROMPT_FRONTEND_FEATURES"
         elif [ "$TESTING_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_FRONTEND_TESTING"
+        elif [ "$SECURITY_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_FRONTEND_SECURITY"
         else
             AI_PROMPT="$PROMPT_FRONTEND_DEBUGGING"
         fi
@@ -429,6 +568,8 @@ while true; do
             AI_PROMPT="$PROMPT_SERVER_FEATURES"
         elif [ "$TESTING_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_SERVER_TESTING"
+        elif [ "$SECURITY_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_SERVER_SECURITY"
         else
             AI_PROMPT="$PROMPT_SERVER_DEBUGGING"
         fi
@@ -437,6 +578,8 @@ while true; do
             AI_PROMPT="$PROMPT_INFRA_FEATURES"
         elif [ "$TESTING_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_INFRA_TESTING"
+        elif [ "$SECURITY_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_INFRA_SECURITY"
         else
             AI_PROMPT="$PROMPT_INFRA_DEBUGGING"
         fi
@@ -445,17 +588,19 @@ while true; do
             AI_PROMPT="$PROMPT_DOCS_FEATURES"
         elif [ "$TESTING_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_DOCS_TESTING"
+        elif [ "$SECURITY_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_DOCS_SECURITY"
         else
             AI_PROMPT="$PROMPT_DOCS_DEBUGGING"
         fi
     fi
     
     echo "Active repo: $CURRENT_REPO_INDEX (frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, infra=$INFRA_CHANGED, docs=$DOCS_CHANGED)"
-    echo "Task type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY)"
+    echo "Task step: $TASK_STEP/5 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY)"
     echo "AI Prompt length: ${#AI_PROMPT} chars"
     
     # Run the AI agent with the prompt
-    kilo run "$AI_PROMPT"
+    /home/dev/.bun/bin/kilo run "$AI_PROMPT"
     EXIT_CODE=$?
     
     if [ $EXIT_CODE -eq 0 ]; then
@@ -467,14 +612,10 @@ while true; do
     # Alternate to next repo for next iteration
     CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 4 ))
     
-    # Alternate task type for the CURRENT repo (for next time we visit it)
-    # Now cycles through 3 states: 0=features, 1=testing, 2=debugging
-    case $CURRENT_REPO_INDEX in
-        0) FRONTEND_TASK_INDEX=$(( (FRONTEND_TASK_INDEX + 1) % 3 )) ;;
-        1) SERVER_TASK_INDEX=$(( (SERVER_TASK_INDEX + 1) % 3 )) ;;
-        2) INFRA_TASK_INDEX=$(( (INFRA_TASK_INDEX + 1) % 3 )) ;;
-        3) DOCS_TASK_INDEX=$(( (DOCS_TASK_INDEX + 1) % 3 )) ;;
-    esac
+    # Advance global task step (cycles through 6 steps: D,T,D,T,F,S)
+    TASK_STEP=$(( (TASK_STEP + 1) % 6 ))
+    
+    echo "Next task step: $TASK_STEP"
     
     sleep 60
 done
