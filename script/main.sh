@@ -16,12 +16,14 @@ ADD_NEW_FEATURES=false
 TESTING_ONLY=false
 DEBUGGING_ONLY=false
 SECURITY_ONLY=false
+GITHUB_FILES_ONLY=false
 
-# Global task step counter - cycles through 6 steps with balanced distribution:
-# Step 0: DEBUG  | Step 1: TEST  | Step 2: DEBUG  | Step 3: TEST  | Step 4: FEATURE | Step 5: SECURITY
-# Ratio: 2 debug : 2 test : 1 feature : 1 security
+# Global task step counter - cycles through 7 steps with balanced distribution:
+# Step 0: DEBUG  | Step 1: TEST  | Step 2: DEBUG  | Step 3: TEST  | Step 4: FEATURE | Step 5: SECURITY | Step 6: GITHUB_FILES
+# Ratio: 2 debug : 2 test : 1 feature : 1 security : 1 github_files
 # DEBUG = fix/close GitHub issues | TEST = find bugs & create GitHub issues
 # FEATURE = add new features | SECURITY = check dependabot, code scanning, secret scanning
+# GITHUB_FILES = audit and update README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/ configs
 TASK_STEP=0
 
 # ============================================
@@ -518,6 +520,171 @@ REQUIREMENTS:
 
 IMPORTANT: Fix real vulnerabilities. Dismiss only confirmed false positives. Always test after fixing."
 
+# Frontend - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
+PROMPT_FRONTEND_GITHUB_FILES="You are working on the Enclavr frontend repository.
+The project is a Next.js 16 + React 19 + TypeScript voice chat platform with Tailwind CSS 4.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/frontend
+- Repository: enclavr/frontend
+
+YOUR TASK: Audit and update ALL GitHub community/config files to match the current codebase state.
+
+FILES TO AUDIT AND UPDATE:
+1. README.md - Must accurately describe: tech stack (check package.json), commands (check package.json scripts), features, env vars, file structure
+2. CONTRIBUTING.md - Must reference correct commands, tools, and PR process
+3. CODE_OF_CONDUCT.md - Verify enforcement contact email is correct
+4. CHANGELOG.md - Add entries for recent changes, verify dates match git log
+5. SECURITY.md - Verify all security claims match actual code (JWT, CSP, HSTS, etc.)
+6. LICENSE - Verify it matches the root repo license
+7. .github/CODEOWNERS - Verify correct owner
+8. .github/dependabot.yml - Verify ecosystems match actual dependency files (package.json, Dockerfile)
+9. .github/workflows/ci.yml - Verify CI steps match actual build/test setup
+10. .github/ISSUE_TEMPLATE/ - Verify fields are relevant and accurate
+11. .github/PULL_REQUEST_TEMPLATE/ - Verify checklist commands actually exist
+12. .github/FUNDING.yml - Verify GitHub Sponsors username is correct
+
+REQUIREMENTS:
+1. Read the actual codebase (package.json, tsconfig.json, src/ structure, Dockerfile) as the source of truth
+2. For EACH file listed above:
+   - Read the file
+   - Cross-reference every claim against the actual code
+   - If something is wrong or outdated, fix it
+   - If something is missing, add it
+3. Verify commands in CONTRIBUTING.md and PR template match package.json scripts
+4. Verify tech stack versions match package.json
+5. Verify file paths referenced actually exist
+6. Check for placeholder text that was never filled in
+7. Run tests after changes: bun run lint && bun run typecheck
+8. Commit and push your changes
+
+IMPORTANT: Every claim in these files must match the actual codebase. Fix all mismatches."
+
+# Server - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
+PROMPT_SERVER_GITHUB_FILES="You are working on the Enclavr server repository.
+The project is a Go backend with PostgreSQL and WebSocket for real-time voice chat.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/server
+- Repository: enclavr/server
+
+YOUR TASK: Audit and update ALL GitHub community/config files to match the current codebase state.
+
+FILES TO AUDIT AND UPDATE:
+1. README.md - Must accurately describe: framework (check go.mod and cmd/), commands, API endpoints, env vars (check .env.example and config.go)
+2. AGENTS.md - Must accurately describe: framework, API patterns, handler counts, project structure
+3. CONTRIBUTING.md - Must reference correct commands (golangci-lint, go test)
+4. CODE_OF_CONDUCT.md - Verify enforcement contact email is correct
+5. CHANGELOG.md - Add entries for recent changes, verify dates match git log
+6. SECURITY.md - Verify all security claims match actual code (JWT, bcrypt, GORM, rate limiting, etc.)
+7. LICENSE - Verify it matches the root repo license. Check Dockerfile labels match LICENSE type.
+8. .github/CODEOWNERS - Verify correct owner
+9. .github/dependabot.yml - Verify ecosystems match actual dependency files (go.mod, Dockerfile)
+10. .github/workflows/ci.yml - Verify CI steps match actual build/test setup
+11. .github/ISSUE_TEMPLATE/ - Verify fields are relevant (Go version placeholder should match go.mod)
+12. .github/PULL_REQUEST_TEMPLATE/ - Verify checklist commands actually exist
+
+REQUIREMENTS:
+1. Read the actual codebase (go.mod, cmd/server/main.go, internal/ structure, Dockerfile, .env.example) as the source of truth
+2. For EACH file listed above:
+   - Read the file
+   - Cross-reference every claim against the actual code
+   - If something is wrong or outdated, fix it
+   - If something is missing, add it
+3. Verify Go version references match go.mod
+4. Verify framework claims match actual imports in production code (not test files)
+5. Verify API URL patterns match actual route registrations in cmd/server/main.go
+6. Verify env vars table in README matches .env.example and config.go
+7. Check for placeholder text that was never filled in
+8. Run tests after changes: go test -v ./... && golangci-lint run ./...
+9. Commit and push your changes
+
+IMPORTANT: Every claim in these files must match the actual codebase. Fix all mismatches."
+
+# Infra - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
+PROMPT_INFRA_GITHUB_FILES="You are working on the Enclavr infrastructure repository.
+The project uses Docker Compose for deployment.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/infra
+- Repository: enclavr/infra
+
+YOUR TASK: Audit and update ALL GitHub community/config files to match the current codebase state.
+
+FILES TO AUDIT AND UPDATE:
+1. README.md - Must accurately describe: services (check docker-compose.yml), ports, volumes, resource limits, security features
+2. CONTRIBUTING.md - Must reference correct commands (docker compose config)
+3. CODE_OF_CONDUCT.md - Verify enforcement contact email is correct
+4. CHANGELOG.md - Add entries for recent changes, verify dates match git log
+5. SECURITY.md - Verify ALL security claims match docker-compose.yml:
+   - Read-only filesystems (check which services actually have read_only: true)
+   - Network isolation (check which services span multiple networks)
+   - Backup encryption (check backup.sh for actual encryption)
+   - Default ports vs profile-gated ports (check which services need --profile)
+6. LICENSE - Verify it matches the root repo license
+7. .github/CODEOWNERS - Verify correct owner
+8. .github/dependabot.yml - Verify ecosystems match actual files (docker-compose.yml, Dockerfiles). Verify image patterns cover all images used.
+9. .github/workflows/ci.yml - Verify CI steps are accurate (Hadolint, Trivy, etc.)
+10. .github/ISSUE_TEMPLATE/ - Verify fields are relevant (Docker version, compose logs)
+11. .github/PULL_REQUEST_TEMPLATE/ - Verify checklist commands actually exist
+
+REQUIREMENTS:
+1. Read docker-compose.yml, Dockerfiles, backup.sh, .env.example, Makefile as the source of truth
+2. For EACH file listed above:
+   - Read the file
+   - Cross-reference every claim against the actual docker-compose.yml
+   - Verify which features are default vs optional profiles
+   - If something is wrong or outdated, fix it
+   - If something is missing, add it
+3. Verify volumes listed in README actually exist in docker-compose.yml
+4. Verify file path references (like LICENSE links) are correct
+5. Verify dependabot patterns cover all Docker images used
+6. Check for placeholder text that was never filled in
+7. Test after changes: docker compose config
+8. Commit and push your changes
+
+IMPORTANT: Every claim in these files must match the actual docker-compose.yml. Fix all mismatches."
+
+# Docs - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
+PROMPT_DOCS_GITHUB_FILES="You are working on the Enclavr documentation repository.
+Static HTML documentation for the Enclavr voice chat platform.
+
+CONTEXT:
+- Location: /home/dev/Projects/enclavr/docs
+- Repository: enclavr/docs
+
+YOUR TASK: Audit and update ALL GitHub community/config files to match the current codebase state.
+
+FILES TO AUDIT AND UPDATE:
+1. README.md - Must accurately describe: deployment URL, testing commands, project structure
+2. CONTRIBUTING.md - Must reference correct commands (npx playwright test)
+3. CODE_OF_CONDUCT.md - Verify enforcement contact email is correct
+4. CHANGELOG.md - Verify dates match actual git tags (run: git tag -l). Fix false 'Initial release' claims.
+5. SECURITY.md - Verify all claims match actual codebase
+6. LICENSE - Verify it matches the root repo license
+7. .github/CODEOWNERS - Verify correct owner
+8. .github/dependabot.yml - Verify ecosystems match actual dependency files (package.json)
+9. .github/workflows/ci.yml - Verify CI steps are correct
+10. .github/workflows/deploy.yml - Verify deployment config is correct. Check artifact upload doesn't include unnecessary files.
+11. .github/ISSUE_TEMPLATE/ - Verify placeholder URLs are correct (GitHub Pages URL pattern)
+12. .github/PULL_REQUEST_TEMPLATE/ - Verify checklist commands actually exist
+
+REQUIREMENTS:
+1. Read the actual codebase (package.json, HTML files, templates, workflows) as the source of truth
+2. For EACH file listed above:
+   - Read the file
+   - Cross-reference every claim against the actual code
+   - If something is wrong or outdated, fix it
+   - If something is missing, add it
+3. Verify GitHub Pages URL is correct for the repo (check remote URL)
+4. Verify git tag dates match CHANGELOG entries
+5. Verify deploy workflow doesn't upload unnecessary files
+6. Check for placeholder text that was never filled in
+7. Run tests after changes: npx playwright test
+8. Commit and push your changes
+
+IMPORTANT: Every claim in these files must match the actual codebase. Fix all mismatches."
+
 # ============================================
 # Main Loop
 # ============================================
@@ -534,6 +701,7 @@ while true; do
     TESTING_ONLY=false
     DEBUGGING_ONLY=false
     SECURITY_ONLY=false
+    GITHUB_FILES_ONLY=false
     
     # Set the current repo flag based on index
     case $CURRENT_REPO_INDEX in
@@ -543,13 +711,14 @@ while true; do
         3) DOCS_CHANGED=true ;;
     esac
     
-    # Set task type based on global step counter (2:2:1:1 debug:test:feature:security ratio)
-    # Steps 0,2 = debug (fix issues) | Steps 1,3 = test (create issues) | Step 4 = feature | Step 5 = security
+    # Set task type based on global step counter (2:2:1:1:1 debug:test:feature:security:github_files ratio)
+    # Steps 0,2 = debug (fix issues) | Steps 1,3 = test (create issues) | Step 4 = feature | Step 5 = security | Step 6 = github_files
     case $TASK_STEP in
         0|2) DEBUGGING_ONLY=true ;;
         1|3) TESTING_ONLY=true ;;
         4)   ADD_NEW_FEATURES=true ;;
         5)   SECURITY_ONLY=true ;;
+        6)   GITHUB_FILES_ONLY=true ;;
     esac
     
     # Build the AI prompt based on current flags
@@ -560,6 +729,8 @@ while true; do
             AI_PROMPT="$PROMPT_FRONTEND_TESTING"
         elif [ "$SECURITY_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_FRONTEND_SECURITY"
+        elif [ "$GITHUB_FILES_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_FRONTEND_GITHUB_FILES"
         else
             AI_PROMPT="$PROMPT_FRONTEND_DEBUGGING"
         fi
@@ -570,6 +741,8 @@ while true; do
             AI_PROMPT="$PROMPT_SERVER_TESTING"
         elif [ "$SECURITY_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_SERVER_SECURITY"
+        elif [ "$GITHUB_FILES_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_SERVER_GITHUB_FILES"
         else
             AI_PROMPT="$PROMPT_SERVER_DEBUGGING"
         fi
@@ -580,6 +753,8 @@ while true; do
             AI_PROMPT="$PROMPT_INFRA_TESTING"
         elif [ "$SECURITY_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_INFRA_SECURITY"
+        elif [ "$GITHUB_FILES_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_INFRA_GITHUB_FILES"
         else
             AI_PROMPT="$PROMPT_INFRA_DEBUGGING"
         fi
@@ -590,13 +765,15 @@ while true; do
             AI_PROMPT="$PROMPT_DOCS_TESTING"
         elif [ "$SECURITY_ONLY" = true ]; then
             AI_PROMPT="$PROMPT_DOCS_SECURITY"
+        elif [ "$GITHUB_FILES_ONLY" = true ]; then
+            AI_PROMPT="$PROMPT_DOCS_GITHUB_FILES"
         else
             AI_PROMPT="$PROMPT_DOCS_DEBUGGING"
         fi
     fi
     
     echo "Active repo: $CURRENT_REPO_INDEX (frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, infra=$INFRA_CHANGED, docs=$DOCS_CHANGED)"
-    echo "Task step: $TASK_STEP/5 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY)"
+    echo "Task step: $TASK_STEP/6 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY, security=$SECURITY_ONLY, github_files=$GITHUB_FILES_ONLY)"
     echo "AI Prompt length: ${#AI_PROMPT} chars"
     
     # Run the AI agent with the prompt
@@ -612,8 +789,8 @@ while true; do
     # Alternate to next repo for next iteration
     CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 4 ))
     
-    # Advance global task step (cycles through 6 steps: D,T,D,T,F,S)
-    TASK_STEP=$(( (TASK_STEP + 1) % 6 ))
+    # Advance global task step (cycles through 7 steps: D,T,D,T,F,S,G)
+    TASK_STEP=$(( (TASK_STEP + 1) % 7 ))
     
     echo "Next task step: $TASK_STEP"
     
