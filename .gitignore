@@ -10,7 +10,6 @@ shared-state.md
 *.tsbuildinfo
 .next/
 out/
-memory-bank/
 .proactive_cooldown
 .provider_cooldown
 *.swp
@@ -19,6 +18,7 @@ memory-bank/
 .idea/
 .vscode/
 coverage.out
+logs/
 bin/
 dist/
 build/
