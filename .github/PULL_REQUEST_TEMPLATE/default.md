@@ -15,3 +15,4 @@ How was this tested?
 - [ ] Tests pass
 - [ ] Documentation updated
 - [ ] No secrets or credentials included
+- [ ] Submodule references updated (if applicable)

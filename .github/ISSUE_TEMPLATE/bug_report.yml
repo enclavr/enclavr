@@ -2,6 +2,20 @@ name: Bug Report
 description: Report a bug in Enclavr
 labels: ["bug"]
 body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component is affected?
+      options:
+        - Frontend (Next.js)
+        - Server (Go)
+        - Infrastructure (Docker)
+        - Documentation
+        - Monorepo (root)
+    validations:
+      required: true
+
   - type: textarea
     id: description
     attributes:

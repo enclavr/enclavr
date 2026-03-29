@@ -2,6 +2,20 @@ name: Feature Request
 description: Suggest a new feature for Enclavr
 labels: ["enhancement"]
 body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component should this feature target?
+      options:
+        - Frontend (Next.js)
+        - Server (Go)
+        - Infrastructure (Docker)
+        - Documentation
+        - Cross-cutting
+    validations:
+      required: true
+
   - type: textarea
     id: description
     attributes:
