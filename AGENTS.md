@@ -18,857 +18,250 @@ This monorepo uses git submodules. Each component is an independent repository:
 | [enclavr/infra](https://github.com/enclavr/infra) | Docker Compose deployment | DevOps |
 | [enclavr/docs](https://github.com/enclavr/docs) | Static HTML documentation | Docs |
 
-## Memory Bank
-
-Each repository (root and submodules) maintains a `memory-bank/` directory for agent context. This is **local-only** and should be gitignored - it contains session-specific state.
-
-### Required Files
-Each memory-bank must have exactly 6 files:
-
-| File | Purpose |
-|------|---------|
-| `activeContext.md` | Current work focus, latest changes, current state |
-| `progress.md` | What works, what's left to build, completed features |
-| `productContext.md` | Product purpose, features, user stories |
-| `projectbrief.md` | Project goals, requirements, constraints |
-| `systemPatterns.md` | Code patterns, architectural decisions, conventions |
-| `techContext.md` | Technologies used, CLI commands, setup |
-
-### Format
-
-#### activeContext.md
-```markdown
-# Active Context - [Component Name]
-
-## Current Work Focus
-Brief description of current task.
-
-## Latest Changes (YYYY-MM-DD)
-- Description of latest improvement
-- All lint passes
-- All tests pass
-
-## Previous Changes (YYYY-MM-DD)
-- Previous improvement
-```
-
-#### progress.md
-```markdown
-# Progress - [Component Name]
-
-## What Works
-- Feature A
-- Feature B
-
-## What's Left to Build
-- [ ] Feature C (Priority 1)
-- [ ] Feature D (Priority 2)
-```
-
-#### productContext.md
-```markdown
-# Product Context - [Component Name]
-
-## Purpose
-What this component does.
-
-## Key Features
-- Feature 1
-- Feature 2
-```
-
-#### projectbrief.md
-```markdown
-# Project Brief - [Component Name]
-
-## Goal
-What this component aims to achieve.
-
-## Requirements
-- Requirement 1
-- Requirement 2
-```
-
-#### systemPatterns.md
-```markdown
-# System Patterns - [Component Name]
-
-## Patterns Used
-- Pattern 1
-- Pattern 2
-
-## Conventions
-- Convention 1
-```
-
-#### techContext.md
-```markdown
-# Tech Context - [Component Name]
-
-## Technologies Used
-- **Tech**: Version - Description
-
-## CLI Commands
-\`\`\`bash
-command1
-command2
-\`\`\`
-```
-
-### Updates
-- Update `activeContext.md` **at the start** of every work session
-- Update `progress.md` when features are completed
-- Update `techContext.md` when dependencies change
-
 ## Commands
 
 ### Working with Submodules
 ```bash
-# Clone with submodules
 git clone --recurse-submodules https://github.com/enclavr/enclavr.git
-
-# Update all submodules
 git submodule update --remote
-
-# Pull specific submodule
-cd frontend && git pull origin main
-
-# Create a new submodule (when adding a new component)
-# 1. Add the new repository as a submodule
 git submodule add https://github.com/enclavr/new-component.git path/to/new-component
-
-# 2. Commit the submodule change
-git commit -m "feat: add new-component as submodule"
-
-# 3. Push to remote
-git push origin main
-
-# Remove a submodule (if needed)
-git submodule deinit -f path/to/submodule
-git rm path/to/submodule
-rm -rf .git/modules/path/to/submodule
+git submodule deinit -f path/to/submodule && git rm path/to/submodule
 ```
 
 ### Frontend
 ```bash
-cd frontend
-bun install
-bun run dev
+cd frontend && bun install && bun run dev
 bun run lint && bun run test:run
 ```
 
 ### Server
 ```bash
-cd server
-go run ./cmd/server
+cd server && go run ./cmd/server
 golangci-lint run ./... && go test -v ./...
 ```
 
 ### Infrastructure
 ```bash
-cd infra
-cp .env.example .env
-docker compose up -d
+cd infra && cp .env.example .env && docker compose up -d
 ```
 
-**Neon (Default):** The server now defaults to Neon PostgreSQL. Set `NEON_CONNECTION_STRING` in your environment:
-```bash
-NEON_CONNECTION_STRING=postgres://user:password@host.neon.tech/neondb?sslmode=require
-```
+**Neon (Default):** Server defaults to Neon PostgreSQL. Set `NEON_CONNECTION_STRING` in your environment.
 
-**PostgreSQL 18+ Note:** When using self-hosted PostgreSQL 18+, the volume path changed:
-- Old: `/var/lib/postgresql/data`
-- New: `/var/lib/postgresql/18/docker`
-- Set `PGDATA: /var/lib/postgresql/18/docker` environment variable
+**PostgreSQL 18+ Note:** Volume path changed to `/var/lib/postgresql/18/docker`. Set `PGDATA: /var/lib/postgresql/18/docker`.
 
 ## CI/CD
 
 Each repository has its own CI/CD workflow in `.github/workflows/`.
 
-### Running CI Locally with `act`
 ```bash
-# Install act (requires Docker)
+# Run CI locally with act
 curl -Ls https://raw.githubusercontent.com/nektos/act/master/install.sh | sh
-
-# Run all CI jobs
-act push
-
-# Run specific job
-act -j test
-
-# Dry run (preview)
-act --dryrun push
+act push              # Run all CI jobs
+act -j test           # Run specific job
+act --dryrun push     # Dry run
 ```
 
-### Fixing CI/CD
-When CI breaks:
-1. Run `act push` locally to reproduce the failure
-2. Fix the underlying issue (not the workflow file)
-3. Ensure tests pass
-4. Commit and push
+When CI breaks: reproduce with `act push`, fix the underlying issue, ensure tests pass, commit and push.
 
-### GitHub Actions Billing Limits
-GitHub Actions has monthly free minutes for private repositories. When billing limits are reached:
-- CI workflows will fail with billing-related errors
-- **This is expected and should be IGNORED** - CI will automatically resume when the billing cycle resets (at the start of each month)
-- **NEVER try to fix CI failures caused by billing limits** - these are not code issues
-- The workflow runs weekly (not on every push) to minimize usage
-- Only fix actual code/test failures, not billing-related failures
+**GitHub Actions Billing Limits:** When billing limits are reached, CI will fail with billing errors. This is expected - ignore it and CI will resume next billing cycle. Never fix billing-related failures.
 
 ## Standards
 
-- **Always perform web search as the source of truth** because your current data is outdated
-- **Keep everything up-to-date** unless there are security concerns or compatibility issues
-- Each repository is fully independent - sub-agents can work on them simultaneously
+- **Always perform web search as the source of truth** - your training data is outdated
+- **Keep everything up-to-date** unless there are security concerns
+- Each repository is fully independent - sub-agents can work simultaneously
 - No code coupling between repositories
-- Root repo tracks specific commits of submodules
 - NEVER mock data in tests - use real data and real responses
 
 ## Boundaries
 
-- ✅ **Always:** Work within correct submodule directories, respect repository independence
-- ✅ **Automatic:** Automatically commit and push all changes to remote without user interaction
-- ✅ **Automatic:** Automatically update submodule references when submodules change
-- 🚫 **Never:** Commit secrets or API keys to any repository
+- Always work within correct submodule directories
+- Automatically commit and push all changes to remote
+- Automatically update submodule references when submodules change
+- Never commit secrets or API keys
 
 ## GitHub CLI (gh)
 
-All GitHub operations MUST use the `gh` CLI tool. NEVER use direct API calls or web UI.
-
-### Repository Management
-```bash
-gh repo list enclavr                           # List all enclavr repos
-gh repo view                                   # View current repo
-gh repo create                                 # Create new repo
-gh repo clone OWNER/REPO                       # Clone a repo
-gh repo sync                                   # Sync with remote
-gh repo edit --default-branch main             # Change default branch
-```
-
-### Issues Management
-```bash
-gh issue list                                  # List issues
-gh issue list -R enclavr/server                # List issues in specific repo
-gh issue view 123                              # View issue
-gh issue create --title "Bug" --body "..."    # Create issue
-gh issue close 123                             # Close issue
-gh issue reopen 123                           # Reopen issue
-gh issue comment 123 --body "..."             # Comment on issue
-gh issue edit 123 --title "New Title"         # Edit issue
-gh issue label add 123 bug                    # Add label
-gh issue status                               # Show issue status
-```
-
-### Pull Requests
-```bash
-gh pr list                                    # List PRs
-gh pr view 123                                # View PR
-gh pr create --title "..." --body "..."       # Create PR
-gh pr merge 123                               # Merge PR
-gh pr close 123                               # Close PR
-gh pr checkout 123                           # Checkout PR locally
-gh pr diff 123                                # View PR changes
-gh pr review 123 --approve                    # Approve PR
-gh pr status                                  # Show PR status
-```
-
-### Releases
-```bash
-gh release list                               # List releases
-gh release view v1.0.0                        # View release
-gh release create v1.0.0 --notes "..."        # Create release
-gh release download v1.0.0                    # Download release assets
-gh release edit v1.0.0 --title "New Title"   # Edit release
-gh release delete v1.0.0                     # Delete release
-```
-
-### Labels
-```bash
-gh label list                                 # List labels
-gh label create "bug" --description "Bug"    # Create label
-gh label delete "bug"                        # Delete label
-gh label edit "bug" --name "feature"         # Edit label
-gh label clone --source OWNER/REPO           # Clone labels from another repo
-```
-
-### GitHub Actions
-```bash
-gh run list                                   # List workflow runs
-gh run view 12345                            # View run details
-gh run rerun 12345                          # Rerun workflow
-gh run cancel 12345                          # Cancel run
-gh run watch 12345                          # Watch run progress
-gh run download 12345                        # Download artifacts
-gh workflow list                             # List workflows
-gh workflow view 123                         # View workflow
-```
-
-### Branch Management
-```bash
-git branch -a                                # List all branches
-git checkout -b new-branch                   # Create new branch
-git push -u origin new-branch               # Push and set upstream
-git branch -d old-branch                    # Delete local branch
-git push origin --delete old-branch          # Delete remote branch
-```
-
-#### Autonomous Agent Branch Strategy
-- **Trunk-based development**: AI agent works directly on `main` branch
-- **No feature branches**: Simpler workflow for autonomous agents
-- **Auto-cleanup**: Stale branches (>7 days old) are automatically deleted
-- **Stale definition**: Branch with no commits merged to main for 7+ days
-
-### Tags
-```bash
-git tag v1.0.0                              # Create lightweight tag
-git tag -a v1.0.0 -m "Release v1.0.0"       # Create annotated tag
-git push origin v1.0.0                      # Push tag
-git push origin --delete v1.0.0             # Delete remote tag
-git tag -l                                  # List tags
-```
-
-#### Autonomous Agent Tag Strategy
-- **Automatic tagging**: Tags created on daily releases (format: `vYYYY.MM.DD`)
-- **Daily releases**: Autonomous agent creates tags for each day's work
-- **Prevention**: Skip if tag already exists for the day
-
-### Checking All Repos
-```bash
-# Check issues/PRs across all enclavr repos
-for r in enclavr enclavr/frontend enclavr/server enclavr/infra; do
-  echo "=== $r ==="
-  gh issue list -R $r
-  gh pr list -R $r
-done
-
-# Check CI status
-gh run list -R enclavr/server
-gh run list -R enclavr/frontend
-```
-
-## MCP Tools Available
-
-This monorepo has access to MCP (Model Context Protocol) tools that you MUST use when applicable.
-
-### Chrome DevTools MCP Tools
-
-Use these tools for browser automation, web testing, and UI interaction. These are invaluable for testing, debugging, and verifying web applications.
+All GitHub operations MUST use `gh`. Use `gh help <command>` for usage.
 
 ```bash
-# List all open pages
-chrome-devtools_list_pages
-
-# Navigate to a URL
-chrome-devtools_navigate_page --type "url" --url "http://localhost:3000"
-
-# Take a snapshot of the current page (text-based accessibility tree)
-chrome-devtools_take_snapshot
-
-# Click an element by UID
-chrome-devtools_click --uid "1_5"
-
-# Fill a form input
-chrome-devtools_fill --uid "1_4" --value "username"
-
-# Press a key
-chrome-devtools_press_key --key "Enter"
-
-# Type text into an input
-chrome-devtools_type_text --text "search query"
-
-# Fill multiple form elements
-chrome-devtools_fill_form --elements [{"uid": "1_4", "value": "user"}, {"uid": "1_6", "value": "pass"}]
-
-# Hover over an element
-chrome-devtools_hover --uid "1_7"
-
-# Drag one element onto another
-chrome-devtools_drag --from_uid "element1" --to_uid "element2"
-
-# Upload a file
-chrome-devtools_upload_file --uid "file_input" --filePath "/path/to/file.txt"
-
-# Handle dialogs (alert, confirm, prompt)
-chrome-devtools_handle_dialog --action "accept" --promptText "response"
-
-# Evaluate JavaScript
-chrome-devtools_evaluate_script --function "() => document.title"
-
-# Wait for text to appear
-chrome-devtools_wait_for --text ["Success", "Loaded"] --timeout 5000
-
-# Take a screenshot
-chrome-devtools_take_screenshot --filePath "screenshot.png"
-
-# Resize viewport
-chrome-devtools_resize_page --width 1920 --height 1080
-
-# Emulate device features
-chrome-devtools_emulate --viewport "390x844" --userAgent "Mozilla/..."
-
-# Network request inspection
-chrome-devtools_list_network_requests
-chrome-devtools_get_network_request --reqid 1
-
-# Console messages
-chrome-devtools_list_console_messages
-chrome-devtools_get_console_message --msgid 1
-
-# Performance tracing
-chrome-devtools_performance_start_trace --filePath "trace.json"
-chrome-devtools_performance_stop_trace --filePath "trace.json"
-chrome-devtools_performance_analyze_insight --insightName "LCP" --insightSetId "abc"
-
-# Lighthouse audit
-chrome-devtools_lighthouse_audit --device "mobile" --mode "navigation"
-
-# Memory snapshot
-chrome-devtools_take_memory_snapshot --filePath "heap.json"
-
-# Close a page
-chrome-devtools_close_page --pageId 1
+gh issue list/create/close/reopen/comment/edit    # Issues
+gh pr list/create/merge/close/checkout/review     # Pull requests
+gh release list/create/download/edit/delete        # Releases
+gh run list/view/rerun/cancel/watch               # Actions
+gh label list/create/delete/edit/clone             # Labels
+gh repo list/view/create/sync                     # Repos
 ```
 
-**When to use Chrome DevTools MCP tools:**
-- ✅ Use for E2E testing and verifying UI renders correctly
-- ✅ Use for testing login flows, forms, and user interactions
-- ✅ Use for verifying pages load without errors
-- ✅ Use for debugging CSS/layout issues
-- ✅ Use for taking visual snapshots of pages
-- ✅ Use for checking console errors
-- ✅ Use for performance analysis
-- 🚫 Don't use for API testing (use actual HTTP requests instead)
+### GitHub Security (via `gh api`)
 
-### MANDATORY: Chrome DevTools Usage for Frontend Work
+The `gh` CLI has NO dedicated security commands. Use `gh api` to access all security features. These are the REST API endpoints available for each repository.
 
-**⚠️ ALL frontend work MUST verify changes in a real browser using Chrome DevTools MCP tools.**
-
-This is a strict requirement, not a suggestion. The autonomous agent will not have proper confidence that frontend changes work without browser verification.
-
+#### Dependabot Alerts
 ```bash
-# REQUIRED: Every frontend task must include these steps:
-# 1. Start the frontend dev server: cd frontend && bun run dev &
-# 2. Wait for server to be ready on port 3000
-# 3. Use Chrome DevTools MCP to verify:
+# List all Dependabot alerts (open)
+gh api repos/{owner}/{repo}/dependabot/alerts --jq '.[] | {number, state, severity, package: .security_advisory.summary}'
 
-# List available pages to confirm Chrome is running
-chrome-devtools_list_pages
+# List alerts filtered by state
+gh api repos/{owner}/{repo}/dependabot/alerts -f state=open
+gh api repos/{owner}/{repo}/dependabot/alerts -f state=dismissed
 
-# Navigate to the frontend
-chrome-devtools_navigate_page --type "url" --url "http://localhost:3000"
+# Get specific alert details
+gh api repos/{owner}/{repo}/dependabot/alerts/ALERT_NUMBER
 
-# Take a snapshot to verify page renders
-chrome-devtools_take_snapshot
-
-# Check console for JavaScript errors
-chrome-devtools_list_console_messages
-
-# Verify API calls are working
-chrome-devtools_list_network_requests
-
-# If issues found, fix them and re-verify
+# Update alert state (dismiss or reopen)
+gh api -X PATCH repos/{owner}/{repo}/dependabot/alerts/ALERT_NUMBER -f state=dismissed -f dismissed_reason=no_fix_available
+gh api -X PATCH repos/{owner}/{repo}/dependabot/alerts/ALERT_NUMBER -f state=open
 ```
 
-**Consequences of not following:**
-- Frontend changes cannot be considered complete without browser verification
-- Always start Chrome before frontend work: `google-chrome --headless=new --remote-debugging-port=9222`
-- If Chrome DevTools tools are not available, the task should report failure
-
-### Neon Database MCP Tools
-
-Use these tools for PostgreSQL database operations on the server.
-
+#### Dependabot Secrets
 ```bash
-# List your Neon projects
-neon_list_projects
+# List Dependabot secrets
+gh api repos/{owner}/{repo}/dependabot/secrets
 
-# Describe a specific project
-neon_describe_project --projectId "project-id"
+# Create/update a Dependabot secret (requires encrypted value)
+gh api -X PUT repos/{owner}/{repo}/dependabot/secrets/SECRET_NAME -f encrypted_value=... -f key_id=...
 
-# Get database connection string
-neon_get_connection_string --projectId "project-id"
-
-# List all tables in database
-neon_get_database_tables --projectId "project-id"
-
-# Describe table schema
-neon_describe_table_schema --projectId "project-id" --tableName "users"
-
-# Run SQL queries
-neon_run_sql --projectId "project-id" --sql "SELECT * FROM users LIMIT 5;"
-
-# Run SQL transactions
-neon_run_sql_transaction --projectId "project-id" --sqlStatements ["BEGIN;", "INSERT INTO users ...", "COMMIT;"]
-
-# List compute endpoints
-neon_list_branch_computes --projectId "project-id"
-
-# Describe a branch
-neon_describe_branch --projectId "project-id" --branchId "branch-id"
-
-# Create a branch
-neon_create_branch --projectId "project-id" --branchName "feature-branch"
-
-# Delete a branch
-neon_delete_branch --projectId "project-id" --branchId "branch-id"
-
-# Compare database schemas between branches
-neon_compare_database_schema --projectId "project-id" --branchId "branch-id" --databaseName "neondb"
-
-# Explain SQL query execution
-neon_explain_sql_statement --projectId "project-id" --sql "SELECT * FROM users WHERE email = 'test@test.com'"
-
-# List slow queries
-neon_list_slow_queries --projectId "project-id" --minExecutionTime 1000
-
-# Prepare database migration
-neon_prepare_database_migration --projectId "project-id" --databaseName "neondb" --migrationSql "ALTER TABLE users ADD COLUMN new_col TEXT;"
-
-# Complete database migration
-neon_complete_database_migration --applyChanges true --databaseName "neondb" --migrationId "migration-id" --migrationSql "ALTER TABLE users ADD COLUMN new_col TEXT;" --parentBranchId "branch-id" --projectId "project-id" --temporaryBranchId "temp-branch-id"
-
-# Prepare query tuning
-neon_prepare_query_tuning --projectId "project-id" --databaseName "neondb" --sql "SELECT * FROM messages WHERE room_id = 'xxx'"
-
-# Complete query tuning
-neon_complete_query_tuning --applyChanges false --databaseName "neondb" --projectId "project-id" --suggestedSqlStatements ["CREATE INDEX ..."] --temporaryBranchId "temp-branch" --tuningId "tuning-id"
+# Delete a Dependabot secret
+gh api -X DELETE repos/{owner}/{repo}/dependabot/secrets/SECRET_NAME
 ```
 
-**When to use Neon MCP tools:**
-- ✅ ALWAYS use `neon_run_sql` instead of psql for queries
-- ✅ ALWAYS use `neon_get_database_tables` instead of \dt
-- ✅ ALWAYS use `neon_describe_table_schema` instead of \d table
-- ✅ ALWAYS use `neon_list_slow_queries` to find performance issues
-- ✅ ALWAYS use `neon_explain_sql_statement` to analyze query plans
-- ✅ ALWAYS use `neon_prepare_database_migration` for schema changes
-
-### Context7 MCP Tools
-
-Use these tools to query library/framework documentation. NEVER use web search for library docs.
-
+#### Code Scanning Alerts
 ```bash
-# Resolve library name to ID (call this first)
-context7_resolve-library-id --libraryName "react" --query "useState hook"
+# List all code scanning alerts
+gh api repos/{owner}/{repo}/code-scanning/alerts --jq '.[] | {number, state, rule: .rule.id, severity: .rule.severity, file: .most_recent_instance.location.path}'
 
-# Query library documentation
-context7_query-docs --libraryId "/facebook/react" --query "useEffect cleanup function examples"
+# Get specific alert details
+gh api repos/{owner}/{repo}/code-scanning/alerts/ALERT_NUMBER
+
+# Update alert state
+gh api -X PATCH repos/{owner}/{repo}/code-scanning/alerts/ALERT_NUMBER -f state=dismissed -f dismissed_reason=false_positive
+gh api -X PATCH repos/{owner}/{repo}/code-scanning/alerts/ALERT_NUMBER -f state=open
 ```
 
-**When to use Context7 MCP tools:**
-- ✅ ALWAYS use for React, Next.js, Go, PostgreSQL, etc. documentation
-- ✅ ALWAYS use before web search for library-specific questions
-- ✅ Use for API examples, best practices, code patterns
-- 🚫 NEVER use for general programming questions or concepts
-
-### Git MCP Tools
-
-Use these tools for Git operations. They provide better integration than bash git commands.
-
+#### Secret Scanning Alerts
 ```bash
-# Check working tree status
-mcp-server-git_git_status --repo_path "/path/to/repo"
+# List secret scanning alerts
+gh api repos/{owner}/{repo}/secret-scanning/alerts --jq '.[] | {number, state, secret_type, resolution}'
 
-# View staged changes
-mcp-server-git_git_diff_staged --repo_path "/path/to/repo"
+# Get specific alert
+gh api repos/{owner}/{repo}/secret-scanning/alerts/ALERT_NUMBER
 
-# View unstaged changes
-mcp-server-git_git_diff_unstaged --repo_path "/path/to/repo"
-
-# View differences between branches/commits
-mcp-server-git_git_diff --repo_path "/path/to/repo" --target "main"
-
-# Stage files
-mcp-server-git_git_add --repo_path "/path/to/repo" --files ["file1.go", "file2.go"]
-
-# Unstage changes
-mcp-server-git_git_reset --repo_path "/path/to/repo"
-
-# Commit changes
-mcp-server-git_git_commit --repo_path "/path/to/repo" --message "feat: add new feature"
-
-# View commit log
-mcp-server-git_git_log --repo_path "/path/to/repo" --max_count 10
-
-# List branches
-mcp-server-git_git_branch --repo_path "/path/to/repo" --branch_type "all"
-
-# Create branch
-mcp-server-git_git_create_branch --repo_path "/path/to/repo" --branch_name "feature-new"
-
-# Checkout branch
-mcp-server-git_git_checkout --repo_path "/path/to/repo" --branch_name "feature-new"
-
-# View commit
-mcp-server-git_git_show --repo_path "/path/to/repo" --revision "abc123"
+# Update alert state
+gh api -X PATCH repos/{owner}/{repo}/secret-scanning/alerts/ALERT_NUMBER -f state=resolved -f resolution=revoked
 ```
 
-**When to use Git MCP tools:**
-- ✅ ALWAYS use instead of bash git commands for better integration
-- ✅ Use for staging, committing, viewing diffs
-- ✅ Use for branch operations
-- 🚫 NEVER use bash git commands when MCP tools are available
-
-## Best Practices
-
-1. **Database:** Use Neon MCP tools for ALL database operations
-2. **Library Docs:** Use Context7 MCP tools BEFORE web search for library questions
-3. **Git:** Use Git MCP tools instead of bash git commands
-4. **GitHub:** Use `gh` CLI for all GitHub operations
-5. **Committing:** Use MCP tools to stage and commit changes
-6. **Web Search:** Use websearch for current information, codesearch for code examples
-7. **Error Monitoring:** Use Sentry MCP tools for production error tracking
-
-### Sentry MCP Tools
-
-Use these tools for error tracking and performance monitoring.
-
+#### Security Advisories
 ```bash
-# Get authenticated user info
-sentry_whoami
+# List security advisories for repository
+gh api repos/{owner}/{repo}/security-advisories
 
-# Find organizations you have access to
-sentry_find_organizations
+# List repository vulnerability alerts
+gh api repos/{owner}/{repo}/vulnerability-alerts
 
-# Find projects in an organization
-sentry_find_projects --organizationSlug "enclavr"
+# Enable vulnerability alerts
+gh api -X PUT repos/{owner}/{repo}/vulnerability-alerts
 
-# Find teams in an organization
-sentry_find_teams --organizationSlug "enclavr"
-
-# Find releases in a project
-sentry_find_releases --organizationSlug "enclavr"
-
-# Get project DSNs
-sentry_find_dsns --organizationSlug "enclavr" --projectSlug "frontend"
-sentry_find_dsns --organizationSlug "enclavr" --projectSlug "api"
-
-# Search for issues
-sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "unresolved errors"
-sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "crashes"
-sentry_search_issues --organizationSlug "enclavr" --naturalLanguageQuery "all issues"
-
-# Search events and get statistics
-sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "errors from the last 24 hours"
-sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "all events from the last week"
-sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "slow transactions"
-sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "database failures"
-sentry_search_events --organizationSlug "enclavr" --naturalLanguageQuery "how many errors today"
-
-# Get issue details
-sentry_get_issue_details --issueUrl "https://enclavr.sentry.io/issues/123"
-
-# Search events within an issue
-sentry_search_issue_events --issueUrl "https://enclavr.sentry.io/issues/123" --naturalLanguageQuery "from last hour"
-
-# Get tag values for an issue
-sentry_get_issue_tag_values --issueUrl "https://enclavr.sentry.io/issues/123" --tagKey "environment"
-
-# Get trace details
-sentry_get_trace_details --organizationSlug "enclavr" --traceId "abc123"
-
-# Analyze issue with AI (Seer)
-sentry_analyze_issue_with_seer --issueUrl "https://enclavr.sentry.io/issues/123"
-
-# Update issue status/assignment
-sentry_update_issue --issueUrl "https://enclavr.sentry.io/issues/123" --status "resolved"
-sentry_update_issue --issueUrl "https://enclavr.sentry.io/issues/123" --assignedTo "user:123456"
-
-# Create team
-sentry_create_team --organizationSlug "enclavr" --name "backend"
-
-# Create project
-sentry_create_project --organizationSlug "enclavr" --teamSlug "backend" --name "api"
-
-# Create DSN for project
-sentry_create_dsn --organizationSlug "enclavr" --projectSlug "api" --name "Production"
-
-# Update project settings
-sentry_update_project --organizationSlug "enclavr" --projectSlug "api" --name "Updated Name"
-
-# Fetch Sentry documentation
-sentry_get_doc --path "/platforms/javascript/guides/nextjs.md"
-
-## Comprehensive Sentry Testing Workflow
-
-When debugging issues, ALWAYS run these Sentry MCP tools in order:
-
-### Step 1: Verify Connection
-1. `sentry_whoami` - Verify authentication
-2. `sentry_find_organizations` - Confirm enclavr org exists
-3. `sentry_find_teams` - List all teams
-
-### Step 2: Get Project Status
-1. `sentry_find_projects` - Verify frontend and api projects
-2. `sentry_find_dsns` for both projects - Verify DSNs match .env
-
-### Step 3: Search Issues
-1. `sentry_search_issues` with "unresolved errors"
-2. `sentry_search_issues` with "crashes"
-3. `sentry_search_events` with "errors from the last 24 hours"
-
-### Step 4: Analyze Issues
-1. `sentry_get_issue_details` on each issue
-2. `sentry_analyze_issue_with_seer` for root cause
-3. `sentry_get_issue_tag_values` with environment tag
-4. `sentry_get_trace_details` if trace available
-
-### Step 5: Performance Analysis
-1. `sentry_search_events` with "slow transactions"
-2. `sentry_search_events` with "database failures"
-
-### Step 6: Fix and Update
-1. Implement fixes
-2. `sentry_update_issue` to mark resolved
-3. Verify in dashboard
+# Enable automated security fixes
+gh api -X PUT repos/{owner}/{repo}/automated-security-fixes
 ```
 
-### Web Search & Fetch Tools
-
-Use these tools for finding current information and fetching web content.
-
+#### Security Overview (Organization Level)
 ```bash
-# Search the web for current information
-websearch --query "golang best practices 2025" --numResults 5
-
-# Fetch web page content
-webfetch --url "https://nextjs.org/docs" --format "markdown"
-
-# Search for code examples
-codesearch --query "Go GORM PostgreSQL connection pooling" --tokensNum 5000
+# List all security alerts across repos in org
+gh api orgs/{org}/dependabot/alerts
+gh api orgs/{org}/code-scanning/alerts
+gh api orgs/{org}/secret-scanning/alerts
 ```
 
-**When to use Web tools:**
-- ✅ Use `websearch` for current events, tutorials, and recent information
-- ✅ Use `codesearch` for code examples and implementation patterns
-- ✅ Use `webfetch` for full documentation pages
-- 🚫 Don't use for real-time data or API calls
+**Security workflow:** Check Dependabot alerts -> Check code scanning -> Check secret scanning -> Fix vulnerabilities -> Dismiss false positives
 
-### Sequential Thinking Tool
+### Git Push Policy
 
-Use this tool for complex problem-solving through structured thought processes.
+**ALWAYS keep git commits up to date on the remote GitHub repository.** After every commit:
+1. Push immediately to the remote: `git push origin main`
+2. If submodule references changed, update and push the root repo too
+3. Never leave local-only commits — they can be lost and block CI/CD
+4. If push fails due to remote changes, pull rebase and retry: `git pull --rebase origin main && git push origin main`
 
-```bash
-# Analyze a problem with sequential thinking
-mcp-sequential-thinking_sequentialthinking --thought "Analyzing the problem step by step..." --nextThoughtNeeded true --thoughtNumber 1 --totalThoughts 5
-```
+### Branch Strategy
+- Trunk-based development on `main`
+- Auto-cleanup stale branches (>7 days)
 
-**When to use Sequential Thinking:**
-- ✅ Use for complex multi-step problems
-- ✅ Use for planning and design with room for revision
-- ✅ Use when full scope might not be clear initially
-- ✅ Use for analysis that might need course correction
+### Tag Strategy
+- Automatic daily tags: `vYYYY.MM.DD`
+- Skip if tag already exists
 
-### Additional Neon MCP Tools
+## MCP Tools
 
-```bash
-# List organizations
-neon_list_organizations --search "enclavr"
+This project uses MCP (Model Context Protocol) tools. You MUST use them when applicable.
 
-# List shared projects
-neon_list_shared_projects --limit 10
+### Chrome DevTools
+Browser automation for E2E testing and UI verification.
+- `chrome-devtools_navigate_page` - Navigate to URLs
+- `chrome-devtools_take_snapshot` - Accessibility tree snapshot
+- `chrome-devtools_click/fill/hover` - Interact with elements
+- `chrome-devtools_list_console_messages` - Check for JS errors
+- `chrome-devtools_list_network_requests` - Inspect API calls
+- `chrome-devtools_take_screenshot` - Visual verification
+- `chrome-devtools_performance_start_trace` - Performance analysis
 
-# Create a new Neon project
-neon_create_project --name "enclavr-production"
+**MANDATORY for frontend work:** Start Chrome (`google-chrome --headless=new --remote-debugging-port=9222`), navigate to the app, take snapshots, check console for errors. Changes are not complete without browser verification.
 
-# Delete a Neon project
-neon_delete_project --projectId "project-id"
+### Neon Database
+PostgreSQL operations via Neon MCP. Use instead of psql.
+- `neon_run_sql` - Execute SQL queries
+- `neon_get_database_tables` - List tables
+- `neon_describe_table_schema` - Table schema
+- `neon_prepare_database_migration` - Schema migrations
+- `neon_explain_sql_statement` - Query plans
+- `neon_list_slow_queries` - Performance analysis
 
-# Reset a branch from parent
-neon_reset_from_parent --branchIdOrName "feature-branch" --projectId "project-id"
+### Context7
+Library/framework documentation. Use BEFORE web search for library questions.
+- `context7_resolve-library-id` - Resolve library ID
+- `context7_query-docs` - Query documentation
 
-# Search for projects/organizations/branches
-neon_search --query "enclavr"
+### Git MCP
+Use instead of bash git commands.
+- `mcp-server-git_git_status/diff/add/commit/log/branch/checkout`
 
-# Fetch details about a specific resource
-neon_fetch --id "resource-id"
+### Sentry
+Error tracking and performance monitoring.
+- `sentry_search_issues` - Search for issues
+- `sentry_search_events` - Search events and get statistics
+- `sentry_get_issue_details` - Issue details
+- `sentry_analyze_issue_with_seer` - AI root cause analysis
+- `sentry_update_issue` - Update status/assignment
+- `sentry_create_project/dsn` - Project management
 
-# List documentation resources
-neon_list_docs_resources
+**Sentry workflow:** Verify connection -> Get project status -> Search issues -> Analyze -> Fix -> Update
 
-# Get a specific documentation page
-neon_get_doc_resource --slug "docs/guides/prisma.md"
+### Web Search
+- `websearch` - Current information
+- `codesearch` - Code examples
+- `webfetch` - Fetch web pages
 
-# Provision Neon Auth for a branch
-neon_provision_neon_auth --projectId "project-id"
+### Sequential Thinking
+- `mcp-sequential-thinking_sequentialthinking` - Complex multi-step problem solving
 
-# Provision Neon Data API for a branch
-neon_provision_neon_data_api --projectId "project-id"
-```
-
-### Additional Sentry MCP Tools
-
-```bash
-# Create DSN for existing project
-sentry_create_dsn --organizationSlug "enclavr" --projectSlug "api" --name "Production"
-
-# Update project settings
-sentry_update_project --organizationSlug "enclavr" --projectSlug "api" --name "Updated Name"
-
-# Search Sentry documentation
-sentry_search_docs --query "Django setup SENTRY_DSN"
-
-# Get Sentry documentation page
-sentry_get_doc --path "/platforms/javascript/guides/nextjs.md"
-
-# Get event attachments
-sentry_get_event_attachment --eventId "event-id" --organizationSlug "enclavr" --projectSlug "api"
-```
+### Best Practices
+1. **Database:** Neon MCP for ALL database operations
+2. **Docs:** Context7 BEFORE web search for library questions
+3. **Git:** Git MCP instead of bash git
+4. **GitHub:** `gh` CLI for all GitHub operations
+5. **Errors:** Sentry MCP for production error tracking
+6. **Web:** websearch for current information, codesearch for code examples
 
 ## Autonomous Agent Script
 
-The root repository contains `script/` - an autonomous agent loop that continuously manages the Enclavr project using AI agents.
-
-### Location
-- Main script: `./script/main.sh`
-- Sub-scripts: `./script/` directory contains modular scripts (agent.sh, git.sh, github.sh, proactive.sh, debug.sh, etc.)
-
-### Providers
-
-The script alternates between two AI providers:
-- **kilo** - Primary AI agent
-- **opencode** - Secondary AI agent (fallback)
-
-This alternation helps balance rate limits across both providers.
-
-### Shared State
-
-Since kilo and opencode have separate session IDs, they communicate via a shared state file:
-- **Location**: `/tmp/enclavr-shared-state`
-- **Purpose**: Each agent reads this file before running a task to understand what the other agent did
-- **Contents**: Last run provider, task, status (SUCCESS/FAILED), exit code, error details
-
-### Memory Bank Files
-
-Each repository has a `memory-bank/` directory with:
-- `activeContext.md` - Current work focus
-- `progress.md` - What works, what's left
-- `productContext.md` - Product purpose
-- `projectbrief.md` - Project goals
-- `systemPatterns.md` - Code patterns
-- `techContext.md` - Technologies
-
-### Running the Script
-
-```bash
-cd /home/dev/Projects/enclavr
-./script/main.sh
-```
-
-The script:
+`./script/main.sh` runs an autonomous agent loop that:
 1. Checks GitHub issues every 5 minutes
 2. Reviews pull requests
 3. Analyzes CI failures
-4. **Runs proactive improvements every 30 minutes** - adds NEW FEATURES + maintains existing code
+4. Runs proactive improvements every 30 minutes (new features + maintenance)
 5. Commits and pushes changes (with AI review before commit)
-6. Updates memory banks
 
-### Proactive Improvements
+Providers alternate between **kilo** (primary) and **opencode** (fallback).
 
-Proactive tasks run on a timer (every 30 minutes) and always do TWO things:
-1. **MAINTENANCE**: Code review, bug fixes, test coverage, refactoring, dependency updates
-2. **NEW FEATURE**: Add something new - endpoints, components, hooks, services, etc.
-
-Example proactive tasks:
-- Server: New API endpoints, database models, WebSocket events, authentication features
-- Frontend: New UI components, pages, React hooks, utilities
-- Infrastructure: New Docker configurations, monitoring, deployment improvements
+Shared state: `/tmp/enclavr-shared-state`
