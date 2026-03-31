@@ -20,8 +20,8 @@ SECURITY_ONLY=false
 GITHUB_FILES_ONLY=false
 
 # Global task step counter - cycles through 7 steps with balanced distribution:
-# Step 0: DEBUG  | Step 1: TEST  | Step 2: DEBUG  | Step 3: TEST  | Step 4: FEATURE | Step 5: SECURITY | Step 6: GITHUB_FILES
-# Ratio: 2 debug : 2 test : 1 feature : 1 security : 1 github_files
+# Step 0: DEBUG  | Step 1: TEST  | Step 2: FEATURE | Step 3: DEBUG  | Step 4: FEATURE | Step 5: SECURITY | Step 6: GITHUB_FILES
+# Ratio: 2 debug : 1 test : 2 feature : 1 security : 1 github_files
 # DEBUG = fix/close GitHub issues | TEST = find bugs & create GitHub issues
 # FEATURE = add new features | SECURITY = check dependabot, code scanning, secret scanning
 # GITHUB_FILES = audit and update README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/ configs
@@ -92,6 +92,12 @@ IMPORTANT ISSUE CREATION RULES:
 - MAXIMUM 2 issues per testing session
 - For each issue: clear title, description, file paths, steps to reproduce
 
+FALLBACK IF NO ISSUES FOUND: If everything looks clean, do proactive verification:
+- Verify all submodule refs in .gitmodules match the latest remote: git ls-remote --refs origin for each submodule URL
+- Check AGENTS.md for outdated version numbers (compare against actual package.json/go.mod in submodules)
+- Verify .env.example has all variables referenced in AGENTS.md
+- If you find anything outdated, create an issue for it
+
 IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually matter."
 
 # Root - Security (Dependabot, Code Scanning, Secret Scanning)
@@ -126,6 +132,13 @@ REQUIREMENTS:
    - Only dismiss if confirmed false positive with comment
 7. Verify no secrets in .env.example or AGENTS.md
 8. Commit and push your changes
+
+FALLBACK IF NO ALERTS EXIST: If all scanners report no open alerts, do proactive security hardening:
+- Verify .github/workflows/ci.yml has 'permissions:' block with minimal required scopes
+- Check that .env.example has no real secrets (only placeholders)
+- Verify .gitignore covers all sensitive file patterns (.env, *.key, *.pem, credentials*)
+- Verify the CI workflow uses pinned action versions (actions/checkout@SHA not @main)
+- If you find hardening opportunities, implement them directly and commit
 
 CRITICAL DISMISSAL RULES:
 - ALWAYS read the source code before dismissing ANY alert
@@ -188,7 +201,7 @@ YOUR TASK: Add NEW features to the frontend.
 
 REQUIREMENTS:
 1. Check AGENTS.md in the frontend repo for coding standards and patterns
-3. Implement a new feature - consider:
+2. Implement a new feature - consider:
    - New UI components in src/components/ui/
    - New pages in src/app/
    - New React hooks in src/hooks/
@@ -198,9 +211,12 @@ REQUIREMENTS:
 5. Use bun for package management
 6. Test your changes with: bun run test:run && bun run lint && bun run typecheck
 7. For any frontend work, MUST use Chrome DevTools MCP to verify:
+   - First start Chrome: google-chrome --headless=new --remote-debugging-port=9222 --no-sandbox --disable-gpu http://localhost:3000 &
+   - Wait 3 seconds for Chrome to start
    - chrome-devtools_navigate_page to test the app
    - chrome-devtools_take_snapshot to verify rendering
    - chrome-devtools_list_console_messages to check for errors
+   - If Chrome DevTools MCP is unavailable or fails, skip browser checks — rely on test/lint/typecheck results only
 8. Commit and push your changes
 
 IMPORTANT: First analyze the codebase to find gaps or missing features. Build something useful that fits the voice chat platform."
@@ -219,13 +235,15 @@ YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO
 REQUIREMENTS:
 1. FIRST check existing open issues: gh issue list -R enclavr/frontend --state open
    - Do NOT create duplicates of existing issues
-3. Run existing tests: bun run test:run
-4. Run linting: bun run lint
-5. Run type checking: bun run typecheck
-6. Analyze any test failures or lint errors
-7. Check for console errors using Chrome DevTools MCP:
-   - chrome-devtools_navigate_page --type url --url http://localhost:3000
+2. Run existing tests: bun run test:run
+3. Run linting: bun run lint
+4. Run type checking: bun run typecheck
+5. Analyze any test failures or lint errors
+6. Check for console errors using Chrome DevTools MCP:
+   - First start Chrome: google-chrome --headless=new --remote-debugging-port=9222 --no-sandbox --disable-gpu http://localhost:3000 &
+   - Wait 3 seconds, then: chrome-devtools_navigate_page --type url --url http://localhost:3000
    - chrome-devtools_list_console_messages
+   - If Chrome DevTools MCP is unavailable or fails, skip browser checks — rely on test/lint results only
 
 IMPORTANT ISSUE CREATION RULES:
 - ONLY create issues for HIGH priority problems:
@@ -240,6 +258,12 @@ IMPORTANT ISSUE CREATION RULES:
   * Issues that already exist (check first!)
 - MAXIMUM 3 issues per testing session
 - For each issue: clear title, description, file paths, steps to reproduce
+
+FALLBACK IF NO ISSUES FOUND: If tests pass, lint is clean, and no open issues exist, do proactive analysis:
+- Check for unused exports in src/components/ui/index.ts
+- Look for TODO/FIXME/HACK comments in src/ and create issues for critical ones
+- Verify all hooks in src/hooks/ have corresponding test files
+- If you find gaps, create issues (max 2)
 
 IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually matter."
 
@@ -256,16 +280,20 @@ YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
 REQUIREMENTS:
 1. List ALL open GitHub issues: gh issue list -R enclavr/frontend --state open --limit 50
-3. Sort by priority: fix critical/security bugs first, then high, then medium
-4. For EACH issue you can fix in this session:
+2. Sort by priority: fix critical/security bugs first, then high, then medium
+3. For EACH issue you can fix in this session:
    - Read the issue details and understand what needs to be fixed
    - Analyze the code to find the root cause
    - Implement a fix for the issue
    - Run tests to verify: bun run test:run && bun run lint && bun run typecheck
-   - Use Chrome DevTools MCP to verify frontend changes work correctly
+   - Use Chrome DevTools MCP to verify frontend changes (start Chrome first: google-chrome --headless=new --remote-debugging-port=9222 --no-sandbox --disable-gpu http://localhost:3000 &). If Chrome MCP unavailable, skip browser checks.
    - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
 5. Fix AT LEAST 3 issues per session if that many are open
-6. If no open issues exist, run tests/lint and fix any failures directly (do not create issues)
+6. If no open issues exist, do proactive improvement:
+   - Run bun run lint and fix any warnings (not just errors)
+   - Check for React anti-patterns: missing keys, direct state mutation, memory leaks in useEffect
+   - Look for opportunities to extract reusable logic into hooks
+   - If you find improvements, implement them directly (do not create issues)
 7. Commit and push your changes after fixing multiple issues
 
 IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
@@ -284,7 +312,7 @@ YOUR TASK: Add NEW features to the server.
 
 REQUIREMENTS:
 1. Check AGENTS.md in the server repo for coding standards
-3. Implement a new feature - consider:
+2. Implement a new feature - consider:
    - New API endpoints in internal/handlers/
    - New database models in internal/models/
    - New services in internal/services/
@@ -306,16 +334,18 @@ CONTEXT:
 - Tech Stack: Go 1.25, GORM, PostgreSQL (Neon), gorilla/websocket, Redis pub/sub
 - Location: /home/dev/Projects/enclavr/server
 - Auth: JWT, bcrypt, OIDC, WebAuthn
+- IMPORTANT: Tests requiring DB will fail without NEON_CONNECTION_STRING. If you see 'hostname resolving error: lookup invalid-host', use non-DB tests: go test -v -short ./...
+- IMPORTANT: .golangci.yml uses 'disable-all: true' with explicit 'enable' list. Do NOT add --enable-all flag. If lint fails, fall back to: go vet ./...
 
 YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
 
 REQUIREMENTS:
 1. FIRST check existing open issues: gh issue list -R enclavr/server --state open
    - Do NOT create duplicates of existing issues
-3. Run tests: go test -v ./...
-4. Run linting: golangci-lint run ./...
-5. Check go vet for issues
-6. Analyze any test failures
+2. Run tests (use -short flag if DB unavailable): go test -v -short ./...
+3. Run linting: golangci-lint run ./... (or go vet ./... if lint config fails)
+4. Check go vet for issues: go vet ./...
+5. Analyze any test failures
 
 IMPORTANT ISSUE CREATION RULES:
 - ONLY create issues for HIGH priority problems:
@@ -329,6 +359,12 @@ IMPORTANT ISSUE CREATION RULES:
   * Issues that already exist (check first!)
 - MAXIMUM 3 issues per testing session
 - For each issue: clear title, description, file paths, steps to reproduce
+
+FALLBACK IF NO ISSUES FOUND: If tests pass, lint is clean, and no open issues exist, do proactive analysis:
+- Check for unchecked error returns: grep -rn 'err != nil' --include='*.go' internal/ | wc -l
+- Look for SQL injection risks: grep -rn 'fmt.Sprintf.*SELECT\|fmt.Sprintf.*INSERT' internal/
+- Verify all handlers have proper authentication middleware in cmd/server/main.go routes
+- If you find gaps, create issues (max 2)
 
 IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually matter."
 
@@ -345,16 +381,19 @@ YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
 REQUIREMENTS:
 1. List ALL open GitHub issues: gh issue list -R enclavr/server --state open --limit 50
-3. Sort by priority: fix critical/security bugs first, then high, then medium
-4. For EACH issue you can fix in this session:
+2. Sort by priority: fix critical/security bugs first, then high, then medium
+3. For EACH issue you can fix in this session:
    - Read the issue details and understand what needs to be fixed
    - Analyze the code to find the root cause
    - Implement a fix for the issue
-   - Run tests to verify: go test -v ./... && golangci-lint run ./...
+   - Run tests to verify: go test -v -short ./... && golangci-lint run ./... (or go vet if lint config fails)
    - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
-5. Fix AT LEAST 3 issues per session if that many are open
-6. If no open issues exist, run tests/lint and fix any failures directly (do not create issues)
-7. Commit and push your changes after fixing multiple issues
+4. Fix AT LEAST 3 issues per session if that many are open
+5. If no open issues exist, do proactive improvement:
+   - Run go vet ./... and fix any warnings
+   - Check for missing error handling: grep -rn '_ =' internal/ | head -20
+   - If you find improvements, implement them directly (do not create issues)
+6. Commit and push your changes after fixing multiple issues
 
 IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
 Do NOT create new issues. If you find a bug while fixing, fix it immediately."
@@ -365,23 +404,28 @@ The project uses Docker Compose for deployment.
 
 CONTEXT:
 - Location: /home/dev/Projects/enclavr/infra
-- Docker Compose for PostgreSQL, Redis, server, frontend
+- Docker Compose for PostgreSQL, Redis, server, frontend, Caddy reverse proxy
+- Monitoring stack: Prometheus, Grafana, Node Exporter, Postgres Exporter, cAdvisor
+- Optional profiles: --profile debugging (Redis Commander), --profile monitoring (Uptime Kuma), --profile migration (DB migrations)
 - Environment configuration via .env
 
 YOUR TASK: Add NEW infrastructure features.
 
 REQUIREMENTS:
-1. Analyze current Docker Compose setup
-2. Consider adding:
-   - New services (monitoring, logging, caching)
-   - Better health checks
-   - Improved networking
-   - Volume management
-   - Security hardening
-3. Check .env.example for configuration options
-4. Test with: docker compose config
-5. Ensure services can start properly
-6. Commit and push your changes"
+1. Check open issues first: gh issue list -R enclavr/infra --state open
+2. Analyze current Docker Compose setup: docker compose config
+3. Consider adding (pick ONE that fills the biggest gap):
+   - Log aggregation (Loki + Promtail for centralized logging)
+   - Backup automation (scheduled pg_dump with S3 upload)
+   - Container resource alerts in Prometheus (CPU > 80%, memory > 90%)
+   - Network segmentation improvements
+   - Graceful shutdown handling (stop_timeout, health check dependencies)
+4. Check .env.example for configuration options
+5. Test with: docker compose config
+6. Update .env.example and Makefile if applicable
+7. Commit and push your changes
+
+IMPORTANT: Focus on ONE substantial improvement per session. Each must solve a real operational need."
 
 # Infra - Testing Only
 PROMPT_INFRA_TESTING="You are working on the Enclavr infrastructure repository.
@@ -389,7 +433,8 @@ The project uses Docker Compose for deployment.
 
 CONTEXT:
 - Location: /home/dev/Projects/enclavr/infra
-- Docker Compose for PostgreSQL, Redis, server, frontend
+- Docker Compose for PostgreSQL, Redis, server, frontend, Caddy, monitoring stack
+- Profiles: default, debugging, monitoring, migration
 
 YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
 
@@ -414,6 +459,13 @@ IMPORTANT ISSUE CREATION RULES:
 - MAXIMUM 2 issues per testing session
 - For each issue: clear title, description, impact assessment
 
+FALLBACK IF NO ISSUES FOUND: If docker compose config passes and no open issues exist, do proactive checks:
+- Verify all services have resource limits
+- Check for services missing restart policies
+- Verify no ports are exposed to 0.0.0.0 unnecessarily
+- Verify Prometheus scrape targets match actual service names
+- If you find gaps, create issues (max 2)
+
 IMPORTANT: Be selective. Quality over quantity. Only report issues that actually matter."
 
 # Infra - Debugging (Fix GitHub Issues)
@@ -436,7 +488,11 @@ REQUIREMENTS:
    - Test with: docker compose config
    - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
 4. Fix AT LEAST 2 issues per session if that many are open
-5. If no open issues exist, run docker compose config and fix any issues directly
+5. If no open issues exist, do proactive improvement:
+   - Run docker compose config and fix any warnings
+   - Check for outdated Docker image tags (compare against latest releases)
+   - Look for opportunities to add security headers in Caddyfile
+   - If you find improvements, implement them directly (do not create issues)
 6. Commit and push your changes after fixing multiple issues
 
 IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
@@ -465,9 +521,9 @@ REQUIREMENTS:
    - Usage examples
    - Architecture docs
 3. Run playwright tests to verify docs render: npx playwright test
-5. Look at GitHub issues for what needs to be documented
-6. Update existing docs to match current code
-7. Commit and push your changes
+4. Look at GitHub issues for what needs to be documented
+5. Update existing docs to match current code
+6. Commit and push your changes
 
 IMPORTANT: The docs MUST be 100% in sync with actual features. If code has a feature, docs must document it."
 
@@ -565,6 +621,12 @@ REQUIREMENTS:
 7. Run tests after fixes: bun run lint && bun run typecheck && bun run test:run
 8. Commit and push your changes
 
+FALLBACK IF NO ALERTS EXIST: If all scanners report no open alerts, do proactive security hardening:
+- Check for dangerouslySetInnerHTML usage without sanitization
+- Verify no sensitive data in client-side localStorage
+- Check that NEXT_PUBLIC_ env vars don't leak secrets
+- If you find hardening opportunities, implement them directly and commit
+
 CRITICAL DISMISSAL RULES:
 - ALWAYS read the source code before dismissing ANY alert
 - ALWAYS include a -f dismissed_comment explaining your reasoning
@@ -615,6 +677,13 @@ REQUIREMENTS:
 7. Run tests after fixes: go test -v ./... && golangci-lint run ./...
 8. Commit and push your changes
 
+FALLBACK IF NO ALERTS EXIST: If all scanners report no open alerts, do proactive security hardening:
+- Check for SQL injection risks: grep for string concatenation in SQL queries
+- Verify JWT tokens have appropriate expiration times
+- Verify rate limiting is applied to all authentication endpoints
+- Check that error responses don't leak internal details
+- If you find hardening opportunities, implement them directly and commit
+
 CRITICAL DISMISSAL RULES:
 - ALWAYS read the source code before dismissing ANY alert
 - ALWAYS include a -f dismissed_comment explaining your reasoning
@@ -657,6 +726,13 @@ REQUIREMENTS:
 7. Test after fixes: docker compose config
 8. Commit and push your changes
 
+FALLBACK IF NO ALERTS EXIST: If all scanners report no open alerts, do proactive security hardening:
+- Verify Docker images use specific version tags (not :latest)
+- Check for services running as root
+- Verify no sensitive data in docker-compose.yml environment section
+- Verify network isolation between services
+- If you find hardening opportunities, implement them directly and commit
+
 CRITICAL DISMISSAL RULES:
 - ALWAYS read the source code before dismissing ANY alert
 - ALWAYS include a -f dismissed_comment explaining your reasoning
@@ -698,6 +774,12 @@ REQUIREMENTS:
    - Only dismiss if confirmed false positive with comment
 7. Run tests after fixes: npx playwright test
 8. Commit and push your changes
+
+FALLBACK IF NO ALERTS EXIST: If all scanners report no open alerts, do proactive security checks:
+- Verify no API keys, tokens, or passwords are embedded in HTML files
+- Check that documentation doesn't include internal IP addresses
+- Verify that example .env snippets use placeholder values, not real credentials
+- If you find issues, fix them directly and commit
 
 CRITICAL DISMISSAL RULES:
 - ALWAYS read the source code before dismissing ANY alert
@@ -876,6 +958,10 @@ IMPORTANT: Every claim in these files must match the actual codebase. Fix all mi
 # Main Loop
 # ============================================
 
+# Track consecutive failures for circuit breaker
+CONSECUTIVE_FAILURES=0
+MAX_CONSECUTIVE_FAILURES=5
+
 while true; do
     echo "Loop running..."
     
@@ -900,12 +986,12 @@ while true; do
         4) DOCS_CHANGED=true ;;
     esac
     
-    # Set task type based on global step counter (2:2:1:1:1 debug:test:feature:security:github_files ratio)
-    # Steps 0,2 = debug (fix issues) | Steps 1,3 = test (create issues) | Step 4 = feature | Step 5 = security | Step 6 = github_files
+    # Set task type based on global step counter (2:1:2:1:1 debug:test:feature:security:github_files ratio)
+    # Steps 0,3 = debug (fix issues) | Step 1 = test (create issues) | Steps 2,4 = feature | Step 5 = security | Step 6 = github_files
     case $TASK_STEP in
-        0|2) DEBUGGING_ONLY=true ;;
-        1|3) TESTING_ONLY=true ;;
-        4)   ADD_NEW_FEATURES=true ;;
+        0|3) DEBUGGING_ONLY=true ;;
+        1)   TESTING_ONLY=true ;;
+        2|4) ADD_NEW_FEATURES=true ;;
         5)   SECURITY_ONLY=true ;;
         6)   GITHUB_FILES_ONLY=true ;;
     esac
@@ -975,15 +1061,66 @@ while true; do
     echo "Task step: $TASK_STEP/6 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY, security=$SECURITY_ONLY, github_files=$GITHUB_FILES_ONLY)"
     echo "AI Prompt length: ${#AI_PROMPT} chars"
     
-    # Run the AI agent with the prompt
+    # Determine working directory based on active repo
+    case $CURRENT_REPO_INDEX in
+        0) WORK_DIR="/home/dev/Projects/enclavr" ;;
+        1) WORK_DIR="/home/dev/Projects/enclavr/frontend" ;;
+        2) WORK_DIR="/home/dev/Projects/enclavr/server" ;;
+        3) WORK_DIR="/home/dev/Projects/enclavr/infra" ;;
+        4) WORK_DIR="/home/dev/Projects/enclavr/docs" ;;
+    esac
+    echo "Working directory: $WORK_DIR"
+    
+    # Run the AI agent with the prompt from the correct working directory
+    cd "$WORK_DIR" || { echo "ERROR: Cannot cd to $WORK_DIR"; sleep 60; continue; }
     /home/dev/.bun/bin/kilo run "$AI_PROMPT"
     EXIT_CODE=$?
+    cd /home/dev/Projects/enclavr || true
     
     if [ $EXIT_CODE -eq 0 ]; then
         echo "AI agent completed successfully"
+        CONSECUTIVE_FAILURES=0
     else
         echo "AI agent FAILED with exit code $EXIT_CODE"
+        CONSECUTIVE_FAILURES=$((CONSECUTIVE_FAILURES + 1))
+        
+        # Circuit breaker: if too many consecutive failures, wait longer
+        if [ $CONSECUTIVE_FAILURES -ge $MAX_CONSECUTIVE_FAILURES ]; then
+            echo "CIRCUIT BREAKER: $MAX_CONSECUTIVE_FAILURES consecutive failures. Waiting 10 minutes before retry."
+            CONSECUTIVE_FAILURES=0
+            sleep 600
+            continue
+        fi
     fi
+    
+    # Post-agent git verification: ensure all changes are committed and pushed
+    cd "$WORK_DIR" || { echo "ERROR: Cannot cd to $WORK_DIR for verification"; sleep 60; continue; }
+    
+    # For root repo, update submodule refs before checking status
+    if [ "$ROOT_CHANGED" = true ]; then
+        git submodule update --remote 2>/dev/null || true
+    fi
+    
+    # Check for uncommitted changes
+    if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
+        echo "POST-AGENT: Uncommitted changes detected in $WORK_DIR. Auto-committing..."
+        git add -A
+        TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        git commit -m "chore: auto-commit leftover changes from agent session [$TIMESTAMP]" --no-verify 2>/dev/null
+        if [ $? -eq 0 ]; then
+            echo "POST-AGENT: Committed changes. Pushing..."
+            git push origin main 2>/dev/null || git push origin master 2>/dev/null
+            if [ $? -ne 0 ]; then
+                echo "POST-AGENT: Push failed. Attempting pull --rebase and retry..."
+                git pull --rebase origin main 2>/dev/null || git pull --rebase origin master 2>/dev/null
+                git push origin main 2>/dev/null || git push origin master 2>/dev/null
+            fi
+        fi
+    else
+        echo "POST-AGENT: Working tree clean in $WORK_DIR"
+    fi
+    
+    cd /home/dev/Projects/enclavr || true
     
     # Alternate to next repo for next iteration (5 repos: root, frontend, server, infra, docs)
     CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 5 ))
