@@ -955,6 +955,49 @@ REQUIREMENTS:
 IMPORTANT: Every claim in these files must match the actual codebase. Fix all mismatches."
 
 # ============================================
+# Shared Git Workflow (appended to ALL prompts)
+# ============================================
+
+GIT_WORKFLOW='
+
+MANDATORY GIT WORKFLOW — YOU MUST COMPLETE ALL STEPS BEFORE FINISHING:
+
+Your session is NOT complete until all changes are committed AND pushed to GitHub. Follow these steps EXACTLY at the end of your session:
+
+STEP 1 — CHECK FOR CHANGES:
+Run: git status --short
+If output is empty, you have nothing to commit. Skip to STEP 6.
+
+STEP 2 — STAGE AND COMMIT:
+Run: git add -A
+Run: git commit -m "descriptive message here" --no-verify
+If commit fails because nothing is staged, go back to STEP 1.
+
+STEP 3 — PUSH:
+Run: git push origin main
+If push succeeds, skip to STEP 6.
+
+STEP 4 — HANDLE PUSH FAILURE:
+If push fails, run: git pull --rebase origin main
+If rebase succeeds, run: git push origin main again.
+If rebase has conflicts you cannot resolve, run: git rebase --abort, then skip this push attempt.
+
+STEP 5 — VERIFY:
+Run: git status --short
+If output is not empty, you still have uncommitted changes. Go back to STEP 2.
+
+STEP 6 — DONE:
+Your session is complete. All changes are on GitHub.
+
+FOR ROOT REPO (enclavr/enclavr) ONLY — SUBMODULE UPDATES:
+Before STEP 1, run: git submodule update --remote
+This updates submodule pointers. If they changed, they will appear in git status and get committed in STEP 2.
+
+CRITICAL: Do NOT skip git operations. Do NOT say "I will commit later." Commit and push NOW before finishing.
+CRITICAL: If you made zero file changes, still run git status to confirm the tree is clean.
+'
+
+# ============================================
 # Main Loop
 # ============================================
 
@@ -1059,6 +1102,10 @@ while true; do
     
     echo "Active repo: $CURRENT_REPO_INDEX (root=$ROOT_CHANGED, frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, infra=$INFRA_CHANGED, docs=$DOCS_CHANGED)"
     echo "Task step: $TASK_STEP/6 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY, security=$SECURITY_ONLY, github_files=$GITHUB_FILES_ONLY)"
+    
+    # Append mandatory git workflow to every prompt
+    AI_PROMPT="${AI_PROMPT}${GIT_WORKFLOW}"
+    
     echo "AI Prompt length: ${#AI_PROMPT} chars"
     
     # Determine working directory based on active repo
@@ -1092,59 +1139,6 @@ while true; do
             continue
         fi
     fi
-    
-    # Post-agent git verification: ensure all changes are committed and pushed
-    cd "$WORK_DIR" || { echo "POST-AGENT ERROR: Cannot cd to $WORK_DIR"; sleep 60; continue; }
-    
-    # For root repo, update submodule refs before checking status
-    if [ "$ROOT_CHANGED" = true ]; then
-        echo "POST-AGENT: Updating submodule refs..."
-        git submodule update --remote 2>&1 || echo "POST-AGENT: Submodule update had warnings"
-    fi
-    
-    # Check for uncommitted changes
-    if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
-        echo "POST-AGENT: Uncommitted changes detected in $WORK_DIR"
-        git status --short
-        echo "POST-AGENT: Auto-committing..."
-        git add -A
-        TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-        git commit -m "chore: auto-commit leftover changes from agent session [$TIMESTAMP]" --no-verify
-        COMMIT_EXIT=$?
-        if [ $COMMIT_EXIT -eq 0 ]; then
-            echo "POST-AGENT: Committed. Pushing to remote..."
-            PUSH_OUTPUT=$(git push origin main 2>&1) || PUSH_OUTPUT=$(git push origin master 2>&1)
-            PUSH_EXIT=$?
-            if [ $PUSH_EXIT -ne 0 ]; then
-                echo "POST-AGENT: Push failed: $PUSH_OUTPUT"
-                echo "POST-AGENT: Attempting pull --rebase and retry..."
-                # Abort any stuck rebase first
-                git rebase --abort 2>/dev/null || true
-                PULL_OUTPUT=$(git pull --rebase origin main 2>&1) || PULL_OUTPUT=$(git pull --rebase origin master 2>&1)
-                PULL_EXIT=$?
-                if [ $PULL_EXIT -ne 0 ]; then
-                    echo "POST-AGENT: Pull --rebase failed: $PULL_OUTPUT"
-                    echo "POST-AGENT: Aborting rebase and skipping push for this cycle"
-                    git rebase --abort 2>/dev/null || true
-                else
-                    PUSH_OUTPUT=$(git push origin main 2>&1) || PUSH_OUTPUT=$(git push origin master 2>&1)
-                    if [ $? -ne 0 ]; then
-                        echo "POST-AGENT: Retry push also failed: $PUSH_OUTPUT"
-                    else
-                        echo "POST-AGENT: Push succeeded after rebase"
-                    fi
-                fi
-            else
-                echo "POST-AGENT: Push succeeded"
-            fi
-        else
-            echo "POST-AGENT: Commit failed (exit $COMMIT_EXIT)"
-        fi
-    else
-        echo "POST-AGENT: Working tree clean in $WORK_DIR"
-    fi
-    
-    cd /home/dev/Projects/enclavr || true
     
     # Alternate to next repo for next iteration (5 repos: root, frontend, server, infra, docs)
     CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 5 ))
