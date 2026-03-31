@@ -1094,27 +1094,51 @@ while true; do
     fi
     
     # Post-agent git verification: ensure all changes are committed and pushed
-    cd "$WORK_DIR" || { echo "ERROR: Cannot cd to $WORK_DIR for verification"; sleep 60; continue; }
+    cd "$WORK_DIR" || { echo "POST-AGENT ERROR: Cannot cd to $WORK_DIR"; sleep 60; continue; }
     
     # For root repo, update submodule refs before checking status
     if [ "$ROOT_CHANGED" = true ]; then
-        git submodule update --remote 2>/dev/null || true
+        echo "POST-AGENT: Updating submodule refs..."
+        git submodule update --remote 2>&1 || echo "POST-AGENT: Submodule update had warnings"
     fi
     
     # Check for uncommitted changes
     if [ -n "$(git status --porcelain 2>/dev/null)" ]; then
-        echo "POST-AGENT: Uncommitted changes detected in $WORK_DIR. Auto-committing..."
+        echo "POST-AGENT: Uncommitted changes detected in $WORK_DIR"
+        git status --short
+        echo "POST-AGENT: Auto-committing..."
         git add -A
         TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-        git commit -m "chore: auto-commit leftover changes from agent session [$TIMESTAMP]" --no-verify 2>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "POST-AGENT: Committed changes. Pushing..."
-            git push origin main 2>/dev/null || git push origin master 2>/dev/null
-            if [ $? -ne 0 ]; then
-                echo "POST-AGENT: Push failed. Attempting pull --rebase and retry..."
-                git pull --rebase origin main 2>/dev/null || git pull --rebase origin master 2>/dev/null
-                git push origin main 2>/dev/null || git push origin master 2>/dev/null
+        git commit -m "chore: auto-commit leftover changes from agent session [$TIMESTAMP]" --no-verify
+        COMMIT_EXIT=$?
+        if [ $COMMIT_EXIT -eq 0 ]; then
+            echo "POST-AGENT: Committed. Pushing to remote..."
+            PUSH_OUTPUT=$(git push origin main 2>&1) || PUSH_OUTPUT=$(git push origin master 2>&1)
+            PUSH_EXIT=$?
+            if [ $PUSH_EXIT -ne 0 ]; then
+                echo "POST-AGENT: Push failed: $PUSH_OUTPUT"
+                echo "POST-AGENT: Attempting pull --rebase and retry..."
+                # Abort any stuck rebase first
+                git rebase --abort 2>/dev/null || true
+                PULL_OUTPUT=$(git pull --rebase origin main 2>&1) || PULL_OUTPUT=$(git pull --rebase origin master 2>&1)
+                PULL_EXIT=$?
+                if [ $PULL_EXIT -ne 0 ]; then
+                    echo "POST-AGENT: Pull --rebase failed: $PULL_OUTPUT"
+                    echo "POST-AGENT: Aborting rebase and skipping push for this cycle"
+                    git rebase --abort 2>/dev/null || true
+                else
+                    PUSH_OUTPUT=$(git push origin main 2>&1) || PUSH_OUTPUT=$(git push origin master 2>&1)
+                    if [ $? -ne 0 ]; then
+                        echo "POST-AGENT: Retry push also failed: $PUSH_OUTPUT"
+                    else
+                        echo "POST-AGENT: Push succeeded after rebase"
+                    fi
+                fi
+            else
+                echo "POST-AGENT: Push succeeded"
             fi
+        else
+            echo "POST-AGENT: Commit failed (exit $COMMIT_EXIT)"
         fi
     else
         echo "POST-AGENT: Working tree clean in $WORK_DIR"
