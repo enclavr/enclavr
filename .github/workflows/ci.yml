@@ -14,18 +14,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
-        with:
-          submodules: recursive
-
-      - name: Validate submodule references
-        run: |
-          git submodule status --recursive
-          if git submodule status --recursive | grep -q '^-'; then
-            echo "::error::Submodules are not initialized"
-            exit 1
-          fi
 
       - name: Validate YAML syntax
         run: |
           pip install yamllint
           yamllint -d relaxed .github/
+
+      - name: Validate script syntax
+        run: bash -n script/main.sh
+
+      - name: Validate required files
+        run: |
+          test -f AGENTS.md && echo "AGENTS.md present"
+          test -f README.md && echo "README.md present"
+          test -f LICENSE && echo "LICENSE present"
+          test -f script/main.sh && echo "script/main.sh present"

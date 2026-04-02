@@ -1,48 +1,42 @@
 ---
 name: enclavr-root
-description: Root monorepo for Enclavr - a self-hosted voice chat platform
+description: Root orchestrator for Enclavr - a self-hosted voice chat platform
 ---
 
 # Enclavr - Agent Instructions
 
-You are an expert software architect and developer working on the Enclavr monorepo. Enclavr is a self-hosted voice chat platform.
+You are an expert software architect and developer working on the Enclavr project. Enclavr is a self-hosted voice chat platform.
 
 ## Project Structure
 
-This monorepo uses git submodules. Each component is an independent repository:
+Enclavr consists of 4 independent repositories. Each is fully self-contained:
 
 | Repository | Description | Agent Focus |
 |------------|-------------|-------------|
 | [enclavr/frontend](https://github.com/enclavr/frontend) | Next.js 16 + React 19 + TypeScript | UI/UX, State |
 | [enclavr/server](https://github.com/enclavr/server) | Go backend with PostgreSQL, WebSocket | API, DB, Auth |
-| [enclavr/infra](https://github.com/enclavr/infra) | Docker Compose deployment | DevOps |
-| [enclavr/docs](https://github.com/enclavr/docs) | Static HTML documentation | Docs |
+| [enclavr/docs](https://github.com/enclavr/docs) | Static HTML documentation (GitHub Pages) | Docs |
+| [enclavr/enclavr](https://github.com/enclavr/enclavr) | Root orchestrator (this repo) | Agent coordination |
 
 ## Commands
 
-### Working with Submodules
-```bash
-git clone --recurse-submodules https://github.com/enclavr/enclavr.git
-git submodule update --remote
-git submodule add https://github.com/enclavr/new-component.git path/to/new-component
-git submodule deinit -f path/to/submodule && git rm path/to/submodule
-```
-
 ### Frontend
 ```bash
+git clone https://github.com/enclavr/frontend.git
 cd frontend && bun install && bun run dev
 bun run lint && bun run test:run
 ```
 
 ### Server
 ```bash
+git clone https://github.com/enclavr/server.git
 cd server && go run ./cmd/server
 golangci-lint run ./... && go test -v ./...
 ```
 
-### Infrastructure
+### Infrastructure (in server repo)
 ```bash
-cd infra && cp .env.example .env && docker compose up -d
+cd server/infra && cp .env.example .env && docker compose up -d
 ```
 
 **Neon (Default):** Server defaults to Neon PostgreSQL. Set `NEON_CONNECTION_STRING` in your environment.
@@ -75,9 +69,8 @@ When CI breaks: reproduce with `act push`, fix the underlying issue, ensure test
 
 ## Boundaries
 
-- Always work within correct submodule directories
+- Always work within the correct repository directory
 - Automatically commit and push all changes to remote
-- Automatically update submodule references when submodules change
 - Never commit secrets or API keys
 
 ## GitHub CLI (gh)
@@ -180,9 +173,8 @@ gh api orgs/{org}/secret-scanning/alerts
 
 **ALWAYS keep git commits up to date on the remote GitHub repository.** After every commit:
 1. Push immediately to the remote: `git push origin main`
-2. If submodule references changed, update and push the root repo too
-3. Never leave local-only commits — they can be lost and block CI/CD
-4. If push fails due to remote changes, pull rebase and retry: `git pull --rebase origin main && git push origin main`
+2. Never leave local-only commits — they can be lost and block CI/CD
+3. If push fails due to remote changes, pull rebase and retry: `git pull --rebase origin main && git push origin main`
 
 ### Branch Strategy
 - Trunk-based development on `main`

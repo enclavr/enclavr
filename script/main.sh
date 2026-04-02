@@ -6,10 +6,9 @@
 ROOT_CHANGED=false
 FRONTEND_CHANGED=false
 SERVER_CHANGED=false
-INFRA_CHANGED=false
 DOCS_CHANGED=false
 
-# Current active repo index (0=root, 1=frontend, 2=server, 3=infra, 4=docs)
+# Current active repo index (0=root, 1=frontend, 2=server, 3=docs)
 CURRENT_REPO_INDEX=0
 
 # Task type flags
@@ -33,13 +32,13 @@ TASK_STEP=0
 
 # Root - Debugging (Fix GitHub Issues)
 PROMPT_ROOT_DEBUGGING="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
-This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+This is the orchestrator repository for Enclavr. The project has 4 independent repositories: enclavr/enclavr (root), enclavr/frontend, enclavr/server, enclavr/docs.
 
 CONTEXT:
 - Location: /home/dev/Projects/enclavr
 - Repository: enclavr/enclavr
 - This repo contains: AGENTS.md, README.md, SECURITY.md, script/, .gitmodules, .env.example
-- Submodules: frontend, server, infra, docs
+- Repositories: enclavr/enclavr (root), enclavr/frontend, enclavr/server, enclavr/docs
 
 YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
@@ -61,7 +60,7 @@ Do NOT create new issues. If you find a bug while fixing, fix it immediately."
 
 # Root - Testing Only
 PROMPT_ROOT_TESTING="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
-This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+This is the orchestrator repository for Enclavr. The project has 4 independent repositories: enclavr/enclavr (root), enclavr/frontend, enclavr/server, enclavr/docs.
 
 CONTEXT:
 - Location: /home/dev/Projects/enclavr
@@ -102,7 +101,7 @@ IMPORTANT: Be selective. Quality over quantity. Only report bugs that actually m
 
 # Root - Security (Dependabot, Code Scanning, Secret Scanning)
 PROMPT_ROOT_SECURITY="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
-This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+This is the orchestrator repository for Enclavr. The project has 4 independent repositories: enclavr/enclavr (root), enclavr/frontend, enclavr/server, enclavr/docs.
 
 CONTEXT:
 - Location: /home/dev/Projects/enclavr
@@ -150,7 +149,7 @@ CRITICAL DISMISSAL RULES:
 
 # Root - GitHub Files
 PROMPT_ROOT_GITHUB_FILES="You are working on the Enclavr root monorepo at /home/dev/Projects/enclavr.
-This is the monorepo orchestrator containing git submodules for frontend, server, infra, docs.
+This is the orchestrator repository for Enclavr. The project has 4 independent repositories: enclavr/enclavr (root), enclavr/frontend, enclavr/server, enclavr/docs.
 
 CONTEXT:
 - Location: /home/dev/Projects/enclavr
@@ -399,105 +398,6 @@ IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
 Do NOT create new issues. If you find a bug while fixing, fix it immediately."
 
 # Infra - Add New Features
-PROMPT_INFRA_FEATURES="You are working on the Enclavr infrastructure repository.
-The project uses Docker Compose for deployment.
-
-CONTEXT:
-- Location: /home/dev/Projects/enclavr/infra
-- Docker Compose for PostgreSQL, Redis, server, frontend, Caddy reverse proxy
-- Monitoring stack: Prometheus, Grafana, Node Exporter, Postgres Exporter, cAdvisor
-- Optional profiles: --profile debugging (Redis Commander), --profile monitoring (Uptime Kuma), --profile migration (DB migrations)
-- Environment configuration via .env
-
-YOUR TASK: Add NEW infrastructure features.
-
-REQUIREMENTS:
-1. Check open issues first: gh issue list -R enclavr/infra --state open
-2. Analyze current Docker Compose setup: docker compose config
-3. Consider adding (pick ONE that fills the biggest gap):
-   - Log aggregation (Loki + Promtail for centralized logging)
-   - Backup automation (scheduled pg_dump with S3 upload)
-   - Container resource alerts in Prometheus (CPU > 80%, memory > 90%)
-   - Network segmentation improvements
-   - Graceful shutdown handling (stop_timeout, health check dependencies)
-4. Check .env.example for configuration options
-5. Test with: docker compose config
-6. Update .env.example and Makefile if applicable
-7. Commit and push your changes
-
-IMPORTANT: Focus on ONE substantial improvement per session. Each must solve a real operational need."
-
-# Infra - Testing Only
-PROMPT_INFRA_TESTING="You are working on the Enclavr infrastructure repository.
-The project uses Docker Compose for deployment.
-
-CONTEXT:
-- Location: /home/dev/Projects/enclavr/infra
-- Docker Compose for PostgreSQL, Redis, server, frontend, Caddy, monitoring stack
-- Profiles: default, debugging, monitoring, migration
-
-YOUR TASK: Testing - find HIGH PRIORITY issues only and create GitHub issues. DO NOT fix anything yourself.
-
-REQUIREMENTS:
-1. FIRST check existing open issues: gh issue list -R enclavr/infra --state open
-   - Do NOT create duplicates of existing issues
-2. Validate Docker Compose: docker compose config
-3. Check for critical issues in docker-compose.yml
-4. Test service health checks
-5. Verify environment variables in .env.example
-
-IMPORTANT ISSUE CREATION RULES:
-- ONLY create issues for HIGH priority problems:
-  * Security misconfigurations (exposed ports, weak credentials)
-  * Services that cannot start or crash
-  * Missing health checks for critical services
-  * Data loss risks (missing volumes, no backups)
-- DO NOT create issues for:
-  * Minor config preferences
-  * Theoretical improvements
-  * Issues that already exist (check first!)
-- MAXIMUM 2 issues per testing session
-- For each issue: clear title, description, impact assessment
-
-FALLBACK IF NO ISSUES FOUND: If docker compose config passes and no open issues exist, do proactive checks:
-- Verify all services have resource limits
-- Check for services missing restart policies
-- Verify no ports are exposed to 0.0.0.0 unnecessarily
-- Verify Prometheus scrape targets match actual service names
-- If you find gaps, create issues (max 2)
-
-IMPORTANT: Be selective. Quality over quantity. Only report issues that actually matter."
-
-# Infra - Debugging (Fix GitHub Issues)
-PROMPT_INFRA_DEBUGGING="You are working on the Enclavr infrastructure repository.
-The project uses Docker Compose for deployment.
-
-CONTEXT:
-- Location: /home/dev/Projects/enclavr/infra
-- Docker Compose for PostgreSQL, Redis, server, frontend
-
-YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
-
-REQUIREMENTS:
-1. List ALL open GitHub issues: gh issue list -R enclavr/infra --state open --limit 50
-2. Sort by priority: fix critical/security issues first
-3. For EACH issue you can fix in this session:
-   - Read the issue details and understand what needs to be fixed
-   - Analyze the Docker configuration to find the root cause
-   - Implement a fix for the issue
-   - Test with: docker compose config
-   - Close the issue with gh issue close <number> -c 'Fixed in <commit description>'
-4. Fix AT LEAST 2 issues per session if that many are open
-5. If no open issues exist, do proactive improvement:
-   - Run docker compose config and fix any warnings
-   - Check for outdated Docker image tags (compare against latest releases)
-   - Look for opportunities to add security headers in Caddyfile
-   - If you find improvements, implement them directly (do not create issues)
-6. Commit and push your changes after fixing multiple issues
-
-IMPORTANT: Debugging and testing sessions are equal. Fix issues aggressively.
-Do NOT create new issues."
-
 # Docs - Add New Features
 PROMPT_DOCS_FEATURES="You are working on the Enclavr documentation repository.
 This docs repository MUST reflect 100% of the features from the other repositories.
@@ -505,15 +405,14 @@ This docs repository MUST reflect 100% of the features from the other repositori
 CONTEXT:
 - Location: /home/dev/Projects/enclavr/docs
 - Static HTML documentation generated from codebase
-- Docs must stay in sync with: frontend, server, infra repositories
+- Docs must stay in sync with: frontend, server repositories
 
 YOUR TASK: Update documentation to reflect all features from other repositories.
 
 REQUIREMENTS:
 1. Check the other repositories to understand what features exist:
    - Frontend: /home/dev/Projects/enclavr/frontend (Next.js, React, components, hooks)
-   - Server: /home/dev/Projects/enclavr/server (Go, API endpoints, WebSocket, auth)
-   - Infra: /home/dev/Projects/enclavr/infra (Docker, deployment)
+   - Server: /home/dev/Projects/enclavr/server (Go, API endpoints, WebSocket, auth, Docker deployment)
 2. For each feature in the other repos, ensure documentation exists:
    - API documentation (all endpoints)
    - Component documentation (UI components)
@@ -534,7 +433,7 @@ This docs repository MUST reflect 100% of the features from the other repositori
 CONTEXT:
 - Location: /home/dev/Projects/enclavr/docs
 - Static HTML documentation
-- Docs must stay in sync with: frontend, server, infra repositories
+- Docs must stay in sync with: frontend, server repositories
 
 YOUR TASK: Testing - find HIGH PRIORITY doc gaps and create GitHub issues. DO NOT fix anything yourself.
 
@@ -568,7 +467,7 @@ This docs repository MUST reflect 100% of the features from the other repositori
 CONTEXT:
 - Location: /home/dev/Projects/enclavr/docs
 - Static HTML documentation
-- Docs must stay in sync with: frontend, server, infra repositories
+- Docs must stay in sync with: frontend, server repositories
 
 YOUR TASK: Fix as many GitHub issues as possible. Do NOT create new issues.
 
@@ -691,55 +590,6 @@ CRITICAL DISMISSAL RULES:
 - NEVER bulk dismiss — max 2 dismissals per session
 - Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
 - If you fixed a vulnerability, leave the alert for CodeQL to auto-resolve"
-
-# Infra - Security (Dependabot, Code Scanning, Secret Scanning)
-PROMPT_INFRA_SECURITY="You are working on the Enclavr infrastructure repository.
-The project uses Docker Compose for deployment.
-
-CONTEXT:
-- Location: /home/dev/Projects/enclavr/infra
-- Repository: enclavr/infra
-
-YOUR TASK: Check and fix GitHub security alerts. Check Dependabot, code scanning, and secret scanning.
-
-REQUIREMENTS:
-1. Check Dependabot alerts:
-   gh api repos/enclavr/infra/dependabot/alerts -f state=open --jq '.[] | {number, state, severity, package: .security_advisory.summary, cve: .security_advisory.cve_id}'
-2. Check code scanning alerts (Trivy):
-   gh api repos/enclavr/infra/code-scanning/alerts --jq '.[] | {number, state, rule: .rule.id, severity: .rule.severity}'
-3. Check secret scanning alerts:
-   gh api repos/enclavr/infra/secret-scanning/alerts
-4. For each Dependabot alert:
-   - If it is a Docker image vulnerability, update the image tag in docker-compose.yml
-   - If it is a GitHub Actions vulnerability, update the action version
-   - If no fix is available and vulnerability does not affect this project, dismiss: gh api -X PATCH repos/enclavr/infra/dependabot/alerts/NUMBER -f state=dismissed -f dismissed_reason=no_fix_available -f dismissed_comment='EXPLAIN WHY this does not affect the project'
-5. For each code scanning alert (Trivy):
-   - Read the actual Dockerfile or docker-compose.yml at the reported location
-   - If it is a real misconfiguration, FIX IT. Do NOT dismiss after fixing — let Trivy auto-resolve on next scan.
-   - ONLY dismiss if you can prove it is a false positive by reading the code. You MUST provide a dismissal comment:
-     gh api -X PATCH repos/enclavr/infra/code-scanning/alerts/NUMBER -f state=dismissed -f dismissed_reason='false positive' -f dismissed_comment='EXPLAIN YOUR REASONING (max 280 chars)'
-   - NEVER fix AND dismiss the same alert in one session
-   - NEVER dismiss more than 2 alerts per session without explicit user approval
-6. For each secret scanning alert:
-   - If a real secret was exposed, rotate it and mark resolved
-   - Only dismiss if confirmed false positive with comment
-7. Test after fixes: docker compose config
-8. Commit and push your changes
-
-FALLBACK IF NO ALERTS EXIST: If all scanners report no open alerts, do proactive security hardening:
-- Verify Docker images use specific version tags (not :latest)
-- Check for services running as root
-- Verify no sensitive data in docker-compose.yml environment section
-- Verify network isolation between services
-- If you find hardening opportunities, implement them directly and commit
-
-CRITICAL DISMISSAL RULES:
-- ALWAYS read the source code before dismissing ANY alert
-- ALWAYS include a -f dismissed_comment explaining your reasoning
-- NEVER fix and dismiss the same alert in one session
-- NEVER bulk dismiss — max 2 dismissals per session
-- Use 'false positive' (with space) as dismissed_reason, NOT 'false_positive'
-- If you fixed a vulnerability, leave the alert for scanner to auto-resolve"
 
 # Docs - Security (Dependabot, Code Scanning, Secret Scanning)
 PROMPT_DOCS_SECURITY="You are working on the Enclavr documentation repository.
@@ -870,50 +720,6 @@ REQUIREMENTS:
 
 IMPORTANT: Every claim in these files must match the actual codebase. Fix all mismatches."
 
-# Infra - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
-PROMPT_INFRA_GITHUB_FILES="You are working on the Enclavr infrastructure repository.
-The project uses Docker Compose for deployment.
-
-CONTEXT:
-- Location: /home/dev/Projects/enclavr/infra
-- Repository: enclavr/infra
-
-YOUR TASK: Audit and update ALL GitHub community/config files to match the current codebase state.
-
-FILES TO AUDIT AND UPDATE:
-1. README.md - Must accurately describe: services (check docker-compose.yml), ports, volumes, resource limits, security features
-2. CONTRIBUTING.md - Must reference correct commands (docker compose config)
-3. CODE_OF_CONDUCT.md - Verify enforcement contact email is correct
-4. CHANGELOG.md - Add entries for recent changes, verify dates match git log
-5. SECURITY.md - Verify ALL security claims match docker-compose.yml:
-   - Read-only filesystems (check which services actually have read_only: true)
-   - Network isolation (check which services span multiple networks)
-   - Backup encryption (check backup.sh for actual encryption)
-   - Default ports vs profile-gated ports (check which services need --profile)
-6. LICENSE - Verify it matches the root repo license
-7. .github/CODEOWNERS - Verify correct owner
-8. .github/dependabot.yml - Verify ecosystems match actual files (docker-compose.yml, Dockerfiles). Verify image patterns cover all images used.
-9. .github/workflows/ci.yml - Verify CI steps are accurate (Hadolint, Trivy, etc.)
-10. .github/ISSUE_TEMPLATE/ - Verify fields are relevant (Docker version, compose logs)
-11. .github/PULL_REQUEST_TEMPLATE/ - Verify checklist commands actually exist
-
-REQUIREMENTS:
-1. Read docker-compose.yml, Dockerfiles, backup.sh, .env.example, Makefile as the source of truth
-2. For EACH file listed above:
-   - Read the file
-   - Cross-reference every claim against the actual docker-compose.yml
-   - Verify which features are default vs optional profiles
-   - If something is wrong or outdated, fix it
-   - If something is missing, add it
-3. Verify volumes listed in README actually exist in docker-compose.yml
-4. Verify file path references (like LICENSE links) are correct
-5. Verify dependabot patterns cover all Docker images used
-6. Check for placeholder text that was never filled in
-7. Test after changes: docker compose config
-8. Commit and push your changes
-
-IMPORTANT: Every claim in these files must match the actual docker-compose.yml. Fix all mismatches."
-
 # Docs - GitHub Files (README, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG, SECURITY, LICENSE, .github/)
 PROMPT_DOCS_GITHUB_FILES="You are working on the Enclavr documentation repository.
 Static HTML documentation for the Enclavr voice chat platform.
@@ -989,10 +795,6 @@ If output is not empty, you still have uncommitted changes. Go back to STEP 2.
 STEP 6 — DONE:
 Your session is complete. All changes are on GitHub.
 
-FOR ROOT REPO (enclavr/enclavr) ONLY — SUBMODULE UPDATES:
-Before STEP 1, run: git submodule update --remote
-This updates submodule pointers. If they changed, they will appear in git status and get committed in STEP 2.
-
 CRITICAL: Do NOT skip git operations. Do NOT say "I will commit later." Commit and push NOW before finishing.
 CRITICAL: If you made zero file changes, still run git status to confirm the tree is clean.
 '
@@ -1012,21 +814,19 @@ while true; do
     ROOT_CHANGED=false
     FRONTEND_CHANGED=false
     SERVER_CHANGED=false
-    INFRA_CHANGED=false
     DOCS_CHANGED=false
     ADD_NEW_FEATURES=false
     TESTING_ONLY=false
     DEBUGGING_ONLY=false
     SECURITY_ONLY=false
     GITHUB_FILES_ONLY=false
-    
-    # Set the current repo flag based on index
+
+    # Set the current repo flag based on index (4 repos: root, frontend, server, docs)
     case $CURRENT_REPO_INDEX in
         0) ROOT_CHANGED=true ;;
         1) FRONTEND_CHANGED=true ;;
         2) SERVER_CHANGED=true ;;
-        3) INFRA_CHANGED=true ;;
-        4) DOCS_CHANGED=true ;;
+        3) DOCS_CHANGED=true ;;
     esac
     
     # Set task type based on global step counter (2:1:2:1:1 debug:test:feature:security:github_files ratio)
@@ -1074,18 +874,6 @@ while true; do
         else
             AI_PROMPT="$PROMPT_SERVER_DEBUGGING"
         fi
-    elif [ "$INFRA_CHANGED" = true ]; then
-        if [ "$ADD_NEW_FEATURES" = true ]; then
-            AI_PROMPT="$PROMPT_INFRA_FEATURES"
-        elif [ "$TESTING_ONLY" = true ]; then
-            AI_PROMPT="$PROMPT_INFRA_TESTING"
-        elif [ "$SECURITY_ONLY" = true ]; then
-            AI_PROMPT="$PROMPT_INFRA_SECURITY"
-        elif [ "$GITHUB_FILES_ONLY" = true ]; then
-            AI_PROMPT="$PROMPT_INFRA_GITHUB_FILES"
-        else
-            AI_PROMPT="$PROMPT_INFRA_DEBUGGING"
-        fi
     elif [ "$DOCS_CHANGED" = true ]; then
         if [ "$ADD_NEW_FEATURES" = true ]; then
             AI_PROMPT="$PROMPT_DOCS_FEATURES"
@@ -1100,7 +888,7 @@ while true; do
         fi
     fi
     
-    echo "Active repo: $CURRENT_REPO_INDEX (root=$ROOT_CHANGED, frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, infra=$INFRA_CHANGED, docs=$DOCS_CHANGED)"
+    echo "Active repo: $CURRENT_REPO_INDEX (root=$ROOT_CHANGED, frontend=$FRONTEND_CHANGED, server=$SERVER_CHANGED, docs=$DOCS_CHANGED)"
     echo "Task step: $TASK_STEP/6 | Type: (add_features=$ADD_NEW_FEATURES, testing=$TESTING_ONLY, debugging=$DEBUGGING_ONLY, security=$SECURITY_ONLY, github_files=$GITHUB_FILES_ONLY)"
     
     # Append mandatory git workflow to every prompt
@@ -1108,13 +896,12 @@ while true; do
     
     echo "AI Prompt length: ${#AI_PROMPT} chars"
     
-    # Determine working directory based on active repo
+    # Determine working directory based on active repo (4 repos: root, frontend, server, docs)
     case $CURRENT_REPO_INDEX in
         0) WORK_DIR="/home/dev/Projects/enclavr" ;;
         1) WORK_DIR="/home/dev/Projects/enclavr/frontend" ;;
         2) WORK_DIR="/home/dev/Projects/enclavr/server" ;;
-        3) WORK_DIR="/home/dev/Projects/enclavr/infra" ;;
-        4) WORK_DIR="/home/dev/Projects/enclavr/docs" ;;
+        3) WORK_DIR="/home/dev/Projects/enclavr/docs" ;;
     esac
     echo "Working directory: $WORK_DIR"
     
@@ -1140,8 +927,8 @@ while true; do
         fi
     fi
     
-    # Alternate to next repo for next iteration (5 repos: root, frontend, server, infra, docs)
-    CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 5 ))
+    # Alternate to next repo for next iteration (4 repos: root, frontend, server, docs)
+    CURRENT_REPO_INDEX=$(( (CURRENT_REPO_INDEX + 1) % 4 ))
     
     # Advance global task step (cycles through 7 steps: D,T,D,T,F,S,G)
     TASK_STEP=$(( (TASK_STEP + 1) % 7 ))

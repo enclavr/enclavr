@@ -8,36 +8,35 @@ A self-hosted voice chat platform.
 
 | Repository | Description |
 |------------|-------------|
-| [frontend](https://github.com/enclavr/frontend) | Next.js 16 + React 19 frontend |
-| [server](https://github.com/enclavr/server) | Go backend with PostgreSQL |
-| [infra](https://github.com/enclavr/infra) | Docker Compose deployment |
-| [docs](https://github.com/enclavr/docs) | Documentation |
+| [enclavr/frontend](https://github.com/enclavr/frontend) | Next.js 16 + React 19 + TypeScript frontend |
+| [enclavr/server](https://github.com/enclavr/server) | Go backend with PostgreSQL, WebSocket |
+| [enclavr/docs](https://github.com/enclavr/docs) | Documentation (GitHub Pages) |
 
 ## Quick Start
 
 ### Development
 
 ```bash
-git clone --recurse-submodules https://github.com/enclavr/enclavr.git
-cd enclavr
-
 # Frontend
+git clone https://github.com/enclavr/frontend.git
 cd frontend && bun install && bun run dev
 
 # Server (separate terminal)
+git clone https://github.com/enclavr/server.git
 cd server && go run ./cmd/server
 ```
 
 ### Production
 
 ```bash
-cd enclavr/infra
+git clone https://github.com/enclavr/server.git
+cd server/infra
 cp .env.example .env
 # Edit .env and change all default passwords/secrets
 docker compose up -d
 ```
 
-**First Login:** First user to register becomes admin (or set `ADMIN_PASSWORD` in `infra/.env`).
+**First Login:** First user to register becomes admin (or set `ADMIN_PASSWORD` in `.env`).
 
 ## Features
 
@@ -49,8 +48,8 @@ docker compose up -d
 
 ## Documentation
 
-- **Live Docs**: https://enclavr.github.io/enclavr/docs/
-- **Source**: `/docs` folder
+- **Live Docs**: https://enclavr.github.io/docs/
+- **Source**: [enclavr/docs](https://github.com/enclavr/docs)
 
 ## Error Monitoring
 
