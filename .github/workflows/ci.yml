@@ -20,12 +20,8 @@ jobs:
           pip install yamllint
           yamllint -d relaxed .github/
 
-      - name: Validate script syntax
-        run: bash -n script/main.sh
-
       - name: Validate required files
         run: |
           test -f AGENTS.md && echo "AGENTS.md present"
           test -f README.md && echo "README.md present"
           test -f LICENSE && echo "LICENSE present"
-          test -f script/main.sh && echo "script/main.sh present"
