@@ -1,1 +1,1 @@
-// Placeholder for CodeQL analysis
+function hello() { console.log('hello world'); }
